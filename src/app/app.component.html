@@ -1,0 +1,167 @@
+<div *ngIf="isLoggedIn">
+  <mat-toolbar [style.background-color]="nav_color">
+    <div fxLayout="row" class="fullW" fxLayoutAlign="start center" *ngIf="sidenav.mode === 'over'">
+      <button mat-icon-button style="color: #3f5efb; fill: #3f5efb;" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened">
+            menu
+        </mat-icon>
+        <mat-icon *ngIf="sidenav.opened">
+            close
+        </mat-icon>
+      </button>
+      <div *ngIf="sidenav.mode === 'over'">
+        <span class="rute"><b>{{rute}}</b></span>
+      </div>
+    </div>
+    <div fxLayout="row" class="fullW" fxLayoutAlign="space-between center" *ngIf="sidenav.mode === 'side'">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <img src="{{baseUrl}}files/files/{{logo}}" width="45" [routerLink]="['/']">
+        <span [style.color]="title_color" style="margin-left:10px;">{{ comp_name }}</span>
+        <span class="rute">Codata | <b>{{rute}}</b></span>
+      </div>
+      <div>
+        <div fxLayout="row" fxLayoutAlign="end center">
+          <a mat-button class="text-gradient" [routerLink]="'/profile'"> {{ username }} </a>
+          <a mat-button class="logout-btn text-gradient" (click)="logout()"> Log Out </a>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="mat-sidenav-container">
+    <mat-sidenav mode="side" #sidenav="matSidenav" class="mat_sidenav">
+      <div class="fullH" fxLayout="column" fxLayoutAlign="space-between start">
+        <div style="width: 100%;">
+          <div fxLayout="row" *ngIf="sidenav.mode === 'over'" fxLayoutAlign="start center">
+            <!--<img src="/assets/img/s.png" width="45" [routerLink]="['/']">-->
+            <img src="{{baseUrl}}files/files/{{logo}}" width="45" [routerLink]="['/']">
+            <span [style.color]="title_color" style="margin-left:10px;">{{ comp_name }}</span>
+          </div>
+          <button mat-button class="menu-button" [routerLink]="'/pos'" *ngIf="sidenav.mode === 'side' && isLoggedIn && !pos_shift && isPOSU">
+            <span>POS</span>
+          </button>
+          <button mat-button class="menu-button" [routerLink]="'/pos-session'" *ngIf="sidenav.mode === 'side' && isLoggedIn && pos_shift && isPOSU">
+            <span>POS</span>
+          </button>
+
+          <button mat-button class="menu-button" (click)="togglePur()" *ngIf="isLoggedIn && isPurU">
+            <span>Pembelian</span>
+          </button>
+            <button mat-button class="menu-button" [routerLink]="'/purchase'" *ngIf="isLoggedIn && isPurShow">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>PO</span>
+            </button>
+
+          <button mat-button class="menu-button" (click)="toggleSal()" *ngIf="isLoggedIn && isSalU">
+            <span>Penjualan</span>
+          </button>
+            <button mat-button class="menu-button" [routerLink]="'/sale'" *ngIf="isLoggedIn && isSalShow">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>SO</span>
+            </button>
+
+          <button mat-button class="menu-button" (click)="toggleTransac()" *ngIf="isLoggedIn && isIU">
+            <span>Transaksi</span>
+          </button>
+            <button mat-button class="menu-button" [routerLink]="'/stockmove'" *ngIf="isLoggedIn && isTransacShow">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>Gerakan Barang</span>
+            </button>
+          
+          <button mat-button class="menu-button" (click)="toggleAcc()" *ngIf="isLoggedIn && isAU">
+            <span>Akuntansi</span>
+          </button>
+            <button mat-button class="menu-button" [routerLink]="'/receivable'" *ngIf="isLoggedIn && isAccShow">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>Piutang</span>
+            </button>
+            <button mat-button class="menu-button" [routerLink]="'/payable'" *ngIf="isLoggedIn && isAccShow">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>Hutang</span>
+            </button>
+            <button mat-button class="menu-button" [routerLink]="'/journal'" *ngIf="isLoggedIn && isAccShow">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>Jurnal</span>
+            </button>
+          
+          <button mat-button class="menu-button" [routerLink]="'/partner'" *ngIf="isLoggedIn && isPU">
+            <span>Katalog Partner</span>
+          </button>
+          
+          <button mat-button class="menu-button" (click)="toggleProduct()" *ngIf="isLoggedIn && isIU">
+            <span>Katalog Produk</span>
+          </button>
+            <button mat-button class="menu-button" [routerLink]="'/product'" *ngIf="isLoggedIn && isProductShow">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>Produk</span>
+            </button>
+            <button mat-button class="menu-button" [routerLink]="'/productcategory'" *ngIf="isLoggedIn && isProductShow && isIM">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>Kategori</span>
+            </button>
+            <button mat-button class="menu-button" [routerLink]="'/brand'" *ngIf="isLoggedIn && isProductShow && isIM">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>Merek</span>
+            </button>
+            <button mat-button class="menu-button" [routerLink]="'/uom'" *ngIf="isLoggedIn && isProductShow && isIM">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>Satuan</span>
+            </button>
+            <button mat-button class="menu-button" [routerLink]="'/warehouse'" *ngIf="isLoggedIn && isProductShow && isIM">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>Gudang</span>
+            </button>
+          
+          <button mat-button class="menu-button" (click)="toggleProduction()" *ngIf="isLoggedIn && isProdU">
+            <span>Produksi</span>
+          </button>
+            <button mat-button class="menu-button" [routerLink]="'/bom'" *ngIf="isLoggedIn && isProductionShow">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>Bahan Pembentuk</span>
+            </button>
+
+          <button mat-button class="menu-button" [routerLink]="'/helpdesk'" *ngIf="isLoggedIn && isTickU">
+            <span>Helpdesk</span>
+          </button>
+
+          <button mat-button class="menu-button" [routerLink]="'/'" *ngIf="isLoggedIn && isProjU">
+            <span>Project</span>
+          </button>
+          
+          <button mat-button class="menu-button" (click)="toggleReport()" *ngIf="isLoggedIn">
+            <span>Laporan</span>
+          </button>
+            <button mat-button class="menu-button" [routerLink]="'/report-pos'" *ngIf="isLoggedIn && isReportShow">
+              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <span>POS</span>
+            </button>
+        </div>
+        <div *ngIf="sidenav.mode === 'side'" style="width: 100%;">
+          <button mat-button class="menu-button" [routerLink]="'/setting'" *ngIf="isLoggedIn && isAdm">
+            <span>Setting</span>
+          </button>
+        </div>
+        <div *ngIf="sidenav.mode === 'over'" class="profile2">
+          <div fxLayout="column" fxLayoutAlign="center center">
+          <button mat-button class="menu-button" [routerLink]="'/setting'" *ngIf="isLoggedIn && isAdm">
+            <span>Setting</span>
+          </button>
+          <a mat-button class="text-gradient" [routerLink]="'/profile'"> {{ username }} </a>
+          <a mat-button class="fullW logout-btn text-gradient" (click)="logout()"> Log Out </a>
+        </div>
+        </div>
+      </div>
+
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="main_content">
+        <!--<mat-progress-bar mode="indeterminate" *ngIf="productLoad"></mat-progress-bar>-->
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<div *ngIf="!isLoggedIn">
+  <router-outlet></router-outlet>
+</div>

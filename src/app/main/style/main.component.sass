@@ -1,0 +1,408 @@
+//::ng-deep .mat-form-field-underline
+  //display: none
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@300;400;700&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;600;800&display=swap')
+
+::-webkit-scrollbar
+  width: 0
+
+@mixin gradient-text($angle: 45deg, $color: #3f5efb, $pink: #fc466b, $amount: 0%)
+  color: $color
+  background: -webkit-linear-gradient($angle, $color, adjust-hue($pink, $amount))
+  -webkit-text-fill-color: transparent
+  -webkit-background-clip: text
+  display: inline-block
+
+.flexfull
+  width: 100%
+  display: flex
+  flex-direction: row
+
+.flex100
+  flex: 100%
+
+.flex70
+  flex: 70%
+
+.flex65
+  flex: 65%
+
+.flex50
+  flex: 50%
+
+.flex35
+  flex: 35%
+
+.flex33
+  flex: 33%
+
+.flex30
+  flex: 30%
+  
+.flex25
+  flex: 25%
+
+.width100
+  width: 100%
+
+.width90
+  width: 90%
+
+.width70
+  width: 70%
+
+.width66
+  width: 66%
+
+.width60
+  width: 60%
+
+.width50
+  width: 50%
+
+.width33
+  width: 33%
+
+.width25
+  width: 25%
+
+.text-left
+  text-align: left
+
+.text-right
+  text-align: right
+
+.text-center
+  text-align: center
+
+.margin_7
+  margin-left: 7pt
+
+.max_action
+  max-width: 35pt
+  text-align: center
+
+.max_id
+  max-width: 100pt
+
+.max_search
+  width: 250pt
+
+.padtop
+  padding-top: 7pt
+
+.padbot
+  padding-bottom: 7pt
+
+.text11
+  font-size: 1.1em
+
+.filtered
+  padding-top: 3pt
+  height:43pt !important
+
+.flex-container
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  text-align: center
+  padding: 10pt
+  width: calc(100vw - 185pt)
+  justify-content: space-between
+  font-family: 'Anek Bangla', sans-serif
+
+.flex-vertical
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  text-align: center
+  padding: 10pt
+  width: calc(100vw - 185pt)
+  justify-content: space-between
+  font-family: 'Anek Bangla', sans-serif
+
+.flex-left
+  padding: 3pt
+
+.flex-right
+  padding: 3pt
+
+.input_field
+  margin-right: 4pt
+  font-size: .9em
+  color: #121212
+
+.inputs
+  border: 0
+  width: 90%
+  border-bottom: 2px solid #333
+  padding: 1pt 3pt
+  background: none
+
+.inputs:focus
+  outline: none
+
+.section-setting
+  margin-top: 1pt
+  border-bottom: 2px solid #dddddd
+
+.global-setting
+  border-bottom: 2px solid #888888
+
+.mat-card
+  box-shadow: 3px 3px 12px -7px #333
+  background: #fdfdfd
+  min-width: 70%
+  max-width: 70%
+  border-radius: 10pt
+  min-height: 130pt !important
+  text-align: center
+  padding: 15pt
+  overflow: hidden
+
+  .mat-content
+    display: flex
+    flex-direction: column
+
+  .mat-card-image
+    object-fill: scale-down
+    max-width: 90% !important
+    max-height: 80pt !important
+    margin: 0 auto
+    width: 90%
+    height: 80pt
+    border-radius: 6pt
+
+.title
+  font-size: 1em
+  color: #000
+  height: 25pt
+
+.price
+  font-size: 1.1em
+  font-weight: bold
+  border-radius: 6pt
+  background: #3f5efb
+  color: #fff
+  padding: 3pt
+  box-shadow: inset 3pt 0pt 3pt #fc466b
+
+.imagecont
+  border: 3px dashed #ccc
+  border-radius:10pt
+  margin-bottom: 4pt
+
+.uldialog
+  list-style-type: none
+  padding: 0
+  margin-top: 0px
+  
+.submit
+  color: #3f5efb
+  font-family: 'Aleo', serif
+  background: none
+  border: 0
+  width: 75pt
+  text-transform: uppercase
+  letter-spacing: 1pt
+
+.pink
+  color: #fc466b
+
+.setting-title
+  font-size: 1.4em
+  font-weight: 400
+  border-bottom: 2px solid #cbcbcb
+  padding: 0pt 9pt
+
+.btn-rainbow
+  background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+  border: 0
+  border-radius: 7pt
+  padding: 2px
+  display: inline-flex
+  justify-content: center
+  align-items: center
+
+.btn-white
+  border: 0
+  background: #fff
+  padding: 4pt 10pt
+  border-radius: 6pt
+  display: inline-flex
+  justify-content: center
+  align-items: center
+
+.btn-gradient
+  border: 0
+  font-size: 1.1em
+  font-family: 'Aleo', serif
+  font-weight: 400
+  text-transform: uppercase
+  letter-spacing: 1pt
+
+.save_btn
+  width: 100%
+  border: 0
+  border-radius: 3pt
+  padding: 5pt
+  color: #fff
+  text-transform: uppercase
+  letter-spacing: 1pt
+  font-size: 1.2em
+  background: #3f5efb
+
+.upload
+  font-size: .9em
+  margin: 9pt
+
+.text-gradient
+  @include gradient-text
+
+.add_stock
+  color: #3f5efb
+  background: none
+  font-size: .9em
+  text-align: left
+  padding: 0
+  border: 0
+  text-transform: uppercase
+  letter-spacing: 1pt
+
+.quick_add
+  padding: 0pt 3pt 1pt 3pt
+  height: 20pt !important
+  background: #fff
+  font-size: 1em
+  margin-left: 9pt
+  border:1px solid #3f5efb
+  border-radius: 5pt
+  text-align: center
+
+.active_btn
+  padding: 2pt
+  height: 10pt !important
+  background: #fff
+  font-size: .9em
+  border-radius: 5pt
+  text-align: center
+
+mat-button-toggle
+  font-size: .8em
+  padding: -5pt
+  width: 60pt
+  background-color: white
+
+.mat-button-toggle-checked
+  background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+  color: white
+
+.table-container
+  border-radius: 5pt
+  margin-left: 10pt
+  box-shadow: 5px 5px 20px 1px #dedede
+
+mat-paginator
+  background: none
+
+mat-table
+  background: #fff
+  font-size: 1.2em
+  width: 100%
+  display: flex
+  flex-direction: column
+  
+  .tableHeader
+    background: #eee
+    height: 23pt
+    padding: 5pt
+    border: 0
+    font-size: 1em
+    text-weight: bold
+    text-transform: uppercase
+
+  .tableRow
+    height: 23pt
+    border-bottom: 1px solid #eee
+    padding: 5pt
+    font-size: 1em
+    text-weight: bold
+
+  .th-style
+    color: #111
+    border: 0
+
+  .tr-style
+    color: #333
+    border: 0
+
+.inactive
+  width:11pt !important
+  background: red
+  color: red
+  border-radius:11pt
+
+
+.switch
+  position: relative
+  display: inline-block
+  width: 52px
+  height: 26px
+
+.switch input 
+  opacity: 0
+  width: 0
+  height: 0
+
+.slider
+  position: absolute
+  cursor: pointer
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: #ccc
+  transition: .4s
+  border-radius: 34px
+
+.slider:before
+  position: absolute
+  content: ""
+  height: 18px
+  width: 18px
+  left: 4px
+  bottom: 4px
+  background-color: white
+  transition: .4s
+  border-radius: 50%
+
+input:checked + .slider
+  background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+
+input:focus + .slider
+  box-shadow: 0 0 1px #2196F3
+
+input:checked + .slider:before 
+  transform: translateX(26px)
+
+.span-left
+  font-weight: 600
+  width: 35pt
+  text-align: right
+  padding-right: 5pt
+
+.span-right
+  font-weight: 600
+  width: 35pt
+  text-align: left
+  padding-left: 5pt
+
+
+$layout-breakpoint-small: 800px
+
+@media (max-width: $layout-breakpoint-small)
+  .flex-container
+    width: calc(100vw - 60pt)
+    background: white
+  .text-right
+    text-align: left

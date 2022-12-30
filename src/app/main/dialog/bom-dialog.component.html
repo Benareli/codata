@@ -1,0 +1,126 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100" style="overflow-y: scroll;">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <h2>Bahan Baku </h2>
+    <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+  </div>
+  
+  <div fxLayout="row" class="width100" fxLayoutAlign="space-between start">
+    <div class="flex50 text-left">
+      <div fxLayout="column">
+        <div fxLayout="row">
+          <div class="flex30">Produk</div>
+          <div class="flex70">
+            <select class="inputs width-90" [disabled]="this.lock" (change)="onChange($event)" [(ngModel)]="productString">
+              <option *ngFor="let product of products" [value]="product.id">
+                {{ product.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table class="table-new">
+    <tr>
+      <th class="th-new" style="border-left:1px solid #ccc;" fxFlex="40%">BOM</th>
+      <th class="th-new" fxFlex="10%">Qty</th>
+      <th class="th-new" fxFlex="20%">Satuan</th>
+      <th class="th-new" fxFlex="20%">Cost</th>
+      <th class="th-new" fxFlex="10%"></th>
+    </tr>
+    <tr>
+      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="50%">
+        <input class="inputs width-100" (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/></td>
+      <td class="td-new" fxFlex="10%"><input class="inputs width-100" [(ngModel)]="datqty"/></td>
+      <td class="td-new" fxFlex="20%"><input class="inputs width-100" [(ngModel)]="datsuom"/></td>
+      <td class="td-new" fxFlex="20%"></td>
+      <td class="td-new btn-rainbow" style="text-align:center;" fxFlex="10%"><button style="width:100%;background:none;border:none;color:white;" (click)="pushing()">+</button></td>
+    </tr>
+  </table>
+
+  <ul class="prod" *ngIf="openDropDown">
+    <li class="list-group-item category"
+      *ngFor="let product of rmproducts | filter:term; let i1 = index"
+      [class.active]="i1 == currentIndex1"
+      (click)="getProd(product, i1)">
+      {{ product.name }}
+    </li>
+  </ul>
+
+  <mat-table #table [dataSource]="dataSource" class="mat-table">
+    <ng-container matColumnDef="bom">
+      <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let datas">
+        {{datas.bom.name}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="qty">
+      <td class="tr-style text-right" fxFlex="10%" mat-cell *matCellDef="let datas">
+        {{datas.qty | number}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="uom">
+      <td class="tr-style text-right" fxFlex="20%" mat-cell *matCellDef="let datas">
+        {{datas.uom.uom_name}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="cost">
+      <td class="tr-style text-right" fxFlex="20%" mat-cell *matCellDef="let datas">
+        {{datas.bom.cost}}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <td class="tr-style text-right" fxFlex="10%" mat-cell *matCellDef="let datas">
+        <a class="add_stock" ><mat-icon class="mat-icon" 
+          (click)="deleteBOMDetail(dataSource.filteredData.indexOf(datas), datas.id, datas.product)">delete</mat-icon></a>
+      </td>
+    </ng-container>
+
+    <tr mat-row class="tableRow" 
+      *matRowDef="let row; columns: displayedColumns;"
+    ></tr>
+  </mat-table>
+
+  <br/>
+  <table class="table-new">
+    <tr>
+      <th class="th-new" style="border-left:1px solid #ccc;" fxFlex="40%"></th>
+      <th class="th-new" fxFlex="20%">Nilai</th>
+      <th class="th-new" fxFlex="20%">Tipe</th>
+      <th class="th-new" fxFlex="20%">Jumlah Jam</th>
+    </tr>
+    <tr>
+      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="40%">
+        Overhead
+      <td class="td-new" fxFlex="20%"><input class="inputs width-90" [(ngModel)]="overhead"/></td>
+      <td class="td-new" fxFlex="20%">
+        <select class="inputs width-90" [(ngModel)]="ovType">
+          <option>fix</option>
+          <option>percent</option>
+        </select>
+      </td>
+      <td class="td-new" fxFlex="20%"><input class="inputs width-90" [(ngModel)]="ovTime"/></td>
+    </tr>
+    <tr>
+      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="40%">
+        Tenaga Kerja Langsung
+      <td class="td-new" fxFlex="20%"><input class="inputs width-90" [(ngModel)]="labor"/></td>
+      <td class="td-new" fxFlex="20%">
+        <select class="inputs width-90" [(ngModel)]="laType">
+          <option>fix</option>
+          <option>percent</option>
+        </select>
+      </td>
+      <td class="td-new" fxFlex="20%"><input class="inputs width-90" [(ngModel)]="laTime"/></td>
+    </tr>
+  </table>
+</div>
+
+<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="width-90">
+    <button mat-button [disabled]="isRes" (click)="uploadBOM()" class="save_btn">Simpan</button>
+  </div>
+  <div class="width-10"><button class="log_btn" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+</div>
+</div>

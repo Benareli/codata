@@ -1,0 +1,170 @@
+<div class="loaders" *ngIf="loaded">
+  <div class="loader" style="margin-right:160pt;"></div>
+</div>
+<div class="flex-container">
+	<div class="flex-left">
+		<div *ngIf="isIM || isAdm" (click)="openQuickAdd()" class="submit-form quick_add">
+    		<button class="submit">+ Tambah</button>
+  		</div>
+	</div>
+
+	<div class="flex-right">
+    <div style="display: flex; flex-direction: row;">
+		  <!--<input type="text" class="inputs" placeholder="Search data" (keyup)="applyFilter($event)">-->
+      <div (click)="toggleDisplay()" *ngIf="toggle" class="submit-form quick_add">
+        <button class="submit">Filter</button>
+      </div>
+      <div class="flexfull" style="margin-left: 5pt;">
+        <mat-button-toggle-group class="active_btn" #groupProd="matButtonToggleGroup" [(value)]="dattoggle" (change)="onToggleChange(groupProd.value)" style="height: 20pt !important; padding: 0pt;">
+          <mat-button-toggle value="true" style="width: 50px;"><i class="fa fa-bars" style="margin-top: -15pt;" aria-hidden="true"></i></mat-button-toggle>
+          <mat-button-toggle value="false" style="width: 50px;"><i class="fa fa-file-o" style="margin-top: -15pt;" aria-hidden="true"></i></mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+	</div>
+</div>
+
+<!--<div fxLayout="row" fxLayoutAlign="space-around center" class="filtered" *ngIf="isShow">
+  <mat-form-field>
+    <mat-label>Kategori</mat-label>
+    <mat-select name="categoryString" (selectionChange)="applyCatFilter($event)">
+      <mat-option value="">All</mat-option>
+      <mat-option *ngFor="let productcat of productcats" [value]="productcat.id" ngDefaultControl [(ngModel)]="filterCat">
+        {{ productcat.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Merek</mat-label>
+    <mat-select name="brandString" (selectionChange)="applyBrandFilter($event)">
+      <mat-option value="">All</mat-option>
+      <mat-option *ngFor="let brand of brands" [value]="brand.id" ngDefaultControl [(ngModel)]="filterBrand">
+        {{ brand.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div *ngIf="isIM || isAdm" fxLayout="column">
+    <button class="submit" style="font-size: .7em; margin-top:5pt" (click)="searchActive()">aktif</button>
+    <button class="submit pink" style="font-size: .65em; margin-top:5pt" (click)="searchInactive()">nonaktif</button>
+  </div>
+</div>-->
+
+<div class="table-container" *ngIf="toggle">
+<!--<mat-table #table [dataSource]="dataSource" class="mat-table">
+  <ng-container matColumnDef="name">
+    <th class="th-style" fxFlex="65%" mat-header-cell *matHeaderCellDef>Nama</th>
+    <td class="tr-style" fxFlex="65%" mat-cell *matCellDef="let products">
+      <a (click)="openDialog(products.id)">
+        <span *ngIf="products.active==false" class="inactive">&nbsp;&nbsp;</span>{{products.name}}</a>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="qty">
+    <th class="th-style" fxFlex="7%" mat-header-cell *matHeaderCellDef>Qty</th>
+    <td class="tr-style" fxFlex="7%" mat-cell *matCellDef="let products">
+      <div *ngIf="products.fg"></div>
+      <div *ngIf="!products.fg" style="cursor: default;">
+      <a (click)="openDialog(products.id)">{{products.qoh}}</a></div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="uom">
+    <th class="th-style" fxFlex="7%" mat-header-cell *matHeaderCellDef>Satuan</th>
+    <td class="tr-style" fxFlex="7%" mat-cell *matCellDef="let products">
+      <a (click)="openDialog(products.id)">{{products.suom.uom_name}}</a>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="listprice">
+    <th class="th-style" fxFlex="12%" mat-header-cell *matHeaderCellDef>Harga Jual</th>
+    <td class="tr-style" fxFlex="12%" mat-cell *matCellDef="let products">
+      <a (click)="openDialog(products.id)">{{products.listprice | number}}</a>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="category">
+    <th class="th-style" fxFlex="15%" mat-header-cell *matHeaderCellDef mat-sort-header>Kategori</th>
+    <td class="tr-style" fxFlex="15%" mat-cell *matCellDef="let products" style="cursor: default;">
+      {{products.category.description}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="brand">
+    <th class="th-style" fxFlex="15%" mat-header-cell *matHeaderCellDef>Merek</th>
+    <td class="tr-style" fxFlex="15%" mat-cell *matCellDef="let products">
+      <div *ngIf="!products.brand"></div>
+      <div *ngIf="products.brand" style="cursor: default;">
+      {{products.brand.description}}</div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="stock">
+    <th class="th-style" fxFlex="43%" mat-header-cell *matHeaderCellDef>Aksi</th>
+    <td class="tr-style" fxFlex="43%" mat-cell *matCellDef="let products">
+      <div *ngIf="products.isStock == true">
+        <div *ngIf="products.fg"></div>
+        <div *ngIf="!products.fg && isIM" style="cursor: default;">
+        <a class="add_stock" (click)="openStockDialog(products.id)">Tambah Stock</a></div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeader"></tr>
+  <tr mat-row class="tableRow" 
+      *matRowDef="let row; columns: displayedColumns;"
+      
+      [class.active]="clickedRows == row"
+  ></tr>
+</mat-table>-->
+
+  <ngx-table [configuration]="configuration"
+           [data]="products"
+           [columns]="columns"
+           (event)="openDialog($event)">
+    <ng-template let-row let-index="index">
+      <td (click)="openDialog(row.id)">
+        {{row.name}}
+      </td>
+      <td (click)="openDialog(row.id)">
+        {{row.qoh | number}}
+      </td>
+      <td (click)="openDialog(row.id)">
+        {{row.suomName}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.listprice | number}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.categoryName}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.brandName}}
+      </td>
+    </ng-template>
+  </ngx-table>
+</div>
+
+<div *ngIf="!toggle"><input type="text" class="inputs" style="width: 100%;" placeholder="Search data" [(ngModel)]="term"></div>
+
+<div *ngIf="!toggle" style="height: 100vw; overflow-y: scroll;">
+  <div>
+  <mat-grid-list [cols]="cols" [rowHeight]="rowHeight">
+    <mat-grid-tile *ngFor="let product of products | filter:term" [colspan]="1" [rowspan]="2" (click)="openCard(product)">
+      <mat-card>
+        <mat-card-content>
+          <div class="mat-content">
+            <img class="mat-card-image" src="{{baseUrl}}files/files/{{product.image}}" />
+            <div class="title">
+              <b>{{product.name}}</b><br/>
+              <font style="color: #999999">Brand: </font><font style="color: #6C3483">{{product.brandName}}</font><br/>
+              <font style="color: #999999">Cat: </font><font style="color: #666666">{{product.brandName}}</font><br/>
+              {{product.qoh | number}} {{product.suomName}}
+            </div>
+            <!--<div class="price">Rp {{product.listprice | number}}</div>-->
+          </div>
+        </mat-card-content>        
+      </mat-card>
+    </mat-grid-tile> 
+  </mat-grid-list>
+  </div>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <button *ngIf="toggle" class="btn-gradient text-gradient upload" (click)="openUpload()">Unggah</button>
+  <!--<mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>-->
+</div>

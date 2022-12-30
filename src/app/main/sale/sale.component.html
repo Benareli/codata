@@ -1,0 +1,72 @@
+<div class="flex-container">
+	<div class="flex-left">
+		<div *ngIf="isSalM || isAdm" class="submit-form">
+    		<div fxLayout="row">
+            <div (click)="addSale()" class="quick_add">
+      			<button class="submit">+ Tambah</button></div>
+    		</div>
+  		</div>
+	</div>
+
+	<div class="flex-right">
+    <div (click)="toggleDisplay()" class="submit-form quick_add">
+      <button class="submit">Filter</button>
+    </div>
+	</div>
+</div>
+
+<div class="table-container">
+  <ngx-table
+    [configuration]="configuration"
+    [data]="sales"
+    [id]="'parent-table'"
+    #table
+    [detailsTemplate]="detailsTemplate"
+    [columns]="columns">
+    <ng-template let-row let-index="index">
+      <td (click)="openDialog(row.id)">
+        {{row.sale_id}}
+      </td>
+      <td (click)="openDialog(row.id)">
+        {{row.date | date}}
+      </td>
+      <td (click)="openDialog(row.id)">
+        {{row.customer.name}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.amount_untaxed | number}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.discount | number}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.amount_tax | number}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.amount_total | number}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        <span *ngIf="row.open" style="background: #A569BD; color: white; border-radius: 3pt; padding: 3pt;">Draft</span>
+        <span *ngIf="!row.open" style="background: #28B463; color: white; border-radius: 3pt; padding: 3pt;">Posted</span>
+      </td>
+      <td>
+        <button
+          class="save_btn"
+          id="expandButton-{{ index }}"
+          (click)="onRowClickEvent($event, index, row.sale_id)">
+          <i class="fa fa-arrow-right" *ngIf="!toggledRows.has(index)"></i>
+          <i class="fa fa-arrow-down" *ngIf="toggledRows.has(index)"></i>
+          
+        </button>
+      </td>
+    </ng-template>
+  </ngx-table>
+  <ng-template #detailsTemplate let-row>
+    <ngx-table
+      [id]="'nested-table'"
+      [configuration]="configuration"
+      [data]="saledetails"
+      [columns]="nestedColumns">
+    </ngx-table>
+  </ng-template>
+</div>

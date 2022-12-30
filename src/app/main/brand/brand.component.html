@@ -1,0 +1,29 @@
+<div class="flex-container">
+	<div class="flex-left">
+		<div *ngIf="isIM || isAdm" class="submit-form">
+    		<div fxLayout="row">
+            <input class="inputs" type="text" name="description" [(ngModel)]="brandadd.description" required id="description" placeholder="Merek *">
+            <div (click)="saveBrand()" class="quick_add">
+      			<button class="submit">+ Tambah</button></div>
+    		</div>
+  		</div>
+	</div>
+
+	<div class="flex-right">
+    <div (click)="toggleDisplay()" class="submit-form quick_add">
+      <button class="submit">Filter</button>
+    </div>
+	</div>
+</div>
+
+<div class="table-container">
+  <ngx-table [configuration]="configuration"
+           [data]="brands"
+           [columns]="columns"
+           (event)="openDialog($event)">
+  </ngx-table>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <button class="btn-gradient text-gradient upload" (click)="openUpload()">Unggah</button>
+</div>

@@ -1,0 +1,64 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <div>{{journidtitle}}</div>
+    <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+  </div>
+
+  <div fxLayout="row">
+    <div class="flex50">
+      <div class="descrip">Dokumen Asal</div>
+      <div class="inputs">{{data.origin}}</div>
+    </div>
+    <div class="flex50 margin_7">
+      <div class="descrip">Tanggal</div>
+      <div class="inputs">{{data.date | date}}</div>
+    </div>
+  </div>
+
+  <div class="table-container" style="margin-top: 10pt;">
+    <mat-table #table [dataSource]="dataSource" class="mat-table">
+      <ng-container matColumnDef="label">
+        <th class="th-style" fxFlex="40%" mat-header-cell *matHeaderCellDef>Label</th>
+        <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let datas">
+          {{datas.label}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="account">
+        <th class="th-style" fxFlex="30%" mat-header-cell *matHeaderCellDef>Akun</th>
+        <td class="tr-style" fxFlex="30%" mat-cell *matCellDef="let datas">
+          <span *ngIf="datas.total">{{datas.total}}</span>
+          <span *ngIf="datas.debit &gt; -1 && !datas.total">{{datas.debit_acc.code}} - {{datas.debit_acc.name}}</span>
+          <span *ngIf="datas.credit &gt; -1 && !datas.total">{{datas.credit_acc.code}} - {{datas.credit_acc.name}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="debit">
+        <th class="th-style text-center" fxFlex="15%" mat-header-cell *matHeaderCellDef>Debit</th>
+        <td class="tr-style text-right" fxFlex="15%" mat-cell *matCellDef="let datas">
+          <span *ngIf="datas.total"><b>{{datas.debit | number}}</b></span>
+          <span *ngIf="!datas.total">{{datas.debit | number}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="credit">
+        <th class="th-style text-center" fxFlex="15%" mat-header-cell *matHeaderCellDef>Kredit</th>
+        <td class="tr-style text-right" fxFlex="15%" mat-cell *matCellDef="let datas">
+          <span *ngIf="datas.total"><b>{{datas.credit | number}}</b></span>
+          <span *ngIf="!datas.total">{{datas.credit | number}}</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeader"></tr>
+      <tr mat-row class="tableRow" 
+        *matRowDef="let row; columns: displayedColumns;"  
+      ></tr>
+    </mat-table>
+  </div>
+</div>
+
+<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="width-90">
+    <button mat-button class="save_btn" (click)="closeDialog()">Tutup</button>
+  </div>
+  <div class="width-10"><button class="log_btn" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+</div>
+</div>

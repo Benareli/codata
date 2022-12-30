@@ -1,0 +1,102 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+  <div class="width-100">
+    <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="flexfullhead">
+        <div><h2 *ngIf="new">New Ticket</h2><h2 *ngIf="!new">{{data.ticketid}}</h2></div>
+        <div class="exitbtn" fxLayout="row" style="height: 25pt; margin-top:5pt;">
+          <div class="widget-rainbow widget" *ngIf="!new && datStage >= 0" style="padding: 7pt 0pt; width: 70pt !important;" (click)="updateStatus(0)">Open</div>
+          <div class="widget-rainbow widget" *ngIf="!new && datStage >= 1" style="padding: 7pt 0pt; width: 70pt !important;" (click)="updateStatus(1)">Handle</div>
+          <div class="widget-rainbow widget" *ngIf="!new && datStage == 2" style="padding: 7pt 0pt; width: 70pt !important;">Pending</div>
+          <div class="widget-rainbow widget" *ngIf="!new && datStage == 3" style="padding: 7pt 0pt; width: 70pt !important;" (click)="updateStatus(3)">Done</div>
+          
+          <div class="text-gradient widget" *ngIf="!new && datStage < 1" style="padding: 7pt 0pt; width: 70pt !important;" (click)="updateStatus(1)">Handle</div>
+          <div class="text-gradient widget" *ngIf="!new && datStage < 3" style="padding: 7pt 0pt; width: 70pt !important;" (click)="updateStatus(3)">Done</div>
+          <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="new">
+      <div class="flexfull">
+        <div class="flex50">
+          <div class="descrip flex35">Nama *</div>
+          <input class="inputs width-90" required placeholder="Name" [(ngModel)]="datFName">
+        </div>
+        <div class="flex50">
+          <div class="descrip flex35">Phone *</div>
+          <input class="inputs width-100" required placeholder="Phone" [(ngModel)]="datPhone">
+        </div>
+      </div>
+      <div class="flexfull" style="margin-top: 15pt;">
+        <div class="flex50">
+          <div class="descrip flex35">Email</div>
+          <input class="inputs width-90" required placeholder="Email" [(ngModel)]="datEmail">
+        </div>
+        <div class="flex50">
+          <div class="descrip flex35">Date Expected</div>
+          <input class="inputs width-100" type="date" required placeholder="Date" [(ngModel)]="datDate">
+        </div>
+      </div>
+      <div class="flexfull" style="margin-top: 15pt;">
+        <div class="descrip flex35">Message *</div>
+        <input class="inputs width-100" required placeholder="Message" [(ngModel)]="datMessage">
+      </div>
+    </div>
+
+    <div *ngIf="!new">
+      <div class="flexfull">
+        <div class="flex50">
+          <div class="flex100" style="background: #EBF5FB; padding: 3pt; margin-right: 4pt;">
+            <div class="descrip flex35">Nama</div>
+            <input class="inputs width-90" required placeholder="Name" [(ngModel)]="datFName">
+          </div>
+          <div class="flex100" style="background: #EBF5FB; padding: 3pt; margin-right: 4pt;">
+            <div class="descrip flex35">Phone</div>
+            <input class="inputs width-90" required placeholder="Phone" [(ngModel)]="datPhone">
+          </div>
+          <div class="flex100" style="background: #EBF5FB; padding: 3pt; margin-right: 4pt;">
+            <div class="descrip flex35">Email</div>
+            <input class="inputs width-90" required placeholder="Email" [(ngModel)]="datEmail">
+          </div>
+          <div class="flex100" style="background: #EBF5FB; padding: 3pt; margin-right: 4pt;">
+            <div class="descrip flex35">Date Expected</div>
+            <input class="inputs width-90" type="date" required placeholder="Date" [(ngModel)]="datDate">
+          </div>
+          <div class="flex100" style="background: #EBF5FB; padding: 3pt; margin-right: 4pt;">
+            <div class="descrip flex35">Message</div>
+            <input class="inputs width-90" required placeholder="Message" [(ngModel)]="datMessage">
+          </div>
+          <div class="flex100" style="padding: 30pt 3pt 3pt 3pt; margin-right: 4pt;">
+            <div class="descrip flex35">Add Message</div>
+            <input class="inputs width-90" required placeholder="Message" [(ngModel)]="datNote">
+          </div>
+        </div>
+
+        <div class="flex50">
+          <ngx-table [configuration]="configuration"
+           [data]="logs"
+           [columns]="columns">
+              <ng-template let-row let-index="index">
+                <td>
+                  {{row.message}}
+                </td>
+                <td>
+                  {{row.createdAt | date}}
+                </td>
+                <td>
+                  {{row.user.username}}
+                </td>
+              </ng-template>
+          </ngx-table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="width-100">
+      <button mat-button class="save_btn" *ngIf="new" (click)="saveData()">Simpan</button>
+      <button mat-button class="save_btn" *ngIf="!new" (click)="updateData()">Update</button>
+    </div>
+  </div>
+</div>

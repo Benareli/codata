@@ -1,0 +1,58 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100" style="overflow-y:scroll;">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <div>PRINT ORDER</div>
+    <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+  </div>
+
+  <div style="border:1px solid #666;width:400px;">
+  <div id="printpos" style="text-align: center;">
+    <font style="font-size:1.3em;font-weight:bold;">{{comp_name}}</font><br/>
+    <span *ngIf="comp_addr!=null">{{comp_addr}}<br/></span>
+    <span *ngIf="comp_phone!=null">{{comp_phone}}<br/></span>
+    {{data.posid}}<br/>
+    user:<br/>
+    date:<br/>
+
+    <ul style="padding-left:0px;margin-left:10px;">
+      <li style="list-style:none;text-align:left;border-bottom:1px solid #ddd;margin-left:0px;margin-right:10px;margin-top:5px;"
+        *ngFor="let order of data.orders">
+        <div style="float:left;">
+          {{ order.product_name }}<br/>
+          {{ order.qty }} x {{order.price_unit|number}}
+        </div>
+        <div style="float:right;">{{ order.qty * order.price_unit|number }}</div>
+        <div style="clear:both;"></div>
+      </li>
+    </ul>
+
+    <table style="width:100%;">
+      <tr>
+        <td style="width:50%;text-align:right;">Subtotal : </td>
+        <td style="width:50%;text-align:right;">{{data.subtotal|number}}</td>
+      </tr>
+      <tr>
+        <td style="width:50%;text-align:right;">Disc : </td>
+        <td style="width:50%;text-align:right;">{{data.subtotal - data.untaxed|number}}</td>
+      </tr>
+      <tr>
+        <td style="width:50%;text-align:right;">Tax : </td>
+        <td style="width:50%;text-align:right;">{{data.tax|number}}</td>
+      </tr>
+      <tr>
+        <td style="width:50%;text-align:right;"><b>TOTAL : </b></td>
+        <td style="width:50%;text-align:right;">Rp. <b>{{data.total|number}}</b></td>
+      </tr>
+    </table>
+    <br/><br/>
+    <div style="font-size:.8em; text-align:left;">Terms & Condition:<br/>
+    Barang yang sudah dibeli tidak dapat dikembalikan.</div>
+
+  </div>
+  </div>
+</div>
+
+<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+  <button mat-button class="save_btn" printSectionId="printpos" ngxPrint>Cetak</button>
+</div>
+</div>

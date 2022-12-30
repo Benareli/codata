@@ -1,0 +1,39 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <span>{{datname}}</span>
+    <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+  </div>
+<!--[(ngModel)]="data.description"-->
+  <div class="row" fxLayoutAlign="space-between center">
+    <div class="flex50">
+      <div class="descrip flex35">Nama Outlet *</div>
+      <input class="inputs width-90" id="desc" required placeholder="Name" [(ngModel)]="datname">
+    </div>
+    <div class="flex50 margin_7">
+      <div class="descrip flex35">Phone</div>
+      <input class="inputs width-90" id="desc" required placeholder="Phone" [(ngModel)]="datphone">
+    </div>
+  </div>
+  <div class="row" fxLayoutAlign="space-between center" style="margin-top: 20px;">
+    <div class="flex50">
+      <div class="descrip flex35">Alamat</div>
+      <input class="inputs width-90" id="desc" required placeholder="Alamat" [(ngModel)]="dataddr">
+    </div>
+  </div>
+  <div class="row" fxLayoutAlign="space-between center" style="margin-top: 20px;">
+    <div class="flex100">
+      <div class="descrip flex35">Gudang *</div>
+      <select class="inputs width-90" [(ngModel)]="warehouseid">
+        <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+          {{ warehouse.short }} - {{ warehouse.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+  <button mat-button class="save_btn" (click)="updateData()">Simpan</button>
+</div>
+</div>

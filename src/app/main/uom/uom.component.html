@@ -1,0 +1,57 @@
+<div class="flex-container">
+	<div class="flex-left">
+		<div *ngIf="isIM || isAdm" class="submit-form">
+    		<div fxLayout="row">
+            <input class="inputs" type="text" name="name" [(ngModel)]="uomadd.uom_name" required id="name" placeholder="Name *">
+            <select class="inputs" style="margin-left: 9pt;" [(ngModel)]="datcat">
+              <option *ngFor="let uomcat of uomcats" [value]="uomcat.id">
+                {{ uomcat.uom_cat }}
+              </option>
+            </select>
+            <input style="margin-left: 9pt; width: 40pt;" class="inputs" type="text" name="ratio" [(ngModel)]="uomadd.ratio" required id="ratio" placeholder="Ratio *">
+            <div (click)="saveUom()" class="quick_add">
+      			<button class="submit">+ Tambah</button></div>
+    		</div>
+  		</div>
+	</div>
+
+	<div class="flex-right">
+    <div (click)="toggleDisplay()" class="submit-form quick_add">
+      <button class="submit">Filter</button>
+    </div>
+	</div>
+</div>
+
+<div class="table-container">
+<!--<mat-table #table [dataSource]="dataSource">
+  <ng-container matColumnDef="name">
+    <th class="th-style" fxFlex="40%" mat-header-cell *matHeaderCellDef>Nama</th>
+    <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let uoms">
+      {{uoms.uom_name}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="kategori">
+    <th class="th-style" fxFlex="40%" mat-header-cell *matHeaderCellDef>Kategori</th>
+    <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let uoms">
+      {{uoms.uom_cat.uom_cat}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="ratio">
+    <th class="th-style" fxFlex="20%" mat-header-cell *matHeaderCellDef>Rasio</th>
+    <td class="tr-style" fxFlex="20%" mat-cell *matCellDef="let uoms">
+      {{uoms.ratio}}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns;" class="tableHeader"></tr>
+  <tr mat-row class="tableRow" 
+      *matRowDef="let row; columns: displayedColumns;"
+      
+      [class.active]="clickedRows == row"
+  ></tr>
+</mat-table>-->
+  <ngx-table [configuration]="configuration"
+           [data]="uoms"
+           [columns]="columns">
+  </ngx-table>
+</div>

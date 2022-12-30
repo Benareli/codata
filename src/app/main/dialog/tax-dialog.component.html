@@ -1,0 +1,35 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <span>{{datname}}</span>
+    <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+  </div>
+<!--[(ngModel)]="data.description"-->
+  <div class="row" fxLayoutAlign="space-between center">
+    <div class="flex50">
+      <div class="descrip flex35">Nama Pajak *</div>
+      <input class="inputs width-90" id="desc" required placeholder="Name" [(ngModel)]="datname">
+    </div>
+    <div class="flex50 margin_7">
+      <div class="descrip flex35">Pajak (%) *</div>
+      <input class="inputs width-90" id="desc" required placeholder="Pajak" type="number" (ngModelChange)="ngModelChange($event)" [(ngModel)]="dattax">
+    </div>
+  </div>
+  <div class="row" fxLayoutAlign="space-between center" style="margin-top: 20px;">
+    <div class="flex50">
+      <div class="descrip flex35">Termasuk *</div>
+      <mat-button-toggle-group class="active_btn" #groupTax="matButtonToggleGroup" [(value)]="datinclude" (change)="onIncludeChange(groupTax.value)">
+        <mat-button-toggle value="true" style="width: 150px;">Termasuk</mat-button-toggle>
+        <mat-button-toggle value="false" style="width: 150px;">Tidak Termasuk</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div class="flex50">
+      <div [innerText]="explainer"></div>
+    </div>
+  </div>
+</div>
+
+<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+  <button mat-button class="save_btn" (click)="updateData()">Simpan</button>
+</div>
+</div>

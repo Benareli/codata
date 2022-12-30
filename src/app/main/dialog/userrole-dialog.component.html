@@ -1,0 +1,142 @@
+<div fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <div class="width33"><h4 style="font-weight:300;">Username: {{data.username}}</h4></div>
+    <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+  </div>
+  <div fxLayout="row">
+    <h4 style="font-weight:300;">Roles</h4>
+  </div>
+</div>
+
+<div class="flex-container section-setting">
+  <div class="flex-left width33 text-left">
+    <mat-slide-toggle class="padtop" [(ngModel)]="isAdmin" (change)="onAdmin($event.checked)">Admin</mat-slide-toggle>
+  </div>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around start">
+  <span>Inventory</span>
+  <span>Partner</span>
+</div>
+<div fxLayout="row">
+  <div class="flex-container section-setting">
+    <div class="flex-left width33 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isInvenUser" (change)="onInven($event.checked)">User</mat-slide-toggle>
+    </div>
+    <div class="flex-right width60 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isInvenManager" [disabled]="isInvenDisabled" (change)="onInvenManager($event.checked)">Manager</mat-slide-toggle>
+    </div>
+  </div>
+
+  <div class="flex-container section-setting">
+    <div class="flex-left width33 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isPartUser" (change)="onPartner($event.checked)">User</mat-slide-toggle>
+    </div>
+    <div class="flex-right width60 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isPartManager" [disabled]="isPartDisabled" (change)="onPartManager($event.checked)">Manager</mat-slide-toggle>
+    </div>
+  </div>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around start">
+  <span>Purchase</span>
+  <span>POS</span>
+</div>
+<div fxLayout="row">
+  <div class="flex-container section-setting">
+    <div class="flex-left width33 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isPurUser" (change)="onPur($event.checked)">User</mat-slide-toggle>
+    </div>
+    <div class="flex-right width60 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isPurManager" [disabled]="isPurDisabled" (change)="onPurManager($event.checked)">Manager</mat-slide-toggle>
+    </div>
+  </div>
+
+  <div class="flex-container section-setting">
+    <div class="flex-left width33 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isPOSUser" (change)="onPOS($event.checked)">User</mat-slide-toggle>
+    </div>
+    <div class="flex-right width60 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isPOSManager" [disabled]="isPOSDisabled" (change)="onPOSManager($event.checked)">Manager</mat-slide-toggle>
+    </div>
+  </div>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around start">
+  <span>Sale</span>
+  <span></span>
+</div>
+<div fxLayout="row">
+  <div class="flex-container section-setting">
+    <div class="flex-left width33 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isSalUser" (change)="onSal($event.checked)">User</mat-slide-toggle>
+    </div>
+    <div class="flex-right width60 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isSalManager" [disabled]="isSalDisabled" (change)="onSalManager($event.checked)">Manager</mat-slide-toggle>
+    </div>
+  </div>
+
+  <!--<div class="flex-container section-setting">
+    <div class="flex-left width33 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isPOSUser" (change)="onPOS($event.checked)">User</mat-slide-toggle>
+    </div>
+    <div class="flex-right width60 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isPOSManager" [disabled]="isPOSDisabled" (change)="onPOSManager($event.checked)">Manager</mat-slide-toggle>
+    </div>
+  </div>-->
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around start">
+  <span>Production</span>
+  <span>Accounting</span>
+</div>
+<div fxLayout="row">
+  <div class="flex-container section-setting">
+    <div class="flex-left width33 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isProdUser" (change)="onProd($event.checked)">User</mat-slide-toggle>
+    </div>
+    <div class="flex-right width60 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isProdManager" [disabled]="isProdDisabled" (change)="onProdManager($event.checked)">Manager</mat-slide-toggle>
+    </div>
+  </div>
+
+  <div class="flex-container section-setting">
+    <div class="flex-left width33 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isAccUser" (change)="onAcc($event.checked)">User</mat-slide-toggle>
+    </div>
+    <div class="flex-right width60 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isAccManager" [disabled]="isAccDisabled" (change)="onAccManager($event.checked)">Manager</mat-slide-toggle>
+    </div>
+  </div>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="space-around start">
+  <span>Helpdesk</span>
+  <span>Project</span>
+</div>
+<div fxLayout="row">
+  <div class="flex-container section-setting">
+    <div class="flex-left width33 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isTickUser" (change)="onTick($event.checked)">User</mat-slide-toggle>
+    </div>
+    <div class="flex-right width60 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isTickManager" [disabled]="isTickDisabled" (change)="onTickManager($event.checked)">Manager</mat-slide-toggle>
+    </div>
+  </div>
+
+  <div class="flex-container section-setting">
+    <div class="flex-left width33 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isProjUser" (change)="onProj($event.checked)">User</mat-slide-toggle>
+    </div>
+    <div class="flex-right width60 text-left">
+      <mat-slide-toggle class="padtop" [(ngModel)]="isProjManager" [disabled]="isProjDisabled" (change)="onProjManager($event.checked)">Manager</mat-slide-toggle>
+    </div>
+  </div>
+</div>
+
+<br/>
+<div class="btn-rainbow">
+  <div class="btn-white">
+    <button class="btn-gradient text-gradient" (click)="test()">Save</button>
+  </div>
+</div>

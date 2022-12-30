@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@300;400;700&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;600;800&display=swap')
+
+::-webkit-scrollbar
+	width: 0
+
+@mixin gradient-text($angle: 45deg, $color: #3f5efb, $pink: #fc466b, $amount: 0%)
+	color: $color
+	background: -webkit-linear-gradient($angle, $color, adjust-hue($pink, $amount))
+	-webkit-text-fill-color: transparent
+	-webkit-background-clip: text
+	display: inline-block
+
+body
+	font-family: 'Anak Bangla', sans-serif
+	
+.fullW
+	width: 100%
+.w10
+	width: 10%
+.w20
+	width: 20%
+.w30
+	width: 30%
+.w40
+	width: 40%
+.w50
+	width: 50%
+
+.fullH
+	height: 100%
+
+.mat-toolbar
+	background: white
+	color: #3f5efb
+	color: white
+
+.rute
+	font-family: 'Aleo', serif
+	font-weight: 300
+	margin-left: 10px
+	color: #444444
+
+.text-gradient
+	@include gradient-text
+
+.logout-btn
+	border: 1px solid #3f5efb
+	border-radius: 3pt
+
+.text-toolbar
+	background: linear-gradient(#3f5efb, #fc466b)
+	background-clip: text
+	text-fill-color: transparent
+	background-size: 100%
+	font-family: 'Aleo', serif
+
+mat-sidenav
+	margin: 0pt
+	width: 130pt
+	border-right: none
+	background: #f7f7f7
+	color: #002b5c
+	border-top: 2px solid #efefef
+	padding-bottom: 10pt
+	text-align: left
+	overflow: hidden
+
+.main_content
+	height: 100%
+	display: flex
+	flex-direction: column
+	justify-content: top
+	align-items: left
+	font-size: 1em
+	overflow: hidden
+	overflow-y: scroll
+
+.mat-sidenav-container
+	height: calc(100vh - 60px)
+
+.menu-button
+	width: 100%
+	display: flex
+	align-items: center
+	justify-content: flex-start
+	font-weight: 400
+	font-size: .9em
+	color: #666666
+	background: none
+	border: 0
+	letter-spacing: 1pt
+	font-family: 'Aleo', serif
+
+.mat-icon
+	margin-right: 5pt
+
+.profile2
+	width: 100%
+	font-weight: 400
+	font-size: 1em
+	font-family: 'Aleo', serif

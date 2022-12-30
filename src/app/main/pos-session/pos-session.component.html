@@ -1,0 +1,142 @@
+<div class="container">
+	<div fxLayout="column" class="left-container">
+		Sesi Selesai
+		<ul>
+      		<li class="list-group-item category"
+        		*ngFor="let posessiondone of posessiondones; let i1 = index"
+        		
+        		>
+        		<!--[class.active]="i1 == currentIndex1"
+        			(click)="filterCategory(productcat, i1)"-->
+        	{{posessiondone.session_id}}<br/>
+        	Open : {{posessiondone.time_open | date:"dd-MM-y hh:mm"}}<br/> Close: {{posessiondone.time_close | date:"dd-MM-y hh:mm"}}<br/>
+        	Total: Rp.{{posessiondone.total_amount_total | number}}
+      		</li>
+    	</ul>
+	</div>
+	<div fxLayout="column" class="center-container">
+		<div *ngIf="opened" fxLayout="row" fxLayoutAlign="start center">Nama Sesi : <h2 style="margin-left:3pt">{{possession}}</h2></div>
+		<div fxLayout="column">
+			Store
+			<select [disabled]="opened" class="inputs" style="width:100%;font-size:1em;" [(ngModel)]="storeString">
+            	<option *ngFor="let store of stores" [value]="store.id">
+            	{{ store.store_name }}
+            	</option>
+          	</select>
+		</div>
+		<div *ngIf="!opened" fxLayout="row" style="margin-top:8pt;">
+			<div class="flex33">
+				Saldo Awal
+				<button class="inputs inputs-session" (click)="toggleCalc()">{{startB | number}}</button>
+				<div fxLayout="column" class="calc-holder" style="right:50%;" *ngIf="isCalc">
+        			<div fxLayout="row">
+          				<button class="calc" (click)="press('1')">1</button>
+          				<button class="calc" (click)="press('2')">2</button>
+          				<button class="calc" (click)="press('3')">3</button>
+        			</div>
+        			<div fxLayout="row">
+          				<button class="calc" (click)="press('4')">4</button>
+          				<button class="calc" (click)="press('5')">5</button>
+          				<button class="calc" (click)="press('6')">6</button>
+        			</div>
+        			<div fxLayout="row">
+          				<button class="calc" (click)="press('7')">7</button>
+          				<button class="calc" (click)="press('8')">8</button>
+          				<button class="calc" (click)="press('9')">9</button>
+        			</div>
+        			<div fxLayout="row">
+          				<button class="calc" (click)="press('C')">clear</button>
+          				<button class="calc" (click)="press('0')">0</button>
+          				<button class="calc" style="color:red;" (click)="toggleCalc()">close</button>
+        			</div>
+      			</div>
+      		</div>
+      		<div class="flex33 margin_7" style="text-align:center;">
+      			Shift
+      			<mat-button-toggle-group [disabled]="opened" #group="matButtonToggleGroup" [(value)]="shiftSelect" (change)="onShiftChange(group.value)">
+  					<mat-button-toggle value="1" aria-label="1">1</mat-button-toggle>
+  					<mat-button-toggle value="2" aria-label="2">2</mat-button-toggle>
+  					<mat-button-toggle value="3" aria-label="3">3</mat-button-toggle>
+  					<mat-button-toggle value="4" aria-label="4">4</mat-button-toggle>
+				</mat-button-toggle-group>
+      		</div>
+      		<div class="flex33 margin_7">
+      			Pengguna
+      			<div class="inputs">{{user}}</div>
+      		</div>
+      	</div>
+      	<div *ngIf="opened" fxLayout="row">
+			<div class="flex33">
+				Saldo Awal
+				<button class="inputs inputs-session" (click)="toggleCalc()">{{startB | number}}</button>
+      		</div>
+      		<div class="flex33 margin_7" style="text-align:center;">
+      			Pengguna : {{user}}<br/>
+      			Shift
+      			<mat-button-toggle-group [disabled]="opened" #group="matButtonToggleGroup" [(value)]="shiftSelect" (change)="onShiftChange(group.value)">
+  					<mat-button-toggle value="1" aria-label="1">1</mat-button-toggle>
+  					<mat-button-toggle value="2" aria-label="2">2</mat-button-toggle>
+  					<mat-button-toggle value="3" aria-label="3">3</mat-button-toggle>
+  					<mat-button-toggle value="4" aria-label="4">4</mat-button-toggle>
+				</mat-button-toggle-group>
+      		</div>
+      		<div class="flex33 margin_7">
+      			<div class="flex33 margin_7">
+					Saldo Akhir
+					<div class="inputs inputs-session">{{endingB | number}}</div>
+				</div>
+      		</div>
+      	</div>
+		<button class="new-order margin-top" (click)="opening()" *ngIf="!opened">Buka Sesi Baru</button>
+		<br/>
+		<div *ngIf="opened">
+			<div fxLayout="row" class="flexfull">
+				<div class="flex50">
+					Jumlah Transaksi
+      				<div class="inputs inputs-session">{{transaction}}</div>
+				</div>
+				<div class="flex50 margin_7">
+					Total (Rp)
+      				<div class="inputs inputs-session">{{amount_total | number}}</div>
+				</div>
+			</div><br/>
+			<div fxLayout="row" class="flexfull">
+				<div class="flex33">
+					Total sebelum pajak (Rp)
+      				<div class="inputs inputs-session">{{amount_untaxed | number}}</div>
+				</div>
+				<div class="flex33 margin_7">
+					Pajak (Rp)
+      				<div class="inputs inputs-session">{{amount_tax | number}}</div>
+				</div>
+				<div class="flex33 margin_7">
+					Diskon (Rp)
+					<div class="inputs inputs-session">{{discount | number}}</div>
+				</div>
+			</div><br/>
+			<div fxLayout="row">
+				<div class="flex33">
+					Uang Masuk
+      				<div class="inputs inputs-session">{{money_in | number}}</div>
+				</div>
+				<div class="flex33 margin_7">
+					Uang Keluar
+      				<div class="inputs inputs-session">{{money_out | number}}</div>
+				</div>
+				<div class="flex33 margin_7">
+					Bank/E-Wallet/CC
+					<div class="inputs inputs-session">{{bank | number}}</div>
+				</div>
+			</div>
+			<div fxLayout="row" *ngIf="isOpen">
+				<div class="flex50" style="text-align:center;">
+					<button class="new-order margin-top" (click)="openPOS()">buka POS</button>
+				</div>
+				<div class="flex50 margin_7" style="text-align:center;">
+					<button class="new-order margin-top" (click)="closing()">Tutup Sesi</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,46 @@
+<div class="flex-container">
+  <div class="flex-left">
+	<div *ngIf="isTickU || isAdm" (click)="openQuickAdd()" class="submit-form quick_add">
+      <button class="submit">+ Tambah</button>
+  	</div>
+  </div>
+
+  <div class="flex-right">
+	<div style="display: flex; flex-direction: row;">
+	  <div (click)="toggleDisplay()" class="submit-form quick_add">
+        <button class="submit">Filter</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="table-container">
+  <ngx-table [configuration]="configuration"
+           [data]="tickets"
+           [columns]="columns"
+           (event)="openDialog($event)">
+    <ng-template let-row let-index="index">
+      <td (click)="openDialog(row)">
+        {{row.ticketid}}
+      </td>
+      <td (click)="openDialog(row)">
+        {{row.fullname}}
+      </td>
+      <td (click)="openDialog(row)">
+        {{row.phone}}
+      </td>
+      <td (click)="openDialog(row)" class="text-right">
+        {{row.date_submitted | date}}
+      </td>
+      <td (click)="openDialog(row)" class="text-right">
+        {{row.date_expected | date}}
+      </td>
+      <td (click)="openDialog(row)" class="text-right">
+        <span *ngIf="row.stage==0">Open</span>
+        <span *ngIf="row.stage==1">Handling</span>
+        <span *ngIf="row.stage==2">Pending</span>
+        <span *ngIf="row.stage==3">Done</span>
+      </td>
+    </ng-template>
+  </ngx-table>
+</div>

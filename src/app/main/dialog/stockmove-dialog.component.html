@@ -1,0 +1,63 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="title_dialog" name="datname" [innerText]="datname"></span>
+    <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+  </div>
+
+  <!--<mat-form-field class="input_field input_50">
+    <mat-label>Warehouse</mat-label>
+    <mat-select required name="warehouseString" (selectionChange)="selectedValue($event)" [(value)]="selectedWarehouse">
+      <mat-option *ngFor="let warehouse of warehouses" [value]="warehouse.id" ngDefaultControl [(ngModel)]="warehouse.name">
+        {{ warehouse.short }} - {{ warehouse.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="input_field margin_7 input_50">
+    <mat-label>Partner</mat-label>
+    <mat-select name="partnerString" (selectionChange)="selectedValue2($event)" [(value)]="selectedPartner">
+      <mat-option *ngFor="let partner of partners" [value]="partner.id" ngDefaultControl [(ngModel)]="partner.name">
+        {{ partner.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>-->
+
+  <div class="flexfull">
+    <div class="flex50 text-left">
+      <div class="descrip">Gudang</div>
+      <select class="inputs width-90" [(ngModel)]="warehouseid">
+        <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+          {{ warehouse.short }} - {{ warehouse.name }}
+        </option>
+      </select>
+    </div>
+    <div class="flex50 margin_7 text-left">
+      <div class="descrip">Supplier</div>
+      <select class="inputs width-90" [(ngModel)]="partnerid">
+        <option value=""></option>
+        <option *ngFor="let partner of partners" [value]="partner.id">
+          {{ partner.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="flexfull" style="margin-top:25pt;">
+    <div class="descrip flex33">Kuantiti *</div>
+    <div class="descrip flex33 margin_7">Satuan *</div>
+    <div class="descrip flex33 margin_7">HPP *</div>
+  </div>
+  <div class="flexfull">
+    <input class="inputs flex33" placeholder="Jumlah" type="number" [(ngModel)]="datqty">
+    <select class="inputs flex33 margin_7" [(ngModel)]="datuom">
+        <option *ngFor="let uom of uoms" [value]="uom.id">
+          {{ uom.uom_name }}
+        </option>
+      </select>
+    <input class="inputs flex33 margin_7" placeholder="HPP" type="number" [(ngModel)]="datcost">
+  </div>
+</div>
+
+  <button mat-button class="submit save_btn" (click)="createData()">Tambah</button>
+</div>

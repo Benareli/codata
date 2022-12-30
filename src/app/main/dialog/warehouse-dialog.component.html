@@ -1,0 +1,105 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="flexfullhead">
+      <mat-button-toggle-group class="active_btn" #group="matButtonToggleGroup" *ngIf="!isMain" [(value)]="statusActive" (change)="onValChange(group.value)">
+        <mat-button-toggle value="true">Aktif</mat-button-toggle>
+        <mat-button-toggle value="false">Nonaktif</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-button-toggle-group class="active_btn" #group="matButtonToggleGroup" *ngIf="isMain" disabled [(value)]="statusActive" (change)="onValChange(group.value)">
+        <mat-button-toggle value="true">Aktif</mat-button-toggle>
+        <mat-button-toggle value="false">Nonaktif</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <div class="exitbtn">
+        <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flexfull">
+    <div fxLayout="row" class="flex50">
+      <div class="descrip flex30">Kode *</div>
+      <input class="inputs flex70" required maxlength="6" placeholder="Short" [(ngModel)]="data.short">
+    </div>
+    <div fxLayout="row" class="flex50 margin_7 smallmartop">
+      <div class="descrip flex30">Nama *</div>
+      <input class="inputs flex70" required placeholder="Name" [(ngModel)]="data.name">
+    </div>
+  </div>
+
+  <mat-tab-group mat-align-tabs="start" style="height: 350pt; overflow-y: scroll;">
+  <!--TAB1-->
+  <mat-tab label="Transaction">
+    <div class="flexfull">
+      <div class="flex50">
+        <div class="report-card">
+          <span style="background: #28B463; color: white; border-radius: 3pt; padding: 3pt;">Goods In <i class="fa fa-arrow-circle-down"></i></span>
+          <ngx-table [configuration]="configuration"
+              [data]="smin"
+              [columns]="columns">
+            <ng-template let-row let-index="index">
+              <td >
+                {{row.product.name}}
+              </td>
+              <td>
+                {{row.qin | number}} {{row.uom.uom_name}}
+              </td>
+              <td>
+                {{row.date | date}}
+              </td>
+            </ng-template>
+          </ngx-table>
+        </div>
+      </div>
+
+      <div class="flex50">
+        <div class="report-card">
+          <span style="background: #CB4335; color: white; border-radius: 3pt; padding: 3pt;">Goods Out <i class="fa fa-arrow-circle-up"></i></span>
+          <ngx-table [configuration]="configuration"
+              [data]="smout"
+              [columns]="columns">
+            <ng-template let-row let-index="index">
+              <td>
+                {{row.product.name}}
+              </td>
+              <td>
+                {{row.qout | number}} {{row.uom.uom_name}}
+              </td>
+              <td>
+                {{row.date | date}}
+              </td>
+            </ng-template>
+          </ngx-table>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+    <!--TAB2 *ngIf="!isCG"-->
+  <mat-tab label="Available Product">
+    <ngx-table [configuration]="configurationwh"
+        [data]="whqop"
+        [columns]="columnswh">
+        <ng-template let-row let-index="index">
+          <td>
+            {{row.product.name}}
+          </td>
+          <td>
+            {{row.qop | number}} {{row.uom.uom_name}}
+          </td>
+        </ng-template>
+    </ngx-table>
+  </mat-tab>
+  </mat-tab-group>
+  
+</div>
+
+<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="width-90">
+    <button mat-button [disabled]="isRes" class="save_btn" (click)="updateData()">Simpan</button>
+  </div>
+  <div class="width-10"><button class="log_btn" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+</div>
+</div>

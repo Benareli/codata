@@ -1,0 +1,91 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <div>{{data.order_id}}</div>
+    <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+  </div>
+
+  <div class="flexfull">
+    <div class="flex50">
+      <div class="descrip">Payment
+        <mat-button-toggle-group #group="matButtonToggleGroup" [(value)]="pay1Type" (change)="onPay1Change(group.value)">
+          <mat-button-toggle value="tunai" aria-label="Tunai">
+          Tunai
+          </mat-button-toggle>
+          <mat-button-toggle value="bank" aria-label="Bank">
+          Bank
+          </mat-button-toggle>
+          <mat-button-toggle value="cc" aria-label="Settlement">
+          E-Wallet/CC
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div class="payment-screen" [ngStyle]="{'border': borderchange}" (click)="pay1()">{{payment | number}}</div>
+      
+      <div class="descrip" *ngIf="isPay2">Payment 2
+        <mat-button-toggle-group #group2="matButtonToggleGroup" [(value)]="pay2Type" (change)="onPay2Change(group2.value)">
+          <mat-button-toggle value="tunai" aria-label="Tunai">
+          Tunai
+          </mat-button-toggle>
+          <mat-button-toggle value="bank" aria-label="Bank">
+          Bank
+          </mat-button-toggle>
+          <mat-button-toggle value="cc" aria-label="Settlement">
+          E-Wallet/CC
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div class="payment-screen" [ngStyle]="{'border': borderchange2}" (click)="pay2()"*ngIf="isPay2">{{payment2 | number}}</div>
+      <div class="descrip">Total</div>
+      <div class="payment-screen" style="color:#666;">{{data.total | number}}</div>
+      <div class="descrip">Change</div>
+      <div class="payment-screen" [ngStyle]="{'color': colorchange}">{{change | number}}</div>
+      <button class="log_btn" *ngIf="data.typePay=='in'" style="width:87%" (click)="mode2()">Other Payment Method</button>
+    </div>
+
+    <div class="flex50 margin_7">
+      <div fxLayout="column">
+        <div fxLayout="row">
+          <button class="calc" (click)="press('1')">1</button>
+          <button class="calc" (click)="press('2')">2</button>
+          <button class="calc" (click)="press('3')">3</button>
+          <button class="calc2" (click)="press('1k')">+ 1K</button>
+          <button class="calc" (click)="press('2k')">+ 2K</button>
+          <button class="calc" (click)="press('5k')">+ 5K</button>
+        </div>
+        <div fxLayout="row">
+          <button class="calc" (click)="press('4')">4</button>
+          <button class="calc" (click)="press('5')">5</button>
+          <button class="calc" (click)="press('6')">6</button>
+          <button class="calc2" (click)="press('10k')">+ 10K</button>
+          <button class="calc" (click)="press('20k')">+ 20K</button>
+          <button class="calc" (click)="press('50k')">+ 50K</button>
+        </div>
+        <div fxLayout="row">
+          <button class="calc" (click)="press('7')">7</button>
+          <button class="calc" (click)="press('8')">8</button>
+          <button class="calc" (click)="press('9')">9</button>
+          <button class="calc3" (click)="press('100k')">+ 100K</button>
+        </div>
+        <div fxLayout="row">
+          <button class="calc" (click)="press('.')">.</button>
+          <button class="calc" (click)="press('0')">0</button>
+          <button class="calc" (click)="press('000')">000</button>
+          <button class="calc3" style="color:turquoise;" (click)="press('F')">FULL</button>
+        </div>
+        <div fxLayout="row">
+          <button class="calc3" style="color:red;" (click)="press('X')">CLEAR</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="width-90">
+    <button mat-button [disabled]="isRes" class="save_btn" (click)="confirm()">Save</button>
+  </div>
+  
+</div>
+</div>

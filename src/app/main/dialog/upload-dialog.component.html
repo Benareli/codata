@@ -1,0 +1,26 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100" style="height: 300pt; overflow-y: scroll;">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <div><h2>Upload Data - {{data | uppercase}}</h2></div>
+    <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+  </div>
+  <input type="file" id="file-upload" name="fileUpload" accept=".xls,.xlsx" (change)="onFileChange($event)" />
+  <div *ngIf="alerted" class="alert" style="padding:7pt 3pt; font-size:1em;">{{message}}</div>
+  <div *ngIf="success" class="success" style="padding:7pt 3pt; font-size:1em;">{{msgsuccess}}</div>
+  <br/>
+  <div>{{sample}}</div>
+  <table class="sjs-table">
+    <tr *ngFor="let row of data1">
+      <td *ngFor="let val of row">
+        {{val}}
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="width-100">
+    <button mat-button [disabled]="isRes" class="save_btn" (click)="updateData()">{{btntxt}}</button>
+  </div>
+</div>
+</div>

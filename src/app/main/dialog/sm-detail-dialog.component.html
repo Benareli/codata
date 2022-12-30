@@ -1,0 +1,191 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="flexfullhead">
+      <div>
+        <h2>{{transidtitle}}</h2>
+        <h4>
+          <div *ngIf="c==1">
+            <span style="background: #28B463; color: white; border-radius: 3pt; padding: 3pt;">Goods In <i class="fa fa-arrow-circle-down"></i></span><font style="font-weight: 100;"> to <b>{{wh1String}}</b></font>
+          </div>
+          <div *ngIf="c==2">
+            <span style="background: #CB4335; color: white; border-radius: 3pt; padding: 3pt;">Goods Out <i class="fa fa-arrow-circle-up"></i></span><font style="font-weight: 100;"> from <b>{{wh1String}}</b></font>
+          </div>
+          <div *ngIf="c==3">
+            <span style="background: #2E86C1; color: white; border-radius: 3pt; padding: 3pt;">Internal Transfer <i class="fa fa-arrows-h"></i></span><font style="font-weight: 100;"> from <b>{{wh1String}}</b>, to <b>{{wh2String}}</b></font>
+          </div>
+        </h4>
+      </div>
+      <div fxLayout="row" style="height: 30pt;">
+        <div class="text-gradient widget" *ngIf="request && isIM" (click)="validate()">Validate</div>
+        <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row">
+    <div class="flex50" *ngIf="!this.new">
+      <div class="descrip">Dokumen Asal</div>
+      <div class="inputs">{{data.origin}}</div>
+    </div>
+    <div class="flex50" *ngIf="this.new">
+      <div class="descrip">Tipe</div>
+      <div>
+        <select class="inputs width-100" (ngModelChange)="checkingType($event)" [(ngModel)]="typeTrans">
+        <option>In</option>
+        <option>Out</option>
+        <option>Internal</option>
+      </select>
+      </div>
+    </div>
+    <div class="flex50 margin_7">
+      <div class="descrip">Tanggal</div>
+      <div class="inputs">{{datdate | date}}</div>
+    </div>
+  </div>
+
+  <div class="flexfull" style="margin-top: 15pt;" *ngIf="new">
+    <div fxLayout="row" class="flex50">
+      <div class="flex30">From Warehouse</div>
+      <div class="flex70">
+        <select class="inputs width-100" [disabled]="in" [(ngModel)]="fromString">
+          <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+            {{ warehouse.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div fxLayout="row" class="flex50">
+      <div class="flex30">To Warehouse</div>
+      <div class="flex70">
+        <select class="inputs width-100" [disabled]="out" [(ngModel)]="tooString">
+          <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+            {{ warehouse.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <table class="table-new" *ngIf="new">
+    <tr>
+      <th class="th-new" style="border-left:1px solid #ccc;" fxFlex="40%">Product</th>
+      <th class="th-new" fxFlex="10%">Qty</th>
+      <th class="th-new" fxFlex="10%">Uom</th>
+      <th class="th-new" fxFlex="10%">Date</th>
+      <th class="th-new" fxFlex="10%">From</th>
+      <th class="th-new" fxFlex="10%">To</th>
+      <th class="th-new" fxFlex="10%">Type</th>
+    </tr>
+  </table>
+
+  <div class="table-container" *ngIf="new">
+    <mat-table #table [dataSource]="dataSource" class="mat-table">
+      <ng-container matColumnDef="product">
+        <th class="th-style" fxFlex="40%" mat-header-cell *matHeaderCellDef>Produk</th>
+        <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let datas">
+          {{datas.product.name}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qty">
+        <th class="th-style text-center" fxFlex="10%" mat-header-cell *matHeaderCellDef>Jumlah</th>
+        <td class="tr-style text-right" fxFlex="10%" mat-cell *matCellDef="let datas">
+          <span *ngIf="!new && datas.qin">{{datas.qin}}</span>
+          <span *ngIf="!new && datas.qout">-{{datas.qout}}</span>
+          <span *ngIf="new">{{datas.qty}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="uom">
+        <th class="th-style text-center" fxFlex="10%" mat-header-cell *matHeaderCellDef>Satuan</th>
+        <td class="tr-style text-center" fxFlex="10%" mat-cell *matCellDef="let datas">
+          {{datas.uom.uom_name}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th class="th-style text-center" fxFlex="10%" mat-header-cell *matHeaderCellDef>Tanggal</th>
+        <td class="tr-style text-center" fxFlex="10%" mat-cell *matCellDef="let datas">
+          {{datas.date | date}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="from">
+        <th class="th-style" fxFlex="10%" mat-header-cell *matHeaderCellDef>From</th>
+        <td class="tr-style" fxFlex="10%" mat-cell *matCellDef="let datas">
+          <span *ngIf="!new && datas.qout">{{datas.warehouse.short}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="to">
+        <th class="th-style" fxFlex="10%" mat-header-cell *matHeaderCellDef>To</th>
+        <td class="tr-style" fxFlex="10%" mat-cell *matCellDef="let datas">
+          <span *ngIf="!new && datas.qin">{{datas.warehouse.short}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="type">
+        <th class="th-style" fxFlex="10%" mat-header-cell *matHeaderCellDef>Type</th>
+        <td class="tr-style" fxFlex="10%" mat-cell *matCellDef="let datas">
+          <span *ngIf="datas.qin">in</span>
+          <span *ngIf="datas.qout">out</span>
+        </td>
+      </ng-container>
+
+      <tr mat-row class="tableRow" 
+          *matRowDef="let row; columns: displayedColumns;"  
+      ></tr>
+    </mat-table>
+  </div>
+
+  <table class="table-new" style="margin-top: -1pt;">
+    <tr *ngIf="this.lock" class="borderinput">
+      <td class="td-new" fxFlex="40%">
+        <input class="inputss" (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/></td>
+      <td class="td-new" fxFlex="10%"><input class="inputss width-100" [(ngModel)]="datqty"/></td>
+      <td class="td-new text-right" fxFlex="10%">
+        <select class="inputss width-100" [(ngModel)]="uomString">
+          <option *ngFor="let uom of uoms" [value]="uom.id">
+            {{ uom.uom_name }}
+          </option>
+        </select></td>
+      <td class="td-new" fxFlex="10%"><input class="inputss width-100" disabled /></td>
+      <td class="td-new" fxFlex="10%"><input class="inputss width-100" disabled /></td>
+      <td class="td-new" fxFlex="10%"><input class="inputss width-100" disabled /></td>
+      <td class="td-new btn-rainbow" style="text-align:center;" fxFlex="10%"><button style="width:100%;background:none;border:none;color:white;" (click)="pushing()">+</button></td>
+    </tr>
+    <tr>
+      <td colspan="7">
+        <ul class="prod" *ngIf="openDropDown">
+          <li class="list-group-item category" style="font-size: .8em;"
+            *ngFor="let product of products | filter:term; let i1 = index"
+            [class.active]="i1 == currentIndex1"
+            (click)="getProd(product, i1)">
+              {{ product.name }}
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+
+  <ngx-table *ngIf="!new" [configuration]="configuration"
+           [data]="datas"
+           [columns]="columns">
+    <ng-template let-row let-index="index">
+      <td>
+        {{row.product.name}}
+      </td>
+      <td>
+        <span *ngIf="row.qin">{{row.qin | number}}</span>
+        <span *ngIf="row.qout">-{{row.qout | number}}</span>
+      </td>
+      <td>
+        {{row.uom.uom_name}}
+      </td>
+    </ng-template>
+  </ngx-table>
+</div>
+
+<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="width-90">
+    <button *ngIf="!new" mat-button class="save_btn" (click)="closeDialog()">Tutup</button>
+    <button *ngIf="new" mat-button class="save_btn" (click)="startSave()">Simpan</button>
+  </div>
+  <div class="width-10"><button class="log_btn" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+</div>
+</div>

@@ -1,0 +1,519 @@
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@300;400;700&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;600;800&display=swap')
+
+::ng-deep .mat-form-field-underline
+  display: none
+
+::-webkit-scrollbar
+  width: 0
+
+@mixin gradient-text($angle: 45deg, $color: #3f5efb, $pink: #fc466b, $amount: 0%)
+  color: $color
+  background: -webkit-linear-gradient($angle, $color, adjust-hue($pink, $amount))
+  -webkit-text-fill-color: transparent
+  -webkit-background-clip: text
+  display: inline-block
+
+.basic-container
+  width: 100%
+  position: relative
+  height: 100%
+
+.widget
+  border: 1px solid #ccc
+  border-radius: 10pt
+  cursor: pointer
+  text-align: center
+  font-size: 9pt
+  text-transform: uppercase
+  letter-spacing: 1pt
+
+.report-card
+  width: 90%
+  overflow: hidden
+  height: 280pt
+  margin: 5pt
+  padding: 9pt
+  background: #efefef
+  border-radius: 5pt
+
+.text-left
+  text-align: left
+
+.text-center
+  text-align: center
+
+.text-right
+  text-align: right
+
+.title_dialog
+  font-size: 1.2em
+  font-weight: 400
+  color: #343434
+  background: #efefef
+  padding: 5pt 10pt
+  border-radius: 4pt
+
+.imagecont
+  border: 3px dashed #ccc
+  border-radius:10pt
+  margin-bottom: 4pt
+
+.btn-rainbow
+  background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+  border: 0
+  font-weight: bold
+  border-radius: 2pt
+  color: #fff
+  padding: 0pt 3pt
+
+.btn-rainbow17
+  width: 17pt
+  height: 17pt
+
+.btn-gradient
+  border: 0
+  font-size: 1.1em
+  font-family: 'Aleo', serif
+  font-weight: 400
+  text-transform: uppercase
+  letter-spacing: 1pt
+
+.login-btn
+  border: 0
+  border-radius: 3pt
+  padding: 7pt 5pt
+  color: #fff
+  cursor: pointer
+  text-transform: uppercase
+  letter-spacing: 1pt
+  font-size: 1em
+  background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+
+.widget
+  border: 1px solid #ededed
+  width: 80pt
+  border-radius: 0
+  background: #fff
+  padding: 10pt
+
+.widget-rainbow
+  background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+  color: #fff
+
+.text-gradient
+  @include gradient-text
+
+.paddingstock
+  padding: 0pt 10pt
+
+.close_btn
+  background: #fff
+  color: #8b0000
+
+.input_field
+  width: 100%
+  font-size: 1em
+  color: #121212
+
+.holder
+  display: flex
+  flex-direction: column
+
+.holder-row
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+
+.descrip
+  color: #666
+  font-size: .9em
+
+.inputs
+  border: 0
+  border-bottom: 2px solid #333
+  padding: 1pt 3pt
+  background: none
+  font-size: 1em
+
+.inputs:focus
+  outline: none
+
+.inputss
+  border: 0
+  padding: 1pt 3pt
+  background: none
+  font-size: 1em
+
+.inputss:focus
+  outline: none
+
+.borderinput
+  border-bottom: 2px solid #ddd
+
+.add_stock
+  color: #3f5efb
+  background: none
+  font-size: .9em
+  text-align: left
+  padding: 0
+  border: 0
+  text-transform: uppercase
+  letter-spacing: 1pt
+
+.harga
+  text-align: right
+  padding-top: 2pt
+  padding-right: 5pt
+
+.uldialog
+  list-style-type: none
+  padding: 0
+  margin-top: 0px
+
+:host ::ng-deep .mat-form-field-label
+  font-size: 1.1em
+  color: #3f5efb
+
+.alert
+  background: rgb(255,223,191)
+  background: linear-gradient(90deg, rgba(255,223,191,1) 0%, rgba(255,242,230,1) 50%, rgba(255,255,255,1) 100%)
+  color: #8b0000
+  width: 100%
+  font-size: .7em
+  padding: 1pt
+  text-transform: uppercase
+  letter-spacing: .5pt
+
+.success
+  background: rgb(151,192,250)
+  background: linear-gradient(90deg, rgba(190,256,254,1) 0%, rgba(228,242,255,1) 50%, rgba(255,255,255,1) 100%)
+  color: #009B77
+  width: 100%
+  font-size: .7em
+  padding: 1pt
+  text-transform: uppercase
+  letter-spacing: .5pt
+
+.marginbot
+  margin-bottom: 15pt
+
+mat-button-toggle-group
+  padding:0px !important
+  align-items: center
+  height: 23pt
+
+mat-button-toggle
+  font-size: .8em
+  padding: -5pt
+  width: 60pt
+  background-color: white
+
+.mat-button-toggle-checked
+  background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+  color: white
+
+table.sjs-table
+  font-size: .9em
+
+table.sjs-table > tr:first-child
+  background: #ddd
+  font-weight: bold
+
+table.sjs-table > tr:nth-child(even)
+  background: #eee
+
+table.sjs-table > tr:first-child > td
+  padding: 2pt 4pt
+
+table.sjs-table > tr > td
+  padding: 1pt 4pt
+
+.table-subtotal
+  background: #fff
+  font-size: .9em
+  width: 100%
+  display: flex
+  flex-direction: column
+
+.table-new
+  margin-top: 30pt
+  background: #fff
+  font-size: 1.2em
+  width: 100%
+  display: flex
+  flex-direction: column
+
+  .th-new
+    color: #333
+    background: #eee
+    font-size: .7em
+    font-family: 'Anek Bangla', sans-serif
+    text-align: center
+    border-right: 1px solid #ccc
+    border-top: 1px solid #ccc
+
+  .td-new
+    border-right: 1px solid #ddd
+    border-top: 1px dashed #ccc
+    padding: 4pt 0pt 0pt 0pt
+    text-align: left
+    font-size: .8em
+
+  .td-total
+    border-bottom: 1px solid #eee
+    padding: 4pt 0pt 0pt 0pt
+    text-align: right
+    font-size: .8em
+
+
+mat-table
+  background: #fff
+  font-size: 1.2em
+  width: 100%
+  display: flex
+  flex-direction: column
+  
+  .tableHeader
+    background: #eee
+    height: 23pt
+    padding: 5pt
+    border: 0
+    font-size: 1em
+    text-weight: bold
+    text-transform: uppercase
+
+  .tableRow
+    height: 23pt
+    border-bottom: 1px solid #eee
+    padding: 5pt
+    font-size: 1em
+    text-weight: bold
+
+  .th-style
+    color: #111
+    border: 0
+
+  .tr-style
+    color: #333
+    border: 0
+
+.save_btn
+  width: 100%
+  border: 0
+  border-radius: 3pt
+  padding: 5pt
+  color: #fff
+  text-transform: uppercase
+  letter-spacing: 1pt
+  font-size: 1.2em
+  background: #3f5efb
+
+.save_btn_white
+  width: 100%
+  border: 0
+  border-radius: 3pt
+  padding: 5pt
+  color: #3f5efb
+  text-transform: uppercase
+  letter-spacing: 1pt
+  font-size: 1.2em
+  background: #fff
+
+.btn-invbill
+  font-size: 12pt
+  width: 100%
+  padding: 5pt
+
+.log_btn
+  width: 100%
+  border: 0
+  border-radius: 3pt
+  padding: 5pt
+  color: #3f5efb
+  text-transform: uppercase
+  letter-spacing: 1pt
+  font-size: .9em
+  background: #fff
+
+.choosefile
+  color: #fff
+
+.calc
+  padding: 3pt
+  width: 40pt
+  height: 40pt
+  margin: 1pt
+  border-radius: 3pt
+  border: 1px solid #ccc
+  background: #eee
+  font-size: 1.1em
+
+.calc2
+  padding: 3pt
+  width: 40pt
+  height: 40pt
+  margin: 1pt
+  margin-left: 4pt
+  border-radius: 3pt
+  border: 1px solid #ccc
+  background: #eee
+  font-size: 1.1em
+
+.calc3
+  padding: 3pt
+  width: 124pt
+  height: 40pt
+  margin: 1pt
+  margin-left: 4pt
+  border-radius: 3pt
+  border: 1px solid #ccc
+  background: #eee
+  font-size: 1.1em
+
+.payment-screen
+  width: 75%
+  margin: 0pt 10pt 10pt 0pt
+  padding: 10pt
+  font-size: 1.1em
+  border-radius: 10pt
+  box-shadow: inset 7px 0 30px -7px #dddddd
+  border: 1px solid #000
+
+.methods
+  width: 30%
+  height: 40pt
+
+input[type=file]::file-selector-button
+  color: #fc466b
+  padding: 4pt
+  background: none
+  text-transform: uppercase
+  letter-spacing: 1pt
+  border: 0
+
+ul.prod
+  position: absolute
+  margin-top: 0pt
+  z-index: 999
+  width: 20%
+  padding: 0pt 10pt
+  background: #fff
+  border-radius: 10pt
+  box-shadow: 5px 5px 20px 1px #dedede
+
+  li
+    list-style-type: none
+    text-align: left
+    padding: 4pt
+
+  li:hover
+    background: #ddd
+
+.input_50
+  width: 47%
+  text-align: left
+
+.input_33
+  width: 32%
+  text-align: left
+
+.margin_7
+  margin-left: 7pt
+
+.input_100
+  width: 97%
+  text-align: left
+
+.width-10
+  width: 10%
+
+.width-75
+  width: 75%
+
+.width-90
+  width: 90%
+
+.width-100
+  width: 100%
+  overflow: hidden
+
+.flexfull
+  width: 100%
+  display: flex
+  flex-direction: row
+
+.flexfullhead
+  width: 100%
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+
+.flex100
+  flex: 100%
+
+.flex70
+  flex: 70%
+
+.flex65
+  flex: 65%
+
+.flex50
+  flex: 50%
+
+.flex35
+  flex: 35%
+
+.flex33
+  flex: 33%
+
+.flex30
+  flex: 30%
+
+.flex28
+  flex: 28%
+  
+.flex25
+  flex: 25%
+
+.flex18
+  flex: 18%
+
+.flex15
+  flex: 15%
+
+.padtop
+  padding-top: 15pt
+
+.martop
+  margin-top: 15pt
+
+$layout-breakpoint-small: 800px
+
+@media (max-width: $layout-breakpoint-small)
+  .flexfull
+    flex-direction: column
+    overflow: scroll
+
+  .flexfullhead
+    flex-direction: column-reverse
+    overflow: scroll
+
+  .exitbtn
+    width: 100%
+    text-align: right
+
+  mat-button-toggle
+    width: 50%
+
+  .margin_7
+    margin-left: 0pt
+
+  .smallmartop
+    margin-top: 7pt
+
+  .paddingstock
+    padding: 0pt 10pt
+
+  ul
+    top: 45%

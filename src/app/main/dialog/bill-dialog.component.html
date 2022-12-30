@@ -1,0 +1,157 @@
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="width-100">
+  <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="flexfullhead">
+      <div><h2>{{journidtitle}}</h2></div>
+      <div class="exitbtn">
+        <span *ngIf="data.lock" class="widget" style="background: #28B463; color: white; border-radius: 3pt; padding: 10pt; margin-right: 3pt;" (click)="changeLock()">Posted</span>
+        <span *ngIf="!data.lock" class="widget" style="background: #C70039; color: white; border-radius: 3pt; padding: 10pt; margin-right: 3pt;" (click)="changeLock()">Unposted</span>
+        <span *ngIf="data.lock" (click)="startPay()" class="text-gradient widget" style="border-radius: 3pt; margin-right: 3pt;">Pay <i class="fa fa-money"></i><i class="fa fa-chevron-right"></i></span>
+        <button class="close_btn" mat-button (click)="closeDialog()">X</button>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row">
+    <div class="flex50" fxLayout="row">
+      <div class="descrip flex30">Dokumen Asal</div>
+      <div class="inputs flex70">{{data.origin}}</div>
+    </div>
+    <div class="flex50 margin_7" fxLayout="row">
+      <div class="descrip flex30">Tanggal</div>
+      <div class="flex70">
+        <input type="date" class="inputs width-100" [disabled]="this.lock" [(ngModel)]="datdate"/>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row" style="margin-top: 10pt;">
+    <div class="flex50" fxLayout="row">
+      <div class="descrip flex30">Vendor</div>
+      <div class="flex70">
+        <select class="inputs width-100" [disabled]="this.lock" [(ngModel)]="supplierString">
+          <option *ngFor="let partner of partners" [value]="partner.id">
+            {{ partner.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="flex50 margin_7" fxLayout="row">
+      <div class="descrip flex30">Tanggal Jth Tempo</div>
+      <div class="flex70">
+        <input type="date" class="inputs width-100" [disabled]="this.lock" [(ngModel)]="datduedate"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container" style="margin-top: 10pt;">
+    <mat-table #table [dataSource]="dataSource" class="mat-table">
+      <ng-container matColumnDef="label">
+        <th class="th-style" fxFlex="35%" mat-header-cell *matHeaderCellDef>Label</th>
+        <td class="tr-style" fxFlex="35%" mat-cell *matCellDef="let datas">
+          {{datas.label}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qty">
+        <th class="th-style" fxFlex="10%" mat-header-cell *matHeaderCellDef>Qty</th>
+        <td class="tr-style" fxFlex="10%" mat-cell *matCellDef="let datas">
+          {{datas.qty | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="price_unit">
+        <th class="th-style text-center" fxFlex="20%" mat-header-cell *matHeaderCellDef>Price Unit</th>
+        <td class="tr-style text-right" fxFlex="20%" mat-cell *matCellDef="let datas">
+          {{datas.price_unit | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="discount">
+        <th class="th-style text-center" fxFlex="7%" mat-header-cell *matHeaderCellDef>Disc(%)</th>
+        <td class="tr-style text-right" fxFlex="7%" mat-cell *matCellDef="let datas">
+          {{datas.discount | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="tax">
+        <th class="th-style text-center" fxFlex="7%" mat-header-cell *matHeaderCellDef>Tax(%)</th>
+        <td class="tr-style text-right" fxFlex="7%" mat-cell *matCellDef="let datas">
+          {{datas.tax | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="subtotal">
+        <th class="th-style text-center" fxFlex="21%" mat-header-cell *matHeaderCellDef>Subtotal</th>
+        <td class="tr-style text-right" fxFlex="21%" mat-cell *matCellDef="let datas">
+          {{datas.subtotal | number}}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeader"></tr>
+      <tr mat-row class="tableRow" 
+        *matRowDef="let row; columns: displayedColumns;"  
+      ></tr>
+    </mat-table>
+    <div fxLayout="row">
+      <div class="flex50">
+        <mat-table #table [dataSource]="dataSourcePay" class="mat-table" style="margin-top: 20pt;">
+          <ng-container matColumnDef="label">
+            <th class="th-style text-center" fxFlex="40%" mat-header-cell *matHeaderCellDef>Method</th>
+            <td class="tr-style text-left" fxFlex="40%" mat-cell *matCellDef="let datas">
+              {{datas.pay1method}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="date">
+            <th class="th-style text-center" fxFlex="20%" mat-header-cell *matHeaderCellDef>Date</th>
+            <td class="tr-style text-left" fxFlex="20%" mat-cell *matCellDef="let datas">
+              {{datas.date | date}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="payment">
+            <th class="th-style text-center" fxFlex="40%" mat-header-cell *matHeaderCellDef>Payment</th>
+            <td class="tr-style text-right" fxFlex="40%" mat-cell *matCellDef="let datas">
+              {{datas.payment1 | number}}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsPay" class="tableHeader"></tr>
+          <tr mat-row class="tableRow" 
+            *matRowDef="let row; columns: displayedColumnsPay;"  
+          ></tr>
+        </mat-table>
+      </div>
+      <div class="flex50">
+        <table class="table-new text-right" style="margin-top:2pt;">
+          <tr>
+            <td class="td-total" fxFlex="50%">Subtotal</td>
+            <td class="td-total text-right" fxFlex="43%">Rp. {{thissub | number}}</td>
+            <td class="td-total" fxFlex="2%"></td>
+          </tr>
+          <tr>
+            <td class="td-total" fxFlex="50%">Disc</td>
+            <td class="td-total text-right" fxFlex="43%">Rp. {{thisdisc | number}}</td>
+            <td class="td-total" fxFlex="2%"></td>
+          </tr>
+          <tr>
+            <td class="td-total" fxFlex="50%">Tax</td>
+            <td class="td-total text-right" fxFlex="43%">Rp. {{thistax | number}}</td>
+            <td class="td-total" fxFlex="2%"></td>
+          </tr>
+          <tr>
+            <td class="td-total" fxFlex="50%"><b>TOTAL</b></td>
+            <td class="td-total text-right" fxFlex="43%"><b>Rp. {{thistotal | number}}</b></td>
+            <td class="td-total" fxFlex="2%"></td>
+          </tr>
+          <tr>
+            <td class="td-total" fxFlex="50%">Outstanding</td>
+            <td class="td-total text-right" fxFlex="43%">Rp. {{thistotal - payments | number}}</td>
+            <td class="td-total" fxFlex="2%"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="width-90">
+    <button mat-button class="save_btn" (click)="closeDialog()">Tutup</button>
+  </div>
+  <div class="width-10"><button class="log_btn" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+</div>
+</div>

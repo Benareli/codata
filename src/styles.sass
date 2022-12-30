@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+a
+  cursor: pointer
+  
+.loaders
+  background: #fdfdfd
+  width: 100%
+  height: 100vh
+  padding-top: 50%
+  text-align: center
+
+.loader
+  width: 100px
+  height: 100px
+
+.loader:before
+  content: ''
+  border-radius: 50%
+  position: absolute
+  margin-top: 40vh
+  margin-left: calc(50vw - 50px)
+  width: 100px
+  height: 100px
+  inset: 0
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.15) inset
+
+.loader:after
+  content: ''
+  border-radius: 50%
+  position: absolute
+  margin-top: 40vh
+  margin-left: calc(50vw - 50px)
+  width: 100px
+  height: 100px
+  inset: 0
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.15) inset
+  box-shadow: 0 2px 0 #3f5efb inset
+  animation: rotate 2s linear infinite
+
+@keyframes rotate
+  0%
+    transform: rotate(0)
+  100%
+    transform: rotate(360deg)

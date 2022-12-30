@@ -1,0 +1,330 @@
+::-webkit-scrollbar
+	width: 0
+
+.container
+	width: calc(100vw - 35pt)
+	display: flex
+	flex-direction: row
+	justify-content: center
+	align-item: flex-start
+	gap: 3pt
+	margin-left: 5pt
+	height: 100%
+	overflow: hidden
+
+.left-container
+	flex: 20%
+	height: 100%
+	width: 100%
+	padding-right: 5pt
+	overflow: scroll
+	box-shadow: inset 0 7px 30px -7px #dddddd
+
+.center-container
+	flex: 35%
+	height: 100vh
+	width: 100%
+	overflow-y: scroll
+	padding: 10pt
+
+.right-container
+	flex: 45%
+	height: 100%
+	width: 100%
+	overflow: hidden
+	box-shadow: inset 7px 0 30px -7px #dddddd
+
+.right-new
+	padding-top: 50%
+	width: 100%
+	text-align: center
+
+.qops
+	position: fixed
+	top: 40pt
+	width: 40%
+
+.grow1
+	flex-grow: 1
+
+.grow2
+	flex-grow: 2
+
+.flex10
+	flex: 10%
+.flex20
+	flex: 20%
+.flex30
+	flex: 30%
+.flex33
+	flex: 33%
+.flex50
+	flex: 50%
+.flex60
+	flex: 60%
+.flex70
+	flex: 70%
+.flex80
+	flex: 80%
+.flex90
+	flex: 90%
+
+.margin_7
+	margin-left: 10pt
+
+.margin-top
+	margin-top: 10pt
+
+.inputs
+	border: 0
+	border-bottom: 2px solid #333
+	padding: 1pt 3pt
+	background: none
+
+.inputs:focus
+	outline: none
+
+.inputs-session
+	width: 100%
+	text-align: left
+	font-size: 1.1em
+
+.mat-grid-list
+	padding-top: 0pt
+
+.mat-card
+	box-shadow: inset 3px 3px 30px -7px #dddddd
+	background: #fdfdfd
+	min-width: 70%
+	max-width: 70%
+	min-height: 120pt !important
+	border-radius: 10pt
+	text-align: center
+	padding: 0 15pt
+	overflow: hidden
+
+	.mat-content
+		display: flex
+		flex-direction: column
+
+	.mat-card-image
+		object-fill: scale-down
+		margin-left: 0pt
+		max-width: 100% !important
+		max-height: 60pt !important
+		width: 100%
+		height: 60pt
+		border-radius: 6pt
+
+.title
+	font-size: 1em
+	color: #000
+	height: 25pt
+	padding-top: 3pt
+
+.price
+	font-size: 1.1em
+	font-weight: bold
+	border-radius: 6pt
+	background: #3f5efb
+	color: #fff
+	padding: 3pt
+	box-shadow: inset 3pt 0pt 3pt #fc466b
+
+.clear-filter
+	border: 0
+	color: #fc466b
+	padding: 6pt
+	background: #eeeeee
+	text-transform: uppercase
+	letter-spacing: .5pt
+	margin-bottom: 8pt
+	border-radius: 10pt
+	box-shadow: 5px 5px 20px 1px #dedede
+
+ul
+	background: #fff
+	padding-left: 12pt
+	border-radius: 10pt
+	box-shadow: 5px 5px 20px 1px #dedede
+
+	li
+		list-style-type: none
+		text-align: left
+		padding: 0pt
+		border-bottom: 2px dashed #ddd
+
+	li.category
+		list-style-type: '> '
+		padding: 3pt 3pt
+		border-bottom: 1px solid #eee
+
+.add-btn
+	font-size: 1.1em
+	text-align: center
+	border: 0
+	color: #009B77
+	border-bottom: 1px solid #3f5efb
+
+.min-btn
+	font-size: 1.1em
+	text-align: center
+	border: 0
+	color: #fc466b
+
+.new-order
+	background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+	color: white
+	text-transform: uppercase
+	letter-spacing: .5pt
+	padding: 15pt 40pt
+	border: 0
+	border-radius: 9pt
+	box-shadow: 5px 5px 20px 1px #dedede
+
+.session
+	width: 100%
+	background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+	color: white
+	text-transform: uppercase
+	letter-spacing: .5pt
+	padding: 8pt
+	text-align: center
+	border: 0
+	border-radius: 9pt
+	box-shadow: 5px 5px 20px 1px #dedede
+
+.pos-number
+	width: 100%
+	text-align: center
+	overflow: hidden
+	display: flex
+	flex-direction: column
+	justify-content: space-between
+	align-item: flex-center
+
+.discount
+	width: 100%
+	background: #eee
+	padding: 4pt 0pt
+	margin-top:6pt
+	display: flex
+	flex-direction: row
+	justify-content: space-around
+	align-item: flex-start
+
+.discount-amount
+	border-radius: 6pt
+	border: 1px solid #fc466b
+
+.calc-holder
+	position: fixed
+	right: 10pt
+
+.calc
+	padding: 3pt
+	width: 40pt
+	height: 40pt
+	margin: 1pt
+	border-radius: 3pt
+	border: 1px solid #ccc
+	background: #eee
+	font-size: 1.1em
+
+.total
+	width: 40%
+	position: fixed
+	bottom: 10pt
+	right: 20pt
+	height: 35pt
+	background: #666666
+	color: #fff
+	padding: 10pt 0pt
+	border-radius: 10pt
+	box-shadow: 5px 5px 20px 1px #dedede
+	display: flex
+	flex-direction: row
+	justify-content: space-around
+	align-item: flex-start
+
+.total-text
+	width: 100%
+	padding: 3pt 3pt 0pt 9pt
+	font-size: 1.2em
+	text-align: left
+
+.paynow
+	background: #009B77
+	color: white
+	font-size: 1.3em
+	text-align: center
+	padding: 10pt
+	border-radius: 9pt
+
+mat-button-toggle-group
+	padding:0px !important
+	align-items: center
+	height: 20pt
+
+mat-button-toggle
+	font-size: .8em
+	padding: -5pt
+	background-color: white
+
+.mat-button-toggle-checked
+	background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+	color: white
+
+@mixin gradient-text($angle: 45deg, $color: #3f5efb, $pink: #fc466b, $amount: 0%)
+	color: $color
+	background: -webkit-linear-gradient($angle, $color, adjust-hue($pink, $amount))
+	-webkit-text-fill-color: transparent
+	-webkit-background-clip: text
+	display: inline-block
+
+.active
+	@include gradient-text
+
+$layout-breakpoint-small: 800px
+@media (max-width: $layout-breakpoint-small)
+	.container
+		flex-direction: column
+	.left-container
+		flex: 12%
+	.center-container
+		flex: 23%
+	.right-container
+		flex: 65%
+		overflow: scroll
+	.right-new
+		padding-top: 5pt
+	.mat-card
+		min-height: 35pt !important
+		padding-top: 11pt
+		.mat-content
+			display: flex
+			flex-direction: row
+			justify-content: space-between
+		.mat-card-image
+			display: none
+	.price
+		color: #3f5efb
+		background: none
+		box-shadow: none
+	.calc-holder
+		top: 20pt
+	.total
+		width: 91%
+	.clear-filter
+		display: none
+	.filter
+		display: none
+
+$layout-breakpoint-big: 1024px
+@media (min-width: $layout-breakpoint-big)
+	.center-container
+		flex: 40%
+	.right-container
+		flex: 40%
+	.total
+		width: 40%
