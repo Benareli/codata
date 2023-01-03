@@ -121,7 +121,6 @@ export class SettingComponent implements OnInit {
   retrieveSetting(): void {
     this.settingService.getAll()
       .subscribe(setting => {
-        console.log(setting);
         this.settingid = setting[0].id;
         this.cost_general = setting[0].cost_general;
         this.explainer1();
