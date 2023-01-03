@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
 import { Globals } from 'src/app/global';
-import { FormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormsModule, UntypedFormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Observable, of } from "rxjs";
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -219,7 +219,7 @@ export class ProductDialogComponent implements OnInit {
     private purchaseDetailService: PurchasedetailService,
     private globals: Globals,
     private logService: LogService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}

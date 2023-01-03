@@ -2,7 +2,7 @@ import { Component, AfterContentInit, EventEmitter,
   ViewChild, Output, OnInit, HostListener } from '@angular/core';
 import { Globals } from 'src/app/global';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { FormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup, UntypedFormControl } from '@angular/forms';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { MatGridList } from '@angular/material/grid-list';
@@ -109,7 +109,7 @@ export class PosComponent {
     valuePartner: "",
     textPartner: ""
   };
-  selectedPartnerControl = new FormControl(this.selectedPartner);
+  selectedPartnerControl = new UntypedFormControl(this.selectedPartner);
   selectedValue(event: MatSelectChange) {
     this.partnerid = event.value;
   }
@@ -120,7 +120,7 @@ export class PosComponent {
     valueStore: "",
     textStore: ""
   };
-  selectedStoreControl = new FormControl(this.selectedStore);
+  selectedStoreControl = new UntypedFormControl(this.selectedStore);
   selectedValue2(event: MatSelectChange) {
     //this.warehouseid = event.value;
     this.storeService.get(event.value)

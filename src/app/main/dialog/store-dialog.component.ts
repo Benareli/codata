@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
 import { Globals } from 'src/app/global';
-import { FormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormsModule, UntypedFormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Observable, of } from "rxjs";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -31,7 +31,7 @@ export class StoreDialogComponent implements OnInit {
     private globals: Globals,
     private warehouseService: WarehouseService,
     private storeService: StoreService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
