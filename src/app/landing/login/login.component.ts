@@ -79,17 +79,17 @@ export class LoginComponent implements OnInit {
       const { username, password } = this.form;
       this.authService.register(username, password).subscribe({
         next: data => {
-          console.log(data);
           this.isSuccessful = true;
           this.isSignUpFailed = false;
           const dataRole = {
             roles: this.listRoles
           };
-          this.user2Service.update(data._id, dataRole)
+          this.reloadPage()
+          /*this.user2Service.update(data._id, dataRole)
             .subscribe({
               next: (res) => {this.reloadPage();
               },error: (e) => console.error(e)
-          });
+          });*/
         },
         error: err => {
           this.errorMessage = err.error.message;
