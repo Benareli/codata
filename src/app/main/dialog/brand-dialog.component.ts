@@ -64,6 +64,7 @@ export class BrandDialogComponent implements OnInit {
     this.logService.getAll()
       .subscribe(logPR => {
         logPR = logPR.filter(dataPR => dataPR.brand === this.data.id);
+        this.log = logPR.length;
       })
   }
 
