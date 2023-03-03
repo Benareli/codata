@@ -13,4 +13,7 @@ export class Journal {
     origin?: string;
     partner?: string;
     lock?: boolean;
+    entrys?: any;
+    name?: any;
+    amountdue?: number;
 }

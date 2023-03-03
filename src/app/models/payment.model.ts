@@ -13,4 +13,8 @@ export class Payment {
     changeMethod?: string;
     date?: Date;
     type?: string;
+    payment?: number;
+    pay_method?: string;
+    pay_note?: string;
+    change_method?: string;
 }

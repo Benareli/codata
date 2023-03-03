@@ -17,41 +17,32 @@
   </div>
 
   <div class="table-container" style="margin-top: 10pt;">
-    <mat-table #table [dataSource]="dataSource" class="mat-table">
-      <ng-container matColumnDef="label">
-        <th class="th-style" fxFlex="40%" mat-header-cell *matHeaderCellDef>Label</th>
-        <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let datas">
-          {{datas.label}}
+    <ngx-table [configuration]="configuration"
+           [data]="entrys"
+           [columns]="columns">
+           <!--(event)="openDialog($event)">-->
+      <ng-template let-row let-index="index">
+        <td style="width:25%;">
+          {{row.label}}
         </td>
-      </ng-container>
-      <ng-container matColumnDef="account">
-        <th class="th-style" fxFlex="30%" mat-header-cell *matHeaderCellDef>Akun</th>
-        <td class="tr-style" fxFlex="30%" mat-cell *matCellDef="let datas">
-          <span *ngIf="datas.total">{{datas.total}}</span>
-          <span *ngIf="datas.debit &gt; -1 && !datas.total">{{datas.debit_acc.code}} - {{datas.debit_acc.name}}</span>
-          <span *ngIf="datas.credit &gt; -1 && !datas.total">{{datas.credit_acc.code}} - {{datas.credit_acc.name}}</span>
+        <td style="width:35%;">
+          <span *ngIf="row.debits">{{row.debits.code}}</span>
+          <span *ngIf="row.credits">{{row.credits.code}}</span>
+          <span *ngIf="row.total"><b>TOTAL</b></span>
         </td>
-      </ng-container>
-      <ng-container matColumnDef="debit">
-        <th class="th-style text-center" fxFlex="15%" mat-header-cell *matHeaderCellDef>Debit</th>
-        <td class="tr-style text-right" fxFlex="15%" mat-cell *matCellDef="let datas">
-          <span *ngIf="datas.total"><b>{{datas.debit | number}}</b></span>
-          <span *ngIf="!datas.total">{{datas.debit | number}}</span>
+        <td style="width:15%;">
+          <span *ngIf="!row.total">{{row.debit}}</span>
+          <span *ngIf="row.total"><b>{{row.debit}}</b></span>
         </td>
-      </ng-container>
-      <ng-container matColumnDef="credit">
-        <th class="th-style text-center" fxFlex="15%" mat-header-cell *matHeaderCellDef>Kredit</th>
-        <td class="tr-style text-right" fxFlex="15%" mat-cell *matCellDef="let datas">
-          <span *ngIf="datas.total"><b>{{datas.credit | number}}</b></span>
-          <span *ngIf="!datas.total">{{datas.credit | number}}</span>
+        <td style="width:15%;">
+          <span *ngIf="!row.total">{{row.credit}}</span>
+          <span *ngIf="row.total"><b>{{row.credit}}</b></span>
         </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeader"></tr>
-      <tr mat-row class="tableRow" 
-        *matRowDef="let row; columns: displayedColumns;"  
-      ></tr>
-    </mat-table>
+        <td style="width:10%;">
+          Action
+        </td>
+      </ng-template>
+    </ngx-table>
   </div>
 </div>
 

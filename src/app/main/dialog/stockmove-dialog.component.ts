@@ -80,10 +80,10 @@ export class StockMoveDialogComponent implements OnInit {
     this.productService.get(id)
       .subscribe(prod => {
         this.datname = prod.name;
-        this.datuom = prod.suom._id;
-        this.oriuom = prod.suom._id;
-        this.datsuom = prod.suom.uom_name;
-        this.uom_cat = prod.suom.uom_cat;
+        this.datuom = prod.uoms.id;
+        this.oriuom = prod.uoms.id;
+        this.datsuom = prod.uoms.uom_name;
+        this.uom_cat = prod.uoms.uomcat_id;
         this.retrieveData();
       });
   }
@@ -132,15 +132,16 @@ export class StockMoveDialogComponent implements OnInit {
   createSM(): void {
     const dataSM = {
       trans_id: this.transid,
-      user: this.globals.userid,
-      product: this.data,
-      partner: this.partnerid ?? "null",
-      warehouse: this.warehouseid,
-      qin: this.datqty * this.uom_big ?? 0,
-      cost: this.datcost / this.uom_big ?? 0,
-      uom: this.datuom,
+      user_id: this.globals.userid,
+      product_id: this.data,
+      partner_id: this.partnerid ?? null,
+      warehouse_id: this.warehouseid,
+      qin: this.datqty ?? 0,
+      cost: this.datcost ?? 0,
+      uom_id: Number(this.datuom),
       date: new Date(),
-      meth: this.globals.cost_general
+      company_id: this.globals.companyid,
+      meth: this.globals.cost_general,
     };
     this.stockmoveService.create(dataSM)
       .subscribe(res => {
@@ -148,22 +149,6 @@ export class StockMoveDialogComponent implements OnInit {
       }); 
   }
   
-  /*qop(): void{
-    const qop = {
-      product: this.data,
-      partner: this.partnerid ?? "null",
-      warehouse: this.warehouseid,
-      qop: this.datqty * this.uom_big ?? 0,
-      uom: this.datuom,
-      cost: this.datcost / this.uom_big ?? 0
-    }
-    console.log(qop);
-    this.qopService.createUpdate(qop)
-      .subscribe(res => {
-        this.closeDialog();
-      })
-  }*/
-
   closeDialog() {
     this.dialogRef.close();
   }

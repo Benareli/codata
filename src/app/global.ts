@@ -15,5 +15,6 @@ export class Globals{
     pos_open?: boolean;
     pos_session?: string;
     pos_session_id?: string;
+    companyid?: string;
     product_global?: Product[];
 }

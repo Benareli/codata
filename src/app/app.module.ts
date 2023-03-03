@@ -88,6 +88,7 @@ import { BillDialogComponent } from './main/dialog/bill-dialog.component';
 import { InvoicecreateDialogComponent } from './main/dialog/invoicecreate-dialog.component';
 import { InvoiceDialogComponent } from './main/dialog/invoice-dialog.component';
 import { TicketDialogComponent } from './main/dialog/ticket-dialog.component';
+import { CompanyComponent } from './backend/company/company.component';
 
 @NgModule({
   declarations: [
@@ -141,6 +142,7 @@ import { TicketDialogComponent } from './main/dialog/ticket-dialog.component';
     InvoicecreateDialogComponent,
     InvoiceDialogComponent,
     TicketDialogComponent,
+    CompanyComponent,
   ],
   imports: [
     BrowserModule,

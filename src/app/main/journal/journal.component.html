@@ -23,7 +23,7 @@
     [detailsTemplate]="detailsTemplate">
     <ng-template let-row let-index="index">
       <td (click)="openDialog(row)">
-        {{row.journal_id}}
+        {{row.name}}
       </td>
       <td (click)="openDialog(row)">
         {{row.origin}}
@@ -31,7 +31,7 @@
       <td (click)="openDialog(row)">
         {{row.amount | number}}
       </td>
-      <td (click)="openDialog(row)" class="text-right">
+      <td (click)="openDialog(row)" class="text-center">
         {{row.date | date}}
       </td>
       <td>
@@ -39,8 +39,8 @@
           class="save_btn"
           id="expandButton-{{ index }}"
           (click)="onRowClickEvent($event, index, row.id)">
-          <i class="fa fa-arrow-right" *ngIf="!toggledRows.has(index)"></i>
-          <i class="fa fa-arrow-down" *ngIf="toggledRows.has(index)"></i>
+          <i class="fa fa-arrow-down" *ngIf="!toggledRows.has(index)"></i>
+          <i class="fa fa-arrow-up" *ngIf="toggledRows.has(index)"></i>
         </button>
       </td>
     </ng-template>
@@ -51,6 +51,18 @@
       [configuration]="configuration"
       [data]="entries"
       [columns]="nestedColumns">
+      <ng-template let-row let-index="index">
+        <td>
+          <span *ngIf="row.debits">{{row.debits.code}} - {{row.debits.name}}</span>
+          <span *ngIf="row.credits">{{row.credits.code}} - {{row.credits.name}}</span>
+        </td>
+        <td>
+          {{row.debit | number}}
+        </td>
+        <td>
+          {{row.credit | number}}
+        </td>
+      </ng-template>
     </ngx-table>
   </ng-template>
 </div>

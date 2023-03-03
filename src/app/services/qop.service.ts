@@ -36,7 +36,7 @@ export class QopService {
     return this.http.get<Qop[]>(`${baseUrl}/whqop/${warehouse}`, { 'headers': headers });
   }
   findByProduct(product: any): Observable<Qop[]> {
-    return this.http.get<Qop[]>(`${baseUrl}?product=${product}`, { 'headers': headers });
+    return this.http.get<Qop[]>(`${baseUrl}/product/${product}`, { 'headers': headers });
   }
   create(data: any): Observable<any> {
     return this.http.post(baseUrl, data, { 'headers': headers });

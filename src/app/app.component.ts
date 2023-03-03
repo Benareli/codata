@@ -6,8 +6,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 import { BaseURL } from 'src/app/baseurl';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { Setting } from 'src/app/models/setting.model';
-import { SettingService } from 'src/app/services/setting.service';
+import { Company } from 'src/app/models/company.model';
+import { CompanyService } from 'src/app/services/company.service';
 import { User } from 'src/app/models/user.model';
 import { User2Service } from 'src/app/services/user2.service';
 
@@ -71,7 +71,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     private route : ActivatedRoute,
     private globals: Globals,
     private user2Service: User2Service,
-    private settingService: SettingService,
+    private companyService: CompanyService,
     public breakpointObserver: BreakpointObserver,
     private tokenStorageService: TokenStorageService
   ){ 
@@ -160,15 +160,16 @@ export class AppComponent implements OnInit, AfterViewInit{
       this.globals.username = user.username;
       this.globals.userid = user.id;
       this.globals.roles = user.roles;
-      this.settingService.getAll()
-        .subscribe(setting => {
-          this.globals.pos_shift = setting[0].pos_shift;
-          this.pos_shift = setting[0].pos_shift;
-          this.logo = setting[0].image;
-          this.comp_name = setting[0].comp_name;
-          this.nav_color = "#" + setting[0].nav_color;
-          this.title_color = "#" + setting[0].title_color;
-          this.globals.cost_general = setting[0].cost_general;
+      this.companyService.getAll()
+        .subscribe(company => {
+          this.globals.pos_shift = company[0].pos_shift;
+          this.pos_shift = company[0].pos_shift;
+          this.logo = company[0].image;
+          this.comp_name = company[0].comp_name;
+          this.nav_color = "#" + company[0].nav_color;
+          this.title_color = "#" + company[0].title_color;
+          this.globals.cost_general = company[0].cost_general;
+          this.globals.companyid = company[0].id;
           if(this.globals.pos_shift){
             this.user2Service.get(user.id)
               .subscribe(users => {

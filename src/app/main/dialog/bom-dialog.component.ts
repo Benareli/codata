@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialog } from '@angular/material/dialog';
 
+import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 import { Bom } from 'src/app/models/bom.model';
@@ -59,18 +61,17 @@ export class BomDialogComponent implements OnInit {
   laType?: string;
   laTime?: number;
 
-  //Table
-  displayedColumns: string[] = 
-  ['bom', 'qty', 'uom', 'cost', 'action'];
-  dataSource = new MatTableDataSource<any>();
   datas?: any;
-  datBOM?: any;
+  datBOMs?: any;
 
   a = 0; b = 0;
   isUpdated = 'update';
   currDescription?: string;
   log = 0;
   currentIndex1 = -1;
+
+  columns: Columns[];
+  configuration: Config;
 
   constructor(
     public dialogRef: MatDialogRef<BomDialogComponent>,
@@ -88,10 +89,11 @@ export class BomDialogComponent implements OnInit {
   ngOnInit() {
     if(this.data){
       this.lock = true;
+      this.productString = this.data;
       this.retrieveBOM();
     }
-    this.datas = [{product:"",bom:"",qty:"",uom:""}]
-    this.dataSource.data = this.datas;
+    //this.datas = [{product:"",bom:"",qty:"",uom:""}]
+    //this.dataSource.data = this.datas;
     this.datdate = new Date().toISOString().split('T')[0];;
     this.checkRole();
   }
@@ -124,13 +126,25 @@ export class BomDialogComponent implements OnInit {
   retrieveBOM(): void {
     this.bomService.findByProduct(this.data)
       .subscribe(dataBOM => {
-        this.dataSource.data = dataBOM;
+        this.datBOMs = dataBOM;
+        this.columns = [
+          {key:'bomes.name', title:'Name', orderBy:'asc', width: '40%'},
+          {key:'qty', title:'Qty', width:'10%'},
+          {key:'uoms.uom_name', title:'UOM', width:'20%'},
+          {key:'bomes.cost * qty', title:'Cost', width:'20%'},
+          {key:'', title:'Action', width:'10%'},
+        ];
+        this.configuration = { ...DefaultConfig };
+        this.configuration.columnReorder = true;
+        this.configuration.searchEnabled = false;
+        this.configuration.headerEnabled = false;
+        /*this.dataSource.data = dataBOM;
         this.datBOM = dataBOM[0];
         this.productString = this.datBOM.product._id; 
         if(this.datas[0].product=='') this.datas.splice(0,1);
         for(let x=0; x<dataBOM.length; x++){
           this.datas.push(dataBOM[x]);
-        }
+        }*/
       })
     this.costingService.findByProduct(this.data)
       .subscribe(dataCosting => {
@@ -185,7 +199,7 @@ export class BomDialogComponent implements OnInit {
         product: this.productString, bom: this.datbom, qty: this.datqty, uom: this.datuom
       }
       this.datas.push(dataPush);
-      this.dataSource.data = this.datas;
+      //this.dataSource.data = this.datas;
       this.ph = "Ketik disini untuk cari";
       this.term = "";
       this.datqty = undefined;
@@ -234,7 +248,7 @@ export class BomDialogComponent implements OnInit {
     this.datas = [{product:"",bom:"",qty:"",uom:""}]
     this.bomService.findByProduct(event.target.value)
       .subscribe(dataBOMS => {
-        if(dataBOMS.length > 0){
+        /*if(dataBOMS.length > 0){
           this.dataSource.data = dataBOMS;
           this.datBOM = dataBOMS[0];
           this.productString = this.datBOM.product._id;
@@ -245,7 +259,7 @@ export class BomDialogComponent implements OnInit {
         }else{
           this.datas = [{product:"",bom:"",qty:"",uom:""}]
           this.dataSource.data = this.datas;
-        }
+        }*/
       })
   }
 

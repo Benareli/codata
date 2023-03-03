@@ -161,8 +161,11 @@ export class PurchaseComponent implements OnInit {
 
   addPurchase(): void {
     const dialog = this.dialog.open(PurchaseDialogComponent, {
-      width: '100vw',
+      maxWidth: '98vw',
+      maxHeight: '98vh',
       height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
       disableClose: true,   
     }).afterClosed().subscribe(result => {
       if(result) this.openDialog(result);
@@ -172,8 +175,11 @@ export class PurchaseComponent implements OnInit {
 
   openDialog(id: string) {
     const dialog = this.dialog.open(PurchaseDialogComponent, {
-      width: '100vw',
+      maxWidth: '98vw',
+      maxHeight: '98vh',
       height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
       disableClose: true,
       data: id
     }).afterClosed().subscribe(result => {

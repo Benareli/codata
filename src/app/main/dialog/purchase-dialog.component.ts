@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
+import { Component, OnInit, Inject, Optional, Input, TemplateRef, ElementRef, ViewChild } from '@angular/core';
 import { Globals } from 'src/app/global';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -21,6 +21,8 @@ import { Log } from 'src/app/models/log.model';
 import { LogService } from 'src/app/services/log.service';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
+import { Uom } from 'src/app/models/uom.model';
+import { UomService } from 'src/app/services/uom.service';
 import { Partner } from 'src/app/models/partner.model';
 import { PartnerService } from 'src/app/services/partner.service';
 import { Warehouse } from 'src/app/models/warehouse.model';
@@ -51,8 +53,9 @@ export class PurchaseDialogComponent implements OnInit {
   partners?: Partner[];
   warehouses?: Warehouse[];
   products?: Product[];
-  supplierString?: string;
-  warehouseString?: string;
+  uoms?: Uom[];
+  supplierString?: number;
+  warehouseString?: number;
   datid?: string;
   datprod?: any;
   datqty?: number;
@@ -62,6 +65,7 @@ export class PurchaseDialogComponent implements OnInit {
   datsub?: number;
   datdate?: string;
   datuom?: string;
+  datuomid?: number;
   datexpected?: Date;
   totalqty?: number = 0;
   totaldone?: number = 0;
@@ -81,10 +85,12 @@ export class PurchaseDialogComponent implements OnInit {
   transid?: string;
 
   //Table
-  displayedColumns: string[] = 
+  /*displayedColumns: string[] = 
   ['product', 'qty', 'qty_done', 'price_unit', 'discount', 'tax', 'subtotal', 'action'];
   dataSource = new MatTableDataSource<any>();
-  datas?: any;
+  datas?: any;*/
+
+  datax: any;
 
   a = 0; b = 0;
   isUpdated = 'update';
@@ -94,6 +100,21 @@ export class PurchaseDialogComponent implements OnInit {
 
   columns: Columns[];
   configuration: Config;
+  @ViewChild('productTpl', { static: true }) productTpl: TemplateRef<any>;
+  @ViewChild('qtyTpl', { static: true }) qtyTpl: TemplateRef<any>;
+  @ViewChild('qtyDoneTpl', { static: true }) qtyDoneTpl: TemplateRef<any>;
+  @ViewChild('uomTpl', { static: true }) uomTpl: TemplateRef<any>;
+  @ViewChild('priceunitTpl', { static: true }) priceunitTpl: TemplateRef<any>;
+  @ViewChild('discountTpl', { static: true }) discountTpl: TemplateRef<any>;
+  @ViewChild('taxTpl', { static: true }) taxTpl: TemplateRef<any>;
+  @ViewChild('subtotalTpl', { static: true }) subtotalTpl: TemplateRef<any>;
+  @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
+
+  @ViewChild('qty') qty: ElementRef<any>;
+  @ViewChild('priceunit') priceunit: ElementRef<any>;
+  @ViewChild('discount') discount: ElementRef<any>;
+  @ViewChild('tax') tax: ElementRef<any>;
+  editRow: number;
 
   constructor(
     public dialogRef: MatDialogRef<PurchaseDialogComponent>,
@@ -107,6 +128,7 @@ export class PurchaseDialogComponent implements OnInit {
     private partnerService: PartnerService,
     private warehouseService: WarehouseService,
     private productService: ProductService,
+    private uomService: UomService,
     private stockmoveService: StockmoveService,
     private journalService: JournalService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -121,10 +143,27 @@ export class PurchaseDialogComponent implements OnInit {
       this.retrievePO();
       this.retrievePODetail();
     }
-    this.datas = [{product:"",qty:"",price_unit:""}]
-    this.dataSource.data = this.datas;
+    this.datax = [{products:"",qty:"",price_unit:""}];
     this.datdate = new Date().toISOString().split('T')[0];
+    this.columns = [
+      {key:'products.name', title:'Product', width: '35%', cellTemplate: this.productTpl},
+      {key:'qty', title:'Qty', width: '7%', cellTemplate: this.qtyTpl},
+      {key:'qty_done', title:'Qty Done', width: '7%', cellTemplate: this.qtyDoneTpl},
+      {key:'uoms.uom_name', title:'Uom', width: '7%', cellTemplate: this.uomTpl},
+      {key:'price_unit', title:'Price Unit', width: '13%', cellTemplate: this.priceunitTpl},
+      {key:'discount',title:'Disc(%)', width: '5%', cellTemplate: this.discountTpl},
+      {key:'tax',title:'Tax(%)', width: '5%', cellTemplate: this.taxTpl},
+      {key:'subtotal',title:'Subtotal', width: '16%', cellTemplate: this.subtotalTpl},
+      {key:'', title:'Actions', width: '5%', cellTemplate: this.actionTpl},
+    ];
+    this.configuration = { ...DefaultConfig };
+    this.configuration.searchEnabled = false;
+    this.configuration.headerEnabled = false;
     this.checkRole();
+  }
+
+  editX(rowIndex: number): void {
+    this.editRow = rowIndex;
   }
 
   checkRole(): void {
@@ -150,24 +189,28 @@ export class PurchaseDialogComponent implements OnInit {
     this.partnerService.findAllActiveSupplier()
       .subscribe(dataSup => {
         this.partners = dataSup;
-        this.supplierString = dataSup[0].id;
+        //this.supplierString = dataSup[0].id;
       })
     this.warehouseService.findAllActive()
       .subscribe(datawh => {
         this.warehouses = datawh;
-        this.warehouseString = datawh[0].id;
+        //this.warehouseString = datawh[0].id;
       })
     this.productService.findAllPOReady()
       .subscribe(dataProd => {
         this.products = dataProd;
+      })
+    this.uomService.getAll()
+      .subscribe(dataUom => {
+        this.uoms = dataUom;
       })
   }
 
   retrievePO(): void {
     this.purchaseService.get(this.data)
       .subscribe(dataPO => {
-        this.supplierString = dataPO.supplier._id;
-        this.warehouseString = dataPO.warehouse._id;
+        this.supplierString = dataPO.partner_id;
+        this.warehouseString = dataPO.warehouse_id;
         this.purchaseHeader = dataPO.id;
         this.thissub = dataPO.amount_untaxed;
         this.thisdisc = dataPO.discount;
@@ -187,35 +230,16 @@ export class PurchaseDialogComponent implements OnInit {
   }
 
   retrievePODetail(): void {
-    this.purchaseService.get(this.data)
-      .subscribe(POId => {
-        this.purchaseid = POId.purchase_id;
-        this.purchasedetailService.getByPOId(POId.purchase_id)
-          .subscribe(POD => {
-            if(this.datas[0].product=='') this.datas.splice(0,1);
-            for(let x=0;x<POD.length;x++){
-              this.totalqty = Number(this.totalqty) + Number(POD[x].qty) ?? 0;
-              this.totaldone = Number(this.totaldone) + Number(POD[x].qty_done) ?? 0;
-              this.datas.push(POD[x]);
-              this.dataSource.data = this.datas;
-            }
-            this.persenqty = Number(this.totaldone) / Number(this.totalqty) * 100;
-            
-            this.columns = [
-              {key:'product', title:'Product'},
-              {key:'qty', title:'Qty'},
-              {key:'qty_done', title:'Qty Received'},
-              {key:'price_unit', title:'Price Unit'},
-              {key:'discount', title:'Discount'},
-              {key:'tax', title:'Tax'},
-              {key:'subtotal', title:'Subtotal'},
-              {key:'', title:'Action'}
-            ];
-            this.configuration = { ...DefaultConfig };
-            this.configuration.searchEnabled = false;
-            this.configuration.headerEnabled = false;
-            this.configuration.paginationEnabled = false;
-          })
+    this.purchasedetailService.getByPOId(this.data)
+      .subscribe(POD => {
+        if(this.datax[0].products=='') this.datax.splice(0,1);
+        for(let x=0;x<POD.length;x++){
+          this.totalqty = Number(this.totalqty) + Number(POD[x].qty) ?? 0;
+          this.totaldone = Number(this.totaldone) + Number(POD[x].qty_done) ?? 0;
+          this.datax = [...this.datax,(POD[x])];
+        }
+        this.persenqty = Number(this.totaldone) / Number(this.totalqty) * 100;
+        console.log(this.datax);
       })
   }
 
@@ -227,32 +251,33 @@ export class PurchaseDialogComponent implements OnInit {
     this.datprod = product;
     this.datid = product.id;
     this.datqty = 1;
-    this.datuom = product.suom;
+    this.datuom = product.uoms;
+    this.datuomid = product.uoms.id;
     this.datcost = product.cost ?? 0;
-    this.dattax = product.taxout.tax ?? 0;
+    this.dattax = product.taxouts.tax ?? 0;
   }
 
   pushing(): void {
-    if(this.datas[0].product=='') this.datas.splice(0,1);
     if(this.datid){
-      const dataPush = {
-        id: this.datid, product: this.datprod, qty: this.datqty, qty_done: 0, uom: this.datuom,
-        price_unit: this.datcost ?? 0, tax: this.dattax ?? 0, discount: this.datdisc,
-        subtotal: (Number(this.datqty ?? 0) * Number(this.datcost ?? 0)) - 
-          (Number(this.datdisc ?? 0) / 100 * Number(this.datqty ?? 0) * Number(this.datcost ?? 0)) +
-          (Number(this.dattax ?? 0)/100 * ((Number(this.datqty ?? 0) * Number(this.datcost ?? 0)) - 
-          (Number(this.datdisc ?? 0) / 100 * Number(this.datqty ?? 0) * Number(this.datcost ?? 0)))) ?? 0
-      }
-      this.datas.push(dataPush);
-      this.dataSource.data = this.datas;
-      this.ph = "Ketik disini untuk cari";
-      this.term = "";
-      this.calculateSub();
+      this.uomService.get(this.datuomid).subscribe(uomz => {
+        this.datax = [...this.datax, {
+          id: this.datid, products: this.datprod, qty: this.datqty, qty_done: 0, uoms: uomz, 
+          uom_id: Number(this.datuomid), price_unit: this.datcost ?? 0, tax: this.dattax ?? 0, discount: this.datdisc,
+          subtotal: (Number(this.datqty ?? 0) * Number(this.datcost ?? 0)) - 
+            (Number(this.datdisc ?? 0) / 100 * Number(this.datqty ?? 0) * Number(this.datcost ?? 0)) +
+            (Number(this.dattax ?? 0)/100 * ((Number(this.datqty ?? 0) * Number(this.datcost ?? 0)) - 
+            (Number(this.datdisc ?? 0) / 100 * Number(this.datqty ?? 0) * Number(this.datcost ?? 0)))) ?? 0
+        }];
+        if(this.datax[0].products=='') this.datax.splice(0,1);
+        this.ph = "Ketik disini untuk cari";
+        this.term = "";
+        this.calculateSub();
+      })
     }
   }
 
   deletePODetail(index: number, id: any, product: any): void {
-    if(product._id){
+    /*if(product.id){
       if(this.datas[index].stockmove.length>0){
         this._snackBar.open("Sudah ada Penerimaan Barang!", "Tutup", {duration: 5000});
       }else{
@@ -280,7 +305,6 @@ export class PurchaseDialogComponent implements OnInit {
                   .subscribe(resc => {
                     this.retrievePO();
                     this.datas.splice(index, 1);
-                    this.dataSource.data = this.datas;
                   })
               })
         })
@@ -295,12 +319,10 @@ export class PurchaseDialogComponent implements OnInit {
         Number(this.thistax??0);
       this.thistotal = Number(this.thistotal) - Number(this.datas[index].subtotal);
       this.datas.splice(index, 1);
-      this.dataSource.data = this.datas;
     }
     if(this.datas.length==0){
       this.datas = [{product:"",qty:"",price_unit:""}];
-      this.dataSource.data = this.datas;
-    }
+    }*/
   }
 
   editPO(): void {
@@ -326,7 +348,6 @@ export class PurchaseDialogComponent implements OnInit {
 
   calculateSub(): void {
     this.thissub = Number(this.thissub??0) + (Number(this.datqty??0) * Number(this.datcost??0));
-    //this.thistotal = Number(this.thistotal??0) + Number(this.datsub??0);
     this.thistax = Number(this.thistax??0) +
       (Number(this.dattax ?? 0)/100 * ((Number(this.datqty ?? 0) * Number(this.datcost ?? 0)) - 
       (Number(this.datdisc ?? 0) / 100 * Number(this.datqty ?? 0) * Number(this.datcost ?? 0)))) ?? 0 + Number(this.thistax??0);
@@ -340,6 +361,7 @@ export class PurchaseDialogComponent implements OnInit {
     this.datcost = undefined;
     this.dattax = undefined;
     this.datsub = undefined;
+    this.datuomid = undefined;
   }
 
   validate() {
@@ -358,8 +380,10 @@ export class PurchaseDialogComponent implements OnInit {
   }
 
   startPO(): void {
-    if(this.purchaseid){
+    if(this.data){
       const POEd = {
+        partner_id: this.supplierString,
+        warehouse_id: this.warehouseString,
         amount_tax: this.thistax ?? 0,
         amount_untaxed: this.thissub ?? 0,
         amount_discount: this.thisdisc ?? 0,
@@ -373,7 +397,7 @@ export class PurchaseDialogComponent implements OnInit {
         })
     }else{
       if(this.supplierString){
-        if(this.datas[0].product!=""&&this.datas[0].qty!=""){
+        if(this.datax[0].product!=""&&this.datax[0].qty!=""){
           this.idService.getPurchaseId()
             .subscribe({
               next: (ids) => {
@@ -401,7 +425,8 @@ export class PurchaseDialogComponent implements OnInit {
       user: this.globals.userid,
       paid: 0,
       delivery_state: 0,
-      open: true
+      open: true,
+      company: this.globals.companyid
     };
     this.purchaseService.create(purcHeaderData)
       .subscribe({
@@ -413,16 +438,13 @@ export class PurchaseDialogComponent implements OnInit {
   }
 
   rollingDetail(purchid: string): void {
-    if(this.datas.length>0){
-
-      if(!this.datas[0].purchase_id){
-        this.createDetail(purchid, this.datas[0].qty, this.datas[0].uom,
-          this.datas[0].price_unit, this.datas[0].discount, this.datas[0].tax,
-          this.datas[0].subtotal, this.datas[0].id, this.datas[0].partner,
-          this.datas[0].warehouse);
+    if(this.datax.length>0){
+      if(!this.datax[0].purchase_id){
+        this.createDetail(purchid, this.datax[0].qty, this.datax[0].uom_id,
+          this.datax[0].price_unit, this.datax[0].discount, this.datax[0].tax,
+          this.datax[0].subtotal, this.datax[0].id);
       }else {
-        this.datas.splice(0, 1);
-        this.dataSource.data = this.datas;
+        this.datax.splice(0, 1);
         this.rollingDetail(purchid);
       }
     }else{
@@ -434,11 +456,10 @@ export class PurchaseDialogComponent implements OnInit {
     }
   }
 
-  createDetail(purchid:string, qty:number, uom:string, price_unit:number, discount:number, tax:number,
-    subtotal:number, product:string, partner:string, warehouse:string): void {
+  createDetail(purchid:string, qty:number, uom:number, price_unit:number, discount:number, tax:number,
+    subtotal:number, product:number): void {
       const purchaseDetail = {
-        ids: purchid,
-        purchase_id: this.purchaseid,
+        purchase_id: purchid,
         qty: qty,
         qty_done: 0,
         qty_inv: 0,
@@ -448,16 +469,16 @@ export class PurchaseDialogComponent implements OnInit {
         tax: tax,
         subtotal: subtotal,
         product: product,
-        partner: partner,
-        warehouse: warehouse,
+        partner: this.supplierString,
+        warehouse: this.warehouseString,
         date: this.datdate,
-        user: this.globals.userid
+        user: this.globals.userid,
+        company: this.globals.companyid
       };
       this.purchasedetailService.create(purchaseDetail)
         .subscribe({
           next: (res) => {
-            this.datas.splice(0, 1);
-            this.dataSource.data = this.datas;
+            this.datax.splice(0, 1);
             this.rollingDetail(purchid);
           },
           error: (e) => console.error(e)
@@ -465,11 +486,11 @@ export class PurchaseDialogComponent implements OnInit {
   }
 
   receiveAll(): void {
-    for(let x=0; x< this.datas.length; x++){
-      this.datas[x].qty_rec = this.datas[x].qty - this.datas[x].qty_done;
+    for(let x=0; x< this.datax.length; x++){
+      this.datax[x].qty_rec = this.datax[x].qty - this.datax[x].qty_done;
     }
     this.purchasedetailService.updateReceiveAll(
-      this.globals.userid, this.supplierString, this.warehouseString, this.datdate, this.datas)
+      this.globals.userid, this.supplierString, this.warehouseString, this.datdate, this.datax)
       .subscribe(res => {
         this.closeBackDialog();
       })
@@ -483,7 +504,6 @@ export class PurchaseDialogComponent implements OnInit {
       data: this.purchaseHeader
     }).afterClosed().subscribe(result => {
       if(result){
-        console.log(result);
         this.purchasedetailService.updateReceiveAll(
           this.globals.userid, this.supplierString, result[0].warehouse, result[0].date, result)
             .subscribe(res => {

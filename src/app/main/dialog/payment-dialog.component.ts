@@ -187,10 +187,8 @@ export class PaymentDialogComponent implements OnInit {
       this._snackBar.open("Pembayaran kurang "+this.changeNum, "Tutup", {duration: 5000});
     }else if(this.data.typePay == "out"){
       this.dialogRef.close({
-        payment1:this.payment,
-        payment2: this.payment2,
-        pay1Type: this.pay1Type,
-        pay2Type: this.pay2Type,
+        payment:this.payment,
+        pay_type: this.pay1Type,
         change: this.change
       })
     }

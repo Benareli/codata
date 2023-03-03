@@ -36,7 +36,7 @@ export class BillcreateDialogComponent implements OnInit {
 
   partners?: Partner[];
   products?: Product[];
-  supplierString?: string;
+  supplierString?: number;
   datqty?: any;
   datdate?: string;
   datduedate?: string;
@@ -58,7 +58,7 @@ export class BillcreateDialogComponent implements OnInit {
 
   //Table
   displayedColumns: string[] = 
-  ['product', 'qty', 'qtydone', 'qtynobill', 'qty_inv'];
+  ['product', 'qty', 'qtydone', 'qtynobill', 'qty_inv', 'uom'];
   dataSource = new MatTableDataSource<any>();
   datas?: any;
 
@@ -106,20 +106,21 @@ export class BillcreateDialogComponent implements OnInit {
   retrievePO(): void {
     this.purchaseService.get(this.data)
       .subscribe(dataPO => {
-        this.supplierString = dataPO.supplier._id;
+        this.supplierString = dataPO.partner_id;
         this.purchaseid = dataPO.purchase_id;
         this.retrievePODetail();
       })
   }
 
   retrievePODetail(): void {
-    this.purchasedetailService.getByPOId(this.purchaseid)
+    this.purchasedetailService.getByPOId(this.data)
       .subscribe(POD => {
         if(this.datas[0].product=='') this.datas.splice(0,1);
           for(let x=0;x<POD.length;x++){
             this.datas.push(POD[x]);
             this.datas[x].qty_rec = 0;
             this.dataSource.data = this.datas;
+            console.log(this.datas);
           }
         })
   }
@@ -194,10 +195,10 @@ export class BillcreateDialogComponent implements OnInit {
       if(this.datas[x].qty_rec > 0){
         y = y + (Number(this.datas[x].qty_rec) / Number(this.datas[x].qty) * Number(this.datas[x].subtotal));
         this.pdetailid.push(this.datas[x].id);
-        this.productbill.push(this.datas[x].product._id);
-        this.productname.push(this.datas[x].product.name);
+        this.productbill.push(this.datas[x].product_id);
+        this.productname.push(this.datas[x].products.name);
         this.qrec.push(this.datas[x].qty_rec);
-        this.uom.push(this.datas[x].uom._id);
+        this.uom.push(this.datas[x].uom_id);
         this.priceunit.push(this.datas[x].price_unit);
         this.tax.push(this.datas[x].tax);
         this.qinv.push(this.datas[x].qty_inv);

@@ -14,6 +14,8 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 import { Productcat } from 'src/app/models/productcat.model';
@@ -120,6 +122,7 @@ export class ProductDialogComponent implements OnInit {
   uoms?: Uom[];
   boms: Bom[];
   bundles: Bundle[];
+  qop1: any;
 
   overhead?: number;
   ovType?: string;
@@ -143,10 +146,6 @@ export class ProductDialogComponent implements OnInit {
   cFG = false; cRM = false;
 
   //Table
-  qops?: Qop[]; 
-  displayedColumns: string[] = 
-  ['warehouse', 'partner', 'qty', 'cost'];
-  dataSource = new MatTableDataSource<Qop>();
 
   displayedColumnsDet: string[] = 
   ['warehouse', 'qty'];
@@ -188,17 +187,14 @@ export class ProductDialogComponent implements OnInit {
   bodatqty?: number;
   bodatsuom?: string;
 
-  //Bundle Table
-  displayedColumnsBundle: string[] = 
-  ['product', 'qty', 'uom', 'action'];
-  dataSourceBundle = new MatTableDataSource<any>();
-  dataBundles?: any;
+  coru: number = 0;
 
-  //Bom Table
-  displayedColumnsBom: string[] = 
-  ['product', 'qty', 'uom', 'action'];
-  dataSourceBom = new MatTableDataSource<any>();
-  dataBoms?: any;
+  columnsBundle: Columns[];
+  configurationBundle: Config;
+  columnsBom: Columns[];
+  configurationBom: Config;
+  columnsQop1: Columns[];
+  configurationQop1: Config;
 
   constructor(
     public dialogRef: MatDialogRef<ProductDialogComponent>,
@@ -302,30 +298,30 @@ export class ProductDialogComponent implements OnInit {
           this.datisstock = 'false';
           this.isStock = false;
         }
-        if(prod.category) {
-          this.categoryid = prod.category._id;
-          this.oricategoryid = prod.category._id;
+        if(prod.productcat_id) {
+          this.categoryid = prod.productcat_id;
+          this.oricategoryid = prod.productcat_id;
         }
-        if(prod.brand) {
-          this.brandid = prod.brand._id;
-          this.oribrandid = prod.brand._id;
+        if(prod.brand_id) {
+          this.brandid = prod.brand_id;
+          this.oribrandid = prod.brand_id;
         }
         if(prod.supplier) {
           this.partnerid = prod.supplier._id;
           this.oripartnerid = prod.supplier._id;
         }
-        this.datsuom = prod.suom._id;
-        this.datpuom = prod.puom._id;
-        this.datsuomname = prod.suom.uom_name;
-        this.orisuom = prod.suom._id;
-        this.oripuom = prod.suom._id;
-        if(prod.taxin) {
-          this.taxinid = prod.taxin._id;
-          this.oritaxinid = prod.taxin._id;
+        this.datsuom = prod.uom_id;
+        this.datpuom = prod.puom_id;
+        this.datsuomname = prod.uoms.uom_name;
+        this.orisuom = prod.uom_id;
+        this.oripuom = prod.puom_id;
+        if(prod.tax_id) {
+          this.taxinid = prod.tax_id;
+          this.oritaxinid = prod.tax_id;
         }
-        if(prod.taxout) {
-          this.taxoutid = prod.taxout._id;
-          this.oritaxoutid = prod.taxout._id;
+        if(prod.taxout_id) {
+          this.taxoutid = prod.taxout_id;
+          this.oritaxoutid = prod.taxout_id;
         }
         this.retrieveBundle();
         this.retrieveBom();
@@ -342,13 +338,13 @@ export class ProductDialogComponent implements OnInit {
       })
     this.stockmoveService.findTransIn(id)
       .subscribe(transin => {
-        this.qindet = transin[0].totalLine;
-        this.qinqty = transin[0].totalQin;
+        this.qindet = transin[0].totalline;
+        this.qinqty = transin[0].totalqin;
       })
     this.stockmoveService.findTransOut(id)
       .subscribe(transout => {
-        this.qoutdet = transout[0].totalLine;
-        this.qoutqty = transout[0].totalQout;
+        this.qoutdet = transout[0].totalline;
+        this.qoutqty = transout[0].totalqout;
       })
   }
 
@@ -391,18 +387,27 @@ export class ProductDialogComponent implements OnInit {
       })
     this.qopService.findByProduct(this.data)
       .subscribe(dataQop => {
-        this.dataSource.data = dataQop;
+        this.qop1 = dataQop;
+        this.columnsQop1 = [
+          {key:'warehouses.name', title:'Gudang', width: '30%'},
+          {key:'partners.name', title:'Partner', width: '30%'},
+          {key:'qop', title:'Qty', width: '15%'},
+          {key:'uoms.uom_name', title:'Uom', width: '10%'},
+          {key:'cost',title:'Cost', width: '15%'}
+        ];
+        this.configurationQop1 = { ...DefaultConfig };
+        this.configurationQop1.rows = 5;
+        this.configurationQop1.searchEnabled = false;
       })
-    this.qopService.getProdQop(this.data)
+    /*this.qopService.getProdQop(this.data)
       .subscribe(datQop => {
-        this.dataSourceDet.data = datQop;
-        console.log(datQop);
-      })
+        
+      })*/
     this.partnerService.findAllActiveSupplier()
       .subscribe(dataSup => {
         this.partners = dataSup;
       })
-    this.stockmoveService.getProd(this.datid)
+    this.stockmoveService.getProd(this.data)
       .subscribe(sm => {
         if(sm.length>0) this.isDis = true;
       })
@@ -412,8 +417,16 @@ export class ProductDialogComponent implements OnInit {
     if(this.orifg){
       this.bundleService.getByBundle(this.data)
         .subscribe(bund => {
-          this.dataSourceBundle.data = bund;
+          this.coru = bund.length;
           this.bundles = bund;
+          if(bund.length < 5){
+            for(let b=0; b<5-bund.length; b+1){
+              this.bundles.push({qty: 0, product_id: 0, uom_id: 0,})
+              if(b==4-bund.length) this.easytableBundle();
+            }
+          }else{
+            this.easytableBundle();
+          }
         })
       this.productService.findAllFGStock()
       .subscribe(allfg => {
@@ -422,12 +435,33 @@ export class ProductDialogComponent implements OnInit {
     }
   }
 
+  easytableBundle(): void{
+    this.columnsBundle = [
+      {key:'products.name', title:'Name', width: '50%'},
+      {key:'qty', title:'Qty', width: '20%'},
+      {key:'uoms.uom_name', title:'Uom', width: '20%'},
+      {key:'',title:'Action', width: '10%'}
+    ];
+    this.configurationBundle = { ...DefaultConfig };
+    this.configurationBundle.rows = 5;
+    this.configurationBundle.searchEnabled = false;
+    this.configurationBundle.headerEnabled = false;
+  }
+
   retrieveBom(): void{
     if(this.orirm){
       this.bomService.findByProduct(this.data)
-        .subscribe(boms => {
-          this.dataSourceBom.data = boms;
-          this.boms = boms;
+        .subscribe(bom => {
+          this.coru = bom.length;
+          this.boms = bom;
+          if(bom.length < 5){
+            for(let b=0; b<5-bom.length; b+1){
+              this.boms.push({qty: 0, product_id: 0, uom_id: 0,})
+              if(b==4-bom.length) this.easytableBom();
+            }
+          }else{
+            this.easytableBom();
+          }
         })
       this.productService.findAllRM()
         .subscribe(allrm => {
@@ -444,6 +478,19 @@ export class ProductDialogComponent implements OnInit {
           this.laTime = costs[0]!.laTime! / 3600;
         })
     }
+  }
+
+  easytableBom(): void{
+    this.columnsBom = [
+      {key:'bomes.name', title:'Name', width: '50%'},
+      {key:'qty', title:'Qty', width: '20%'},
+      {key:'uoms.uom_name', title:'Uom', width: '20%'},
+      {key:'',title:'Action', width: '10%'}
+    ];
+    this.configurationBom = { ...DefaultConfig };
+    this.configurationBom.rows = 5;
+    this.configurationBom.searchEnabled = false;
+    this.configurationBom.headerEnabled = false;
   }
 
   retrieveLog(): void {
@@ -470,7 +517,7 @@ export class ProductDialogComponent implements OnInit {
     if(Number(this.datbprice) > Number(this.datlprice)){
       this.bbigger = true;
     }else{
-      if(this.dataSourceBundle.data.length < 1){
+      if(this.coru < 1){
         //this._snackBar.open("Bahan Baku tidak boleh kosong!", "Tutup", {duration: 5000});
         if (this.isNew){
           this.createData();
@@ -569,8 +616,8 @@ export class ProductDialogComponent implements OnInit {
     this.bdatprod = product.name;
     this.bdatid = product.id;
     this.bdatqty = 1;
-    this.bdatuom = product.suom._id;
-    this.bdatsuom = product.suom.uom_name;
+    this.bdatuom = product.uoms.id;
+    this.bdatsuom = product.uoms.uom_name;
   }
 
   getProd2(product: Product, index: number): void {
@@ -581,16 +628,16 @@ export class ProductDialogComponent implements OnInit {
     this.bodatprod = product.name;
     this.bodatid = product.id;
     this.bodatqty = 1;
-    this.bodatuom = product.suom._id;
-    this.bodatsuom = product.suom.uom_name;
+    this.bodatuom = product.uoms.id;
+    this.bodatsuom = product.uoms.uom_name;
   }
 
   pushingBundle(): void {
     const dataBundle = {
       bundle: this.data,
       qty: this.bdatqty,
-      uom: this.bdatuom,
-      product: this.bdatid
+      uom_id: this.bdatuom,
+      product_id: this.bdatid
     };
     this.bundleService.create(dataBundle)
       .subscribe(res => {
@@ -610,7 +657,8 @@ export class ProductDialogComponent implements OnInit {
       bom: this.bodatid,
       qty: this.bodatqty,
       uom: this.bodatuom,
-      product: this.data
+      product: this.data,
+      company_id: this.globals.companyid
     };
     this.bomService.create(dataBom)
       .subscribe(res => {
@@ -745,15 +793,15 @@ export class ProductDialogComponent implements OnInit {
         barcode: this.datbarcode,
         listprice: this.datlprice,
         botprice: this.datbprice,
-        suom: this.datsuom,
-        puom: this.datpuom,
+        uom_id: this.datsuom,
+        puom_id: this.datpuom,
         cost: this.datcost,
         isStock: this.isStock,
-        category: this.categoryid,
-        taxin: this.taxinid,
-        taxout: this.taxoutid,
+        productcat_id: this.categoryid,
+        tax_id: this.taxinid,
+        taxout_id: this.taxoutid,
         image: this.fileName,
-        brand: this.brandid,
+        brand_id: this.brandid,
         min: this.datmin,
         max: this.datmax,
         fg: this.datfg,
@@ -791,14 +839,14 @@ export class ProductDialogComponent implements OnInit {
         barcode: this.datbarcode,
         listprice: this.datlprice,
         botprice: this.datbprice,
-        suom: this.datsuom,
-        puom: this.datpuom,
+        uom_id: this.datsuom,
+        puom_id: this.datpuom,
         cost: this.datcost,
         isStock: this.isStock,
-        category: this.categoryid,
-        brand: this.brandid,
-        taxin: this.taxinid,
-        taxout: this.taxoutid,
+        productcat_id: this.categoryid,
+        brand_id: this.brandid,
+        tax_id: this.taxinid,
+        taxout_id: this.taxoutid,
         image: 'default.png',
         fg: this.datfg,
         rm: this.datrm,

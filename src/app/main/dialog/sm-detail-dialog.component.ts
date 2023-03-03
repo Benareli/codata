@@ -54,6 +54,7 @@ export class SMDetailDialogComponent implements OnInit {
   datqty?: number;
   datuom?: string;
   datsuom?: any;
+  datcost?: number;
   datdate: string;
   datfrom: string;
   datto: string;
@@ -103,6 +104,8 @@ export class SMDetailDialogComponent implements OnInit {
         this.columns = [
           {key:'product.name', title:'Product', orderBy:'asc', width: '40%'},
           {key:'qin', title:'Qty', width:'7%'},
+          {key:'uom.uom_name', title:'Uom', width:'7%'},
+          {key:'oriqin', title:'Qty', width:'7%'},
           {key:'uom.uom_name', title:'Uom', width:'7%'}
         ];
         this.configuration = { ...DefaultConfig };
@@ -115,11 +118,14 @@ export class SMDetailDialogComponent implements OnInit {
             this.datas = smti;
             this.dataSource.data = this.datas;
             this.checkInterface();
+            console.log(this.datas);
           })
         this.lock = false;
         this.columns = [
           {key:'product.name', title:'Product', orderBy:'asc', width: '40%'},
           {key:'qin', title:'Qty', width:'7%'},
+          {key:'uom.uom_name', title:'Uom', width:'7%'},
+          {key:'oriqin', title:'Qty', width:'7%'},
           {key:'uom.uom_name', title:'Uom', width:'7%'}
         ];
         this.configuration = { ...DefaultConfig };
@@ -180,7 +186,6 @@ export class SMDetailDialogComponent implements OnInit {
   }
 
   checkWH(): void {
-    console.log(this.datas.length);
     if(this.c==1) {this.wh1String = this.datas[0].warehouse.name;}
     else if(this.c==2) {this.wh1String = this.datas[0].warehouse.name;}
     else if(this.c==3) {this.wh1String = this.datas[0].warehouse.name;
@@ -211,9 +216,10 @@ export class SMDetailDialogComponent implements OnInit {
     this.datid = product.id;
     this.datprod = product;
     this.datqty = 1;
-    this.datuom = product.suom.uom_name;
-    this.datsuom = product.suom;
-    this.uomString = product.suom._id;
+    this.datuom = product.uoms.uom_name;
+    this.datsuom = product.uoms;
+    this.uomString = product.uoms.id;
+    this.datcost = product.cost;
   }
 
   onF(): void {
@@ -224,7 +230,7 @@ export class SMDetailDialogComponent implements OnInit {
     this.uomService.get(this.uomString)
       .subscribe(uomc => {
         this.uomcat = uomc;
-        if(this.datprod.suom.uom_cat == this.uomcat.uom_cat._id){
+        if(this.datprod.uoms.uomcat_id == this.uomcat.uomcat_id){
           this.uomService.get(this.uomString)
             .subscribe(uomget => {
               this.uomz = uomget;
@@ -241,8 +247,10 @@ export class SMDetailDialogComponent implements OnInit {
     if(this.datas[0].product=='') this.datas.splice(0,1);
     if(this.datid){
       const dataPush = {
-        id: this.datid, product: this.datprod, prodid: this.datid, qty: this.datqty, qty_done: 0, uom: this.uomz, uomid: this.uomString,
-        user: this.globals.userid, from: this.fromString, to: this.tooString, type: this.typeTrans, date: this.datdate
+        id: this.datid, product: this.datprod, prodid: this.datid, qty: this.datqty, qty_done: 0, 
+        uom: this.uomz, uomid: this.uomString, user: this.globals.userid, from: this.fromString, 
+        to: this.tooString, type: this.typeTrans, date: this.datdate, company: this.globals.companyid,
+        cost: this.datcost
       }
       this.datas.push(dataPush);
       this.dataSource.data = this.datas;
@@ -258,7 +266,6 @@ export class SMDetailDialogComponent implements OnInit {
   }
 
   startSave(): void {
-    console.log("start", this.datas);
     this.stockrequestService.create(this.datas)
       .subscribe(src => {
         this.closeDialog();

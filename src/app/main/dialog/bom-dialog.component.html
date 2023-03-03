@@ -49,39 +49,29 @@
     </li>
   </ul>
 
-  <mat-table #table [dataSource]="dataSource" class="mat-table">
-    <ng-container matColumnDef="bom">
-      <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let datas">
-        {{datas.bom.name}}
+  <ngx-table [configuration]="configuration"
+           [data]="datBOMs"
+           [columns]="columns">
+           <!--(event)="openDialog($event)">-->
+    <ng-template let-row let-index="index">
+      <td style="width:40%;">
+        {{row.bomes.name}}
       </td>
-    </ng-container>
-    <ng-container matColumnDef="qty">
-      <td class="tr-style text-right" fxFlex="10%" mat-cell *matCellDef="let datas">
-        {{datas.qty | number}}
+      <td style="width:10%;">
+        {{row.qty | number}}
       </td>
-    </ng-container>
-    <ng-container matColumnDef="uom">
-      <td class="tr-style text-right" fxFlex="20%" mat-cell *matCellDef="let datas">
-        {{datas.uom.uom_name}}
+      <td style="width:20%;">
+        {{row.uoms.uom_name}}
       </td>
-    </ng-container>
-    <ng-container matColumnDef="cost">
-      <td class="tr-style text-right" fxFlex="20%" mat-cell *matCellDef="let datas">
-        {{datas.bom.cost}}
+      <td style="width:20%;">
+        {{row.bomes.cost * row.qty}}
       </td>
-    </ng-container>
-    <ng-container matColumnDef="action">
-      <td class="tr-style text-right" fxFlex="10%" mat-cell *matCellDef="let datas">
-        <a class="add_stock" ><mat-icon class="mat-icon" 
-          (click)="deleteBOMDetail(dataSource.filteredData.indexOf(datas), datas.id, datas.product)">delete</mat-icon></a>
+      <td style="width:10%;">
+        Action
       </td>
-    </ng-container>
-
-    <tr mat-row class="tableRow" 
-      *matRowDef="let row; columns: displayedColumns;"
-    ></tr>
-  </mat-table>
-
+    </ng-template>
+  </ngx-table>
+  
   <br/>
   <table class="table-new">
     <tr>

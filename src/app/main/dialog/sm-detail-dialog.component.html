@@ -84,7 +84,7 @@
       <ng-container matColumnDef="product">
         <th class="th-style" fxFlex="40%" mat-header-cell *matHeaderCellDef>Produk</th>
         <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let datas">
-          {{datas.product.name}}
+          <span *ngIf="datas.product">{{datas.product.name}}</span>
         </td>
       </ng-container>
       <ng-container matColumnDef="qty">
@@ -98,25 +98,25 @@
       <ng-container matColumnDef="uom">
         <th class="th-style text-center" fxFlex="10%" mat-header-cell *matHeaderCellDef>Satuan</th>
         <td class="tr-style text-center" fxFlex="10%" mat-cell *matCellDef="let datas">
-          {{datas.uom.uom_name}}
+          <span *ngIf="datas.product">{{datas.uom.uom_name}}</span>
         </td>
       </ng-container>
       <ng-container matColumnDef="date">
         <th class="th-style text-center" fxFlex="10%" mat-header-cell *matHeaderCellDef>Tanggal</th>
         <td class="tr-style text-center" fxFlex="10%" mat-cell *matCellDef="let datas">
-          {{datas.date | date}}
+          <span *ngIf="datas.product">{{datas.date | date}}</span>
         </td>
       </ng-container>
       <ng-container matColumnDef="from">
         <th class="th-style" fxFlex="10%" mat-header-cell *matHeaderCellDef>From</th>
         <td class="tr-style" fxFlex="10%" mat-cell *matCellDef="let datas">
-          <span *ngIf="!new && datas.qout">{{datas.warehouse.short}}</span>
+          <span *ngIf="!new && datas.qout">{{datas.warehouses.short}}</span>
         </td>
       </ng-container>
       <ng-container matColumnDef="to">
         <th class="th-style" fxFlex="10%" mat-header-cell *matHeaderCellDef>To</th>
         <td class="tr-style" fxFlex="10%" mat-cell *matCellDef="let datas">
-          <span *ngIf="!new && datas.qin">{{datas.warehouse.short}}</span>
+          <span *ngIf="!new && datas.qin">{{datas.warehouses.short}}</span>
         </td>
       </ng-container>
       <ng-container matColumnDef="type">
@@ -168,14 +168,21 @@
            [columns]="columns">
     <ng-template let-row let-index="index">
       <td>
-        {{row.product.name}}
+        {{row.products.name}}
       </td>
       <td>
         <span *ngIf="row.qin">{{row.qin | number}}</span>
         <span *ngIf="row.qout">-{{row.qout | number}}</span>
       </td>
       <td>
-        {{row.uom.uom_name}}
+        {{row.uoms.uom_name}}
+      </td>
+      <td>
+        <span *ngIf="row.oriqin">{{row.oriqin | number}}</span>
+        <span *ngIf="row.oriqout">-{{row.oriqout | number}}</span>
+      </td>
+      <td>
+        <span *ngIf="row.oriuom_id">{{row.oriuoms.uom_name}}</span>
       </td>
     </ng-template>
   </ngx-table>

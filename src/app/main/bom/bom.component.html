@@ -19,32 +19,20 @@
 </div>
 
 <div class="table-container">
-<mat-table #table [dataSource]="dataSource" class="mat-table">
-  <ng-container matColumnDef="product">
-    <th class="th-style" fxFlex="85%" mat-header-cell *matHeaderCellDef>Product</th>
-    <td class="tr-style" fxFlex="85%" mat-cell *matCellDef="let boms">
-      <a (click)="openDialog(boms._id.product[0]._id)">{{boms._id.product[0].name}}</a>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="line">
-    <th class="th-style" fxFlex="85%" mat-header-cell *matHeaderCellDef>Jumlah Material</th>
-    <td class="tr-style" fxFlex="85%" mat-cell *matCellDef="let boms">
-      <a (click)="openDialog(boms._id.product[0]._id)">{{boms.totalLine}}</a>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="action">
-    <th class="th-style" fxFlex="15%" mat-header-cell *matHeaderCellDef>Aksi</th>
-    <td class="tr-style" fxFlex="15%" mat-cell *matCellDef="let boms">
-      Aksi
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeader"></tr>
-  <tr mat-row class="tableRow" 
-      *matRowDef="let row; columns: displayedColumns;"
-      
-      [class.active]="clickedRows == row"
-  ></tr>
-  <!--(click)="openDialog(row)"-->
-</mat-table>
+  <ngx-table [configuration]="configuration"
+           [data]="bomes"
+           [columns]="columns"
+           (event)="openDialog($event)">
+    <ng-template let-row let-index="index">
+      <td>
+        {{row.name}}
+      </td>
+      <td>
+        {{row.totalline | number}}
+      </td>
+      <td>
+        <span *ngIf="row.name">Edit</span>
+      </td>
+    </ng-template>
+  </ngx-table>
 </div>

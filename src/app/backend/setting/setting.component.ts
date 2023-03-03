@@ -16,8 +16,8 @@ import { TaxDialogComponent } from '../../main/dialog/tax-dialog.component';
 import { StoreDialogComponent } from '../../main/dialog/store-dialog.component';
 
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { Setting } from 'src/app/models/setting.model';
-import { SettingService } from 'src/app/services/setting.service';
+import { Company } from 'src/app/models/company.model';
+import { CompanyService } from 'src/app/services/company.service';
 import { Id } from 'src/app/models/id.model';
 import { IdService } from 'src/app/services/id.service';
 import { Possession } from 'src/app/models/possession.model';
@@ -43,8 +43,7 @@ export class SettingComponent implements OnInit {
   users?: User[];
   taxs?: Tax[];
   ids?: Id[];
-  idh?: any;
-  settingid?: string;
+  companyid?: string;
   cost_general?: boolean = true;
   pos_shift?: boolean = false;
   restaurant?: boolean = false;
@@ -52,6 +51,13 @@ export class SettingComponent implements OnInit {
   comp_addr?: string;
   comp_phone?: string;
   comp_email?: string;
+  prepos?: string;
+  prepossession?: string;
+  pretransfer?: string;
+  prepay?: string;
+  prepurchase?: string;
+  prejournal?: string;
+  prebill?: string;
   isAdm?: boolean = false;
   explain1?: string = "";
   explain2?: string = "";
@@ -95,7 +101,7 @@ export class SettingComponent implements OnInit {
     private globals: Globals,
     private token: TokenStorageService,
     private uploadService: FileUploadService,
-    private settingService: SettingService,
+    private companyService: CompanyService,
     private storeService: StoreService,
     private user2Service: User2Service,
     private idService: IdService,
@@ -105,7 +111,7 @@ export class SettingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.retrieveSetting();
+    this.retrieveCompany();
     for(let x=0; x<this.globals.roles!.length;x++){
       if(this.globals.roles![x]=="admin") this.isAdm=true;
     };
@@ -118,21 +124,21 @@ export class SettingComponent implements OnInit {
     this.imageInfos = this.uploadService.getFiles();    
   }
 
-  retrieveSetting(): void {
-    this.settingService.getAll()
-      .subscribe(setting => {
-        this.settingid = setting[0].id;
-        this.cost_general = setting[0].cost_general;
+  retrieveCompany(): void {
+    this.companyService.getAll()
+      .subscribe(company => {
+        this.companyid = company[0].id;
+        this.cost_general = company[0].cost_general;
         this.explainer1();
-        this.comp_name = setting[0].comp_name;
-        this.comp_addr = setting[0].comp_addr;
-        this.comp_phone = setting[0].comp_phone;
-        this.comp_email = setting[0].comp_email;
-        this.navcolor = setting[0].nav_color!.toString();
-        this.titlecolor = setting[0].title_color!.toString();
-        this.oriimage = setting[0].image;
-        this.pos_shift = setting[0].pos_shift;
-        this.restaurant = setting[0].restaurant;
+        this.comp_name = company[0].comp_name;
+        this.comp_addr = company[0].comp_addr;
+        this.comp_phone = company[0].comp_phone;
+        this.comp_email = company[0].comp_email;
+        this.navcolor = company[0].nav_color!.toString();
+        this.titlecolor = company[0].title_color!.toString();
+        this.oriimage = company[0].image;
+        this.pos_shift = company[0].pos_shift;
+        this.restaurant = company[0].restaurant;
       })
     this.storeService.getAll()
       .subscribe(store => {
@@ -148,7 +154,13 @@ export class SettingComponent implements OnInit {
       })
     this.idService.getAll()
       .subscribe(ids => {
-        this.idh = ids[0];
+        this.prepos = ids[0].pre_pos_id;
+        this.prepossession = ids[0].pre_pos_session;
+        this.pretransfer = ids[0].pre_transfer_id;
+        this.prepay = ids[0].pre_pay_id;
+        this.prepurchase = ids[0].pre_purchase_id;
+        this.prejournal = ids[0].pre_journal_id;
+        this.prebill = ids[0].pre_bill_id;
       })
     this.taxService.getAll()
       .subscribe(taxs => {
@@ -230,7 +242,7 @@ export class SettingComponent implements OnInit {
     const setImage = {
       image: this.fileName
     }
-    this.settingService.update(this.settingid, setImage)
+    this.companyService.update(this.companyid, setImage)
       .subscribe({
         next: (res) => {
           this.reloadPage();
@@ -249,10 +261,10 @@ export class SettingComponent implements OnInit {
       title_color: this.titlecolor
     }
 
-    this.settingService.update(this.settingid, save1)
+    this.companyService.update(this.companyid, save1)
         .subscribe({
           next: (res) => {
-            this.retrieveSetting();
+            this.retrieveCompany();
           },
           error: (e) => console.error(e)
         });
@@ -263,9 +275,9 @@ export class SettingComponent implements OnInit {
       cost_general: this.cost_general
     }
 
-    this.settingService.update(this.settingid, save2)
+    this.companyService.update(this.companyid, save2)
       .subscribe(res => {
-        this.retrieveSetting();
+        this.retrieveCompany();
         this.reloadPage();
       });
   }
@@ -275,16 +287,16 @@ export class SettingComponent implements OnInit {
       .subscribe(poss => {
         if(poss.length>0){
           this._snackBar.open("Tidak bisa menutup karena ada POS Session Terbuka", "Tutup", {duration: 10000});
-          this.retrieveSetting();
+          this.retrieveCompany();
         }else{
           const save3 = {
             pos_shift: this.pos_shift,
             restaurant: this.restaurant,
           }
-          this.settingService.update(this.settingid, save3)
+          this.companyService.update(this.companyid, save3)
             .subscribe({
               next: (res) => {
-                this.retrieveSetting();
+                this.retrieveCompany();
                 this.reloadPage();
               },
               error: (e) => console.error(e)
@@ -300,7 +312,7 @@ export class SettingComponent implements OnInit {
       disableClose: true
     })
       .afterClosed()
-      .subscribe(() => this.retrieveSetting());
+      .subscribe(() => this.retrieveCompany());
   }
 
   openTax(row: Tax): void {
@@ -311,7 +323,7 @@ export class SettingComponent implements OnInit {
       data: row
     })
       .afterClosed()
-      .subscribe(() => this.retrieveSetting());
+      .subscribe(() => this.retrieveCompany());
   }
 
   addStore(): void {
@@ -321,7 +333,7 @@ export class SettingComponent implements OnInit {
       disableClose: true
     })
       .afterClosed()
-      .subscribe(() => this.retrieveSetting());
+      .subscribe(() => this.retrieveCompany());
   }
 
   openStore(row: Tax): void {
@@ -332,7 +344,7 @@ export class SettingComponent implements OnInit {
       data: row
     })
       .afterClosed()
-      .subscribe(() => this.retrieveSetting());
+      .subscribe(() => this.retrieveCompany());
   }
 
   addUser(): void {
@@ -342,7 +354,7 @@ export class SettingComponent implements OnInit {
       disableClose: true
     })
       .afterClosed()
-      .subscribe(() => this.retrieveSetting());
+      .subscribe(() => this.retrieveCompany());
   }
 
   userRole(row: User): void {
@@ -353,7 +365,7 @@ export class SettingComponent implements OnInit {
       data: row
     })
       .afterClosed()
-      .subscribe(() => this.retrieveSetting());
+      .subscribe(() => this.retrieveCompany());
   }
 
   reloadPage(): void {

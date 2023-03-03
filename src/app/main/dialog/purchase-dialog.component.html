@@ -68,7 +68,8 @@
       <th class="th-new" style="border-left:1px solid #ccc;" fxFlex="35%">Product</th>
       <th class="th-new" fxFlex="7%">Qty</th>
       <th class="th-new" fxFlex="7%">Qty Done</th>
-      <th class="th-new" fxFlex="20%">Harga Satuan</th>
+      <th class="th-new" fxFlex="7%">Uom</th>
+      <th class="th-new" fxFlex="13%">Harga Satuan</th>
       <th class="th-new" fxFlex="5%">Disc(%)</th>
       <th class="th-new" fxFlex="5%">Tax(%)</th>
       <th class="th-new" fxFlex="16%">Subtotal</th>
@@ -85,64 +86,23 @@
     </li>
   </ul>-->
 
-  <mat-table #table [dataSource]="dataSource" class="mat-table">
-    <ng-container matColumnDef="product">
-      <td class="tr-style" fxFlex="35%" mat-cell *matCellDef="let datas">
-        {{datas.product.name}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="qty">
-      <td class="tr-style text-right" fxFlex="7%" mat-cell *matCellDef="let datas">
-        {{datas.qty | number}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="qty_done">
-      <td class="tr-style text-right" fxFlex="7%" mat-cell *matCellDef="let datas">
-        {{datas.qty_done | number}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="price_unit">
-      <td class="tr-style text-right" fxFlex="20%" mat-cell *matCellDef="let datas">
-        {{datas.price_unit | number}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="discount">
-      <td class="tr-style text-right" fxFlex="5%" mat-cell *matCellDef="let datas">
-        {{datas.discount | number}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="tax">
-      <td class="tr-style text-right" fxFlex="5%" mat-cell *matCellDef="let datas">
-        {{datas.tax | number}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="subtotal">
-      <td class="tr-style text-right" fxFlex="16%" mat-cell *matCellDef="let datas">
-        {{datas.subtotal | number}}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="action">
-      <td class="tr-style" fxFlex="5%" mat-cell *matCellDef="let datas">
-        <div *ngIf="datas.qty_done == 0">
-        <a class="add_stock" *ngIf="edit && (isPurM || isAdm)" ><mat-icon class="mat-icon" 
-          (click)="deletePODetail(dataSource.filteredData.indexOf(datas), datas.id, datas.product)">delete</mat-icon></a>
-        </div>
-      </td>
-    </ng-container>
-    <tr mat-row class="tableRow" 
-      *matRowDef="let row; columns: displayedColumns;"  
-    ></tr>
-  </mat-table>
-  <table>
+  <table style="width: 100%;">
     <tr *ngIf="!lock" class="borderinput">
-      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="35%">
+      <td class="td-new" fxFlex="35%">
         <input class="inputss width-100" (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/></td>
-      <td class="td-new" fxFlex="7%"><input class="inputss width-100 text-right" (blur)="calculate()" [(ngModel)]="datqty"/></td>
-      <td class="td-new" fxFlex="7%"><input class="inputss width-100" disabled /></td>
-      <td class="td-new" fxFlex="20%"><input class="inputss width-100 text-right" (blur)="calculate()" [(ngModel)]="datcost"/></td>
-      <td class="td-new" fxFlex="5%"><input class="inputss width-100 text-right" (blur)="calculate()" [(ngModel)]="datdisc"/></td>
-      <td class="td-new" fxFlex="5%"><input class="inputss width-100 text-right" (blur)="calculate()" [(ngModel)]="dattax"/></td>
-      <td class="td-new" fxFlex="16%"><input disabled class="inputss width-100 text-right" [(ngModel)]="datsub"/></td>
+      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="7%"><input class="inputss width-90 text-right" (blur)="calculate()" [(ngModel)]="datqty"/></td>
+      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="7%"><input class="inputss width-90" disabled /></td>
+      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="7%">
+        <select class="inputs width-90" [disabled]="this.lock" [(ngModel)]="datuomid">
+          <option *ngFor="let uom of uoms" [value]="uom.id">
+            {{ uom.uom_name }}
+          </option>
+        </select>
+      </td>
+      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="13%"><input class="inputss width-90 text-right" (blur)="calculate()" [(ngModel)]="datcost"/></td>
+      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="5%"><input class="inputss width-90 text-right" (blur)="calculate()" [(ngModel)]="datdisc"/></td>
+      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="5%"><input class="inputss width-90 text-right" (blur)="calculate()" [(ngModel)]="dattax"/></td>
+      <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="16%"><input disabled class="inputss width-100 text-right" [(ngModel)]="datsub"/></td>
       <td class="td-new btn-rainbow" style="text-align:center;" fxFlex="5%"><button style="width:100%;background:none;border:none;color:white;" (click)="pushing()">+</button></td>
     </tr>
     <tr>
@@ -158,6 +118,69 @@
       </td>
     </tr>
   </table>
+
+  <ngx-table [configuration]="configuration"
+           [data]="datax"
+           [columns]="columns">
+           <!--(event)="openDialog($event)">-->
+    <!--<ng-template let-row let-index="index">
+      <td style="width:35%;">{{row.products.name}}</td>
+      <td style="width:7%; text-align: right; border-left: 1px solid #dddddd;">{{row.qty | number}}</td>
+      <td style="width:7%; text-align: right; border-left: 1px solid #dddddd;">{{row.qty_done | number}}</td>
+      <td style="width:7%; text-align: right; border-left: 1px solid #dddddd;">
+        <span *ngIf="row.uoms">{{row.uoms.uom_name}}</span></td>
+      <td style="width:13%; text-align: right; border-left: 1px solid #dddddd;">{{row.price_unit | number}}</td>
+      <td style="width:5%; text-align: center; border-left: 1px solid #dddddd;">{{row.discount | number}}</td>
+      <td style="width:5%; text-align: center; border-left: 1px solid #dddddd;">{{row.tax | number}}</td>
+      <td style="width:16%; text-align: right; border-left: 1px solid #dddddd;">{{row.subtotal | number}}</td>
+      
+      <td style="width:5%;">
+        Act
+      </td>
+    </ng-template>-->
+  </ngx-table>
+  
+  <ng-template #productTpl let-row let-rowIndex="rowIndex">
+    <div style="font-size:.9em;">{{row.products.name}}</div>
+  </ng-template>
+  <ng-template #qtyTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex" style="border-left: 1px solid #333; font-size:.9em;">{{row.qty}}</div>
+    <div *ngIf="editRow === rowIndex">
+      <input type="text" #qty placeholder="Qty" class="form-label" [value]="row.qty" />
+    </div>
+  </ng-template>
+  <ng-template #qtyDoneTpl let-row let-rowIndex="rowIndex">
+    <div style="border-left: 1px solid #333; font-size:.9em;">{{row.qty_done}}</div>
+  </ng-template>
+  <ng-template #uomTpl let-row let-rowIndex="rowIndex">
+    <div style="border-left: 1px solid #333; font-size:.9em;">{{row.products.uom_id}}</div>
+  </ng-template>
+  <ng-template #priceunitTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex" style="border-left: 1px solid #333; font-size:.9em;">{{row.price_unit | number}}</div>
+    <div *ngIf="editRow === rowIndex">
+      <input type="text" #priceunit placeholder="Qty" class="form-label" [value]="row.price_unit" />
+    </div>
+  </ng-template>
+  <ng-template #discountTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex" style="border-left: 1px solid #333; font-size:.9em;">{{row.discount}}</div>
+    <div *ngIf="editRow === rowIndex" style="border-left: 1px solid #333;">
+      <input type="text" #discount placeholder="Discount" class="form-label" [value]="row.discount" />
+    </div>
+  </ng-template>
+  <ng-template #taxTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex" style="border-left: 1px solid #333; font-size:.9em;">{{row.tax}}</div>
+    <div *ngIf="editRow === rowIndex">
+      <input type="text" #discount placeholder="Tax" class="form-label" [value]="row.tax" />
+    </div>
+  </ng-template>
+  <ng-template #subtotalTpl let-row let-rowIndex="rowIndex">
+    <div style="border-left: 1px solid #333; font-size:.9em;">{{row.subtotal | number}}</div>
+  </ng-template>
+  <ng-template #actionTpl let-row let-rowIndex="rowIndex">
+    <div *ngIf="editRow !== rowIndex" (click)="editX(rowIndex)" style="border-left: 1px solid #333; font-size:.9em;">E</div>
+    <div *ngIf="editRow === rowIndex">S</div>
+  </ng-template>
+
   <table class="table-new text-right" style="margin-top:2pt;">
     <tr>
       <td fxFlex="50%"></td>
@@ -186,8 +209,8 @@
     <tr>
       <td fxFlex="50%">
         <div fxLayout="row" fxLayoutAlign="space-around center">
-          <button class="save_btn_white flex50" (click)="openReceivePartial()" *ngIf="data && persenqty! < 100" style="font-size: 12pt;"><i class="fa fa-arrow-down"></i> Sebagian</button>
-          <button class="save_btn flex50" (click)="receiveAll()" *ngIf="data && persenqty! < 100" style="font-size: 12pt;"><i class="fa fa-arrow-down"></i> Semua</button>
+          <button class="save_btn_white flex50" (click)="openReceivePartial()" *ngIf="data && !draft && persenqty! < 100" style="font-size: 12pt;"><i class="fa fa-arrow-down"></i> Sebagian</button>
+          <button class="save_btn flex50" (click)="receiveAll()" *ngIf="data && !draft && persenqty! < 100" style="font-size: 12pt;"><i class="fa fa-arrow-down"></i> Semua</button>
         </div>
       </td>
       <td colspan="3" fxFlex="50%">

@@ -35,7 +35,7 @@
     <mat-table #table [dataSource]="dataSource" class="mat-table">
       <ng-container matColumnDef="product">
         <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let datas">
-          <span *ngIf="datas.purchase_id">{{datas.product.name}}</span>
+          <span *ngIf="datas.purchase_id">{{datas.products.name}}</span>
           <span *ngIf="!datas.purchase_id">{{datas.product}}</span>
         </td>
       </ng-container>

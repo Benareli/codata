@@ -58,11 +58,10 @@ export class PayableComponent implements OnInit {
   retrieveData(): void {
     this.journalService.findBill()
       .subscribe(journal => {
-        this.journals = Array.from(new Map(journal.reverse().map(item => [item.journal_id, item])).values());
-
+        this.journals = Array.from(new Map(journal.reverse().map(item => [item.name, item])).values());
         this.columns = [
-          {key:'journal_id', title:'Journal ID', orderBy:'desc', width: '20%'},
-          {key:'partner.name', title:'Partner', width:'30%'},
+          {key:'name', title:'Journal ID', orderBy:'desc', width: '20%'},
+          {key:'partners.name', title:'Partner', width:'30%'},
           {key:'amount', title:'Amount', width:'20%'},
           {key:'date', title:'Date', width:'20%'},
           {key:'lock', title:'Status', width:'10%'}
@@ -76,8 +75,11 @@ export class PayableComponent implements OnInit {
   openDialog($event: { event: string; value: any }) {
     if($event.event == "onClick"){
       const dialog = this.dialog.open(BillDialogComponent, {
-        width: '98%',
-        height: '90%',
+        maxWidth: '98vw',
+        maxHeight: '98vh',
+        height: '100%',
+        width: '100%',
+        panelClass: 'full-screen-modal',
         disableClose: true,
         data: $event.value.row
       }).afterClosed().subscribe(result => {

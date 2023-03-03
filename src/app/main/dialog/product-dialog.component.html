@@ -1,4 +1,4 @@
-<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center" >
+<div class="basic-container submit-form" fxLayout="column" fxLayoutAlign="space-between center">
 <div class="width-100" style="overflow-y: scroll;">
   <div class="marginbot" fxLayout="row" fxLayoutAlign="space-between center">
     <div class="flexfullhead">
@@ -78,7 +78,7 @@
     </div>
   </div>
 
-<mat-tab-group mat-align-tabs="start" style="height: 205pt; overflow-y: scroll;">
+<mat-tab-group mat-align-tabs="start" style="overflow-y: scroll; min-height: 55vh;">
   <!--TAB1-->
   <mat-tab label="Detail">
     <div class="flexfull">
@@ -185,58 +185,27 @@
 
   <!--TAB2 *ngIf="!isCG"-->
   <mat-tab label="Quantity Detail">
-    <mat-table *ngIf="!isCG" #table [dataSource]="dataSource" class="mat-table">
-      <ng-container matColumnDef="warehouse">
-        <th class="th-style" fxFlex="40%" mat-header-cell *matHeaderCellDef>Gudang</th>
-        <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let qops">
-          {{qops.warehouse.name}}
+    <ngx-table [configuration]="configurationQop1"
+           [data]="qop1"
+           [columns]="columnsQop1">
+      <ng-template let-row let-index="index">
+        <td style="width: 50%;">
+          <span *ngIf="row.products">{{row.warehouses.name}}</span>
         </td>
-      </ng-container>
-      <ng-container matColumnDef="partner">
-        <th class="th-style" fxFlex="40%" mat-header-cell *matHeaderCellDef>Supplier</th>
-        <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let qops">
-          <div *ngIf="!qops.partner"></div>
-          <div *ngIf="qops.partner">{{qops.partner.name}}</div>
+        <td style="width: 50%;">
+          <span *ngIf="row.partners">{{row.partners.name}}</span>
         </td>
-      </ng-container>
-      <ng-container matColumnDef="qty">
-        <th class="th-style" fxFlex="20%" mat-header-cell *matHeaderCellDef>Qty</th>
-        <td class="tr-style" fxFlex="20%" mat-cell *matCellDef="let qops">
-          {{qops.qop}}
+        <td style="width: 15%;">
+          <span *ngIf="row.products">{{row.qop | number}}</span>
         </td>
-      </ng-container>
-      <ng-container matColumnDef="cost">
-        <th class="th-style" fxFlex="20%" mat-header-cell *matHeaderCellDef>HPP</th>
-        <td class="tr-style" fxFlex="20%" mat-cell *matCellDef="let qops">
-          {{qops.cost | number : '1.2-2' }}
+        <td style="width: 20%;">
+          <span *ngIf="row.products">{{row.uoms.uom_name}}</span>
         </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeader"></tr>
-      <tr mat-row class="tableRow" 
-        *matRowDef="let row; columns: displayedColumns;"
-      ></tr>
-    </mat-table>
-
-    <mat-table *ngIf="isCG" #table [dataSource]="dataSourceDet" class="mat-table">
-      <ng-container matColumnDef="warehouse">
-        <th class="th-style" fxFlex="50%" mat-header-cell *matHeaderCellDef>Gudang</th>
-        <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let qops">
-          {{qops._id.warehouse}}
+        <td style="width: 15%;">
+          <span *ngIf="row.products">{{row.cost}}</span>
         </td>
-      </ng-container>
-      <ng-container matColumnDef="qty">
-        <th class="th-style" fxFlex="25%" mat-header-cell *matHeaderCellDef>Qty</th>
-        <td class="tr-style" fxFlex="25%" mat-cell *matCellDef="let qops">
-          {{qops.totalQop}}
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumnsDet" class="tableHeader"></tr>
-      <tr mat-row class="tableRow" 
-        *matRowDef="let row; columns: displayedColumnsDet;"
-      ></tr>
-    </mat-table>
+      </ng-template>
+    </ngx-table>
   </mat-tab>
 
   <!--TAB3-->
@@ -264,38 +233,25 @@
         {{ product.name }}
       </li>
     </ul>
-
-    <mat-table #table [dataSource]="dataSourceBundle" class="mat-table">
-      <ng-container matColumnDef="product">
-        <th class="th-style" fxFlex="50%" mat-header-cell *matHeaderCellDef>Product</th>
-        <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let datas">
-          {{datas.product.name}}
+    <ngx-table [configuration]="configurationBundle"
+           [data]="bundles"
+           [columns]="columnsBundle">
+      <ng-template let-row let-index="index">
+        <td style="width: 50%;">
+          <span *ngIf="row.products">{{row.products.name}}</span>
         </td>
-      </ng-container>
-      <ng-container matColumnDef="qty">
-        <th class="th-style" fxFlex="20%" mat-header-cell *matHeaderCellDef>Qty</th>
-        <td class="tr-style" fxFlex="20%" mat-cell *matCellDef="let datas">
-          {{datas.qty}}
+        <td style="width: 20%; text-align: right;">
+          <span *ngIf="row.products">{{row.qty | number}}</span>
         </td>
-      </ng-container>
-      <ng-container matColumnDef="uom">
-        <th class="th-style" fxFlex="20%" mat-header-cell *matHeaderCellDef>Satuan</th>
-        <td class="tr-style" fxFlex="20%" mat-cell *matCellDef="let datas">
-          {{datas.uom.uom_name}}
+        <td style="width: 20%;">
+          <span *ngIf="row.uoms">{{row.uoms.uom_name}}</span>
         </td>
-      </ng-container> 
-      <ng-container matColumnDef="action">
-        <th class="th-style" fxFlex="10%" mat-header-cell *matHeaderCellDef></th>
-        <td class="tr-style text-right" fxFlex="10%" mat-cell *matCellDef="let datas">
-          <a class="add_stock" (click)="deleteBundle(datas.id)">Hapus</a>
+        <td style="width: 10%;">
+          <span *ngIf="row.products"><a class="add_stock" (click)="deleteBundle(row.id)">Hapus</a></span>
+          <span *ngIf="!row.products"><a class="add_stock" style="color: #fff;">.</a></span>
         </td>
-      </ng-container>
-
-      <!--<tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeader"></tr>-->
-      <tr mat-row class="tableRow" 
-        *matRowDef="let row; columns: displayedColumnsBundle;"
-      ></tr>
-    </mat-table>
+      </ng-template>
+    </ngx-table>
   </mat-tab>
 
   <!--TAB4-->
@@ -323,39 +279,26 @@
         {{ product.name }}
       </li>
     </ul>
-
-    <mat-table #table [dataSource]="dataSourceBom" class="mat-table">
-      <ng-container matColumnDef="product">
-        <th class="th-style" fxFlex="50%" mat-header-cell *matHeaderCellDef>Material</th>
-        <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let datax">
-          {{datax.bom.name}}
+    <ngx-table [configuration]="configurationBom"
+           [data]="boms"
+           [columns]="columnsBom">
+      <ng-template let-row let-index="index">
+        <td style="width: 50%;">
+          <span *ngIf="row.products">{{row.bomes.name}}</span>
         </td>
-      </ng-container>
-      <ng-container matColumnDef="qty">
-        <th class="th-style" fxFlex="20%" mat-header-cell *matHeaderCellDef>Qty</th>
-        <td class="tr-style" fxFlex="20%" mat-cell *matCellDef="let datax">
-          {{datax.qty}}
+        <td style="width: 20%; text-align: right;">
+          <span *ngIf="row.products">{{row.qty | number}}</span>
         </td>
-      </ng-container>
-      <ng-container matColumnDef="uom">
-        <th class="th-style" fxFlex="20%" mat-header-cell *matHeaderCellDef>Satuan</th>
-        <td class="tr-style" fxFlex="20%" mat-cell *matCellDef="let datax">
-          {{datax.uom.uom_name}}
+        <td style="width: 20%;">
+          <span *ngIf="row.uoms">{{row.uoms.uom_name}}</span>
         </td>
-      </ng-container> 
-      <ng-container matColumnDef="action">
-        <th class="th-style" fxFlex="10%" mat-header-cell *matHeaderCellDef></th>
-        <td class="tr-style text-right" fxFlex="10%" mat-cell *matCellDef="let datax">
-          <a class="add_stock" (click)="deleteBom(datax.id)">Hapus</a>
+        <td style="width: 10%;">
+          <span *ngIf="row.products"><a class="add_stock" (click)="deleteBundle(row.id)">Hapus</a></span>
+          <span *ngIf="!row.products"><a class="add_stock" style="color: #fff;">.</a></span>
         </td>
-      </ng-container>
-
-      <!--<tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeader"></tr>-->
-      <tr mat-row class="tableRow" 
-        *matRowDef="let row; columns: displayedColumnsBundle;"
-      ></tr>
-    </mat-table>
-
+      </ng-template>
+    </ngx-table>
+    
     <table class="table-new">
       <tr>
         <th class="th-new" style="border-left:1px solid #ccc;" fxFlex="40%"></th>

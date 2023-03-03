@@ -3,12 +3,11 @@ import { FormsModule, FormControl } from '@angular/forms';
 import { Observable, of } from "rxjs";
 import { Globals } from 'src/app/global';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, SortDirection } from '@angular/material/sort';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { DataFilter, filterOption } from 'src/app/models/datafilter';
+
+import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
@@ -32,16 +31,10 @@ export class BomComponent implements OnInit {
   products?: Product[];
   boms?: Bom[];
   uom?: Uom[];
+  bomes: any;
 
-  //Table
-  displayedColumns: string[] = 
-  ['product', 'line', 'action'];
-  dataSource = new MatTableDataSource<Product>();
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
-
-  //Dialog Data
-  clickedRows = null;
+  columns: Columns[];
+  configuration: Config;
 
   constructor(
     private router: Router,
@@ -67,43 +60,43 @@ export class BomComponent implements OnInit {
   }
 
   retrieveData(): void {
-    /*prod = prod.filter
-    (data => data.active === true)*/
     this.loaded = true;
-    /*this.bomService.getAll()
-      .subscribe(bom => {
-        
-      });*/
     this.bomService.findByProductAggr()
       .subscribe(bom => {
         this.loaded = false;
-        this.boms = bom;
-        this.dataSource.data = bom;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.bomes = bom;
+        this.columns = [
+          {key:'name', title:'Name', orderBy:'asc', width: '50%'},
+          {key:'totalline', title:'# of Component', width:'30%'},
+          {key:'', title:'Action', width:'20%'},
+        ];
+        this.configuration = { ...DefaultConfig };
+        this.configuration.columnReorder = true;
+        this.configuration.searchEnabled = false;
       })
   }
 
   openQuickAdd(): void {
     const dialog = this.dialog.open(BomDialogComponent, {
-      width: '98%',
-      height: '90%',
+      width: '100vh',
+      height: '100vw',
       disableClose: true
-      //data: id
     })
       .afterClosed()
       .subscribe(() => this.retrieveData());
   }
 
-  openDialog(id: String): void {
-    const dialog = this.dialog.open(BomDialogComponent, {
-      width: '98%',
-      height: '90%',
-      disableClose: true,
-      data: id
-    })
-      .afterClosed()
-      .subscribe(() => this.retrieveData());
+  openDialog($event: { event: string; value: any }): void {
+    if($event.event == "onClick"){
+      const dialog = this.dialog.open(BomDialogComponent, {
+        width: '100vh',
+        height: '100vw',
+        disableClose: true,
+        data: $event.value.row.product_id
+      })
+        .afterClosed()
+        .subscribe(() => this.retrieveData());
+    }
   }
 
   applyFilter(event: Event): void {

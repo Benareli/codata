@@ -82,35 +82,41 @@
       <div fxLayout="row" fxLayoutAlign="space-around center">
         <div style="text-align: left;" [innerText]="explain1"></div>
       </div>
+
     </div>
-    <div class="flexfull width90 padtop">
-      <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50">
-        <span class="flex33">POS prefix</span>
-        <input class="inputs text11 flex65" type="text" placeholder="POS Prefix" [(ngModel)]="idh.pre_pos_id">
+    <div class="flex-vertical global-setting">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="setting-title">Pengaturan Prefix</span>
       </div>
-      <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50 margin_7">
-        <span class="flex33">Transfer prefix</span>
-        <input class="inputs text11 flex65" type="text" placeholder="Transfer Prefix" [(ngModel)]="idh.pre_transfer_id">
+      <div class="flexfull width90 padtop">
+        <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50">
+          <span class="flex33">POS</span>
+          <input class="inputs text11 flex65" type="text" placeholder="POS Prefix" [(ngModel)]="prepos">
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50 margin_7">
+          <span class="flex33">Transfer</span>
+          <input class="inputs text11 flex65" type="text" placeholder="Transfer Prefix" [(ngModel)]="pretransfer">
+        </div>
       </div>
-    </div>
-    <div class="flexfull width90 padtop">
-      <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50">
-        <span class="flex33">Pembayaran prefix</span>
-        <input class="inputs text11 flex65" type="text" placeholder="Pembayaran Prefix" [(ngModel)]="idh.pre_pay_id">
+      <div class="flexfull width90 padtop">
+        <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50">
+          <span class="flex33">Pembayaran</span>
+          <input class="inputs text11 flex65" type="text" placeholder="Pembayaran Prefix" [(ngModel)]="prepay">
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50 margin_7">
+          <span class="flex33">Pembelian</span>
+          <input class="inputs text11 flex65" type="text" placeholder="Pembelian Prefix" [(ngModel)]="prepurchase">
+        </div>
       </div>
-      <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50 margin_7">
-        <span class="flex33">Pembelian prefix</span>
-        <input class="inputs text11 flex65" type="text" placeholder="Pembelian Prefix" [(ngModel)]="idh.pre_purchase_id">
-      </div>
-    </div>
-    <div class="flexfull width90 padtop">
-      <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50">
-        <span class="flex33">Jurnal prefix</span>
-        <input class="inputs text11 flex65" type="text" placeholder="Jurnal Prefix" [(ngModel)]="idh.pre_journal_id">
-      </div>
-      <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50 margin_7">
-        <span class="flex33">Hutang prefix</span>
-        <input class="inputs text11 flex65" type="text" placeholder="Hutang Prefix" [(ngModel)]="idh.pre_bill_id">
+      <div class="flexfull width90 padtop">
+        <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50">
+          <span class="flex33">Jurnal</span>
+          <input class="inputs text11 flex65" type="text" placeholder="Jurnal Prefix" [(ngModel)]="prejournal">
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between end" class="flex50 margin_7">
+          <span class="flex33">Hutang</span>
+          <input class="inputs text11 flex65" type="text" placeholder="Hutang Prefix" [(ngModel)]="prebill">
+        </div>
       </div>
     </div>
     <div class="flex-vertical global-setting padtop"></div>
@@ -172,7 +178,7 @@
               <th class="th-style" fxFlex="35%" mat-header-cell *matHeaderCellDef>Warehouse</th>
               <td class="tr-style" fxFlex="35%" mat-cell *matCellDef="let stores">
                 <span *ngIf="stores.active==false" class="inactive">&nbsp;&nbsp;</span>
-                {{stores.warehouse.name}}</td>
+                {{stores.warehouse_id}}</td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns;" class="tableHeader"></tr>

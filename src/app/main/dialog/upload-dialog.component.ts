@@ -191,27 +191,27 @@ export class UploadDialogComponent implements OnInit {
     if(this.data=="brand"){
       this.brandService.createMany(this.globals.userid, this.datas)
         .subscribe(dat => {
-          this.success=true; this.msgsuccess="Data Uploaded!"
+          this.success=true; this.msgsuccess="Data Uploaded!"; this.closeDialog();
         }, error => {this.alerted=true;this.message="Line "+error.error[0]+" duplicated!"})
     }else if(this.data=="product category"){
       this.productCatService.createMany(this.globals.userid, this.datas)
         .subscribe(dat => {
-          this.success=true; this.msgsuccess="Data Uploaded!"
+          this.success=true; this.msgsuccess="Data Uploaded!"; this.closeDialog();
         }, error => {this.alerted=true;this.message="Line "+error.error[0]+" duplicated!"})
     }else if(this.data=="warehouse"){
       this.warehouseService.createMany(this.globals.userid, this.datas)
         .subscribe(dat => {
-          this.success=true; this.msgsuccess="Data Uploaded!"
+          this.success=true; this.msgsuccess="Data Uploaded!"; this.closeDialog();
         }, error => {this.alerted=true;this.message="Line "+error.error[0]+" duplicated!"})
     }else if(this.data=="partner"){
       this.partnerService.createMany(this.globals.userid, this.datas)
         .subscribe(dat => {
-          this.success=true; this.msgsuccess="Data Uploaded!"
+          this.success=true; this.msgsuccess="Data Uploaded!"; this.closeDialog();
         }, error => {this.alerted=true;this.message="Line "+error.error[0]+" duplicated!"})
     }else if(this.data=="product"){
       this.productService.createMany(this.globals.userid, this.datas)
         .subscribe(dat => {
-          this.success=true; this.msgsuccess="Data Uploaded!"
+          this.success=true; this.msgsuccess="Data Uploaded!"; this.closeDialog();
         }, error => {console.log(error.error);
           this.alerted=true;this.message="Line "+error.error[0]+" duplicated/skipped(Category no match)!"})
     }

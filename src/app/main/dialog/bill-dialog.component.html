@@ -6,7 +6,7 @@
       <div class="exitbtn">
         <span *ngIf="data.lock" class="widget" style="background: #28B463; color: white; border-radius: 3pt; padding: 10pt; margin-right: 3pt;" (click)="changeLock()">Posted</span>
         <span *ngIf="!data.lock" class="widget" style="background: #C70039; color: white; border-radius: 3pt; padding: 10pt; margin-right: 3pt;" (click)="changeLock()">Unposted</span>
-        <span *ngIf="data.lock" (click)="startPay()" class="text-gradient widget" style="border-radius: 3pt; margin-right: 3pt;">Pay <i class="fa fa-money"></i><i class="fa fa-chevron-right"></i></span>
+        <span *ngIf="data.lock && amountdue > 0" (click)="startPay()" class="text-gradient widget" style="border-radius: 3pt; margin-right: 3pt;">Pay <i class="fa fa-money"></i><i class="fa fa-chevron-right"></i></span>
         <button class="close_btn" mat-button (click)="closeDialog()">X</button>
       </div>
     </div>
@@ -44,7 +44,35 @@
   </div>
 
   <div class="table-container" style="margin-top: 10pt;">
-    <mat-table #table [dataSource]="dataSource" class="mat-table">
+    <ngx-table [configuration]="configuration"
+        [data]="payables"
+        [columns]="columns">
+           <!--(event)="openDialog($event)">-->
+      <ng-template let-row let-index="index">
+        <td>
+          {{row.label}}
+        </td>
+        <td>
+          {{row.qty | number}}
+        </td>
+        <td>
+          {{row.price_unit | number}}
+        </td>
+        <td>
+          {{row.discount | number}}
+        </td>
+        <td>
+          {{row.tax | number}}
+        </td>
+        <td>
+          {{row.subtotal | number}}
+        </td>
+        <td>
+          Del
+        </td>
+      </ng-template>
+    </ngx-table>
+    <!--<mat-table #table [dataSource]="dataSource" class="mat-table">
       <ng-container matColumnDef="label">
         <th class="th-style" fxFlex="35%" mat-header-cell *matHeaderCellDef>Label</th>
         <td class="tr-style" fxFlex="35%" mat-cell *matCellDef="let datas">
@@ -86,10 +114,10 @@
       <tr mat-row class="tableRow" 
         *matRowDef="let row; columns: displayedColumns;"  
       ></tr>
-    </mat-table>
+    </mat-table>-->
     <div fxLayout="row">
       <div class="flex50">
-        <mat-table #table [dataSource]="dataSourcePay" class="mat-table" style="margin-top: 20pt;">
+        <!--<mat-table #table [dataSource]="dataSourcePay" class="mat-table" style="margin-top: 20pt;">
           <ng-container matColumnDef="label">
             <th class="th-style text-center" fxFlex="40%" mat-header-cell *matHeaderCellDef>Method</th>
             <td class="tr-style text-left" fxFlex="40%" mat-cell *matCellDef="let datas">
@@ -113,7 +141,12 @@
           <tr mat-row class="tableRow" 
             *matRowDef="let row; columns: displayedColumnsPay;"  
           ></tr>
-        </mat-table>
+        </mat-table>-->
+        <ngx-table [configuration]="configurationPay"
+          [data]="paymentx"
+          [columns]="columnsPay">
+           <!--(event)="openDialog($event)">-->
+        </ngx-table>
       </div>
       <div class="flex50">
         <table class="table-new text-right" style="margin-top:2pt;">
@@ -139,7 +172,7 @@
           </tr>
           <tr>
             <td class="td-total" fxFlex="50%">Outstanding</td>
-            <td class="td-total text-right" fxFlex="43%">Rp. {{thistotal - payments | number}}</td>
+            <td class="td-total text-right" fxFlex="43%">Rp. {{amountdue | number}}</td>
             <td class="td-total" fxFlex="2%"></td>
           </tr>
         </table>

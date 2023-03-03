@@ -16,10 +16,10 @@
            (event)="openDialog($event)">
     <ng-template let-row let-index="index">
       <td (click)="openDialog(row)">
-        {{row.journal_id}}
+        {{row.name}}
       </td>
       <td (click)="openDialog(row)">
-        {{row.partner.name}}
+        {{row.partners.name}}
       </td>
       <td (click)="openDialog(row)">
         {{row.amount | number}}

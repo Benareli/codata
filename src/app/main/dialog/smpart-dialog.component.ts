@@ -35,8 +35,8 @@ export class SmpartDialogComponent implements OnInit {
   partners?: Partner[];
   warehouses?: Warehouse[];
   products?: Product[];
-  supplierString?: string;
-  warehouseString?: string;
+  supplierString?: number;
+  warehouseString?: number;
   datqty?: any;
   datdate?: string;
 
@@ -94,8 +94,8 @@ export class SmpartDialogComponent implements OnInit {
   retrievePO(): void {
     this.purchaseService.get(this.data)
       .subscribe(dataPO => {
-        this.supplierString = dataPO.supplier._id;
-        this.warehouseString = dataPO.warehouse._id;
+        this.supplierString = dataPO.partner_id;
+        this.warehouseString = dataPO.warehouse_id;
         this.purchaseid = dataPO.purchase_id;
         this.retrievePODetail();
       })
@@ -106,7 +106,7 @@ export class SmpartDialogComponent implements OnInit {
   }
 
   retrievePODetail(): void {
-    this.purchasedetailService.getByPOId(this.purchaseid)
+    this.purchasedetailService.getByPOId(this.data)
       .subscribe(POD => {
         if(this.datas[0].product=='') this.datas.splice(0,1);
           for(let x=0;x<POD.length;x++){

@@ -66,6 +66,7 @@ export class WarehouseComponent implements OnInit {
   retrieveWarehouse(): void {
     this.warehouseService.getAll()
       .subscribe(wh => {
+        console.log(wh);
         if(this.isIM || this.isAdm){
           this.warehouses = wh;
         }else{
@@ -73,7 +74,8 @@ export class WarehouseComponent implements OnInit {
         }
         this.columns = [
           {key:'short', title:'Short', width: '30%'},
-          {key:'name', title:'Name', orderBy:'asc', width:'70%'}
+          {key:'name', title:'Name', orderBy:'asc', width:'35%'},
+          {key:'companys.comp_name', title:'Company', width:'35%'}
         ];
         this.configuration = { ...DefaultConfig };
         this.configuration.columnReorder = true;
@@ -109,8 +111,11 @@ export class WarehouseComponent implements OnInit {
   openDialog($event: { event: string; value: any }) {
     if($event.event == "onClick"){
       const dialog = this.dialog.open(WarehouseDialogComponent, {
-        width: '98%',
-        height: '90%',
+        maxWidth: '98vw',
+        maxHeight: '98vh',
+        height: '100%',
+        width: '100%',
+        panelClass: 'full-screen-modal',
         disableClose: true,
         data: $event.value.row
       })

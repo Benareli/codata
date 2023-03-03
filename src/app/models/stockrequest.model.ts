@@ -14,4 +14,6 @@ export class Stockrequest {
     totalLine?: number;
     totalQin?: number;
     totalQout?: number;
+    user_id?: number;
+    users?: any;
 }

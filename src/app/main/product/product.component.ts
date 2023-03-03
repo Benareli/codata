@@ -42,24 +42,6 @@ export class ProductComponent implements OnInit {
   dattoggle?: string = "true";
   toggle?: boolean = true;
 
-  //filterCat: string = '';
-  //filterBrand: string = '';
-  
-  //View
-  //currentProduct: Product = {};
-  //searchProd='';
-
-  //Table
-  /*displayedColumns: string[] = 
-  ['name', 'qty', 'uom', 'listprice',
-  'category', 'brand', 'stock'];
-  dataSource = new MatTableDataSource<Product>();
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;*/
-
-  //Dialog Data
-  //clickedRows = null;
-
   columns: Columns[];
   configuration: Config;
 
@@ -105,8 +87,6 @@ export class ProductComponent implements OnInit {
   }
 
   retrieveProduct(): void {
-    /*prod = prod.filter
-    (data => data.active === true)*/
     this.loaded = true;
     this.productService.getAll()
       .subscribe(prod => {
@@ -119,10 +99,10 @@ export class ProductComponent implements OnInit {
         this.columns = [
           {key:'name', title:'Name', orderBy:'asc', width: '40%'},
           {key:'qoh', title:'Qty', width:'7%'},
-          {key:'suomName', title:'Uom', width:'7%'},
+          {key:'uoms.uom_name', title:'Uom', width:'7%'},
           {key:'listprice', title:'Sale Price', width:'10%'},
-          {key:'categoryName', title:'Category', width:'10%'},
-          {key:'brandName', title:'Brand', width:'10%'}
+          {key:'productcats.description', title:'Category', width:'10%'},
+          {key:'brands.description', title:'Brand', width:'10%'}
         ];
         this.configuration = { ...DefaultConfig };
         this.configuration.columnReorder = true;
@@ -138,71 +118,7 @@ export class ProductComponent implements OnInit {
       .subscribe(dataB => {
         this.brands = dataB;
       });
-    /*if(this.isIM || this.isAdm){
-      this.productService.getAll()
-        .subscribe(prod => {
-          this.loaded = false;
-          this.products = prod;
-          this.dataSource.data = prod;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-      });
-    }else{
-      this.productService.findAllActive()
-        .subscribe(prod => {
-          this.loaded = false;
-          this.products = prod;
-          this.dataSource.data = prod;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-      });
-    }*/
   }
-
-  /*searchActive(): void {
-    this.dataSource.data = this.products!.filter(prod => prod.active === true);
-  }
-  searchInactive(): void {
-    this.dataSource.data = this.products!.filter(prod => prod.active === false);
-  }
-
-  applyCatFilter(event: MatSelectChange) {
-    //this.dataSource.data = this.products!.filter(prod => prod.category._id === event.value);
-    this.filterCat = event.value;
-    this.filter();
-  }
-
-  applyBrandFilter(event: MatSelectChange) {
-    this.filterBrand = event.value;
-    this.filter();
-  }
-
-  filter(): void {
-    if(this.filterCat===''&&this.filterBrand===''){
-      this.retrieveProduct();
-    }else if(this.filterCat===''){
-      this.dataSource.data = this.products!
-        .filter(prod => 
-          prod.brand._id === this.filterBrand
-      );
-    }else if(this.filterBrand===''){
-      this.dataSource.data = this.products!
-        .filter(prod => 
-          prod.category._id === this.filterCat
-      );
-    }else{
-      this.dataSource.data = this.products!
-        .filter(prod => 
-          prod.brand._id === this.filterBrand &&
-          prod.category._id === this.filterCat
-      );
-    }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }*/
 
   onToggleChange(vals: string) {
     this.dattoggle = vals;
@@ -217,10 +133,13 @@ export class ProductComponent implements OnInit {
 
   openCard(product: Product): void {
     const dialog = this.dialog.open(ProductDialogComponent, {
-      width: '98%',
-      height: '90%',
+      maxWidth: '98vw',
+      maxHeight: '98vh',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
       disableClose: true,
-      data: product._id
+      data: product.id
     })
       .afterClosed()
       .subscribe(() => this.retrieveProduct());
@@ -229,10 +148,13 @@ export class ProductComponent implements OnInit {
   openDialog($event: { event: string; value: any }) {
     if($event.event == "onClick"){
       const dialog = this.dialog.open(ProductDialogComponent, {
-        width: '98%',
-        height: '90%',
+        maxWidth: '98vw',
+        maxHeight: '98vh',
+        height: '100%',
+        width: '100%',
+        panelClass: 'full-screen-modal',
         disableClose: true,
-        data: $event.value.row._id
+        data: $event.value.row.id
       })
         .afterClosed()
         .subscribe(() => this.retrieveProduct());
@@ -252,8 +174,11 @@ export class ProductComponent implements OnInit {
 
   openQuickAdd(): void {
     const dialog = this.dialog.open(ProductDialogComponent, {
-      width: '98%',
-      height: '90%',
+      maxWidth: '98vw',
+      maxHeight: '98vh',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
       disableClose: true,
     })
       .afterClosed()

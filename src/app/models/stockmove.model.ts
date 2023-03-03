@@ -10,7 +10,9 @@ export class Stockmove {
     qout?: number;
     cost?: number;
     date?: Date;
-    totalLine?: number;
-    totalQin?: number;
-    totalQout?: number;
+    totalline?: number;
+    totalqin?: number;
+    totalqout?: number;
+    user_id?: number;
+    users?: any;
 }

@@ -24,116 +24,29 @@
 	</div>
 </div>
 
-<!--<div fxLayout="row" fxLayoutAlign="space-around center" class="filtered" *ngIf="isShow">
-  <mat-form-field>
-    <mat-label>Kategori</mat-label>
-    <mat-select name="categoryString" (selectionChange)="applyCatFilter($event)">
-      <mat-option value="">All</mat-option>
-      <mat-option *ngFor="let productcat of productcats" [value]="productcat.id" ngDefaultControl [(ngModel)]="filterCat">
-        {{ productcat.description }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Merek</mat-label>
-    <mat-select name="brandString" (selectionChange)="applyBrandFilter($event)">
-      <mat-option value="">All</mat-option>
-      <mat-option *ngFor="let brand of brands" [value]="brand.id" ngDefaultControl [(ngModel)]="filterBrand">
-        {{ brand.description }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <div *ngIf="isIM || isAdm" fxLayout="column">
-    <button class="submit" style="font-size: .7em; margin-top:5pt" (click)="searchActive()">aktif</button>
-    <button class="submit pink" style="font-size: .65em; margin-top:5pt" (click)="searchInactive()">nonaktif</button>
-  </div>
-</div>-->
-
 <div class="table-container" *ngIf="toggle">
-<!--<mat-table #table [dataSource]="dataSource" class="mat-table">
-  <ng-container matColumnDef="name">
-    <th class="th-style" fxFlex="65%" mat-header-cell *matHeaderCellDef>Nama</th>
-    <td class="tr-style" fxFlex="65%" mat-cell *matCellDef="let products">
-      <a (click)="openDialog(products.id)">
-        <span *ngIf="products.active==false" class="inactive">&nbsp;&nbsp;</span>{{products.name}}</a>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="qty">
-    <th class="th-style" fxFlex="7%" mat-header-cell *matHeaderCellDef>Qty</th>
-    <td class="tr-style" fxFlex="7%" mat-cell *matCellDef="let products">
-      <div *ngIf="products.fg"></div>
-      <div *ngIf="!products.fg" style="cursor: default;">
-      <a (click)="openDialog(products.id)">{{products.qoh}}</a></div>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="uom">
-    <th class="th-style" fxFlex="7%" mat-header-cell *matHeaderCellDef>Satuan</th>
-    <td class="tr-style" fxFlex="7%" mat-cell *matCellDef="let products">
-      <a (click)="openDialog(products.id)">{{products.suom.uom_name}}</a>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="listprice">
-    <th class="th-style" fxFlex="12%" mat-header-cell *matHeaderCellDef>Harga Jual</th>
-    <td class="tr-style" fxFlex="12%" mat-cell *matCellDef="let products">
-      <a (click)="openDialog(products.id)">{{products.listprice | number}}</a>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="category">
-    <th class="th-style" fxFlex="15%" mat-header-cell *matHeaderCellDef mat-sort-header>Kategori</th>
-    <td class="tr-style" fxFlex="15%" mat-cell *matCellDef="let products" style="cursor: default;">
-      {{products.category.description}}
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="brand">
-    <th class="th-style" fxFlex="15%" mat-header-cell *matHeaderCellDef>Merek</th>
-    <td class="tr-style" fxFlex="15%" mat-cell *matCellDef="let products">
-      <div *ngIf="!products.brand"></div>
-      <div *ngIf="products.brand" style="cursor: default;">
-      {{products.brand.description}}</div>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="stock">
-    <th class="th-style" fxFlex="43%" mat-header-cell *matHeaderCellDef>Aksi</th>
-    <td class="tr-style" fxFlex="43%" mat-cell *matCellDef="let products">
-      <div *ngIf="products.isStock == true">
-        <div *ngIf="products.fg"></div>
-        <div *ngIf="!products.fg && isIM" style="cursor: default;">
-        <a class="add_stock" (click)="openStockDialog(products.id)">Tambah Stock</a></div>
-      </div>
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="tableHeader"></tr>
-  <tr mat-row class="tableRow" 
-      *matRowDef="let row; columns: displayedColumns;"
-      
-      [class.active]="clickedRows == row"
-  ></tr>
-</mat-table>-->
-
   <ngx-table [configuration]="configuration"
            [data]="products"
            [columns]="columns"
            (event)="openDialog($event)">
     <ng-template let-row let-index="index">
-      <td (click)="openDialog(row.id)">
+      <td>
         {{row.name}}
       </td>
-      <td (click)="openDialog(row.id)">
+      <td>
         {{row.qoh | number}}
       </td>
-      <td (click)="openDialog(row.id)">
-        {{row.suomName}}
+      <td>
+        {{row.uoms.uom_name}}
       </td>
-      <td (click)="openDialog(row.id)" class="text-right">
+      <td>
         {{row.listprice | number}}
       </td>
-      <td (click)="openDialog(row.id)" class="text-right">
-        {{row.categoryName}}
+      <td>
+        {{row.productcats.description}}
       </td>
-      <td (click)="openDialog(row.id)" class="text-right">
-        {{row.brandName}}
+      <td>
+        <span *ngIf="row.brands">{{row.brands.description}}</span>
       </td>
     </ng-template>
   </ngx-table>
@@ -155,7 +68,6 @@
               <font style="color: #999999">Cat: </font><font style="color: #666666">{{product.brandName}}</font><br/>
               {{product.qoh | number}} {{product.suomName}}
             </div>
-            <!--<div class="price">Rp {{product.listprice | number}}</div>-->
           </div>
         </mat-card-content>        
       </mat-card>
@@ -166,5 +78,4 @@
 
 <div fxLayout="row" fxLayoutAlign="space-between center">
   <button *ngIf="toggle" class="btn-gradient text-gradient upload" (click)="openUpload()">Unggah</button>
-  <!--<mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>-->
 </div>

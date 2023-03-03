@@ -9,4 +9,9 @@ export class Entry {
     qty?: number;
     uom?: string;
     date?: Date;
+    product_id?: number;
+    products?: any;
+    price_unit?: number;
+    discount?: number;
+    tax?: number;
 }

@@ -14,6 +14,8 @@ import { Stockmove } from 'src/app/models/stockmove.model';
 import { StockmoveService } from 'src/app/services/stockmove.service';
 import { Qop } from 'src/app/models/qop.model';
 import { QopService } from 'src/app/services/qop.service';
+import { Company } from 'src/app/models/company.model';
+import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
   selector: 'app-warehouse-dialog',
@@ -35,6 +37,8 @@ export class WarehouseDialogComponent implements OnInit {
   currShort?: string;
   log = 0;
 
+  companyid: number;
+  companys: Company[];
   smin: Stockmove[];
   smout: Stockmove[];
   whqop: Qop[];
@@ -48,6 +52,7 @@ export class WarehouseDialogComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private globals: Globals,
     private logService: LogService,
+    private companyService: CompanyService,
     private warehouseService: WarehouseService,
     private stockmoveService: StockmoveService,
     private qopService: QopService,
@@ -69,6 +74,7 @@ export class WarehouseDialogComponent implements OnInit {
       }
     this.currName = this.data.name;
     this.currShort = this.data.short;
+    this.companyid = this.data.company_id;
     
     this.columns = [
       {key:'product.name', title:'Product', width:'55%'},
@@ -115,7 +121,10 @@ export class WarehouseDialogComponent implements OnInit {
     this.qopService.getWhQop(this.data.id)
       .subscribe(whqop => {
         this.whqop = whqop;
-        console.log(this.whqop);
+      })
+    this.companyService.getAll()
+      .subscribe(comp => {
+        this.companys = comp;
       })
   }
 

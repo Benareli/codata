@@ -23,9 +23,9 @@
     <table class="table-new" style="margin-top: 20pt;">
       <tr>
         <td fxFlex="40%"></td>
-        <td fxFlex="15%"></td>
-        <td fxFlex="15%"><button (click)="billrec()" class="save_btn" style="font-size: 12pt;">bill by </button></td>
         <td fxFlex="15%"><button (click)="billall()" class="save_btn" style="font-size: 12pt;">bill by </button></td>
+        <td fxFlex="15%"><button (click)="billrec()" class="save_btn" style="font-size: 12pt;">bill by </button></td>
+        <td fxFlex="15%"></td>
         <td fxFlex="15%"></td>
       </tr>
       <tr>
@@ -40,7 +40,7 @@
     <mat-table #table [dataSource]="dataSource" class="mat-table">
       <ng-container matColumnDef="product">
         <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let datas">
-          <span *ngIf="datas.purchase_id">{{datas.product.name}}</span>
+          <span *ngIf="datas.purchase_id">{{datas.products.name}}</span>
           <span *ngIf="!datas.purchase_id">{{datas.product}}</span>
         </td>
       </ng-container>
@@ -62,6 +62,11 @@
       <ng-container matColumnDef="qty_inv">
         <td class="tr-style text-right" fxFlex="15%" mat-cell *matCellDef="let datas; let index = index">
           <input type="number" style="border: none; border-bottom: 2px dashed #666; text-align: right; width: 95%;" [value]="datas.qty_rec" [(ngModel)]="datas.qty_rec" (keyup)="editPO(dataSource.filteredData.indexOf(datas))"/>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="uom">
+        <td class="tr-style text-right" fxFlex="15%" mat-cell *matCellDef="let datas">
+          {{datas.uoms.uom_name}}
         </td>
       </ng-container>
 

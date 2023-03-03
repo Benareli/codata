@@ -115,8 +115,11 @@ export class ProductCatComponent implements OnInit {
   openDialog($event: { event: string; value: any }) {
     if($event.event == "onClick"){
       const dialog = this.dialog.open(ProductcatDialogComponent, {
-        width: '98%',
-        height: '90%',
+        maxWidth: '98vw',
+        maxHeight: '98vh',
+        height: '100%',
+        width: '100%',
+        panelClass: 'full-screen-modal',
         disableClose: true,
         data: $event.value.row
       })

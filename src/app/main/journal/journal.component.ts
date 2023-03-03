@@ -37,7 +37,7 @@ export class JournalComponent implements OnInit {
   
   nestedConfiguration: Config;
   nestedColumns: Columns[] = [
-    {key:'label', title:'Label', width:'50%'},
+    {key:'label', title:'Account', width:'50%'},
     {key:'debit', title:'Debit', width:'15%'},
     {key:'credit', title:'Credit', width:'15%'},
   ];
@@ -57,10 +57,10 @@ export class JournalComponent implements OnInit {
     this.checkRole();
 
     this.columns = [
-      {key:'journal_id', title:'Journal ID', width: '30%'},
-      {key:'origin', title:'Origin', width:'30%'},
+      {key:'name', title:'Journal ID', width: '25%'},
+      {key:'origin', title:'Origin', width:'25%'},
       {key:'amount', title:'Amount', width:'20%'},
-      {key:'date', title:'Date', orderBy:'desc', width:'12%'},
+      {key:'date', title:'Date', orderBy:'desc', width:'22%'},
       {key:'',title:'Quick View', width:'8%'}
     ];
     this.configuration = { ...DefaultConfig };
@@ -93,7 +93,8 @@ export class JournalComponent implements OnInit {
   retrieveData(): void {
     this.journalService.getAll()
       .subscribe(journal => {
-        this.journals = Array.from(new Map(journal.reverse().map(item => [item.journal_id, item])).values());
+        this.journals = journal;
+        //this.journals = Array.from(new Map(journal.reverse().map(item => [item.journal_id, item])).values());
         /*this.dataSource.data = Array.from(new Map(journal.reverse().map(item => [item.journal_id, item])).values());
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;*/
@@ -111,7 +112,7 @@ export class JournalComponent implements OnInit {
 
     this.journalService.get(row)
       .subscribe(ent => {
-        this.entries = ent!.entries!;
+        this.entries = ent.entrys;
         if (this.toggledRows.has(index)) {
           this.toggledRows.delete(index);
         }else{
@@ -132,8 +133,11 @@ export class JournalComponent implements OnInit {
 
   openDialog(row: any) {
     const dialog = this.dialog.open(EntryDialogComponent, {
-      width: '98%',
-      height: '90%',
+      maxWidth: '98vw',
+      maxHeight: '98vh',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
       disableClose: true,
       data: row
     })
