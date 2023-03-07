@@ -1,0 +1,340 @@
+@import 'variable'
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@100;200;300;400;500;600;700;800;900&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@100;200;300;400;500;600;700;800;900&display=swap')
+
+/* Container */
+.container
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    text-align: center
+    padding-top: 1rem
+    padding-bottom: .7rem
+    padding-left: .5rem
+    padding-right: 1rem
+    justify-content: space-between
+    font-family: 'Anek Bangla', sans-serif
+
+.dialog-container
+    position: relative
+    width: 100%
+    min-height: 100%
+    height: 100%
+    overflow: hidden
+
+.widget
+    border: 1px solid #ccc
+    border-radius: 10pt
+    cursor: pointer
+    text-align: center
+    font-size: 13px
+    width: 100%
+    height: 7rem
+    padding-top: .5rem
+    text-transform: uppercase
+    letter-spacing: 1px
+    line-height: 13px
+
+/* Font */
+.font-primary
+    font-family: 'Aleo'
+
+.font-secondary
+    font-family: 'Anek Bangla'
+
+.text-shadow
+    text-shadow: 0 1px 1px #888
+
+::ng-deep .mat-tab-label .mat-tab-label-content
+    color: #333 !important
+    font-family: 'Aleo' !important
+    text-transform: uppercase !important
+
+::ng-deep .mat-tab-label-active
+    color: #000 !important
+
+::ng-deep .mat-slide-toggle-content
+    font-family: 'Aleo'
+
+::ng-deep .mat-button-toggle
+    font-family: 'Aleo'
+
+::ng-deep .mat-checkbox
+    font-family: 'Aleo'
+
+/* Title */
+.title
+    font-size: 20px
+    font-weight: 400
+    padding-right: 3rem
+    padding-left: 0rem
+    border-bottom: 2px solid map-get($colors, 'gray')
+    margin-bottom: 2rem
+    text-transform: uppercase
+    letter-spacing: 1pt
+    font-weight: 500
+    font-family: 'Anek Bangla'
+
+.dialog-title
+    font-size: 20px
+    font-weight: 400
+    padding-right: 1rem
+    padding-left: 1rem
+    border-bottom: 2px solid map-get($colors, 'secondary')
+    margin-bottom: 2rem
+    text-transform: uppercase
+    letter-spacing: 1pt
+    font-weight: 500
+    font-family: 'Anek Bangla'
+
+::ng-deep .mat-ink-bar
+    background-color: var(--primary-color, map-get($colors, 'primary')) !important
+
+::ng-deep .mat-tab-list .mat-tab-labels
+    color: #333
+
+::ng-deep .mat-tab-label-active
+    color: #000
+
+/* Input */
+.input
+    width: 90%
+    border-bottom: 2px solid map-get($colors, 'gray')
+    padding-bottom: .2rem
+    padding-left: 1rem
+    padding-right: 1rem
+.input:focus
+    border-bottom: 2px solid map-get($colors, 'primary')
+
+/* Toggle */
+.switch
+    position: relative
+    display: inline-block
+    width: 52px
+    height: 26px
+
+.switch input 
+    opacity: 0
+    width: 0
+    height: 0
+
+.slider
+    position: absolute
+    cursor: pointer
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: #ccc
+    transition: .4s
+    border-radius: 34px
+
+.slider:before
+    position: absolute
+    content: ""
+    height: 18px
+    width: 18px
+    left: 4px
+    bottom: 4px
+    background-color: white
+    transition: .4s
+    border-radius: 50%
+
+input:checked + .slider
+    background: linear-gradient(45deg, map-get($colors, 'primary') 0%, map-get($colors, 'secondary') 100%)
+
+input:focus + .slider
+    box-shadow: 0 0 1px #2196F3
+
+input:checked + .slider:before 
+    transform: translateX(26px)
+
+/* Mat Button Toggle */
+mat-button-toggle-group
+    padding:0px !important
+    align-items: center
+    height: 23pt
+
+mat-button-toggle
+    font-size: .8em
+    padding: -5pt
+    width: 60pt
+    background-color: white
+
+.mat-button-toggle-checked
+    background: linear-gradient(45deg, map-get($colors, 'primary') 0%, map-get($colors, 'secondary') 100%)
+    color: white
+
+/* Button */
+@mixin gradient-text($angle: 45deg, $color: map-get($colors, 'primary'), $pink: map-get($colors, 'secondary'), $amount: 0%)
+    color: $color
+    background: -webkit-linear-gradient($angle, $color, adjust-hue($pink, $amount))
+    -webkit-text-fill-color: transparent
+    -webkit-background-clip: text
+    display: inline-block
+
+.btn-rainbow
+    background: linear-gradient(45deg, map-get($colors, 'primary') 0%, map-get($colors, 'secondary') 100%)
+    border: 0
+    border-radius: 7pt
+    padding: 1px
+    display: inline-flex
+    justify-content: center
+    align-items: center
+    box-shadow: 2px 2px 3px 1px #ccc
+
+.btn-white
+    border: 0
+    background: linear-gradient(180deg, map-get($colors, 'white') 0%, map-get($colors, 'lightgray') 100%)
+    padding: 4pt 10pt
+    border-radius: 6pt
+    display: inline-flex
+    justify-content: center
+    align-items: center
+
+.btn-gradient
+    border: 0
+    font-size: 1.1em
+    font-family: 'Aleo', serif
+    font-weight: 400
+    text-transform: uppercase
+    letter-spacing: 1pt
+
+.text-gradient
+    @include gradient-text
+
+.btn-primary
+    border-radius: .5rem
+    padding: .5rem 1.5rem
+    color: white
+    background-color: map-get($colors, 'primary')
+    text-transform: uppercase
+    letter-spacing: 1pt
+    box-shadow: 2px 2px 3px 1px #ccc
+
+.btn-quick
+    color: #3f5efb 
+    font-family: 'Aleo', serif
+    background: none
+    border: 0
+    width: 75pt
+    font-size: 14px
+    text-transform: uppercase
+    letter-spacing: 1pt
+    border-bottom: 2px solid map-get($colors, 'gray')
+    text-shadow: 0 1px 2px #aaa
+
+    &-left
+        padding-left: 0em
+        padding-right: 2em
+        padding-bottom: .5em
+
+    &-right
+        padding-left: 2em
+        padding-right: 0em
+        padding-bottom: .5em
+
+/* Table */
+mat-table
+    background: #fff
+    text-size: 16px
+    font-family: 'Aleo'
+    width: 100%
+    display: flex
+    flex-direction: column
+  
+    .table-header
+        background: #333
+        height: 23pt
+        padding: 5pt
+        border: 0
+        text-size: 15px
+        text-transform: uppercase
+
+    .table-row
+        border-bottom: 1px solid map-get($colors, 'lightgray')
+        padding: .3rem
+        height: 33px
+        color: #444
+        font-family: 'Aleo'
+
+    .th-style
+        color: #333
+        font-weight: 400
+        border: 0
+
+    .td-style
+        color: map-get($colors, 'dark')
+        font-weight: 500
+        font-size: 16px
+        border: 0
+
+.inactive
+    width:11pt !important
+    background: red
+    color: red
+    border-radius:11pt
+
+/* Ngx Easy Table */
+::ng-deep .ngx-table
+    font-family: 'Aleo'
+    letter-spacing: 1px
+
+::ng-deep .ngx-table th
+    padding: 2px 4px
+    font-weight: 700
+    line-height: 13px
+
+::ng-deep .ngx-table td
+    padding: 2px 4px
+    font-weight: 400
+    line-height: 15px
+
+::ng-deep .ngx-table__table--hoverable > tbody tr:hover
+    background: map-get($colors, 'lightgray')
+
+::ng-deep .ngx-pagination
+    font-family: 'Aleo'
+    font-size: 12px
+    display: inline-block
+    border: 0
+    margin-left: 0
+    margin-bottom: 1rem
+    -webkit-padding-start: 0
+    -webkit-margin-before: 0
+
+::ng-deep .ngx-pagination li
+    border-radius: 5px
+
+::ng-deep .ngx-pagination li.current
+    border: 1px solid map-get($colors, 'lightgray')
+
+::ng-deep .ngx-pagination .current
+    background: linear-gradient(45deg, map-get($colors, 'primary') 0%, map-get($colors, 'secondary') 100%)
+
+::ng-deep .ngx-pagination-range
+    font-family: 'Aleo'
+    border-radius: 5px
+    font-size: 12px
+
+::ng-deep .ngx-pagination-range-dropdown-button
+    border-radius: 5px
+
+/* Ul Li */
+ul.dropdown
+    position: absolute
+    margin-top: 0pt
+    z-index: 9999
+    width: 20%
+    padding: 0pt 10pt
+    background: #fff
+    border-radius: 10pt
+    box-shadow: 5px 5px 20px 1px #dedede
+
+    li
+        list-style-type: none
+        text-align: left
+        padding: 4pt
+
+    li:hover
+        background: #ddd

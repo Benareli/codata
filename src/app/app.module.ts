@@ -36,100 +36,137 @@ import { AppRoutingModule } from './app-routing.module';
 import { TableModule } from 'ngx-easy-table';
 import { NgxFileDragDropModule } from 'ngx-file-drag-drop';
 import { WebdatarocksPivotModule } from 'ng-webdatarocks';
+import { authInterceptorProviders } from './_helpers/auth.interceptor';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './landing/login/login.component';
-import { HomeComponent } from './main/home/home.component';
+import { HomeComponent } from './components/main/home/home.component';
 
-import { authInterceptorProviders } from './_helpers/auth.interceptor';
-import { RegisterComponent } from './landing/register/register.component';
-import { ProductCatComponent } from './main/product-cat/product-cat.component';
-import { BrandComponent } from './main/brand/brand.component';
-import { ProductComponent } from './main/product/product.component';
-import { UomComponent } from './main/uom/uom.component';
-import { WarehouseComponent } from './main/warehouse/warehouse.component';
-import { PartnerComponent } from './main/partner/partner.component';
-import { PosComponent } from './main/pos/pos.component';
-import { PosSessionComponent } from './main/pos-session/pos-session.component';
-import { SettingComponent } from './backend/setting/setting.component';
-import { ProfileComponent } from './backend/profile/profile.component';
-import { PurchaseComponent } from './main/purchase/purchase.component';
-import { StockmoveComponent } from './main/stockmove/stockmove.component';
-import { JournalComponent } from './main/journal/journal.component';
-import { BomComponent } from './main/bom/bom.component';
-import { PayableComponent } from './main/payable/payable.component';
-import { SaleComponent } from './main/sale/sale.component';
-import { ReceivableComponent } from './main/receivable/receivable.component';
+//User Auth
+import { LoginComponent } from './components/user_auth/login/login.component';
+import { RegisterComponent } from './components/user_auth/register/register.component';
 
-import { HelpdeskComponent } from './main/helpdesk/helpdesk.component';
-import { PosReportComponent } from './main/report/pos-report/pos-report.component';
+//Settings
+import { CompanyComponent } from './components/settings/company/company.component';
+import { ProfileComponent } from './components/settings/profile/profile.component';
+import { SettingComponent } from './components/settings/setting/setting.component';
 
-import { BrandDialogComponent } from './main/dialog/brand-dialog.component';
-import { ProductDialogComponent } from './main/dialog/product-dialog.component';
-import { ProductcatDialogComponent } from './main/dialog/productcat-dialog.component';
-import { WarehouseDialogComponent } from './main/dialog/warehouse-dialog.component';
-import { PartnerDialogComponent } from './main/dialog/partner-dialog.component';
-import { StockMoveDialogComponent } from './main/dialog/stockmove-dialog.component';
-import { SMDetailDialogComponent } from './main/dialog/sm-detail-dialog.component';
-import { SmpartDialogComponent } from './main/dialog/smpart-dialog.component';
-import { PosdetailDialogComponent } from './main/dialog/posdetail-dialog.component';
-import { PaymentDialogComponent } from './main/dialog/payment-dialog.component';
-import { UploadDialogComponent } from './main/dialog/upload-dialog.component';
-import { PurchaseDialogComponent } from './main/dialog/purchase-dialog.component';
-import { SaleDialogComponent } from './main/dialog/sale-dialog.component';
-import { PrintposDialogComponent } from './main/dialog/printpos-dialog.component';
-import { EntryDialogComponent } from './main/dialog/entry-dialog.component';
-import { UserroleDialogComponent } from './main/dialog/userrole-dialog.component';
-import { TaxDialogComponent } from './main/dialog/tax-dialog.component';
-import { StoreDialogComponent } from './main/dialog/store-dialog.component';
-import { BomDialogComponent } from './main/dialog/bom-dialog.component';
-import { BillcreateDialogComponent } from './main/dialog/billcreate-dialog.component';
-import { BillDialogComponent } from './main/dialog/bill-dialog.component';
-import { InvoicecreateDialogComponent } from './main/dialog/invoicecreate-dialog.component';
-import { InvoiceDialogComponent } from './main/dialog/invoice-dialog.component';
-import { TicketDialogComponent } from './main/dialog/ticket-dialog.component';
-import { CompanyComponent } from './backend/company/company.component';
+//Masterdata
+import { BomComponent } from './components/main/masterdata/bom/bom.component';
+import { BrandComponent } from './components/main/masterdata/brand/brand.component';
+import { PartnerComponent } from './components/main/masterdata/partner/partner.component';
+import { ProductComponent } from './components/main/masterdata/product/product.component';
+import { ProductCatComponent } from './components/main/masterdata/product-cat/product-cat.component';
+import { UomComponent } from './components/main/masterdata/uom/uom.component';
+import { WarehouseComponent } from './components/main/masterdata/warehouse/warehouse.component';
+
+
+//Dialog
+//Masterdata
+import { BrandDialogComponent } from './components/main/dialog/masterdata/brand-dialog.component';
+import { PartnerDialogComponent } from './components/main/dialog/masterdata/partner-dialog.component';
+import { ProductDialogComponent } from './components/main/dialog/masterdata/product-dialog.component';
+import { ProductcatDialogComponent } from './components/main/dialog/masterdata/productcat-dialog.component';
+import { WarehouseDialogComponent } from './components/main/dialog/masterdata/warehouse-dialog.component';
+
+//Transaction
+import { SMDetailDialogComponent } from './components/main/dialog/stockmove/sm-detail-dialog.component';
+import { SmpartDialogComponent } from './components/main/dialog/stockmove/smpart-dialog.component';
+import { StockMoveDialogComponent } from './components/main/dialog/stockmove/stockmove-dialog.component';
+
+//Purchase
+import { PurchaseDialogComponent } from './components/main/dialog/purchase/purchase-dialog.component';
+
+//Accounting - Bill
+import { BillcreateDialogComponent } from './components/main/dialog/accounting/bill/billcreate-dialog.component';
+
+
+
+import { PosComponent } from './components/main/pos/pos.component';
+import { PosSessionComponent } from './components/main/pos-session/pos-session.component';
+
+import { PurchaseComponent } from './components/main/transaction/purchase/purchase.component';
+import { StockmoveComponent } from './components/main/transaction/stockmove/stockmove.component';
+import { JournalComponent } from './components/main/accounting/journal/journal.component';
+
+import { PayableComponent } from './components/main/accounting/payable/payable.component';
+import { SaleComponent } from './components/main/sale/sale.component';
+import { ReceivableComponent } from './components/main/accounting/receivable/receivable.component';
+import { HelpdeskComponent } from './components/main/helpdesk/helpdesk.component';
+import { PosReportComponent } from './components/main/report/pos-report/pos-report.component';
+
+import { PosdetailDialogComponent } from './components/main/dialog/posdetail-dialog.component';
+import { PaymentDialogComponent } from './components/main/dialog/payment-dialog.component';
+import { UploadDialogComponent } from './components/main/dialog/upload-dialog.component';
+import { SaleDialogComponent } from './components/main/dialog/sale-dialog.component';
+import { PrintposDialogComponent } from './components/main/dialog/printpos-dialog.component';
+import { EntryDialogComponent } from './components/main/dialog/entry-dialog.component';
+import { UserroleDialogComponent } from './components/main/dialog/userrole-dialog.component';
+import { TaxDialogComponent } from './components/main/dialog/tax-dialog.component';
+import { StoreDialogComponent } from './components/main/dialog/store-dialog.component';
+import { BomDialogComponent } from './components/main/dialog/bom-dialog.component';
+import { BillDialogComponent } from './components/main/dialog/bill-dialog.component';
+import { InvoicecreateDialogComponent } from './components/main/dialog/invoicecreate-dialog.component';
+import { InvoiceDialogComponent } from './components/main/dialog/invoice-dialog.component';
+import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     HomeComponent,
+
+    //User Auth
+    LoginComponent,
     RegisterComponent,
-    ProductCatComponent,
+
+    //Settings
+    CompanyComponent,
+    ProfileComponent,
+    SettingComponent,
+
+    //Masterdata
+    BomComponent,  
     BrandComponent,
+    PartnerComponent,
     ProductComponent,
+    ProductCatComponent,
     UomComponent,
     WarehouseComponent,
-    PartnerComponent,
+
+    //Dialog
+    //Masterdata
+    BrandDialogComponent,
+    PartnerDialogComponent,
+    ProductDialogComponent,
+    ProductcatDialogComponent,
+
+    //Stockmove
+    SMDetailDialogComponent,
+    SmpartDialogComponent,
+    StockMoveDialogComponent,
+
+    //Purchase
+    PurchaseDialogComponent,
+
+    //Accounting - Bill
+    BillcreateDialogComponent,
+
+
+
     PosComponent,
     PosSessionComponent,
-    SettingComponent,
-    ProfileComponent,
     PurchaseComponent,
-    UomComponent,
     StockmoveComponent,
     JournalComponent,
-    BomComponent,
+    
     PayableComponent,
     SaleComponent,
     ReceivableComponent,
-    
     HelpdeskComponent,
     PosReportComponent,
-    
-    ProductcatDialogComponent,
-    BrandDialogComponent,
-    ProductDialogComponent,
     WarehouseDialogComponent,
-    PartnerDialogComponent,
-    StockMoveDialogComponent,
-    SMDetailDialogComponent,
-    SmpartDialogComponent,
     PosdetailDialogComponent,
     PaymentDialogComponent,
     UploadDialogComponent,
-    PurchaseDialogComponent,
     SaleDialogComponent,
     PrintposDialogComponent,
     EntryDialogComponent,
@@ -137,12 +174,11 @@ import { CompanyComponent } from './backend/company/company.component';
     TaxDialogComponent,
     StoreDialogComponent,
     BomDialogComponent,
-    BillcreateDialogComponent,
     BillDialogComponent,
     InvoicecreateDialogComponent,
     InvoiceDialogComponent,
     TicketDialogComponent,
-    CompanyComponent,
+    
   ],
   imports: [
     BrowserModule,

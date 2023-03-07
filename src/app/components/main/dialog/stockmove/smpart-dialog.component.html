@@ -1,0 +1,85 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+  <div class="w-100 overflow-y-scroll">
+    <div class="flex flex-row justify-between items-center">
+      <span class="title">Terima Sebagian {{purchaseid}}</span>
+      <button class="text-danger p-1 mb-3" mat-button (click)="closeDialog()">X</button>
+    </div>
+
+    <div class="w-100 flex flex-col flex-md-row">
+      <div class="flex-100 flex-md-50 flex flex-row">
+        <div class="flex-30">Tanggal Terima</div>
+        <span class="flex-5">:</span>
+        <input type="date" class="input flex-65" [(ngModel)]="datdate" (ngModelChange)="changeDate()"/>
+      </div>
+      <div class="flex-100 flex-md-50 flex flex-row mt-2 mt-md-0 ml-0 ml-md-2">
+        <div class="flex-30">Warehouse</div>
+        <span class="flex-5">:</span>
+        <select class="input flex-65" [(ngModel)]="warehouseString" (ngModelChange)="changeWarehouse()">
+          <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+            {{ warehouse.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  
+    <table class="w-100 mt-2">
+      <tr class="py-1 border-y-1 border-solid border-gray bg-lightgray">
+        <th class="th-style" fxFlex="50%">Produk</th>
+        <th class="th-style" fxFlex="25%">Qty</th>
+        <th class="th-style" fxFlex="25%">Qty yang Diterima</th>
+      </tr>
+    </table>
+
+    <mat-table #table [dataSource]="dataSource" class="mat-table">
+      <ng-container matColumnDef="product">
+        <td class="td-style" fxFlex="50%" mat-cell *matCellDef="let datas">
+          <span *ngIf="datas.purchase_id">{{datas.products.name}}</span>
+          <span *ngIf="!datas.purchase_id">{{datas.product}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qty">
+        <td class="td-style text-right pr-3" fxFlex="25%" mat-cell *matCellDef="let datas">
+          {{datas.qty - datas.qty_done | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qty_done">
+        <td class="td-style text-right" fxFlex="25%" mat-cell *matCellDef="let datas; let index = index">
+          <input type="number" class="input pl-2" [value]="datas.qty_rec" [(ngModel)]="datas.qty_rec" (keyup)="editPO(dataSource.filteredData.indexOf(datas))"/>
+        </td>
+      </ng-container>
+
+      <tr mat-row class="table-row" 
+        *matRowDef="let row; let i = index; columns: displayedColumns;"></tr>
+    </mat-table>
+    <!--<form #elementsForm="ngForm">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="product">
+      <th mat-header-cell *matHeaderCellDef> Product </th>
+      <td mat-cell *matCellDef="let element; let index = index">
+          <input type="text" name="product-{{index}}" [(ngModel)]="element.product.name"/>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="qty">
+      <th mat-header-cell *matHeaderCellDef> Qty </th>
+      <td mat-cell *matCellDef="let datas; let index = index">
+          <input type="text" name="qty-{{index}}" [(ngModel)]="datas.qty"/>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="qyu_done">
+      <th mat-header-cell *matHeaderCellDef> Qty Done </th>
+      <td mat-cell *matCellDef="let datas; let index = index">
+          <input type="text" name="qty-{{index}}" [(ngModel)]="datas.qty"/>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let datas; let i = index; columns: displayedColumns;"></tr>
+  </table>
+  </form>-->
+  </div>
+
+  <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button [disabled]="isRes" class="w-100 p-2 btn-primary" (click)="closeBackDialog()">Simpan</button>
+  </div>
+</div>

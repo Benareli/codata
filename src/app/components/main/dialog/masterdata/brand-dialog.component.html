@@ -1,0 +1,28 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+<div class="w-100">
+  <div class="mb-3 flex flex-row justify-between items-center">
+    <div class="w-100 flex flex-row justify-between">
+      <mat-button-toggle-group #group="matButtonToggleGroup" [(value)]="statusActive" (change)="onValChange(group.value)">
+        <mat-button-toggle value="true">Aktif</mat-button-toggle>
+        <mat-button-toggle value="false">Nonaktif</mat-button-toggle>
+      </mat-button-toggle-group>
+      <div class="w-100 text-right">
+        <button class="text-danger p-1" mat-button (click)="closeDialog()">X</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-50 flex flex-row">
+    <div class="flex-30">Nama<sup>*</sup></div>
+    <span class="flex-5">:</span>
+    <input class="input flex-65" id="desc" required placeholder="Name" [(ngModel)]="data.description">
+  </div>
+</div>
+
+<div class="w-100 flex flex-row justify-between items-center">
+  <div class="w-90">
+    <button mat-button [disabled]="isRes" class="btn-primary w-90 py-2" (click)="updateData()">Simpan</button>
+  </div>
+  <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+</div>
+</div>

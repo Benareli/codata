@@ -1,0 +1,69 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+<div class="w-100">
+  <div class="mb-3 flex flex-row justify-between items-center">
+    <span class="title mb-0" name="datname" [innerText]="datname"></span>
+    <button class="text-danger p-1" mat-button (click)="closeDialog()">X</button>
+  </div>
+
+  <!--<mat-form-field class="input_field input_50">
+    <mat-label>Warehouse</mat-label>
+    <mat-select required name="warehouseString" (selectionChange)="selectedValue($event)" [(value)]="selectedWarehouse">
+      <mat-option *ngFor="let warehouse of warehouses" [value]="warehouse.id" ngDefaultControl [(ngModel)]="warehouse.name">
+        {{ warehouse.short }} - {{ warehouse.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="input_field margin_7 input_50">
+    <mat-label>Partner</mat-label>
+    <mat-select name="partnerString" (selectionChange)="selectedValue2($event)" [(value)]="selectedPartner">
+      <mat-option *ngFor="let partner of partners" [value]="partner.id" ngDefaultControl [(ngModel)]="partner.name">
+        {{ partner.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>-->
+
+  <div class="w-100 flex flex-col flex-md-row">
+    <div class="flex-100 flex-md-50 flex flex-row">
+      <div class="flex-30">Gudang</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [(ngModel)]="warehouseid">
+        <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+          {{ warehouse.short }} - {{ warehouse.name }}
+        </option>
+      </select>
+    </div>
+    <div class="flex-100 flex-md-50 flex flex-row ml-0 ml-md-2 mt-2 mt-md-0">
+      <div class="flex-30">Supplier</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [(ngModel)]="partnerid">
+        <option value=""></option>
+        <option *ngFor="let partner of partners" [value]="partner.id">
+          {{ partner.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="w-100 flex flex-col flex-md-row justify-between mt-2">
+    <div class="flex-25 flex flex-col justify-between overflow-hidden">
+      <span>Qty<sup>*</sup></span>
+      <input class="input" placeholder="Jumlah" type="number" [(ngModel)]="datqty">
+    </div>
+    <div class="flex-25 flex flex-col justify-between overflow-hidden ml-0 ml-md-2 mt-2 mt-md-0">
+      <span>Satuan<sup>*</sup></span>
+      <select class="input" [(ngModel)]="datuom">
+        <option *ngFor="let uom of uoms" [value]="uom.id">
+          {{ uom.uom_name }}
+        </option>
+      </select>
+    </div>
+    <div class="flex-25 flex flex-col justify-between overflow-hidden ml-0 ml-md-2 mt-2 mt-md-0">
+      <span>Harga Satuan<sup>*</sup></span>
+      <input class="input" placeholder="HPP" type="number" [(ngModel)]="datcost">
+    </div>
+  </div>
+</div>
+
+  <button mat-button class="submit btn-primary" (click)="createData()">Tambah</button>
+</div>

@@ -1,0 +1,65 @@
+<div class="container">
+	<div class="pl-2 h-2rem pt-1">
+		<a *ngIf="isPurM || isAdm" class="submit btn-quick btn-quick-left" (click)="addPurchase()">+ Add</a>
+	</div>
+
+	<div class="pr-2 h-2rem pt-1">
+    <a class="submit btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</a>
+	</div>
+</div>
+
+<div class="mx-3">
+  <ngx-table
+    [configuration]="configuration"
+    [data]="purchases"
+    [id]="'parent-table'"
+    #table
+    [detailsTemplate]="detailsTemplate"
+    [columns]="columns">
+    <ng-template let-row let-index="index">
+      <td (click)="openDialog(row.id)">
+        {{row.purchase_id}}
+      </td>
+      <td (click)="openDialog(row.id)">
+        {{row.date | date}}
+      </td>
+      <td (click)="openDialog(row.id)">
+        {{row.partners.name}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.amount_untaxed | number}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.discount | number}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.amount_tax | number}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        {{row.amount_total | number}}
+      </td>
+      <td (click)="openDialog(row.id)" class="text-right">
+        <span *ngIf="row.open" style="background: #A569BD; color: white; border-radius: 3pt; padding: 3pt;">Draft</span>
+        <span *ngIf="!row.open" style="background: #28B463; color: white; border-radius: 3pt; padding: 3pt;">Posted</span>
+      </td>
+      <td>
+        <button
+          class="save_btn"
+          id="expandButton-{{ index }}"
+          (click)="onRowClickEvent($event, index, row.purchase_id)">
+          <i class="fa fa-arrow-right" *ngIf="!toggledRows.has(index)"></i>
+          <i class="fa fa-arrow-down" *ngIf="toggledRows.has(index)"></i>
+          
+        </button>
+      </td>
+    </ng-template>
+  </ngx-table>
+  <ng-template #detailsTemplate let-row>
+    <ngx-table
+      [id]="'nested-table'"
+      [configuration]="configuration"
+      [data]="purchasedetails"
+      [columns]="nestedColumns">
+    </ngx-table>
+  </ng-template>
+</div>

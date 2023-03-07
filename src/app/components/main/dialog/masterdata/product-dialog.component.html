@@ -1,0 +1,408 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+<div class="w-100 overflow-y-scroll">
+  <div class="mb-3 flex flex-row justify-between items-center">
+    <div class="w-100 flex flex-row justify-between">
+      <mat-button-toggle-group #group="matButtonToggleGroup" [(value)]="statusActive" (change)="onValChange(group.value)">
+        <mat-button-toggle value="true">Aktif</mat-button-toggle>
+        <mat-button-toggle value="false">Nonaktif</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-button-toggle-group *ngIf="isNew" #group2="matButtonToggleGroup" [(value)]="datisstock" (change)="onStockChange(group2.value)">
+        <mat-button-toggle class="paddingstock" value="true">Stock</mat-button-toggle>
+        <mat-button-toggle class="paddingstock" value="false">Jasa</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-button-toggle-group *ngIf="!isNew" [disabled]="!isDis" #group2="matButtonToggleGroup" [(value)]="datisstock" (change)="onStockChange(group2.value)">
+        <mat-button-toggle class="paddingstock" value="true">Stock</mat-button-toggle>
+        <mat-button-toggle class="paddingstock" value="false">Jasa</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <div class="w-25 text-right flex flex-col flex-md-row items-center justify-end">
+        <div class="text-gradient uppercase text-12 order-2 order-md-1" *ngIf="!datfg && isIM" (click)="openStockDialog()">Add Stock</div>
+        <button class="text-danger p-1 ml-3 order-1 order-md-2" mat-button (click)="closeDialog()">X</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-100 flex flex-col flex-md-row">
+    <div class="flex-30">
+      <div class="flex flex-col border-3 border-dashed border-gray border-radius-2 mb-2 p-2">
+        <div class="flex flex-row justify-around items-start">
+          <ul *ngFor="let image of imageInfos | async" class="uldialog">
+            <li *ngIf="(image.name == oriimage)" class="uldialog">
+              <img src="{{ image.url }}" alt="{{ image.name }}" height="100px"/>
+            </li>
+          </ul>
+          <div><img style="max-height: 100px;" *ngFor='let preview of previews' [src]="preview" class="preview"></div>
+        </div>
+        <div class="flex flex-col justify-around">
+          <!--class="choosefile submit pink"-->
+          <input class="choosefile" type="file" accept="image/*" (change)="selectFiles($event)" />
+          <button class="btn-primary text-10 w-80" [disabled]="!selectedFiles" (click)="uploadFiles()">Unggah</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="flex-70 ml-md-3">
+      <div class="flex flex-col">
+        <div class="w-100 flex flex-col flex-md-row">
+          <div class="flex flex-row flex-50">
+            <div class="flex-30">SKU</div>
+            <span class="flex-5">:</span>
+            <input class="input flex-65" maxlength="10" placeholder="SKU" [(ngModel)]="datsku">
+          </div>
+
+          <div class="flex flex-row flex-50 ml-md-2 mt-2 mt-md-0">
+            <div class="flex-30">Barcode</div>
+            <span class="flex-5">:</span>
+            <input class="input flex-65" placeholder="Barcode" [(ngModel)]="datbarcode">
+          </div>
+        </div>
+        <div class="w-100 flex flex-row mt-2">
+          <div class="flex-30">Nama<sup>*</sup></div>
+          <span class="flex-5">:</span>
+          <input class="input flex-65" placeholder="Name" [(ngModel)]="datname">
+        </div>
+        <div class="w-100 flex flex-row mt-2">
+          <div class="flex-30">Deskripsi</div>
+          <span class="flex-5">:</span>
+          <input class="input flex-65" placeholder="Deskripsi" [(ngModel)]="datdesc">
+        </div>
+        <div class="w-100 flex flex-row mt-2">
+          <div class="flex-50">
+            <mat-slide-toggle *ngIf="isNew" [disabled]="datrm" [(ngModel)]="datfg">Bundle</mat-slide-toggle>
+            <mat-slide-toggle *ngIf="!isNew" (change)="onFGChange()" [disabled]="isDis || datrm" [(ngModel)]="datfg">Bundle</mat-slide-toggle>
+          </div>
+          <div class="flex-50">
+            <mat-slide-toggle *ngIf="isNew && isProdM" [disabled]="datfg" [(ngModel)]="datrm">Production</mat-slide-toggle>
+            <mat-slide-toggle *ngIf="!isNew && isProdM" (change)="onRMChange()" [disabled]="isDis || datfg" [(ngModel)]="datrm">Production</mat-slide-toggle>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<mat-tab-group mat-align-tabs="start" class="overflow-y-scroll h-40rem font-primary">
+  <!--TAB1-->
+  <mat-tab label="Detail">
+    <div class="w-100 flex flex-col flex-md-row mt-2">
+      <div class="flexx-100 flex-md-50">
+        <div class="flex flex-row">
+          <div class="flex-30">Harga Jual<sup>*</sup></div>
+          <span class="flex-5">:</span>
+          <input class="input flex-65" placeholder="Harga Jual" type="number" [(ngModel)]="datlprice">
+        </div>
+        <div class="flex flex-row mt-2">
+          <div class="flex-30">Harga Batas</div>
+          <span class="flex-5">:</span>
+          <input class="input flex-65" placeholder="0" type="number" [(ngModel)]="datbprice">
+        </div>
+        <div class="bg-warning-200 text-danger w-90 p-2 uppercase border-radius-1" role="alert" *ngIf="bbigger">Harga Batas tidak bisa lebih besar!</div>
+        <div class="flex flex-row mt-2">
+          <div class="flex-30">HPP</div>
+          <span class="flex-5">:</span>
+          <input class="input flex-65" placeholder="0" type="number" [(ngModel)]="datcost">
+        </div>
+        <div class="flex flex-col flex-md-row mt-2">
+          <div class="flex-100 flex-md-50 flex flex-row overflow-hidden">
+            <div class="flex-30">Pajak Masuk</div>
+            <span class="flex-5">:</span>
+            <select class="input flex-65" [(ngModel)]="taxinid">
+              <option value=""></option>
+              <option *ngFor="let tax of taxs" [value]="tax.id">
+                {{ tax.name }}
+              </option>
+            </select>
+          </div>
+          <div class="flex-100 flex-md-50 flex flex-row overflow-hidden ml-md-2 mt-2 mt-md-0">
+            <div class="flex-30">Pajak Keluar</div>
+            <span class="flex-5">:</span>
+            <select class="input flex-65" [(ngModel)]="taxoutid">
+              <option value=""></option>
+              <option *ngFor="let tax of taxs" [value]="tax.id">
+                {{ tax.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-col flex-md-row mt-2">
+          <div class="flex-100 flex-md-50 flex flex-row">
+            <div class="flex-30">Min</div>
+            <span class="flex-5">:</span>
+            <input class="input flex-65" placeholder="0" type="number" [(ngModel)]="datmin">
+          </div>
+          <div class="flex-100 flex-md-50 flex flex-row mt-2 mt-md-0 ml-md-2">
+            <div class="flex-30">Max</div>
+            <span class="flex-5">:</span>
+            <input class="input flex-65" placeholder="0" type="number" [(ngModel)]="datmax">
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-100 flex-md-50 ml-md-3">
+        <div class="flex flex-row mt-2 mt-md-0">
+          <div class="flex-30">Kategori<sup>*</sup></div>
+          <span class="flex-5">:</span>
+          <select class="input flex-65" [(ngModel)]="categoryid">
+            <option value=""></option>
+            <option *ngFor="let productcat of productcats" [value]="productcat.id">
+              {{ productcat.description }}
+            </option>
+          </select>
+        </div>
+
+        <div class="flex flex-row mt-2">
+          <div class="flex-30">Merek</div>
+          <span class="flex-5">:</span>
+          <select class="input flex-65" [(ngModel)]="brandid">
+            <option value=""></option>
+            <option *ngFor="let brand of brands" [value]="brand.id">
+              {{ brand.description }}
+            </option>
+          </select>
+        </div>
+
+        <div class="flex flex-row mt-2">
+          <div class="flex-30">Supplier</div>
+          <span class="flex-5">:</span>
+          <select class="input flex-65" [(ngModel)]="partnerid">
+            <option value=""></option>
+            <option *ngFor="let partner of partners" [value]="partner.id">
+              {{ partner.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="flex flex-col flex-md-row mt-2">
+          <div class="flex-100 flex-md-50 flex flex-row overflow-hidden">
+            <div class="flex-30">Satuan Jual<sup>*</sup></div>
+            <span class="flex-5">:</span>
+            <select class="input flex-65" [(ngModel)]="datsuom">
+              <option value=""></option>
+              <option *ngFor="let uom of uoms" [value]="uom.id">
+                {{ uom.uom_name }}
+              </option>
+            </select>
+          </div>
+          <div class="flex-100 flex-md-50 flex flex-row overflow-hidden ml-md-2 mt-2 mt-md-0">
+            <div class="flex-30">Satuan Beli<sup>*</sup></div>
+            <span class="flex-5">:</span>
+            <select class="input flex-65" [(ngModel)]="datpuom">
+              <option value=""></option>
+              <option *ngFor="let uom of uoms" [value]="uom.id">
+                {{ uom.uom_name }}
+              </option>
+            </select>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <!--TAB2 *ngIf="!isCG"-->
+  <mat-tab label="Quantity Detail">
+    <ngx-table 
+      [configuration]="configurationQop1"
+      [data]="qop1"
+      [columns]="columnsQop1">
+      <ng-template let-row let-index="index">
+        <td class="w-50">
+          <span *ngIf="row.products">{{row.warehouses.name}}</span>
+        </td>
+        <td class="w-50">
+          <span *ngIf="row.partners">{{row.partners.name}}</span>
+        </td>
+        <td class="w-15">
+          <span *ngIf="row.products">{{row.qop | number}}</span>
+        </td>
+        <td class="w-20">
+          <span *ngIf="row.products">{{row.uoms.uom_name}}</span>
+        </td>
+        <td class="w-15">
+          <span *ngIf="row.products">{{row.cost}}</span>
+        </td>
+      </ng-template>
+    </ngx-table>
+  </mat-tab>
+
+  <!--TAB3-->
+  <mat-tab label="Isi Bundle" *ngIf="datfg">
+    <table class="table-new" style="margin-top: 0pt !important;">
+      <tr>
+        <th class="th-new" style="border-left:1px solid #ccc;" fxFlex="50%">Product</th>
+        <th class="th-new" fxFlex="20%">Qty</th>
+        <th class="th-new" fxFlex="20%">Satuan</th>
+      </tr>
+      <tr>
+        <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="50%">
+          <input class="inputs width-100" (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/></td>
+        <td class="td-new" fxFlex="20%"><input class="inputs width-100" [(ngModel)]="bdatqty"/></td>
+        <td class="td-new" fxFlex="20%"><input class="inputs width-100" [(ngModel)]="bdatsuom"/></td>
+        <td class="td-new btn-rainbow" style="text-align:center;" fxFlex="10%"><button style="width:100%;background:none;border:none;color:white;" (click)="pushingBundle()">TAMBAH</button></td>
+        <!--(click)="pushing()"-->
+      </tr>
+    </table>
+    <ul class="prod" *ngIf="openDropDown">
+      <li class="list-group-item category"
+        *ngFor="let product of bproducts | filter:term; let i1 = index"
+        [class.active]="i1 == currentIndex1"
+        (click)="getProd(product, i1)">
+        {{ product.name }}
+      </li>
+    </ul>
+    <ngx-table [configuration]="configurationBundle"
+      [data]="bundles"
+      [columns]="columnsBundle">
+      <ng-template let-row let-index="index">
+        <td class="w-50">
+          <span *ngIf="row.products">{{row.products.name}}</span>
+        </td>
+        <td class="w-20 text-right">
+          <span *ngIf="row.products">{{row.qty | number}}</span>
+        </td>
+        <td class="w-20">
+          <span *ngIf="row.uoms">{{row.uoms.uom_name}}</span>
+        </td>
+        <td class="w-10">
+          <span *ngIf="row.products"><a class="add_stock" (click)="deleteBundle(row.id)">Hapus</a></span>
+          <span *ngIf="!row.products"><a class="add_stock" style="color: #fff;">.</a></span>
+        </td>
+      </ng-template>
+    </ngx-table>
+  </mat-tab>
+
+  <!--TAB4-->
+  <mat-tab label="Bahan Baku" *ngIf="datrm">
+    <table class="table-new" style="margin-top: 0pt !important;">
+      <tr>
+        <th class="th-new" style="border-left:1px solid #ccc;" fxFlex="50%">Product</th>
+        <th class="th-new" fxFlex="20%">Qty</th>
+        <th class="th-new" fxFlex="20%">Satuan</th>
+      </tr>
+      <tr>
+        <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="50%">
+          <input class="inputs width-100" (focus)="onG()" placeholder="{{pi}}" [(ngModel)]="term2"/></td>
+        <td class="td-new" fxFlex="20%"><input class="inputs width-100" [(ngModel)]="bodatqty"/></td>
+        <td class="td-new" fxFlex="20%"><input class="inputs width-100" [(ngModel)]="bodatsuom"/></td>
+        <td class="td-new btn-rainbow" style="text-align:center;" fxFlex="10%"><button style="width:100%;background:none;border:none;color:white;" (click)="pushingBom()">TAMBAH</button></td>
+        <!--(click)="pushing()"-->
+      </tr>
+    </table>
+    <ul class="prod" *ngIf="openDropDown2">
+      <li class="list-group-item category"
+        *ngFor="let product of boproducts | filter:term2; let i2 = index"
+        [class.active]="i2 == currentIndex2"
+        (click)="getProd2(product, i2)">
+        {{ product.name }}
+      </li>
+    </ul>
+    <ngx-table [configuration]="configurationBom"
+           [data]="boms"
+           [columns]="columnsBom">
+      <ng-template let-row let-index="index">
+        <td class="w-50">
+          <span *ngIf="row.products">{{row.bomes.name}}</span>
+        </td>
+        <td class="w-20 text-right">
+          <span *ngIf="row.products">{{row.qty | number}}</span>
+        </td>
+        <td class="w-20">
+          <span *ngIf="row.uoms">{{row.uoms.uom_name}}</span>
+        </td>
+        <td class="w-10">
+          <span *ngIf="row.products"><a class="add_stock" (click)="deleteBundle(row.id)">Hapus</a></span>
+          <span *ngIf="!row.products"><a class="add_stock" style="color: #fff;">.</a></span>
+        </td>
+      </ng-template>
+    </ngx-table>
+    
+    <table class="table-new">
+      <tr>
+        <th class="th-new" style="border-left:1px solid #ccc;" fxFlex="40%"></th>
+        <th class="th-new" fxFlex="20%">Nilai</th>
+        <th class="th-new" fxFlex="20%">Tipe</th>
+        <th class="th-new" fxFlex="20%">Jumlah Jam</th>
+      </tr>
+      <tr>
+        <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="40%">
+          Overhead
+        <td class="td-new" fxFlex="20%"><input class="inputs width-90" [(ngModel)]="overhead"/></td>
+        <td class="td-new" fxFlex="20%">
+          <select class="inputs width-90" [(ngModel)]="ovType">
+            <option>fix</option>
+            <option>percent</option>
+          </select>
+        </td>
+        <td class="td-new" fxFlex="20%"><input class="inputs width-90" [(ngModel)]="ovTime"/></td>
+      </tr>
+      <tr>
+        <td class="td-new" style="border-left:1px solid #ddd;" fxFlex="40%">
+          Tenaga Kerja Langsung
+        <td class="td-new" fxFlex="20%"><input class="inputs width-90" [(ngModel)]="labor"/></td>
+        <td class="td-new" fxFlex="20%">
+          <select class="inputs width-90" [(ngModel)]="laType">
+            <option>fix</option>
+            <option>percent</option>
+          </select>
+        </td>
+        <td class="td-new" fxFlex="20%"><input class="inputs width-90" [(ngModel)]="laTime"/></td>
+      </tr>
+    </table>
+    <br/><br/>
+  </mat-tab>
+
+  <!--TAB5-->
+  <mat-tab label="Transaksi">
+    <div class="w-100 flex flex-row mt-1">
+      <div class="flex-15">
+        <div class="widget">
+          <mat-icon style="font-size: 12pt; padding-top:2pt;"> attach_money</mat-icon>PENJUALAN<br/>
+          {{posdet | number}} <mat-icon style="font-size: 12pt; padding-top: 13pt;">receipt</mat-icon><br/>
+          {{posqty | number}} {{datsuomname}}
+        </div>
+      </div>
+      <div class="flex-15 ml-1">
+        <div class="widget">
+          <mat-icon style="font-size: 12pt; padding-top:2pt;">arrow_drop_down_circle</mat-icon>PEMBELIAN<br/>
+          {{purdet | number}} <mat-icon style="font-size: 12pt; padding-top: 13pt;">receipt</mat-icon><br/>
+          {{purqty | number}} {{datsuomname}}
+        </div>
+      </div>
+      <div class="flex-15 ml-1">
+        <div class="widget">
+          <mat-icon style="font-size: 12pt; padding-top:2pt;"> merge_type</mat-icon>PRODUKSI<br/>
+          xx <mat-icon style="font-size: 12pt; padding-top: 13pt;">receipt</mat-icon><br/>
+          xx {{datsuomname}}
+        </div>
+      </div>
+      <div class="flex-15 ml-1">
+        <div class="widget">
+          <mat-icon style="font-size: 12pt; padding-top:2pt;">keyboard_arrow_down</mat-icon>BARANG MASUK<br/>
+          {{qindet | number}} <mat-icon style="font-size: 12pt; padding-top: 13pt;">receipt</mat-icon><br/>
+          {{qinqty | number}} {{datsuomname}}
+        </div>
+      </div>
+      <div class="flex-15 ml-1 mr-1">
+        <div class="widget">
+          <mat-icon style="font-size: 12pt; padding-top:2pt;">keyboard_arrow_up</mat-icon>BARANG KELUAR<br/>
+          {{qoutdet | number}} <mat-icon style="font-size: 12pt; padding-top: 13pt;">receipt</mat-icon><br/>
+          {{qoutqty | number}} {{datsuomname}}
+        </div>
+      </div>
+    </div>
+    <div class="example-box" cdkDrag >
+      Drag me around
+    </div>
+  </mat-tab>
+</mat-tab-group>
+</div>
+
+<div class="w-100 flex flex-row justify-between items-center mt-4">
+  <div class="w-90">
+    <button [disabled]="isRes" mat-button class="submit btn-primary w-90 py-2" (click)="checkBigger()">Simpan</button>
+  </div>
+  <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+</div>
+</div>

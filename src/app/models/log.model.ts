@@ -9,7 +9,7 @@ export class Log {
     warehouse? : string;
     store? : string;
     pos? : string;
-    purchase? : string;
+    purchase? : number;
     sale?: string;
     ticket?: string;
     user? : string;

@@ -1,0 +1,431 @@
+@import 'reset'
+@import 'variable'
+@import 'style'
+
+::-webkit-scrollbar
+  width: 0
+
+::ng-deep .mat-form-field-underline
+  display: none
+
+/* Display */
+.block
+  display: block
+.flex
+  display: flex
+.hidden
+  display: none
+
+/* Float */
+.float-right
+  float: right
+.float-left
+  float: left
+.float-none
+  float: none
+
+/* Clear */
+.clear-both
+  clear: both
+
+/* Overflow */
+.overflow-auto
+  overflow: auto
+.overflow-hidden
+  overflow: hidden
+.overflow-visible
+  overflow: visible
+.overflow-scroll
+  overflow: scroll
+.overflow-x-auto
+  overflow-x: auto
+.overflow-y-auto
+  overflow-y: auto
+.overflow-x-hidden
+  overflow-x: hidden
+.overflow-y-hidden
+  overflow-y: hidden
+.overflow-x-visible
+  overflow-x: visible
+.overflow-y-visible
+  overflow-y: visible
+.overflow-x-scroll
+  overflow-x: scroll
+.overflow-y-scroll
+  overflow-y: scroll
+
+/* Position */
+.static
+  position: static
+.fixed
+  position: fixed
+.absolute
+  position: absolute
+.relative
+  position: relative
+.sticky
+  position: sticky
+
+/* Visibility */
+.visible
+  visibility: visible
+.invisible
+  visibility: hidden
+.collapse
+  visibility: collapse
+
+/* Z-Index */
+@for $i from 1 through 5
+  .z-#{$i*10}
+    z-index: $i*10
+.z-auto
+  z-index: auto
+
+/* Flex */
+@for $i from 5 through 101
+  @if $i%5 == 0
+    .flex-#{$i}
+      flex: #{$i}'%'
+
+/* Flex Direction */
+.flex-row
+  flex-direction: row
+.flex-row-reverse
+  flex-direction: row-reverse
+.flex-col
+  flex-direction: column
+.flex-col-reverse
+  flex-direction: column-reverse
+
+@each $flex-name, $flex-value in $loop-flexs
+  .flex-#{$flex-name}
+    flex-direction: $flex-value
+
+@each $breakpoint-name, $breakpoint-value in $loop-breakpoints
+  @media (min-width: $breakpoint-value)
+    @each $flex-name, $flex-value in $loop-flexs
+      .flex-#{$breakpoint-name}-#{$flex-name}
+        flex-direction: $flex-value
+
+@for $i from 5 through 100
+  @if $i%5 == 0
+    .flex-#{$i}
+      flex: $i*1%
+
+@each $breakpoint-name, $breakpoint-value in $loop-breakpoints
+  @media (min-width: $breakpoint-value)
+    @for $i from 5 through 100
+      @if $i%5 == 0
+        .flex-#{$breakpoint-name}-#{$i}
+          flex: $i*1%
+
+/* Flex Wrap */
+.flex-wrap
+  flex-wrap: wrap
+.flex-wrap-reverse
+  flex-wrap: wrap-reverse
+.flex-nowrap
+  flex-wrap: nowrap
+
+/* Flex Order */
+@for $i from 0 through 12
+  .order-#{$i}
+    order: $i
+
+@each $breakpoint-name, $breakpoint-value in $loop-breakpoints
+  @media (min-width: $breakpoint-value)
+    @for $i from 0 through 12
+      .order-#{$breakpoint-name}-#{$i}
+        order: $i
+
+.order-first
+  order: -9999
+.order-last
+  order: 9999
+
+/* Justify */
+@each $justify-name, $justify-value in $loop-justifys
+  .justify-#{$justify-name}
+    justify-content: $justify-value
+
+@each $breakpoint-name, $breakpoint-value in $loop-breakpoints
+  @media (min-width: $breakpoint-value)
+    @each $justify-name, $justify-value in $loop-justifys
+      .justify-#{$breakpoint-name}-#{$justify-name}
+        justify-content: $justify-value
+
+/* Align Items */
+@each $align-name, $align-value in $loop-aligns
+  .items-#{$align-name}
+    align-items: $align-value
+
+@each $breakpoint-name, $breakpoint-value in $loop-breakpoints
+  @media (min-width: $breakpoint-value)
+    @each $align-name, $align-value in $loop-aligns
+      .items-#{$breakpoint-name}-#{$align-name}
+        align-items: $align-value
+
+/* Width */
+@for $i from 5 through 100
+  @if $i%5 == 0
+    .w-#{$i}
+      width: $i*1%
+    .min-w-#{$i}
+      min-width: $i*1%
+
+@for $i from 0 to 24
+  .w-#{$i}rem
+    width: $i * 1rem !important
+
+@for $i from 25 to 101
+  @if $i%25 == 0
+    .w-#{$i}vw
+      width: $i * 1vw !important
+
+/* Height */
+.h-auto
+  height: auto
+@for $i from 5 through 100
+  @if $i%5 == 0
+    .h-#{$i}
+      height: $i*1%
+    .min-h-#{$i}
+      min-height: $i*1%
+
+@for $i from 0 to 24
+  .h-#{$i}rem
+    height: $i * 1rem !important
+  .min-h-#{$i}
+    min-height: $i * 1rem !important
+
+@for $i from 25 to 101
+  @if $i%25 == 0
+    .h-#{$i}vh
+      height: $i * 1vh !important
+
+/* Font Size */
+@for $i from 1 through 72
+  .text-#{$i}
+    font-size: #{$i}px
+
+@each $breakpoint-name, $breakpoint-value in $loop-breakpoints
+  @media (min-width: $breakpoint-value)
+    @for $i from 1 through 72
+      .text-#{$breakpoint-name}-#{$i}
+        font-size: #{$i}px
+
+/* Font Weight */
+@for $i from 1 through 9
+  .fw-#{$i}00
+    font-weight: $i*100
+
+/* Font Style */
+.italic
+  font-style: italic
+.not-italic
+  font-style: normal
+
+/* Text Decoration */
+.underline
+  text-decoration-line: underline
+.overline
+  text-decoration-line: overline
+.line-through
+  text-decoration-line: line-through
+.no-underline
+  text-decoration-line: none
+
+/* Text Transform */
+.uppercase
+  text-transform: uppercase
+.lowercase
+  text-transform: lowercase
+.capitalize
+  text-transform: capitalize
+.normal-case
+  text-transform: none
+
+/* Text Align */
+.text-left
+  text-align: left
+.text-center
+  text-align: center
+.text-right
+  text-align: right
+.text-justify
+  text-align: justify
+.text-start
+  text-align: start
+.text-end
+  text-align: end
+
+/* Border Style */
+.border-solid
+  border-style: solid
+.border-dashed
+  border-style: dashed
+.border-dotted
+  border-style: dotted
+.border-double
+  border-style: double
+.border-hidden
+  border-style: hidden
+.border-none
+  border-style: none
+
+/* Border Width */
+.border-1
+  border-width: 1px
+@for $i from 1 through 4
+  .border-#{$i*2}
+    border-width: $i*2px
+
+.border-x-1
+  border-left-width: 1px
+  border-right-width: 1px
+  border-top-width: 0px
+  border-bottom-width: 0px
+@for $i from 1 through 4
+  .border-x-#{$i*2}
+    border-left-width: $i*2px
+    border-right-width: $i*2px
+    border-top-width: 0px
+    border-bottom-width: 0px
+
+.border-y-1
+  border-left-width: 0px
+  border-right-width: 0px
+  border-top-width: 1px
+  border-bottom-width: 1px
+@for $i from 1 through 4
+  .border-y-#{$i*2}
+    border-left-width: 0px
+    border-right-width: 0px
+    border-top-width: $i*2px
+    border-bottom-width: $i*2px
+
+.border-t-1
+  border-left-width: 0px
+  border-right-width: 0px
+  border-top-width: 1px
+  border-bottom-width: 0px
+@for $i from 1 through 4
+  .border-t-#{$i*2}
+    border-left-width: 0px
+    border-right-width: 0px
+    border-top-width: $i*2px
+    border-bottom-width: 0px
+
+.border-r-1
+  border-left-width: 0px
+  border-right-width: 1px
+  border-top-width: 0px
+  border-bottom-width: 0px
+@for $i from 1 through 4
+  .border-r-#{$i*2}
+    border-left-width: 0px
+    border-right-width: $i*2px
+    border-top-width: 0px
+    border-bottom-width: 0px
+
+.border-b-1
+  border-left-width: 0px
+  border-right-width: 0px
+  border-top-width: 0px
+  border-bottom-width: 1px
+@for $i from 1 through 4
+  .border-b-#{$i*2}
+    border-left-width: 0px
+    border-right-width: 0px
+    border-top-width: 0px
+    border-bottom-width: $i*2px
+
+.border-l-1
+  border-left-width: 1px
+  border-right-width: 0px
+  border-top-width: 0px
+  border-bottom-width: 0px
+@for $i from 1 through 4
+  .border-l-#{$i*2}
+    border-left-width: $i*2px
+    border-right-width: 0px
+    border-top-width: 0px
+    border-bottom-width: 0px
+
+/* Border Color */
+.border-inherit
+  border-color: inherit
+.border-current
+  border-color: currentColor
+.border-transparent
+  border-color: transparent
+
+/* Border Radius */
+@for $i from 1 to 12
+  .border-radius-#{$i}
+    border-radius: $i * .5rem !important
+
+/* Spacing */
+.m-auto-left
+  margin-left: auto
+.m-auto-right
+  margin-right: auto
+.mx-auto
+  margin-left: auto
+  margin-right: auto
+.my-auto
+  margin-top: auto
+  margin-bottom: auto
+
+@for $i from 0 to 24
+  @each $prop-name, $prop-abb in $spacing-props
+    .#{$prop-abb}-#{$i}
+      @each $pn in $prop-name
+        #{$pn}: $i * .5rem !important
+
+@for $i from 0 to 24
+  @each $prop-name, $prop-abb in $spacing-props
+    @each $breakpoint-name, $breakpoint-value in $loop-breakpoints
+      .#{$prop-abb}-#{$breakpoint-name}-#{$i}
+        @media screen and (min-width: $breakpoint-value)
+          @each $pn in $prop-name
+            #{$pn}: $i * .5rem !important
+
+/* Color */
+@each $color-name, $color-value in $loop-colors
+  .bg-#{$color-name}
+    background-color: $color-value !important
+  @for $i from 100 through 1000
+    @if ($i % 100 == 0)
+      .bg-#{$color-name}-#{$i}
+        background-color: rgba($color-value, calc($i / 1000)) !important
+
+.gradient-primary
+  background: linear-gradient(45deg, #3f5efb 0%, #fc466b 100%)
+
+/* Color */
+@each $color-name, $color-value in $loop-colors
+  .text-#{$color-name}
+    color: $color-value !important
+
+@each $color-name, $color-value in $loop-colors
+  .border-#{$color-name}
+    border-color: $color-value !important
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

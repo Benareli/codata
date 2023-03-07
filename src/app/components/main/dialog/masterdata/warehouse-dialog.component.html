@@ -1,0 +1,116 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+<div class="w-100">
+  <div class="mb-3 flex flex-row justify-between items-center">
+    <div class="w-100 flex flex-row justify-between">
+      <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="!isMain" [(value)]="statusActive" (change)="onValChange(group.value)">
+        <mat-button-toggle value="true">Aktif</mat-button-toggle>
+        <mat-button-toggle value="false">Nonaktif</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="isMain" disabled [(value)]="statusActive" (change)="onValChange(group.value)">
+        <mat-button-toggle value="true">Aktif</mat-button-toggle>
+        <mat-button-toggle value="false">Nonaktif</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <div class="w-100 text-right">
+        <button class="text-danger p-1" mat-button (click)="closeDialog()">X</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-100 flex flex-col flex-md-row">
+    <div class="flex-30 flex flex-row">
+      <div class="flex-30">Kode<sup>*</sup></div>
+      <span class="flex-5">:</span>
+      <input class="input flex-65" required maxlength="6" placeholder="Short" [(ngModel)]="data.short">
+    </div>
+    <div class="flex-30 flex flex-row ml-md-3 mt-2 mt-md-0">
+      <div class="flex-30">Nama<sup>*</sup></div>
+      <span class="flex-5">:</span>
+      <input class="input flex-65" required placeholder="Name" [(ngModel)]="data.name">
+    </div>
+    <div class="flex-30 flex flex-row ml-md-3 mt-2 mt-md-0">
+      <div class="flex-30">Company<sup>*</sup></div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65 w-100" [(ngModel)]="companyid">
+        <option *ngFor="let company of companys" [value]="company.id">
+          {{ company.comp_name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <mat-tab-group mat-align-tabs="start" style="height: 350pt; overflow-y: scroll;">
+  <!--TAB1-->
+  <mat-tab label="Transaction">
+    <div class="w-100 flex flex-col flex-md-row pt-2">
+      <div class="flex-50">
+        <div class="w-90 overflow-hidden h-22rem bg-lightgray mr-1 p-2 border-radius-2">
+          <span class="bg-success text-white border-radius-1 p-1">Goods In <i class="fa fa-arrow-circle-down"></i></span>
+          <ngx-table [configuration]="configuration"
+              [data]="smin"
+              [columns]="columns">
+            <ng-template let-row let-index="index">
+              <td >
+                {{row.product.name}}
+              </td>
+              <td>
+                {{row.qin | number}} {{row.uom.uom_name}}
+              </td>
+              <td>
+                {{row.date | date}}
+              </td>
+            </ng-template>
+          </ngx-table>
+        </div>
+      </div>
+
+      <div class="flex-50">
+        <div class="w-90 overflow-hidden h-22rem bg-lightgray ml-1 p-2 border-radius-2">
+          <span class="bg-danger text-white border-radius-1 p-1">Goods Out <i class="fa fa-arrow-circle-up"></i></span>
+          <ngx-table [configuration]="configuration"
+              [data]="smout"
+              [columns]="columns">
+            <ng-template let-row let-index="index">
+              <td>
+                {{row.product.name}}
+              </td>
+              <td>
+                {{row.qout | number}} {{row.uom.uom_name}}
+              </td>
+              <td>
+                {{row.date | date}}
+              </td>
+            </ng-template>
+          </ngx-table>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+    <!--TAB2 *ngIf="!isCG"-->
+  <mat-tab label="Available Product">
+    <ngx-table [configuration]="configurationwh"
+        [data]="whqop"
+        [columns]="columnswh">
+        <ng-template let-row let-index="index">
+          <td>
+            {{row.product.name}}
+          </td>
+          <td>
+            {{row.qop | number}} {{row.uom.uom_name}}
+          </td>
+        </ng-template>
+    </ngx-table>
+  </mat-tab>
+  </mat-tab-group>
+  
+</div>
+
+<div class="w-100 flex flex-row justify-between items-center">
+  <div class="w-90">
+    <button mat-button [disabled]="isRes" class="btn-primary w-90 py-2" (click)="updateData()">Simpan</button>
+  </div>
+  <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+</div>
+</div>

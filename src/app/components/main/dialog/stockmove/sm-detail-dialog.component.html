@@ -1,0 +1,163 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+<div class="w-100">
+  <div class="mb-3 flex flex-row justify-between items-center">
+    <div class="w-100 flex flex-row justify-between">
+      <div class="flex flex-col">
+        <span class="title mb-1">{{transidtitle}}</span>
+        <h4>
+          <div *ngIf="c==1">
+            <span style="background: #28B463; color: white; border-radius: 3pt; padding: 3pt;">Goods In <i class="fa fa-arrow-circle-down"></i></span><span class="fw-300"> to <b>{{wh1String}}</b></span>
+          </div>
+          <div *ngIf="c==2">
+            <span style="background: #CB4335; color: white; border-radius: 3pt; padding: 3pt;">Goods Out <i class="fa fa-arrow-circle-up"></i></span><span class="fw-300"> from <b>{{wh1String}}</b></span>
+          </div>
+          <div *ngIf="c==3">
+            <span style="background: #2E86C1; color: white; border-radius: 3pt; padding: 3pt;">Internal Transfer <i class="fa fa-arrows-h"></i></span><span class="fw-300"> from <b>{{wh1String}}</b>, to <b>{{wh2String}}</b></span>
+          </div>
+        </h4>
+      </div>
+      <div class="w-25 flex flex-col flex-md-row items-end items-md-start justify-start justify-md-end">
+        <div class="btn-primary text-12 mt-3 mt-md-0 order-2 order-md-1" *ngIf="request && isIM" (click)="validate()">Validate</div>
+        <button class="text-danger p-1 text-12 ml-0 ml-md-3 order-1 order-md-2" mat-button (click)="closeDialog()">X</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-100 flex flex-col flex-md-row mb-3">
+    <div class="flex-100 flex-md-50 flex flex-row" *ngIf="!this.new">
+      <div class="flex-30">Dokumen Asal</div>
+      <span class="flex-5">:</span>
+      <div class="input flex-65">{{data.origin}}</div>
+    </div>
+    <div class="flex-100 flex-md-50 flex flex-row" *ngIf="this.new">
+      <div class="flex-30">Tipe</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" (ngModelChange)="checkingType($event)" [(ngModel)]="typeTrans">
+        <option>In</option>
+        <option>Out</option>
+        <option>Internal</option>
+      </select>
+    </div>
+    <div class="flex-100 flex-md-50 flex flex-row ml-0 ml-md-2 mt-2 mt-md-0">
+      <div class="flex-30">Tanggal</div>
+      <span class="flex-5">:</span>
+      <div class="input flex-65">{{datdate | date}}</div>
+    </div>
+  </div>
+
+  <div class="w-100 flex flex-col flex-md-row mt-3" *ngIf="new">
+    <div class="flex-100 flex-md-50 flex flex-row">
+      <div class="flex-30">From Warehouse</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [disabled]="in" [(ngModel)]="fromString">
+        <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+          {{ warehouse.name }}
+        </option>
+      </select>
+    </div>
+    <div class="flex-100 flex-md-50 flex flex-row ml-0 ml-md-2 mt-2 mt-md-0">
+      <div class="flex-30">To Warehouse</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [disabled]="out" [(ngModel)]="tooString">
+        <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+          {{ warehouse.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <table class="w-100 mt-2 text-13 fw-500 text-dark" *ngIf="new">
+    <tr class="border-b-1 border-solid border-lightgray">
+      <th fxFlex="50%" class="p-1 text-left">Product</th>
+      <th fxFlex="20%" class="p-1">Qty</th>
+      <th fxFlex="20%" class="p-1">Uom</th>
+      <th fxFlex="10%"></th>
+    </tr>
+  </table>
+
+  <div *ngIf="new">
+    <mat-table #table [dataSource]="dataSource" class="w-100 text-16 text-dark font-primary">
+      <ng-container matColumnDef="product">
+        <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let datas">
+          <span class="text-16" *ngIf="datas.product">{{datas.product.name}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qty">
+        <td class="tr-style text-right" fxFlex="20%" mat-cell *matCellDef="let datas">
+          <span class="text-16" *ngIf="!new && datas.qin">{{datas.qin}}</span>
+          <span class="text-16" *ngIf="!new && datas.qout">-{{datas.qout}}</span>
+          <span class="text-16" *ngIf="new">{{datas.qty}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="uom">
+        <td class="tr-style text-center" fxFlex="20%" mat-cell *matCellDef="let datas">
+          <span class="text-16" *ngIf="datas.product">{{datas.uom.uom_name}}</span>
+        </td>
+      </ng-container>
+
+      <tr mat-row class="tableRow" 
+          *matRowDef="let row; columns: displayedColumns;"  
+      ></tr>
+    </mat-table>
+  </div>
+
+  <table class="w-100">
+    <tr *ngIf="this.lock" class="borderinput mt-1">
+      <td fxFlex="50%">
+        <input class="input" (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/></td>
+      <td fxFlex="20%"><input class="input text-right" [(ngModel)]="datqty"/></td>
+      <td class="text-right" fxFlex="20%">
+        <select class="input width-100" [(ngModel)]="uomString">
+          <option *ngFor="let uom of uoms" [value]="uom.id">
+            {{ uom.uom_name }}
+          </option>
+        </select></td>
+      <td class="btn-rainbow" style="text-align:center;" fxFlex="10%"><button class="text-white" (click)="pushing()">+</button></td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <ul class="dropdown" *ngIf="openDropDown">
+          <li class="list-group-item category text-16"
+            *ngFor="let product of products | filter:term; let i1 = index"
+            [class.active]="i1 == currentIndex1"
+            (click)="getProd(product, i1)">
+              {{ product.name }}
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+
+  <ngx-table *ngIf="!new" [configuration]="configuration"
+    [data]="datas"
+    [columns]="columns">
+    <ng-template let-row let-index="index">
+      <td>
+        {{row.products.name}}
+      </td>
+      <td>
+        <span *ngIf="row.qin">{{row.qin | number}}</span>
+        <span *ngIf="row.qout">-{{row.qout | number}}</span>
+      </td>
+      <td>
+        {{row.uoms.uom_name}}
+      </td>
+      <td>
+        <span *ngIf="row.oriqin">{{row.oriqin | number}}</span>
+        <span *ngIf="row.oriqout">-{{row.oriqout | number}}</span>
+      </td>
+      <td>
+        <span *ngIf="row.oriuom_id">{{row.oriuoms.uom_name}}</span>
+      </td>
+    </ng-template>
+  </ngx-table>
+</div>
+
+<div class="w-100 flex flex-row justify-between items-center">
+  <div class="w-90">
+    <button *ngIf="!new" mat-button class="btn-primary w-90 py-2" (click)="closeDialog()">Tutup</button>
+    <button *ngIf="new" mat-button class="btn-primary w-90 py-2" (click)="startSave()">Simpan</button>
+  </div>
+  <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+</div>
+</div>

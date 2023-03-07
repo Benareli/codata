@@ -1,0 +1,34 @@
+<div class="loaders" *ngIf="loaded">
+  <div class="loader" style="margin-right:160pt;"></div>
+</div>
+<div class="container">
+	<div class="pl-2 h-2rem pt-1">
+		<a *ngIf="isProdM || isAdm" (click)="openQuickAdd()" class="submit btn-quick btn-quick-left">+ Add</a>
+	</div>
+
+	<div class="pr-2 h-2rem pt-1">
+    <div class="flex flex-row items-center">
+		  <input type="text" class="input h-1rem" placeholder="Search data" (keyup)="applyFilter($event)">
+      <a class="submit h-1rem btn-quick btn-quick-right ml-3" (click)="toggleDisplay()">Filter</a>
+    </div>
+	</div>
+</div>
+
+<div class="mx-3">
+  <ngx-table [configuration]="configuration"
+    [data]="bomes"
+    [columns]="columns"
+    (event)="openDialog($event)">
+    <ng-template let-row let-index="index">
+      <td>
+        {{row.name}}
+      </td>
+      <td>
+        {{row.totalline | number}}
+      </td>
+      <td>
+        <span *ngIf="row.name">Edit</span>
+      </td>
+    </ng-template>
+  </ngx-table>
+</div>

@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="pl-2 h-2rem pt-1">
+    <a *ngIf="isAccM || isAdm" (click)="openQuickAdd()" class="submit btn-quick btn-quick-left">+ Tambah</a>
+  </div>
+
+	<div class="pr-2 h-2rem pt-1">
+    <a class="submit btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</a>
+	</div>
+</div>
+
+<div class="mx-3">
+  <ngx-table [configuration]="configuration"
+    [data]="journals"
+    [columns]="columns"
+    [id]="'parent-table'"
+    #table
+    [detailsTemplate]="detailsTemplate">
+    <ng-template let-row let-index="index">
+      <td (click)="openDialog(row)">
+        {{row.name}}
+      </td>
+      <td (click)="openDialog(row)">
+        {{row.origin}}
+      </td>
+      <td (click)="openDialog(row)">
+        {{row.amount | number}}
+      </td>
+      <td (click)="openDialog(row)" class="text-center">
+        {{row.date | date}}
+      </td>
+      <td>
+        <button
+          class="save_btn"
+          id="expandButton-{{ index }}"
+          (click)="onRowClickEvent($event, index, row.id)">
+          <i class="fa fa-arrow-down" *ngIf="!toggledRows.has(index)"></i>
+          <i class="fa fa-arrow-up" *ngIf="toggledRows.has(index)"></i>
+        </button>
+      </td>
+    </ng-template>
+  </ngx-table>
+  <ng-template #detailsTemplate let-row>
+    <ngx-table
+      [id]="'nested-table'"
+      [configuration]="configuration"
+      [data]="entries"
+      [columns]="nestedColumns">
+      <ng-template let-row let-index="index">
+        <td>
+          <span *ngIf="row.debits">{{row.debits.code}} - {{row.debits.name}}</span>
+          <span *ngIf="row.credits">{{row.credits.code}} - {{row.credits.name}}</span>
+        </td>
+        <td>
+          {{row.debit | number}}
+        </td>
+        <td>
+          {{row.credit | number}}
+        </td>
+      </ng-template>
+    </ngx-table>
+  </ng-template>
+</div>

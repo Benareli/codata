@@ -1,0 +1,88 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+  <div class="w-100 overflow-y-scroll">
+    <div class="mb-3 flex flex-row justify-between items-center">
+      <div class="flex-30">
+        <span class="title mb-0">{{purchaseid}}</span>
+      </div>
+      <div class="flex-40 text-center">
+        <span class="dialog-title mb-0">Create Bill</span>
+      </div>
+      <div class="flex-30 text-end">
+        <button class="text-danger p-1" mat-button (click)="closeDialog()">X</button>
+      </div>
+    </div>
+
+    <div class="w-100 flex flex-col flex-md-row">
+      <div class="flex-100 flex-md-50 flex flex-row">
+        <div class="flex-30">Bill Date</div>
+        <span class="flex-5">:</span>
+        <input type="date" class="input flex-65" [(ngModel)]="datdate" (ngModelChange)="changeDate()"/>
+      </div>
+      <div class="flex-100 flex-md-50 flex flex-row"class="flex-100 flex-md-50 flex flex-row">
+        <div class="flex-30">Due Date</div>
+        <span class="flex-5">:</span>
+        <input type="date" class="input flex-65" [(ngModel)]="datduedate" (ngModelChange)="changeDueDate()"/>
+      </div>
+    </div>
+  
+    <table class="w-100 mt-2">
+      <tr>
+        <td fxFlex="40%"></td>
+        <td fxFlex="12%" class="text-center"><button (click)="billall()" class="btn-primary bg-white text-primary text-13">bill by </button></td>
+        <td fxFlex="12%" class="text-center"><button (click)="billrec()" class="btn-primary bg-white text-primary text-13">bill by </button></td>
+        <td fxFlex="12%"></td>
+        <td fxFlex="12%"></td>
+        <td fxFlex="12%"></td>
+      </tr>
+      <tr class="py-1 border-y-1 border-solid border-gray bg-lightgray">
+        <th class="th-style" fxFlex="40%">Produk</th>
+        <th class="th-style" fxFlex="12%">Qty Ordered</th>
+        <th class="th-style" fxFlex="12%">Qty Received</th>
+        <th class="th-style" fxFlex="12%">Qty not Billed</th>
+        <th class="th-style" fxFlex="12%">Qty to Bill</th>
+        <th class="th-style" fxFlex="12%">UoM</th>
+      </tr>
+    </table>
+
+    <mat-table #table [dataSource]="dataSource" class="mat-table">
+      <ng-container matColumnDef="product">
+        <td class="td-style" fxFlex="40%" mat-cell *matCellDef="let datas">
+          <span *ngIf="datas.purchase_id">{{datas.products.name}}</span>
+          <span *ngIf="!datas.purchase_id">{{datas.product}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qty">
+        <td class="td-style text-right" fxFlex="12%" mat-cell *matCellDef="let datas">
+          {{datas.qty | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qtydone">
+        <td class="td-style text-right" fxFlex="12%" mat-cell *matCellDef="let datas">
+          {{datas.qty_done | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qtynobill">
+        <td class="td-style text-right" fxFlex="12%" mat-cell *matCellDef="let datas">
+          {{datas.qty - datas.qty_inv | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qty_inv">
+        <td class="td-style text-right" fxFlex="12%" mat-cell *matCellDef="let datas; let index = index">
+          <input type="number" class="input text-right" [value]="datas.qty_rec" [(ngModel)]="datas.qty_rec" (keyup)="editPO(dataSource.filteredData.indexOf(datas))"/>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="uom">
+        <td class="td-style text-right" fxFlex="12%" mat-cell *matCellDef="let datas">
+          {{datas.uoms.uom_name}}
+        </td>
+      </ng-container>
+
+      <tr mat-row class="table-row" 
+        *matRowDef="let row; let i = index; columns: displayedColumns;"></tr>
+    </mat-table>
+  </div>
+
+  <div class="w-100 flex flex-row">
+    <button mat-button [disabled]="isRes" class="btn-primary p-2 w-100" (click)="checkBill()">Create Bill</button>
+  </div>
+</div>

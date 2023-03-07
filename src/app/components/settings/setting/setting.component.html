@@ -1,0 +1,274 @@
+<div class="flex flex-col flex-wrap justify-between text-center p-3 border-b-2 border-solid border-gray">
+  <div class="flex flex-row justify-between items-start">
+  	<span class="title">System Setting</span>
+  	<div class="btn-rainbow h-auto">
+  		<div class="btn-white">
+  			<button class="btn-gradient text-gradient" (click)="save1()">Save</button>
+  		</div>
+  	</div>
+  </div>
+  <div class="w-100 flex flex-col flex-md-row">
+    <div class="flex-35">
+      <div class="flex flex-col border-3 border-dashed border-gray border-radius-2 mb-2 p-2">
+        <div class="flex flex-row justify-around">
+          <ul *ngFor="let image of imageInfos | async">
+            <li *ngIf="(image.name == oriimage)">
+              <img src="{{ image.url }}" alt="{{ image.name }}" height="100px"/>
+            </li>
+          </ul>
+          <div><img style="max-height: 100px;" *ngFor='let preview of previews' [src]="preview" class="preview"></div>
+        </div>
+        <div class="flex flex-row justify-around">
+          <input class="choosefile" type="file" accept="image/*" (change)="selectFiles($event)" />
+          <button class="btn-primary text-10 w-80" [disabled]="!selectedFiles" (click)="uploadFiles()">Unggah</button>
+        </div>
+      </div>
+    </div>
+    <div class="flex-65">
+      <div class="w-100 flex flex-row">
+        <div class="flex-35 text-right">Store Name : </div>
+        <input class="flex-65 input pl-2" type="text" name="company" required placeholder="Company Name" [(ngModel)]="comp_name">
+      </div>
+      <div class="w-100 flex flex-row mt-2">
+        <div class="flex-35 text-right">Address : </div>
+        <input class="flex-65 input pl-2" type="text" name="address" required placeholder="Address" [(ngModel)]="comp_addr">
+      </div>
+      <div class="w-100 flex flex-row mt-2">
+        <div class="flex-35 text-right">Phone : </div>
+        <input class="flex-65 input pl-2" type="text" name="phone" required placeholder="Phone" [(ngModel)]="comp_phone">
+      </div>
+      <div class="w-100 flex flex-row mt-2">
+        <div class="flex-35 text-right">Email : </div>
+        <input class="flex-65 input pl-2" type="text" name="email" required placeholder="Email" [(ngModel)]="comp_email">
+      </div>
+      <div class="w-100 flex flex-row mt-2">
+        <div class="flex-50">
+          Warna Utama
+          <input class="form-control p-1 border-radius-1" [(ngModel)]="titlecolor" [value]="titlecolor" [style.background]="titlecolor" [cpOutputFormat]="'hex'"
+            [(colorPicker)]="titlecolor" />
+        </div>
+        <div class="flex-50">
+          Warna Kedua
+          <input class="form-control p-1 border-radius-1" [(ngModel)]="navcolor" [value]="navcolor" [style.background]="navcolor" [cpOutputFormat]="'hex'"
+            [(colorPicker)]="navcolor" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-tab-group mat-align-tabs="start" class="h-50 font-secondary overflow-auto">
+  <mat-tab label="Umum">
+    <div class="flex flex-col flex-wrap justify-between text-center p-3">
+      <div class="flex flex-row justify-between items-center">
+        <!-- 1 -->
+        <span class="title">Pengaturan Harga HPP</span>
+        <!-- 2 -->
+        <div class="flex flex-row justify-between items-center">
+          <span class="fw-600 w-35 text-right pr-2">Detail</span>
+          <label class="switch">
+            <input type="checkbox" (ngModelChange)="ngModelChange1($event)" [(ngModel)]="cost_general">
+            <span class="slider round"></span>
+          </label>
+          <span class="fw-600 w-35 text-left pl-2">Umum</span>
+        </div>
+        <!-- 3 -->
+        <div class="btn-rainbow">
+          <div class="btn-white">
+            <button class="btn-gradient text-gradient" (click)="save2()">Save</button>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-row justify-around items-center">
+        <div class="text-left" [innerText]="explain1"></div>
+      </div>
+    </div>
+    <div class="flex flex-col flex-wrap justify-between text-center mt-2 px-3">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="title">Pengaturan Prefix</span>
+      </div>
+      <div class="w-100 flex flex-col flex-md-row">
+        <div class="flex flex-row justify-between items-end flex-50">
+          <span class="flex-30 text-left">POS</span>
+          <span class="flex-5">:</span>
+          <input class="flex-65 input pl-2" type="text" placeholder="POS Prefix" [(ngModel)]="prepos">
+        </div>
+        <div class="flex flex-row justify-between items-end flex-50 ml-md-2 mt-2 mt-md-0">
+          <span class="flex-30 text-left">Transfer</span>
+          <span class="flex-5">:</span>
+          <input class="flex-65 input pl-2" type="text" placeholder="Transfer Prefix" [(ngModel)]="pretransfer">
+        </div>
+      </div>
+      <div class="w-100 flex flex-col flex-md-row mt-2">
+        <div class="flex flex-row justify-between items-end flex-50">
+          <span class="flex-30 text-left">Pembayaran</span>
+          <span class="flex-5">:</span>
+          <input class="flex-65 input pl-2" type="text" placeholder="Pembayaran Prefix" [(ngModel)]="prepay">
+        </div>
+        <div class="flex flex-row justify-between items-end flex-50 ml-md-2 mt-2 mt-md-0">
+          <span class="flex-30 text-left">Pembelian</span>
+          <span class="flex-5">:</span>
+          <input class="flex-65 input pl-2" type="text" placeholder="Pembelian Prefix" [(ngModel)]="prepurchase">
+        </div>
+      </div>
+      <div class="w-100 flex flex-col flex-md-row mt-2">
+        <div class="flex flex-row justify-between items-end flex-50">
+          <span class="flex-30 text-left">Jurnal</span>
+          <span class="flex-5">:</span>
+          <input class="flex-65 input pl-2" type="text" placeholder="Jurnal Prefix" [(ngModel)]="prejournal">
+        </div>
+        <div class="flex flex-row justify-between items-end flex-50 ml-md-2 mt-2 mt-md-0">
+          <span class="flex-30 text-left">Hutang</span>
+          <span class="flex-5">:</span>
+          <input class="flex-65 input pl-2" type="text" placeholder="Hutang Prefix" [(ngModel)]="prebill">
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Outlet">
+    <div class="flex flex-col flex-wrap justify-between text-center p-3">
+      <div class="flex flex-row justify-around items-center">
+        <!-- 1 -->
+        <span class="title">Pengaturan POS</span>
+        <!-- 2 -->
+        <div class="flex flex-row justify-around items-center">
+          <span class="fw-600 w-50 text-right pr-2">No Shift</span>
+          <label class="switch">
+            <input type="checkbox" (ngModelChange)="ngModelChange2($event)" [(ngModel)]="pos_shift">
+            <span class="slider round"></span>
+          </label>
+          <span class="fw-600 w-35 text-left pl-2">Shift</span>
+        </div>
+        <!-- 3 -->
+        <div class="btn-rainbow">
+          <div class="btn-white">
+            <button class="btn-gradient text-gradient" (click)="save3()">Save</button>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-row justify-around items-center">
+        <div class="text-left" [innerText]="explain2"></div>
+      </div>
+    </div>
+    <div class="flex flex-col flex-wrap justify-between text-center mt-2 px-3">
+      <div class="flex flex-row justify-between items-center">
+        <span class="title">Pengaturan Outlet</span>
+        <button class="btn-quick mb-2" (click)="addStore()">+ Tambah</button>
+      </div>
+      <div class="w-100 text-left">
+          <mat-table #table [dataSource]="dataSource" class="mat-table">
+            <ng-container matColumnDef="name">
+              <th class="th-style" fxFlex="50%" mat-header-cell *matHeaderCellDef>Name</th>
+              <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let stores">
+                <span *ngIf="stores.active==false" class="inactive">&nbsp;&nbsp;</span>
+                {{stores.store_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="address">
+              <th class="th-style" fxFlex="50%" mat-header-cell *matHeaderCellDef>Address</th>
+              <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let stores">
+                <span *ngIf="stores.active==false" class="inactive">&nbsp;&nbsp;</span>
+                {{stores.store_addr}}</td>
+            </ng-container>
+            <ng-container matColumnDef="phone">
+              <th class="th-style" fxFlex="25%" mat-header-cell *matHeaderCellDef>Phone</th>
+              <td class="tr-style" fxFlex="25%" mat-cell *matCellDef="let stores">
+                <span *ngIf="stores.active==false" class="inactive">&nbsp;&nbsp;</span>
+                {{stores.store_phone}}</td>
+            </ng-container>
+            <ng-container matColumnDef="warehouse">
+              <th class="th-style" fxFlex="35%" mat-header-cell *matHeaderCellDef>Warehouse</th>
+              <td class="tr-style" fxFlex="35%" mat-cell *matCellDef="let stores">
+                <span *ngIf="stores.active==false" class="inactive">&nbsp;&nbsp;</span>
+                {{stores.warehouse_id}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns;" class="tableHeader"></tr>
+            <tr mat-row class="tableRow" 
+                (click)="openStore(row)"
+                *matRowDef="let row; columns: displayedColumns;"
+            ></tr>
+            <!--(click)="openDialog(row)"
+              [class.active]="clickedRows == row"-->
+          </mat-table>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Pajak">
+    <div class="flex flex-col flex-wrap justify-between text-center p-3">
+      <div class="flex flex-row justify-between items-center">
+        <span class="title">Pengaturan Pajak</span>
+        <button class="btn-quick mb-2" (click)="addTax()">+ Tambah</button>
+      </div>
+      <div class="w-100 text-left">
+          <mat-table #table [dataSource]="dataSourceTax" class="mat-table">
+            <ng-container matColumnDef="name">
+              <th class="th-style" fxFlex="50%" mat-header-cell *matHeaderCellDef>Name</th>
+              <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let taxs">
+                {{taxs.name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="tax">
+              <th class="th-style" fxFlex="50%" mat-header-cell *matHeaderCellDef>Nilai</th>
+              <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let taxs">
+                {{taxs.tax}}</td>
+            </ng-container>
+            <ng-container matColumnDef="include">
+              <th class="th-style" fxFlex="50%" mat-header-cell *matHeaderCellDef>Kondisi</th>
+              <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let taxs">
+                <span *ngIf="taxs.include" >Termasuk</span>
+                <span *ngIf="!taxs.include" >Tidak Termasuk</span>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsTax;" class="tableHeader"></tr>
+            <tr mat-row class="tableRow" 
+                (click)="openTax(row)"
+                *matRowDef="let row; columns: displayedColumnsTax;"
+            ></tr>
+            <!--(click)="openDialog(row)"
+              [class.active]="clickedRows == row"-->
+          </mat-table>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Pengguna">
+    <div class="flex flex-col flex-wrap justify-between text-center p-3">
+      <div class="flex flex-row justify-between items-center">
+        <span class="title">Pengaturan Pengguna</span>
+        <button class="btn-quick mb-2" (click)="addUser()">+ Tambah</button>
+      </div>
+      <div class="w-100 text-left">
+          <mat-table #table [dataSource]="dataSourceUser" class="mat-table">
+            <ng-container matColumnDef="name">
+              <th class="th-style" fxFlex="50%" mat-header-cell *matHeaderCellDef>Name</th>
+              <td class="tr-style" fxFlex="50%" mat-cell *matCellDef="let users">
+                {{users.username}}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsUser;" class="tableHeader"></tr>
+            <tr mat-row class="tableRow" 
+                *matRowDef="let row; columns: displayedColumnsUser;"
+                (click)="userRole(row)"
+            ></tr>
+            <!--(click)="openDialog(row)"
+              [class.active]="clickedRows == row"-->
+          </mat-table>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Aplikasi" *ngIf="isAdm">
+    <div class="flex flex-col flex-md-row justify-around items-center pt-4">
+      <div class="flex flex-col">
+        <h3 class="w-100 text-center font-secondary">UID</h3>
+        <qr-code class="mt-2" [value]="api1" [size]="width"></qr-code>
+      </div>
+      <div class="flex flex-col mt-8 mt-md-0">
+        <h3 class="w-100 text-center font-secondary">Company ID</h3>
+        <qr-code class="mt-2" [value]="api2" [size]="width"></qr-code>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,54 @@
+<div class="container">
+	<div class="pl-2 h-2rem pt-1">
+		<div *ngIf="isIM || isAdm" class="submit-form">
+    	<div class="flex flex-row items-end">
+        <input class="input h-1rem w-4rem" type="text" name="name" [(ngModel)]="uomadd.uom_name" required id="name" placeholder="Name *">
+        <select class="input h-1rem w-4rem ml-3" [(ngModel)]="datcat">
+          <option *ngFor="let uomcat of uomcats" [value]="uomcat.id">
+            {{ uomcat.uom_cat }}
+          </option>
+        </select>
+        <input class="input h-1rem w-4rem ml-3" type="text" name="ratio" [(ngModel)]="uomadd.ratio" required id="ratio" placeholder="Ratio *">
+      	<a class="submit h-1rem w-4rem btn-quick btn-quick-left ml-3" (click)="saveUom()">+ Add</a>
+    	</div>
+  	</div>
+	</div>
+
+	<div class="pr-2 h-1rem">
+    <a class="submit btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</a>
+	</div>
+</div>
+
+<div class="mx-3">
+<!--<mat-table #table [dataSource]="dataSource">
+  <ng-container matColumnDef="name">
+    <th class="th-style" fxFlex="40%" mat-header-cell *matHeaderCellDef>Nama</th>
+    <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let uoms">
+      {{uoms.uom_name}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="kategori">
+    <th class="th-style" fxFlex="40%" mat-header-cell *matHeaderCellDef>Kategori</th>
+    <td class="tr-style" fxFlex="40%" mat-cell *matCellDef="let uoms">
+      {{uoms.uom_cat.uom_cat}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="ratio">
+    <th class="th-style" fxFlex="20%" mat-header-cell *matHeaderCellDef>Rasio</th>
+    <td class="tr-style" fxFlex="20%" mat-cell *matCellDef="let uoms">
+      {{uoms.ratio}}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns;" class="tableHeader"></tr>
+  <tr mat-row class="tableRow" 
+      *matRowDef="let row; columns: displayedColumns;"
+      
+      [class.active]="clickedRows == row"
+  ></tr>
+</mat-table>-->
+  <ngx-table [configuration]="configuration"
+    [data]="uoms"
+    [columns]="columns">
+  </ngx-table>
+</div>
