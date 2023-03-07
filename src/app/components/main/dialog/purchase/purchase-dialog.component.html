@@ -87,7 +87,9 @@
         <input disabled class=" text-right" [(ngModel)]="datsub"/>
       </td>
       <td class="td-style btn-rainbow" fxFlex="5%">
-        <button class="btn-gradient" (click)="pushing()">+</button>
+        <div class="w-1rem mx-auto text-center" (click)="pushing()">
+          <button class="btn-gradient w-1rem text-white">+</button>
+        </div>
       </td>
     </tr>
     <tr>
@@ -177,7 +179,7 @@
       <td class="td-style" fxFlex="5%" mat-cell *matCellDef="let datas">
         <div *ngIf="datas.qty_done == 0">
         <a class="add_stock" *ngIf="edit && (isPurM || isAdm)" ><mat-icon class="mat-icon" 
-          (click)="deletePODetail(dataSource.filteredData.indexOf(datas), datas.id, datas.product)">delete</mat-icon></a>
+          (click)="deletePODetail(dataSource.filteredData.indexOf(datas), datas.id, datas.products)">delete</mat-icon></a>
         </div>
       </td>
     </ng-container>

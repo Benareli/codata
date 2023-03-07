@@ -4,13 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Product } from 'src/app/models/product.model';
-import { Uom } from 'src/app/models/uom.model';
-import { Bom } from 'src/app/models/bom.model';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { Uom } from 'src/app/models/masterdata/uom.model';
+import { Bom } from 'src/app/models/masterdata/bom.model';
 
-import { ProductService } from 'src/app/services/product.service';
-import { UomService } from 'src/app/services/uom.service';
-import { BomService } from 'src/app/services/bom.service';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { UomService } from 'src/app/services/masterdata/uom.service';
+import { BomService } from 'src/app/services/masterdata/bom.service';
 
 import { BomDialogComponent } from '../../dialog/bom-dialog.component';
 

@@ -10,21 +10,21 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { BaseURL } from 'src/app/baseurl';
 
-import { Company } from 'src/app/models/company.model';
-import { Id } from 'src/app/models/id.model';
-import { Possession } from 'src/app/models/possession.model';
-import { Store } from 'src/app/models/store.model';
-import { Tax } from 'src/app/models/tax.model';
-import { User } from 'src/app/models/user.model';
+import { Company } from 'src/app/models/settings/company.model';
+import { Id } from 'src/app/models/settings/id.model';
+import { Possession } from 'src/app/models/transaction/possession.model';
+import { Store } from 'src/app/models/settings/store.model';
+import { Tax } from 'src/app/models/accounting/tax.model';
+import { User } from 'src/app/models/user_auth/user.model';
 
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { FileUploadService } from 'src/app/services/file-upload.service';
-import { CompanyService } from 'src/app/services/company.service';
-import { IdService } from 'src/app/services/id.service';
-import { PossessionService } from 'src/app/services/possession.service';
-import { StoreService } from 'src/app/services/store.service';
-import { TaxService } from 'src/app/services/tax.service';
-import { User2Service } from 'src/app/services/user2.service';
+import { TokenStorageService } from 'src/app/services/user_auth/token-storage.service';
+import { FileUploadService } from 'src/app/services/settings/file-upload.service';
+import { CompanyService } from 'src/app/services/settings/company.service';
+import { IdService } from 'src/app/services/settings/id.service';
+import { PossessionService } from 'src/app/services/transaction/possession.service';
+import { StoreService } from 'src/app/services/settings/store.service';
+import { TaxService } from 'src/app/services/accounting/tax.service';
+import { User2Service } from 'src/app/services/user_auth/user2.service';
 
 import { RegisterComponent } from '../../user_auth/register/register.component';
 import { UserroleDialogComponent } from '../../main/dialog/userrole-dialog.component';

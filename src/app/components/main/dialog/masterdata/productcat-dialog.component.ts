@@ -3,11 +3,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Globals } from 'src/app/global';
-import { Productcat } from 'src/app/models/productcat.model';
-import { Log } from 'src/app/models/log.model';
+import { Productcat } from 'src/app/models/masterdata/productcat.model';
+import { Log } from 'src/app/models/settings/log.model';
 
-import { ProductCatService } from 'src/app/services/product-cat.service';
-import { LogService } from 'src/app/services/log.service';
+import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
+import { LogService } from 'src/app/services/settings/log.service';
 
 @Component({
   selector: 'app-productcat-dialog',

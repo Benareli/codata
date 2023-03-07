@@ -2,18 +2,18 @@ import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
 import { Globals } from 'src/app/global';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Setting } from 'src/app/models/setting.model';
-import { SettingService } from 'src/app/services/setting.service';
-import { Store } from 'src/app/models/store.model';
-import { StoreService } from 'src/app/services/store.service';
-import { Possession } from 'src/app/models/possession.model';
-import { PossessionService } from 'src/app/services/possession.service';
-import { Pos } from 'src/app/models/pos.model';
-import { PosService } from 'src/app/services/pos.service';
-import { Posdetail } from 'src/app/models/posdetail.model';
-import { PosdetailService } from 'src/app/services/posdetail.service';
-import { Payment } from 'src/app/models/payment.model';
-import { PaymentService } from 'src/app/services/payment.service';
+import { Setting } from 'src/app/models/settings/setting.model';
+import { SettingService } from 'src/app/services/settings/setting.service';
+import { Store } from 'src/app/models/settings/store.model';
+import { StoreService } from 'src/app/services/settings/store.service';
+import { Possession } from 'src/app/models/transaction/possession.model';
+import { PossessionService } from 'src/app/services/transaction/possession.service';
+import { Pos } from 'src/app/models/transaction/pos.model';
+import { PosService } from 'src/app/services/transaction/pos.service';
+import { Posdetail } from 'src/app/models/transaction/posdetail.model';
+import { PosdetailService } from 'src/app/services/transaction/posdetail.service';
+import { Payment } from 'src/app/models/accounting/payment.model';
+import { PaymentService } from 'src/app/services/accounting/payment.service';
 
 @Component({
   selector: 'app-printpos-dialog',

@@ -3,11 +3,11 @@ import { Globals } from 'src/app/global';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { Role } from 'src/app/models/role.model';
-import { RoleService } from 'src/app/services/role.service';
-import { User } from 'src/app/models/user.model';
-import { User2Service } from 'src/app/services/user2.service';
+import { TokenStorageService } from 'src/app/services/user_auth/token-storage.service';
+import { Role } from 'src/app/models/user_auth/role.model';
+import { RoleService } from 'src/app/services/user_auth/role.service';
+import { User } from 'src/app/models/user_auth/user.model';
+import { User2Service } from 'src/app/services/user_auth/user2.service';
 
 @Component({
   selector: 'app-userrole-dialog',

@@ -6,25 +6,25 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Globals } from 'src/app/global';
-import { Log } from 'src/app/models/log.model';
-import { Id } from 'src/app/models/id.model';
-import { Stockmove } from 'src/app/models/stockmove.model';
-import { Qof } from 'src/app/models/qof.model';
-import { Qop } from 'src/app/models/qop.model';
-import { Uom } from 'src/app/models/uom.model';
-import { Partner } from 'src/app/models/partner.model';
-import { Warehouse } from 'src/app/models/warehouse.model';
+import { Log } from 'src/app/models/settings/log.model';
+import { Id } from 'src/app/models/settings/id.model';
+import { Stockmove } from 'src/app/models/transaction/stockmove.model';
+import { Qof } from 'src/app/models/transaction/qof.model';
+import { Qop } from 'src/app/models/transaction/qop.model';
+import { Uom } from 'src/app/models/masterdata/uom.model';
+import { Partner } from 'src/app/models/masterdata/partner.model';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
 
-import { LogService } from 'src/app/services/log.service';
-import { IdService } from 'src/app/services/id.service';
-import { StockmoveService } from 'src/app/services/stockmove.service';
-import { QofService } from 'src/app/services/qof.service';
-import { QopService } from 'src/app/services/qop.service';
-import { Product } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
-import { UomService } from 'src/app/services/uom.service';
-import { PartnerService } from 'src/app/services/partner.service';
-import { WarehouseService } from 'src/app/services/warehouse.service';
+import { LogService } from 'src/app/services/settings/log.service';
+import { IdService } from 'src/app/services/settings/id.service';
+import { StockmoveService } from 'src/app/services/transaction/stockmove.service';
+import { QofService } from 'src/app/services/transaction/qof.service';
+import { QopService } from 'src/app/services/transaction/qop.service';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { UomService } from 'src/app/services/masterdata/uom.service';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
 
 @Component({
   selector: 'app-stockmove-dialog',

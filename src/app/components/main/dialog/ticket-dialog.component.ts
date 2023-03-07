@@ -8,8 +8,8 @@ import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Ticket } from 'src/app/models/ticket.model';
 import { TicketService } from 'src/app/services/ticket.service';
-import { Log } from 'src/app/models/log.model';
-import { LogService } from 'src/app/services/log.service';
+import { Log } from 'src/app/models/settings/log.model';
+import { LogService } from 'src/app/services/settings/log.service';
 
 @Component({
   selector: 'app-ticket-dialog',

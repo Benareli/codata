@@ -6,22 +6,22 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Id } from 'src/app/models/id.model';
-import { IdService } from 'src/app/services/id.service';
-import { Sale } from 'src/app/models/sale.model';
-import { SaleService } from 'src/app/services/sale.service';
-import { Saledetail } from 'src/app/models/saledetail.model';
-import { SaledetailService } from 'src/app/services/saledetail.service';
-import { Log } from 'src/app/models/log.model';
-import { LogService } from 'src/app/services/log.service';
-import { Product } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
-import { Partner } from 'src/app/models/partner.model';
-import { PartnerService } from 'src/app/services/partner.service';
-import { Warehouse } from 'src/app/models/warehouse.model';
-import { WarehouseService } from 'src/app/services/warehouse.service';
-import { Journal } from 'src/app/models/journal.model';
-import { JournalService } from 'src/app/services/journal.service';
+import { Id } from 'src/app/models/settings/id.model';
+import { IdService } from 'src/app/services/settings/id.service';
+import { Sale } from 'src/app/models/transaction/sale.model';
+import { SaleService } from 'src/app/services/transaction/sale.service';
+import { Saledetail } from 'src/app/models/transaction/saledetail.model';
+import { SaledetailService } from 'src/app/services/transaction/saledetail.service';
+import { Log } from 'src/app/models/settings/log.model';
+import { LogService } from 'src/app/services/settings/log.service';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { Partner } from 'src/app/models/masterdata/partner.model';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+import { Journal } from 'src/app/models/accounting/journal.model';
+import { JournalService } from 'src/app/services/accounting/journal.service';
 
 @Component({
   selector: 'app-invoicecreate-dialog',

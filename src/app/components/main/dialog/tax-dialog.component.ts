@@ -6,8 +6,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from "@angular/material/checkbox";
 
-import { Tax } from 'src/app/models/tax.model';
-import { TaxService } from 'src/app/services/tax.service';
+import { Tax } from 'src/app/models/accounting/tax.model';
+import { TaxService } from 'src/app/services/accounting/tax.service';
 
 @Component({
   selector: 'app-tax-dialog',

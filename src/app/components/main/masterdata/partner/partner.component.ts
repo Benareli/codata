@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Partner } from 'src/app/models/partner.model';
+import { Partner } from 'src/app/models/masterdata/partner.model';
 
-import { PartnerService } from 'src/app/services/partner.service';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
 
 import { PartnerDialogComponent } from '../../dialog/masterdata/partner-dialog.component';
 import { UploadDialogComponent } from '../../dialog/upload-dialog.component';

@@ -5,10 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Brand } from 'src/app/models/brand.model';
+import { Brand } from 'src/app/models/masterdata/brand.model';
 
-import { BrandService } from 'src/app/services/brand.service';
-import { LogService } from 'src/app/services/log.service';
+import { BrandService } from 'src/app/services/masterdata/brand.service';
+import { LogService } from 'src/app/services/settings/log.service';
 
 import { BrandDialogComponent } from '../../dialog/masterdata/brand-dialog.component';
 import { UploadDialogComponent } from '../../dialog/upload-dialog.component';

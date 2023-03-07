@@ -6,18 +6,18 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
-import { Stockmove } from 'src/app/models/stockmove.model';
-import { StockmoveService } from 'src/app/services/stockmove.service';
-import { Stockrequest } from 'src/app/models/stockrequest.model';
-import { StockrequestService } from 'src/app/services/stockrequest.service';
-import { Product } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
-import { Warehouse } from 'src/app/models/warehouse.model';
-import { WarehouseService } from 'src/app/services/warehouse.service';
-import { Uom } from 'src/app/models/uom.model';
-import { UomService } from 'src/app/services/uom.service';
-import { Uomcat } from 'src/app/models/uomcat.model';
-import { UomcatService } from 'src/app/services/uomcat.service';
+import { Stockmove } from 'src/app/models/transaction/stockmove.model';
+import { StockmoveService } from 'src/app/services/transaction/stockmove.service';
+import { Stockrequest } from 'src/app/models/transaction/stockrequest.model';
+import { StockrequestService } from 'src/app/services/transaction/stockrequest.service';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+import { Uom } from 'src/app/models/masterdata/uom.model';
+import { UomService } from 'src/app/services/masterdata/uom.service';
+import { Uomcat } from 'src/app/models/masterdata/uomcat.model';
+import { UomcatService } from 'src/app/services/masterdata/uomcat.service';
 
 @Component({
   selector: 'app-sm-detail-dialog',

@@ -5,12 +5,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Uom } from 'src/app/models/uom.model';
-import { Uomcat } from 'src/app/models/uomcat.model';
+import { Uom } from 'src/app/models/masterdata/uom.model';
+import { Uomcat } from 'src/app/models/masterdata/uomcat.model';
 
-import { UomService } from 'src/app/services/uom.service';
-import { UomcatService } from 'src/app/services/uomcat.service';
-import { LogService } from 'src/app/services/log.service';
+import { UomService } from 'src/app/services/masterdata/uom.service';
+import { UomcatService } from 'src/app/services/masterdata/uomcat.service';
+import { LogService } from 'src/app/services/settings/log.service';
 
 @Component({
   selector: 'app-uom',

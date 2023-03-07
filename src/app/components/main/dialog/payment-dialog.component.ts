@@ -3,8 +3,8 @@ import { Globals } from 'src/app/global';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Log } from 'src/app/models/log.model';
-import { LogService } from 'src/app/services/log.service';
+import { Log } from 'src/app/models/settings/log.model';
+import { LogService } from 'src/app/services/settings/log.service';
 
 @Component({
   selector: 'app-payment-dialog',

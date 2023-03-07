@@ -5,15 +5,15 @@ import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
-import { Product } from 'src/app/models/product.model';
-import { Productcat } from 'src/app/models/productcat.model';
-import { Brand } from 'src/app/models/brand.model';
-import { Uom } from 'src/app/models/uom.model';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { Productcat } from 'src/app/models/masterdata/productcat.model';
+import { Brand } from 'src/app/models/masterdata/brand.model';
+import { Uom } from 'src/app/models/masterdata/uom.model';
 
-import { ProductService } from 'src/app/services/product.service';
-import { ProductCatService } from 'src/app/services/product-cat.service';
-import { BrandService } from 'src/app/services/brand.service';
-import { UomService } from 'src/app/services/uom.service';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
+import { BrandService } from 'src/app/services/masterdata/brand.service';
+import { UomService } from 'src/app/services/masterdata/uom.service';
 
 import { ProductDialogComponent } from '../../dialog/masterdata/product-dialog.component';
 import { StockMoveDialogComponent } from '../../dialog/stockmove/stockmove-dialog.component';

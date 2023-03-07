@@ -5,10 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Warehouse } from 'src/app/models/warehouse.model';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
 
-import { WarehouseService } from 'src/app/services/warehouse.service';
-import { LogService } from 'src/app/services/log.service';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+import { LogService } from 'src/app/services/settings/log.service';
 
 import { WarehouseDialogComponent } from '../../dialog/masterdata/warehouse-dialog.component';
 import { UploadDialogComponent } from '../../dialog/upload-dialog.component';

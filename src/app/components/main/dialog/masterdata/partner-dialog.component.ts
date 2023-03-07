@@ -3,11 +3,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Globals } from 'src/app/global';
-import { Log } from 'src/app/models/log.model';
-import { Partner } from 'src/app/models/partner.model';
+import { Log } from 'src/app/models/settings/log.model';
+import { Partner } from 'src/app/models/masterdata/partner.model';
 
-import { LogService } from 'src/app/services/log.service';
-import { PartnerService } from 'src/app/services/partner.service';
+import { LogService } from 'src/app/services/settings/log.service';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
 
 @Component({
   selector: 'app-partner-dialog',

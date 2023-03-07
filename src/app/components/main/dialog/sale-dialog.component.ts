@@ -11,24 +11,24 @@ import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 import { SmpartDialogComponent } from './stockmove/smpart-dialog.component';
 import { InvoicecreateDialogComponent } from './invoicecreate-dialog.component';
 
-import { Id } from 'src/app/models/id.model';
-import { IdService } from 'src/app/services/id.service';
-import { Sale } from 'src/app/models/sale.model';
-import { SaleService } from 'src/app/services/sale.service';
-import { Saledetail } from 'src/app/models/saledetail.model';
-import { SaledetailService } from 'src/app/services/saledetail.service';
-import { Log } from 'src/app/models/log.model';
-import { LogService } from 'src/app/services/log.service';
-import { Product } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
-import { Partner } from 'src/app/models/partner.model';
-import { PartnerService } from 'src/app/services/partner.service';
-import { Warehouse } from 'src/app/models/warehouse.model';
-import { WarehouseService } from 'src/app/services/warehouse.service';
-import { Stockmove } from 'src/app/models/stockmove.model';
-import { StockmoveService } from 'src/app/services/stockmove.service';
-import { Journal } from 'src/app/models/journal.model';
-import { JournalService } from 'src/app/services/journal.service';
+import { Id } from 'src/app/models/settings/id.model';
+import { IdService } from 'src/app/services/settings/id.service';
+import { Sale } from 'src/app/models/transaction/sale.model';
+import { SaleService } from 'src/app/services/transaction/sale.service';
+import { Saledetail } from 'src/app/models/transaction/saledetail.model';
+import { SaledetailService } from 'src/app/services/transaction/saledetail.service';
+import { Log } from 'src/app/models/settings/log.model';
+import { LogService } from 'src/app/services/settings/log.service';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { Partner } from 'src/app/models/masterdata/partner.model';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+import { Stockmove } from 'src/app/models/transaction/stockmove.model';
+import { StockmoveService } from 'src/app/services/transaction/stockmove.service';
+import { Journal } from 'src/app/models/accounting/journal.model';
+import { JournalService } from 'src/app/services/accounting/journal.service';
 
 @Component({
   selector: 'app-sale-dialog',

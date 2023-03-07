@@ -7,14 +7,14 @@ import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 import { API, APIDefinition } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Journal } from 'src/app/models/journal.model';
-import { Entry } from 'src/app/models/entry.model';
-import { Log } from 'src/app/models/log.model';
+import { Journal } from 'src/app/models/accounting/journal.model';
+import { Entry } from 'src/app/models/accounting/entry.model';
+import { Log } from 'src/app/models/settings/log.model';
 import { DataFilter, filterOption } from 'src/app/models/datafilter';
 
-import { JournalService } from 'src/app/services/journal.service';
-import { EntryService } from 'src/app/services/entry.service';
-import { LogService } from 'src/app/services/log.service';
+import { JournalService } from 'src/app/services/accounting/journal.service';
+import { EntryService } from 'src/app/services/accounting/entry.service';
+import { LogService } from 'src/app/services/settings/log.service';
 
 import { EntryDialogComponent } from '../../dialog/entry-dialog.component';
 

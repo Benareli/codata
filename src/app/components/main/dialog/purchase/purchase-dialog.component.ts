@@ -5,27 +5,27 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
 import { Globals } from 'src/app/global';
-import { Id } from 'src/app/models/id.model';
-import { Purchase } from 'src/app/models/purchase.model';
-import { Purchasedetail } from 'src/app/models/purchasedetail.model';
-import { Log } from 'src/app/models/log.model';
-import { Product } from 'src/app/models/product.model';
-import { Uom } from 'src/app/models/uom.model';
-import { Partner } from 'src/app/models/partner.model';
-import { Warehouse } from 'src/app/models/warehouse.model';
-import { Stockmove } from 'src/app/models/stockmove.model';
-import { Journal } from 'src/app/models/journal.model';
+import { Id } from 'src/app/models/settings/id.model';
+import { Purchase } from 'src/app/models/transaction/purchase.model';
+import { Purchasedetail } from 'src/app/models/transaction/purchasedetail.model';
+import { Log } from 'src/app/models/settings/log.model';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { Uom } from 'src/app/models/masterdata/uom.model';
+import { Partner } from 'src/app/models/masterdata/partner.model';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
+import { Stockmove } from 'src/app/models/transaction/stockmove.model';
+import { Journal } from 'src/app/models/accounting/journal.model';
 
-import { IdService } from 'src/app/services/id.service';
-import { PurchaseService } from 'src/app/services/purchase.service';
-import { PurchasedetailService } from 'src/app/services/purchasedetail.service';
-import { LogService } from 'src/app/services/log.service';
-import { ProductService } from 'src/app/services/product.service';
-import { UomService } from 'src/app/services/uom.service';
-import { PartnerService } from 'src/app/services/partner.service';
-import { WarehouseService } from 'src/app/services/warehouse.service';
-import { StockmoveService } from 'src/app/services/stockmove.service';
-import { JournalService } from 'src/app/services/journal.service';
+import { IdService } from 'src/app/services/settings/id.service';
+import { PurchaseService } from 'src/app/services/transaction/purchase.service';
+import { PurchasedetailService } from 'src/app/services/transaction/purchasedetail.service';
+import { LogService } from 'src/app/services/settings/log.service';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { UomService } from 'src/app/services/masterdata/uom.service';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+import { StockmoveService } from 'src/app/services/transaction/stockmove.service';
+import { JournalService } from 'src/app/services/accounting/journal.service';
 
 import { SmpartDialogComponent } from '../stockmove/smpart-dialog.component';
 import { BillcreateDialogComponent } from '../accounting/bill/billcreate-dialog.component';
@@ -74,7 +74,7 @@ export class PurchaseDialogComponent implements OnInit {
   thistotal?: number = 0;
   ph?: string = 'Ketik disini untuk cari';
 
-  smtotal?: number;
+  smtotal: number = 0;
   billtotal?: number;
 
   purchaseid?: string;
@@ -249,52 +249,68 @@ export class PurchaseDialogComponent implements OnInit {
   }
 
   deletePODetail(index: number, id: any, product: any): void {
-    /*if(product.id){
-      if(this.datas[index].stockmove.length>0){
+    if(product.id){
+      if(this.smtotal > 0){
         this._snackBar.open("Sudah ada Penerimaan Barang!", "Tutup", {duration: 5000});
       }else{
-        this.purchasedetailService.get(id)
-          .subscribe(resa => {
-            this.thissub = Number(this.thissub) - (Number(resa.qty) * Number(resa.price_unit));
-            this.thisdisc = Number(this.thisdisc) +
-              (Number(resa.discount ?? 0) / 100 * Number(resa.qty ?? 0) * Number(resa.price_unit ?? 0));
-            this.thistax = Number(this.thistax) -
-              (Number(resa.tax ?? 0)/100 * ((Number(resa.qty ?? 0) * Number(resa.price_unit ?? 0)) - 
-              (Number(resa.discount ?? 0) / 100 * Number(resa.qty ?? 0) * Number(resa.price_unit ?? 0)))) ?? 0 + 
-              Number(this.thistax??0);
-            this.thistotal = Number(this.thistotal) - Number(resa.subtotal);
-            const POEd = {
-              amount_tax: this.thistax ?? 0,
-              amount_untaxed: this.thissub ?? 0,
-              amount_discount: this.thisdisc ?? 0,
-              amount_total: this.thistotal ?? 0,
-              message: this.isUpdated + " ke " + this.thistotal,
-              user: this.globals.userid
-            };
-            this.purchaseService.update(this.data, POEd)
-              .subscribe(resb => {
-                this.purchasedetailService.delete(id)
-                  .subscribe(resc => {
-                    this.retrievePO();
-                    this.datas.splice(index, 1);
+        if(this.data){
+          this.purchasedetailService.get(id)
+            .subscribe(resa => {
+              this.thissub = Number(this.thissub) - (Number(resa.qty) * Number(resa.price_unit));
+              this.thisdisc = Number(this.thisdisc) +
+                (Number(resa.discount ?? 0) / 100 * Number(resa.qty ?? 0) * Number(resa.price_unit ?? 0));
+              this.thistax = Number(this.thistax) -
+                (Number(resa.tax ?? 0)/100 * ((Number(resa.qty ?? 0) * Number(resa.price_unit ?? 0)) - 
+                (Number(resa.discount ?? 0) / 100 * Number(resa.qty ?? 0) * Number(resa.price_unit ?? 0)))) ?? 0 + 
+                Number(this.thistax??0);
+              this.thistotal = Number(this.thistotal) - Number(resa.subtotal);
+              const POEd = {
+                amount_tax: this.thistax ?? 0,
+                amount_untaxed: this.thissub ?? 0,
+                amount_discount: this.thisdisc ?? 0,
+                amount_total: this.thistotal ?? 0,
+                message: this.isUpdated + " ke " + this.thistotal,
+                user: this.globals.userid
+              };
+              this.purchaseService.update(this.data, POEd)
+                .subscribe(resb => {
+                  this.purchasedetailService.delete(id)
+                    .subscribe(resc => {
+                      if(resc.message == 'done'){
+                        this.retrievePO();
+                        this.datas.splice(index, 1);
+                        this.dataSource.data = this.datas;
+                      }
+                    })
                   })
-              })
-        })
+          })
+        }else{
+          this.deleteDraftPODetail(index);
+        }
       }
     }else{
-      this.thissub = Number(this.thissub) - (Number(this.datas[index].qty) * Number(this.datas[index].price_unit));
-      this.thisdisc = Number(this.thisdisc) +
-        (Number(this.datas[index].discount ?? 0) / 100 * Number(this.datas[index].qty ?? 0) * Number(this.datas[index].price_unit ?? 0));
-      this.thistax = Number(this.thistax) -
-        (Number(this.datas[index].tax ?? 0)/100 * ((Number(this.datas[index].qty ?? 0) * Number(this.datas[index].price_unit ?? 0)) - 
-        (Number(this.datas[index].discount ?? 0) / 100 * Number(this.datas[index].qty ?? 0) * Number(this.datas[index].price_unit ?? 0)))) ?? 0 + 
-        Number(this.thistax??0);
-      this.thistotal = Number(this.thistotal) - Number(this.datas[index].subtotal);
-      this.datas.splice(index, 1);
+      this.deleteDraftPODetail(index);
     }
     if(this.datas.length==0){
       this.datas = [{product:"",qty:"",price_unit:""}];
-    }*/
+    }
+  }
+
+  deleteDraftPODetail(index: number): void {
+    this.thissub = Number(this.thissub) - (Number(this.datas[index].qty) * Number(this.datas[index].price_unit));
+    this.thisdisc = Number(this.thisdisc) +
+      (Number(this.datas[index].discount ?? 0) / 100 * Number(this.datas[index].qty ?? 0) * Number(this.datas[index].price_unit ?? 0));
+    this.thistax = Number(this.thistax) -
+      (Number(this.datas[index].tax ?? 0)/100 * ((Number(this.datas[index].qty ?? 0) * Number(this.datas[index].price_unit ?? 0)) - 
+      (Number(this.datas[index].discount ?? 0) / 100 * Number(this.datas[index].qty ?? 0) * Number(this.datas[index].price_unit ?? 0)))) ?? 0 + 
+      Number(this.thistax??0);
+    this.thistotal = Number(this.thistotal) - Number(this.datas[index].subtotal);
+    this.datas.splice(index, 1);
+    this.dataSource.data = this.datas;
+    if(this.datas.length==0){
+      this.datas = [{product:"",qty:"",price_unit:""}];
+      this.dataSource.data = this.datas;
+    }
   }
 
   editPO(): void {

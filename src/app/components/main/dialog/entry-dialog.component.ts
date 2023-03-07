@@ -6,10 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
-import { Journal } from 'src/app/models/journal.model';
-import { JournalService } from 'src/app/services/journal.service';
-import { Entry } from 'src/app/models/entry.model';
-import { EntryService } from 'src/app/services/entry.service';
+import { Journal } from 'src/app/models/accounting/journal.model';
+import { JournalService } from 'src/app/services/accounting/journal.service';
+import { Entry } from 'src/app/models/accounting/entry.model';
+import { EntryService } from 'src/app/services/accounting/entry.service';
 
 @Component({
   selector: 'app-entry-dialog',

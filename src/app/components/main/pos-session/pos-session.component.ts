@@ -8,14 +8,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatGridList } from '@angular/material/grid-list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { Id } from 'src/app/models/id.model';
-import { IdService } from 'src/app/services/id.service';
-import { Possession } from 'src/app/models/possession.model';
-import { PossessionService } from 'src/app/services/possession.service';
-import { Store } from 'src/app/models/store.model';
-import { StoreService } from 'src/app/services/store.service';
-import { Pos } from 'src/app/models/pos.model';
-import { PosService } from 'src/app/services/pos.service';
+import { Id } from 'src/app/models/settings/id.model';
+import { IdService } from 'src/app/services/settings/id.service';
+import { Possession } from 'src/app/models/transaction/possession.model';
+import { PossessionService } from 'src/app/services/transaction/possession.service';
+import { Store } from 'src/app/models/settings/store.model';
+import { StoreService } from 'src/app/services/settings/store.service';
+import { Pos } from 'src/app/models/transaction/pos.model';
+import { PosService } from 'src/app/services/transaction/pos.service';
 
 @Component({
   selector: 'app-pos-session',

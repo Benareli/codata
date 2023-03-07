@@ -7,13 +7,13 @@ import { DataFilter, filterOption } from 'src/app/models/datafilter';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Stockmove } from 'src/app/models/stockmove.model';
-import { Stockrequest } from 'src/app/models/stockrequest.model';
-import { Log } from 'src/app/models/log.model';
+import { Stockmove } from 'src/app/models/transaction/stockmove.model';
+import { Stockrequest } from 'src/app/models/transaction/stockrequest.model';
+import { Log } from 'src/app/models/settings/log.model';
 
-import { StockmoveService } from 'src/app/services/stockmove.service';
-import { StockrequestService } from 'src/app/services/stockrequest.service';
-import { LogService } from 'src/app/services/log.service';
+import { StockmoveService } from 'src/app/services/transaction/stockmove.service';
+import { StockrequestService } from 'src/app/services/transaction/stockrequest.service';
+import { LogService } from 'src/app/services/settings/log.service';
 
 import { SMDetailDialogComponent } from '../../dialog/stockmove/sm-detail-dialog.component';
 

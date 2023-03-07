@@ -8,14 +8,14 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
-import { Product } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
-import { Bom } from 'src/app/models/bom.model';
-import { BomService } from 'src/app/services/bom.service';
-import { Costing } from 'src/app/models/costing.model';
-import { CostingService } from 'src/app/services/costing.service';
-import { Log } from 'src/app/models/log.model';
-import { LogService } from 'src/app/services/log.service';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { Bom } from 'src/app/models/masterdata/bom.model';
+import { BomService } from 'src/app/services/masterdata/bom.service';
+import { Costing } from 'src/app/models/masterdata/costing.model';
+import { CostingService } from 'src/app/services/masterdata/costing.service';
+import { Log } from 'src/app/models/settings/log.model';
+import { LogService } from 'src/app/services/settings/log.service';
 
 @Component({
   selector: 'app-bom-dialog',

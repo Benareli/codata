@@ -2,7 +2,7 @@ import { HTTP_INTERCEPTORS, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
-import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { TokenStorageService } from 'src/app/services/user_auth/token-storage.service';
 import { Observable } from 'rxjs';
 
 const TOKEN_HEADER_KEY = 'x-access-token';       // for Spring Boot back-end

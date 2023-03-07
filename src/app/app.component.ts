@@ -5,11 +5,11 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { BaseURL } from 'src/app/baseurl';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { Company } from 'src/app/models/company.model';
-import { CompanyService } from 'src/app/services/company.service';
-import { User } from 'src/app/models/user.model';
-import { User2Service } from 'src/app/services/user2.service';
+import { TokenStorageService } from 'src/app/services/user_auth/token-storage.service';
+import { Company } from 'src/app/models/settings/company.model';
+import { CompanyService } from 'src/app/services/settings/company.service';
+import { User } from 'src/app/models/user_auth/user.model';
+import { User2Service } from 'src/app/services/user_auth/user2.service';
 
 @Component({
   selector: 'app-root',

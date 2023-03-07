@@ -7,16 +7,16 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
-import { Entry } from 'src/app/models/entry.model';
-import { EntryService } from 'src/app/services/entry.service';
-import { Journal } from 'src/app/models/journal.model';
-import { JournalService } from 'src/app/services/journal.service';
-import { Partner } from 'src/app/models/partner.model';
-import { PartnerService } from 'src/app/services/partner.service';
-import { Payment } from 'src/app/models/payment.model';
-import { PaymentService } from 'src/app/services/payment.service';
-import { Id } from 'src/app/models/id.model';
-import { IdService } from 'src/app/services/id.service';
+import { Entry } from 'src/app/models/accounting/entry.model';
+import { EntryService } from 'src/app/services/accounting/entry.service';
+import { Journal } from 'src/app/models/accounting/journal.model';
+import { JournalService } from 'src/app/services/accounting/journal.service';
+import { Partner } from 'src/app/models/masterdata/partner.model';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
+import { Payment } from 'src/app/models/accounting/payment.model';
+import { PaymentService } from 'src/app/services/accounting/payment.service';
+import { Id } from 'src/app/models/settings/id.model';
+import { IdService } from 'src/app/services/settings/id.service';
 
 import { PaymentDialogComponent } from './payment-dialog.component';
 

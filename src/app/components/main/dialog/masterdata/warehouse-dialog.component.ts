@@ -4,17 +4,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Warehouse } from 'src/app/models/warehouse.model';
-import { Log } from 'src/app/models/log.model';
-import { Stockmove } from 'src/app/models/stockmove.model';
-import { Qop } from 'src/app/models/qop.model';
-import { Company } from 'src/app/models/company.model';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
+import { Log } from 'src/app/models/settings/log.model';
+import { Stockmove } from 'src/app/models/transaction/stockmove.model';
+import { Qop } from 'src/app/models/transaction/qop.model';
+import { Company } from 'src/app/models/settings/company.model';
 
-import { WarehouseService } from 'src/app/services/warehouse.service';
-import { LogService } from 'src/app/services/log.service';
-import { StockmoveService } from 'src/app/services/stockmove.service';
-import { QopService } from 'src/app/services/qop.service';
-import { CompanyService } from 'src/app/services/company.service';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+import { LogService } from 'src/app/services/settings/log.service';
+import { StockmoveService } from 'src/app/services/transaction/stockmove.service';
+import { QopService } from 'src/app/services/transaction/qop.service';
+import { CompanyService } from 'src/app/services/settings/company.service';
 
 @Component({
   selector: 'app-warehouse-dialog',

@@ -5,21 +5,21 @@ import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 import { API, APIDefinition } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Purchase } from 'src/app/models/purchase.model';
-import { Purchasedetail } from 'src/app/models/purchasedetail.model';
-import { Product } from 'src/app/models/product.model';
-import { Productcat } from 'src/app/models/productcat.model';
-import { Brand } from 'src/app/models/brand.model';
-import { Partner } from 'src/app/models/partner.model';
-import { Warehouse } from 'src/app/models/warehouse.model';
+import { Purchase } from 'src/app/models/transaction/purchase.model';
+import { Purchasedetail } from 'src/app/models/transaction/purchasedetail.model';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { Productcat } from 'src/app/models/masterdata/productcat.model';
+import { Brand } from 'src/app/models/masterdata/brand.model';
+import { Partner } from 'src/app/models/masterdata/partner.model';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
 
-import { PurchaseService } from 'src/app/services/purchase.service';
-import { PurchasedetailService } from 'src/app/services/purchasedetail.service';
-import { ProductService } from 'src/app/services/product.service';
-import { ProductCatService } from 'src/app/services/product-cat.service';
-import { BrandService } from 'src/app/services/brand.service';
-import { PartnerService } from 'src/app/services/partner.service';
-import { WarehouseService } from 'src/app/services/warehouse.service';
+import { PurchaseService } from 'src/app/services/transaction/purchase.service';
+import { PurchasedetailService } from 'src/app/services/transaction/purchasedetail.service';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
+import { BrandService } from 'src/app/services/masterdata/brand.service';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
 
 import { PurchaseDialogComponent } from '../../dialog/purchase/purchase-dialog.component';
 

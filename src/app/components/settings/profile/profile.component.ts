@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Globals } from 'src/app/global';
-import { User } from 'src/app/models/user.model';
-import { Role } from 'src/app/models/role.model';
+import { User } from 'src/app/models/user_auth/user.model';
+import { Role } from 'src/app/models/user_auth/role.model';
 
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { RoleService } from 'src/app/services/role.service';
-import { User2Service } from 'src/app/services/user2.service';
+import { TokenStorageService } from 'src/app/services/user_auth/token-storage.service';
+import { RoleService } from 'src/app/services/user_auth/role.service';
+import { User2Service } from 'src/app/services/user_auth/user2.service';
 
 @Component({
   selector: 'app-profile',

@@ -12,20 +12,20 @@ import { API, APIDefinition } from 'ngx-easy-table';
 
 import { SaleDialogComponent } from '../dialog/sale-dialog.component';
 
-import { Sale } from 'src/app/models/sale.model';
-import { SaleService } from 'src/app/services/sale.service';
-import { Saledetail } from 'src/app/models/saledetail.model';
-import { SaledetailService } from 'src/app/services/saledetail.service';
-import { Product } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
-import { Productcat } from 'src/app/models/productcat.model';
-import { ProductCatService } from 'src/app/services/product-cat.service';
-import { Brand } from 'src/app/models/brand.model';
-import { BrandService } from 'src/app/services/brand.service';
-import { Partner } from 'src/app/models/partner.model';
-import { PartnerService } from 'src/app/services/partner.service';
-import { Warehouse } from 'src/app/models/warehouse.model';
-import { WarehouseService } from 'src/app/services/warehouse.service';
+import { Sale } from 'src/app/models/transaction/sale.model';
+import { SaleService } from 'src/app/services/transaction/sale.service';
+import { Saledetail } from 'src/app/models/transaction/saledetail.model';
+import { SaledetailService } from 'src/app/services/transaction/saledetail.service';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { Productcat } from 'src/app/models/masterdata/productcat.model';
+import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
+import { Brand } from 'src/app/models/masterdata/brand.model';
+import { BrandService } from 'src/app/services/masterdata/brand.service';
+import { Partner } from 'src/app/models/masterdata/partner.model';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
 
 @Component({
   selector: 'app-sale',

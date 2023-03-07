@@ -5,12 +5,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Journal } from 'src/app/models/journal.model';
-import { Log } from 'src/app/models/log.model';
+import { Journal } from 'src/app/models/accounting/journal.model';
+import { Log } from 'src/app/models/settings/log.model';
 import { DataFilter, filterOption } from 'src/app/models/datafilter';
 
-import { JournalService } from 'src/app/services/journal.service';
-import { LogService } from 'src/app/services/log.service';
+import { JournalService } from 'src/app/services/accounting/journal.service';
+import { LogService } from 'src/app/services/settings/log.service';
 
 import { BillDialogComponent } from '../../dialog/bill-dialog.component';
 

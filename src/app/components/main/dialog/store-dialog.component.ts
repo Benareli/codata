@@ -6,10 +6,10 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from "@angular/material/checkbox";
 
-import { Store } from 'src/app/models/store.model';
-import { StoreService } from 'src/app/services/store.service';
-import { Warehouse } from 'src/app/models/warehouse.model';
-import { WarehouseService } from 'src/app/services/warehouse.service';
+import { Store } from 'src/app/models/settings/store.model';
+import { StoreService } from 'src/app/services/settings/store.service';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
 
 @Component({
   selector: 'app-store-dialog',

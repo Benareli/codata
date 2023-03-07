@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { WebdatarocksComponent } from 'ng-webdatarocks';
 import { BaseURL } from 'src/app/baseurl';
 
-import { Pos } from 'src/app/models/pos.model';
-import { PosService } from 'src/app/services/pos.service';
-import { Posdetail } from 'src/app/models/posdetail.model';
-import { PosdetailService } from 'src/app/services/posdetail.service';
+import { Pos } from 'src/app/models/transaction/pos.model';
+import { PosService } from 'src/app/services/transaction/pos.service';
+import { Posdetail } from 'src/app/models/transaction/posdetail.model';
+import { PosdetailService } from 'src/app/services/transaction/posdetail.service';
 
 @Component({
   selector: 'app-pos-report',

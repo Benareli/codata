@@ -4,16 +4,16 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as XLSX from 'xlsx';
 
-import { Brand } from 'src/app/models/brand.model';
-import { BrandService } from 'src/app/services/brand.service';
-import { Productcat } from 'src/app/models/productcat.model';
-import { ProductCatService } from 'src/app/services/product-cat.service';
-import { Product } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
-import { Warehouse } from 'src/app/models/warehouse.model';
-import { WarehouseService } from 'src/app/services/warehouse.service';
-import { Partner } from 'src/app/models/partner.model';
-import { PartnerService } from 'src/app/services/partner.service';
+import { Brand } from 'src/app/models/masterdata/brand.model';
+import { BrandService } from 'src/app/services/masterdata/brand.service';
+import { Productcat } from 'src/app/models/masterdata/productcat.model';
+import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
+import { Product } from 'src/app/models/masterdata/product.model';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+import { Partner } from 'src/app/models/masterdata/partner.model';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
 
 type AOA = any[][];
 
