@@ -1,21 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatSelectChange } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { DataFilter, filterOption } from 'src/app/models/datafilter';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
 import { Stockmove } from 'src/app/models/transaction/stockmove.model';
 import { Stockrequest } from 'src/app/models/transaction/stockrequest.model';
-import { Log } from 'src/app/models/settings/log.model';
 
 import { StockmoveService } from 'src/app/services/transaction/stockmove.service';
 import { StockrequestService } from 'src/app/services/transaction/stockrequest.service';
-import { LogService } from 'src/app/services/settings/log.service';
 
-import { SMDetailDialogComponent } from '../../dialog/stockmove/sm-detail-dialog.component';
+import { SMDetailDialogComponent } from '../../dialog/transaction/stockmove/sm-detail-dialog.component';
 
 @Component({
   selector: 'app-stockmove',
@@ -37,10 +32,8 @@ export class StockmoveComponent implements OnInit {
   constructor(
     private router: Router,
     private globals: Globals,
-    private _snackBar: MatSnackBar,
     private stockmoveService: StockmoveService,
     private stockrequestService: StockrequestService,
-    private logService: LogService,
     private dialog: MatDialog
   ) { }
 

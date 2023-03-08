@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
 import { Journal } from 'src/app/models/accounting/journal.model';
-import { Log } from 'src/app/models/settings/log.model';
-import { DataFilter, filterOption } from 'src/app/models/datafilter';
 
 import { JournalService } from 'src/app/services/accounting/journal.service';
-import { LogService } from 'src/app/services/settings/log.service';
 
 import { InvoiceDialogComponent } from '../../dialog/invoice-dialog.component';
 
@@ -33,9 +29,7 @@ export class ReceivableComponent implements OnInit {
   constructor(
     private router: Router,
     private globals: Globals,
-    private _snackBar: MatSnackBar,
     private journalService: JournalService,
-    private logService: LogService,
     private dialog: MatDialog
   ) { }
 

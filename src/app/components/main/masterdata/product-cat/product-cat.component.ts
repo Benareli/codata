@@ -7,7 +7,6 @@ import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 import { Globals } from 'src/app/global';
 import { Productcat } from 'src/app/models/masterdata/productcat.model';
 
-import { LogService } from 'src/app/services/settings/log.service';
 import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
 
 import { ProductcatDialogComponent } from '../../dialog/masterdata/productcat-dialog.component';
@@ -40,7 +39,6 @@ export class ProductCatComponent implements OnInit {
     private router: Router,
     private globals: Globals,
     private _snackBar: MatSnackBar,
-    private logService: LogService,
     private productCatService: ProductCatService,
     private dialog: MatDialog
   ) { }

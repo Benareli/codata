@@ -7,21 +7,15 @@ import { API, APIDefinition } from 'ngx-easy-table';
 import { Globals } from 'src/app/global';
 import { Purchase } from 'src/app/models/transaction/purchase.model';
 import { Purchasedetail } from 'src/app/models/transaction/purchasedetail.model';
-import { Product } from 'src/app/models/masterdata/product.model';
-import { Productcat } from 'src/app/models/masterdata/productcat.model';
-import { Brand } from 'src/app/models/masterdata/brand.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
 import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
 
 import { PurchaseService } from 'src/app/services/transaction/purchase.service';
 import { PurchasedetailService } from 'src/app/services/transaction/purchasedetail.service';
-import { ProductService } from 'src/app/services/masterdata/product.service';
-import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
-import { BrandService } from 'src/app/services/masterdata/brand.service';
 import { PartnerService } from 'src/app/services/masterdata/partner.service';
 import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
 
-import { PurchaseDialogComponent } from '../../dialog/purchase/purchase-dialog.component';
+import { PurchaseDialogComponent } from '../../dialog/transaction/purchase/purchase-dialog.component';
 
 @Component({
   selector: 'app-purchase',
@@ -61,9 +55,6 @@ export class PurchaseComponent implements OnInit {
     private dialog: MatDialog,
     private purchaseService: PurchaseService,
     private purchasedetailService: PurchasedetailService,
-    private productService: ProductService,
-    private productCatService: ProductCatService,
-    private brandService: BrandService,
     private partnerService: PartnerService,
     private warehouseService: WarehouseService
   ) { }

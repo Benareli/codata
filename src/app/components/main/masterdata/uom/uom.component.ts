@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
@@ -10,7 +9,6 @@ import { Uomcat } from 'src/app/models/masterdata/uomcat.model';
 
 import { UomService } from 'src/app/services/masterdata/uom.service';
 import { UomcatService } from 'src/app/services/masterdata/uomcat.service';
-import { LogService } from 'src/app/services/settings/log.service';
 
 @Component({
   selector: 'app-uom',
@@ -42,8 +40,6 @@ export class UomComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private uomService: UomService,
     private uomcatService: UomcatService,
-    private logService: LogService,
-    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {

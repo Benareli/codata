@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
-import { Globals } from 'src/app/global';
 import { Partner } from 'src/app/models/masterdata/partner.model';
 
 import { PartnerService } from 'src/app/services/masterdata/partner.service';
@@ -23,8 +21,6 @@ export class PartnerComponent implements OnInit {
   configuration: Config;
  
   constructor(
-    private router: Router,
-    private globals: Globals,
     private partnerService: PartnerService,
     private dialog: MatDialog
   ) { }

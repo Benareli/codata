@@ -1,11 +1,9 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
-import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
-import { Log } from 'src/app/models/settings/log.model';
 import { Stockmove } from 'src/app/models/transaction/stockmove.model';
 import { Qop } from 'src/app/models/transaction/qop.model';
 import { Company } from 'src/app/models/settings/company.model';

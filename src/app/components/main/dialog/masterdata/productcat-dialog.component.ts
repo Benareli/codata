@@ -1,10 +1,8 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Globals } from 'src/app/global';
-import { Productcat } from 'src/app/models/masterdata/productcat.model';
-import { Log } from 'src/app/models/settings/log.model';
 
 import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
 import { LogService } from 'src/app/services/settings/log.service';

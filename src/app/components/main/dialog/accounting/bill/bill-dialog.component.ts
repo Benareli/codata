@@ -1,29 +1,26 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
-import { Globals } from 'src/app/global';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialog } from '@angular/material/dialog';
-
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
-import { Entry } from 'src/app/models/accounting/entry.model';
-import { EntryService } from 'src/app/services/accounting/entry.service';
+
+import { Globals } from 'src/app/global';
 import { Journal } from 'src/app/models/accounting/journal.model';
-import { JournalService } from 'src/app/services/accounting/journal.service';
+import { Entry } from 'src/app/models/accounting/entry.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
+
+import { JournalService } from 'src/app/services/accounting/journal.service';
+import { EntryService } from 'src/app/services/accounting/entry.service';
 import { PartnerService } from 'src/app/services/masterdata/partner.service';
-import { Payment } from 'src/app/models/accounting/payment.model';
 import { PaymentService } from 'src/app/services/accounting/payment.service';
-import { Id } from 'src/app/models/settings/id.model';
 import { IdService } from 'src/app/services/settings/id.service';
 
-import { PaymentDialogComponent } from './payment-dialog.component';
+import { PaymentDialogComponent } from '../../payment-dialog.component';
 
 @Component({
   selector: 'app-bill-dialog',
   templateUrl: './bill-dialog.component.html',
-  styleUrls: ['./dialog.component.sass']
+  styleUrls: ['../../../../../style/main.sass']
 })
 export class BillDialogComponent implements OnInit {
   isChecked = false;
@@ -33,6 +30,7 @@ export class BillDialogComponent implements OnInit {
   isAdm = false;
   isRes = false;
   entrys: any;
+  datas: any;
   journals: Journal[];
   payables: any;
   paymentx: any;
@@ -61,27 +59,21 @@ export class BillDialogComponent implements OnInit {
   today?: Date;
 
   //Table
-  /*displayedColumns: string[] = 
+  displayedColumns: string[] = 
   ['label', 'qty', 'price_unit', 'discount', 'tax', 'subtotal'];
-  dataSource = new MatTableDataSource<any>();*/
+  dataSource = new MatTableDataSource<any>();
 
   //Table
   displayedColumnsPay: string[] = 
   ['label', 'date', 'payment'];
   dataSourcePay = new MatTableDataSource<any>();
 
-  columns: Columns[];
-  configuration: Config;
-  columnsPay: Columns[];
-  configurationPay: Config;
-
   constructor(
     public dialogRef: MatDialogRef<BillDialogComponent>,
-    private _snackBar: MatSnackBar,
     private dialog: MatDialog,
     private globals: Globals,
-    private entryService: EntryService,
     private journalService: JournalService,
+    private entryService: EntryService,
     private partnerService: PartnerService,
     private paymentService: PaymentService,
     private idService: IdService,
@@ -120,7 +112,7 @@ export class BillDialogComponent implements OnInit {
         this.journalid = journal.id;
         this.amountdue = journal.amountdue!;
         this.lock = journal!.lock!;
-        this.entrys = journal!.entrys!;
+        this.datas = journal!.entrys!;
         this.paymentx = journal!.payments;
         for(let x=0;x<this.entrys.length;x++){
           if(this.entrys[x].products){
@@ -141,6 +133,21 @@ export class BillDialogComponent implements OnInit {
             this.thistotal = this.thissub - this.thisdisc + this.thistax;
           }
         }
+        console.log(this.datas);
+        for(let x=0;x<this.datas.length;x++){
+          if(this.datas[x].products){
+            this.entrys.push(this.datas[x]);
+            /*this.entrys.push(this.datas[x]);
+            this.thissub = this.thissub + (this.datas[x].qty * this.datas[x].price_unit);
+            this.thisdisc = this.thisdisc + (this.datas[x].discount/100 * this.datas[x].qty * this.datas[x].price_unit);
+            this.thistax = this.thistax + (this.datas[x].tax / 100 * 
+              ((this.datas[x].qty * this.datas[x].price_unit) - (this.datas[x].discount/100 * this.datas[x].qty * this.datas[x].price_unit)));
+            this.thistotal = this.thissub - this.thisdisc + this.thistax;*/
+            console.log(this.datas[x].products);
+            console.log(this.entrys);
+          }
+        }
+        this.dataSource.data = this.entrys;
         /*this.entryService.getJournal(entry.id)
           .subscribe(ent => {
             for(let x=0;x<ent.length;x++){
@@ -167,7 +174,7 @@ export class BillDialogComponent implements OnInit {
         /*this.datas = entry.entries;
         this.payables = entry;
         for(let x=0;x<this.datas.length;x++){
-          if(this.datas[x].product){
+          if(this.datas[x].products){
             this.entrys.push(this.datas[x]);
             this.thissub = this.thissub + (this.datas[x].qty * this.datas[x].price_unit);
             this.thisdisc = this.thisdisc + (this.datas[x].discount/100 * this.datas[x].qty * this.datas[x].price_unit);
@@ -180,7 +187,7 @@ export class BillDialogComponent implements OnInit {
         this.dataSourcePay.data = entry!.payment!;
         if(entry!.payments! > 0) this.payments = entry!.payments!;*/
           //this.countDebCred();
-        this.columns = [
+        /*this.columns = [
           {key:'label', title:'Description', orderBy:'desc', width: '35%'},
           {key:'qty', title:'Qty', width:'10%'},
           {key:'price_unit', title:'Price Unit', width:'20%'},
@@ -202,7 +209,7 @@ export class BillDialogComponent implements OnInit {
         this.configurationPay = { ...DefaultConfig };
         this.configurationPay.columnReorder = true;
         this.configurationPay.searchEnabled = false;
-        this.configurationPay.paginationEnabled = false;
+        this.configurationPay.paginationEnabled = false;*/
       })
     this.partnerService.findAllActiveSupplier()
       .subscribe(dataSup => {

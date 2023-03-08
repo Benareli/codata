@@ -1,14 +1,15 @@
-import { Component, ViewChild, HostBinding, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { Globals } from 'src/app/global';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { BaseURL } from 'src/app/baseurl';
-import { TokenStorageService } from 'src/app/services/user_auth/token-storage.service';
+import { Globals } from 'src/app/global';
 import { Company } from 'src/app/models/settings/company.model';
-import { CompanyService } from 'src/app/services/settings/company.service';
 import { User } from 'src/app/models/user_auth/user.model';
+
+import { TokenStorageService } from 'src/app/services/user_auth/token-storage.service';
+import { CompanyService } from 'src/app/services/settings/company.service';
 import { User2Service } from 'src/app/services/user_auth/user2.service';
 
 @Component({

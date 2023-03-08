@@ -69,14 +69,15 @@ import { ProductcatDialogComponent } from './components/main/dialog/masterdata/p
 import { WarehouseDialogComponent } from './components/main/dialog/masterdata/warehouse-dialog.component';
 
 //Transaction
-import { SMDetailDialogComponent } from './components/main/dialog/stockmove/sm-detail-dialog.component';
-import { SmpartDialogComponent } from './components/main/dialog/stockmove/smpart-dialog.component';
-import { StockMoveDialogComponent } from './components/main/dialog/stockmove/stockmove-dialog.component';
+import { SMDetailDialogComponent } from './components/main/dialog/transaction/stockmove/sm-detail-dialog.component';
+import { SmpartDialogComponent } from './components/main/dialog/transaction/stockmove/smpart-dialog.component';
+import { StockMoveDialogComponent } from './components/main/dialog/transaction/stockmove/stockmove-dialog.component';
 
 //Purchase
-import { PurchaseDialogComponent } from './components/main/dialog/purchase/purchase-dialog.component';
+import { PurchaseDialogComponent } from './components/main/dialog/transaction/purchase/purchase-dialog.component';
 
 //Accounting - Bill
+import { BillDialogComponent } from './components/main/dialog/accounting/bill/bill-dialog.component';
 import { BillcreateDialogComponent } from './components/main/dialog/accounting/bill/billcreate-dialog.component';
 
 
@@ -104,7 +105,6 @@ import { UserroleDialogComponent } from './components/main/dialog/userrole-dialo
 import { TaxDialogComponent } from './components/main/dialog/tax-dialog.component';
 import { StoreDialogComponent } from './components/main/dialog/store-dialog.component';
 import { BomDialogComponent } from './components/main/dialog/bom-dialog.component';
-import { BillDialogComponent } from './components/main/dialog/bill-dialog.component';
 import { InvoicecreateDialogComponent } from './components/main/dialog/invoicecreate-dialog.component';
 import { InvoiceDialogComponent } from './components/main/dialog/invoice-dialog.component';
 import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.component';
@@ -139,15 +139,16 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     ProductDialogComponent,
     ProductcatDialogComponent,
 
-    //Stockmove
+    //Transaction - Stockmove
     SMDetailDialogComponent,
     SmpartDialogComponent,
     StockMoveDialogComponent,
 
-    //Purchase
+    //Transaction - Purchase
     PurchaseDialogComponent,
 
     //Accounting - Bill
+    BillDialogComponent,
     BillcreateDialogComponent,
 
 
@@ -174,7 +175,6 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     TaxDialogComponent,
     StoreDialogComponent,
     BomDialogComponent,
-    BillDialogComponent,
     InvoicecreateDialogComponent,
     InvoiceDialogComponent,
     TicketDialogComponent,

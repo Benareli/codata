@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Globals } from 'src/app/global';
-import { User } from 'src/app/models/user_auth/user.model';
 import { Role } from 'src/app/models/user_auth/role.model';
 
 import { TokenStorageService } from 'src/app/services/user_auth/token-storage.service';

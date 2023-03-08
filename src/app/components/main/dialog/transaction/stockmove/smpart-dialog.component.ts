@@ -1,31 +1,21 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Globals } from 'src/app/global';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatDialog } from '@angular/material/dialog';
 
-import { Id } from 'src/app/models/settings/id.model';
-import { IdService } from 'src/app/services/settings/id.service';
-import { Purchase } from 'src/app/models/transaction/purchase.model';
 import { PurchaseService } from 'src/app/services/transaction/purchase.service';
-import { Purchasedetail } from 'src/app/models/transaction/purchasedetail.model';
 import { PurchasedetailService } from 'src/app/services/transaction/purchasedetail.service';
-import { Log } from 'src/app/models/settings/log.model';
 
-import { LogService } from 'src/app/services/settings/log.service';
 import { Product } from 'src/app/models/masterdata/product.model';
-import { ProductService } from 'src/app/services/masterdata/product.service';
 import { Partner } from 'src/app/models/masterdata/partner.model';
-import { PartnerService } from 'src/app/services/masterdata/partner.service';
 import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
 import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
 
 @Component({
   selector: 'app-smpart-dialog',
   templateUrl: './smpart-dialog.component.html',
-  styleUrls: ['../../../../style/main.sass']
+  styleUrls: ['../../../../../style/main.sass']
 })
 export class SmpartDialogComponent implements OnInit {
   isPurU = false;
@@ -62,13 +52,9 @@ export class SmpartDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<SmpartDialogComponent>,
     private _snackBar: MatSnackBar,
     private globals: Globals,
-    private logService: LogService,
-    private idService: IdService,
     private purchaseService: PurchaseService,
     private purchasedetailService: PurchasedetailService,
-    private partnerService: PartnerService,
     private warehouseService: WarehouseService,
-    private productService: ProductService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 

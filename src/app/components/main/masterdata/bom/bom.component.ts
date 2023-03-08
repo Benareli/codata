@@ -8,8 +8,6 @@ import { Product } from 'src/app/models/masterdata/product.model';
 import { Uom } from 'src/app/models/masterdata/uom.model';
 import { Bom } from 'src/app/models/masterdata/bom.model';
 
-import { ProductService } from 'src/app/services/masterdata/product.service';
-import { UomService } from 'src/app/services/masterdata/uom.service';
 import { BomService } from 'src/app/services/masterdata/bom.service';
 
 import { BomDialogComponent } from '../../dialog/bom-dialog.component';
@@ -36,8 +34,6 @@ export class BomComponent implements OnInit {
   constructor(
     private router: Router,
     private globals: Globals,
-    private productService: ProductService,
-    private uomService: UomService,
     private bomService: BomService,
     private dialog: MatDialog
   ) {}

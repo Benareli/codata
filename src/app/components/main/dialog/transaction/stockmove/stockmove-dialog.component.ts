@@ -1,25 +1,14 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
-import { FormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Observable, of } from "rxjs";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Globals } from 'src/app/global';
-import { Log } from 'src/app/models/settings/log.model';
-import { Id } from 'src/app/models/settings/id.model';
-import { Stockmove } from 'src/app/models/transaction/stockmove.model';
-import { Qof } from 'src/app/models/transaction/qof.model';
-import { Qop } from 'src/app/models/transaction/qop.model';
 import { Uom } from 'src/app/models/masterdata/uom.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
 import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
 
-import { LogService } from 'src/app/services/settings/log.service';
 import { IdService } from 'src/app/services/settings/id.service';
 import { StockmoveService } from 'src/app/services/transaction/stockmove.service';
-import { QofService } from 'src/app/services/transaction/qof.service';
-import { QopService } from 'src/app/services/transaction/qop.service';
 import { Product } from 'src/app/models/masterdata/product.model';
 import { ProductService } from 'src/app/services/masterdata/product.service';
 import { UomService } from 'src/app/services/masterdata/uom.service';
@@ -29,7 +18,7 @@ import { WarehouseService } from 'src/app/services/masterdata/warehouse.service'
 @Component({
   selector: 'app-stockmove-dialog',
   templateUrl: './stockmove-dialog.component.html',
-  styleUrls: ['../../../../style/main.sass']
+  styleUrls: ['../../../../../style/main.sass']
 })
 export class StockMoveDialogComponent implements OnInit {
   isChecked = false;
@@ -62,14 +51,11 @@ export class StockMoveDialogComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private globals: Globals,
     private idService: IdService,
-    private logService: LogService,
     private productService: ProductService,
     private partnerService: PartnerService,
     private uomService: UomService,
     private warehouseService: WarehouseService,
     private stockmoveService: StockmoveService,
-    private qofService: QofService,
-    private qopService: QopService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 

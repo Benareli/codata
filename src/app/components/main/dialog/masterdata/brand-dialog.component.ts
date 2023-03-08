@@ -3,8 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Globals } from 'src/app/global';
-import { Brand } from 'src/app/models/masterdata/brand.model';
-import { Log } from 'src/app/models/settings/log.model';
 
 import { BrandService } from 'src/app/services/masterdata/brand.service';
 import { LogService } from 'src/app/services/settings/log.service';

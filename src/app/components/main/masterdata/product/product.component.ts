@@ -13,10 +13,9 @@ import { Uom } from 'src/app/models/masterdata/uom.model';
 import { ProductService } from 'src/app/services/masterdata/product.service';
 import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
 import { BrandService } from 'src/app/services/masterdata/brand.service';
-import { UomService } from 'src/app/services/masterdata/uom.service';
 
 import { ProductDialogComponent } from '../../dialog/masterdata/product-dialog.component';
-import { StockMoveDialogComponent } from '../../dialog/stockmove/stockmove-dialog.component';
+import { StockMoveDialogComponent } from '../../dialog/transaction/stockmove/stockmove-dialog.component';
 import { UploadDialogComponent } from '../../dialog/upload-dialog.component';
 
 @Component({
@@ -62,7 +61,6 @@ export class ProductComponent implements OnInit {
     private productService: ProductService,
     private productCatService: ProductCatService,
     private brandService: BrandService,
-    private uomService: UomService,
     private dialog: MatDialog
   ) {}
 

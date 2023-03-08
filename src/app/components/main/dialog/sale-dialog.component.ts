@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
-import { SmpartDialogComponent } from './stockmove/smpart-dialog.component';
+import { SmpartDialogComponent } from './transaction/stockmove/smpart-dialog.component';
 import { InvoicecreateDialogComponent } from './invoicecreate-dialog.component';
 
 import { Id } from 'src/app/models/settings/id.model';

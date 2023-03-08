@@ -8,7 +8,6 @@ import { Globals } from 'src/app/global';
 import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
 
 import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
-import { LogService } from 'src/app/services/settings/log.service';
 
 import { WarehouseDialogComponent } from '../../dialog/masterdata/warehouse-dialog.component';
 import { UploadDialogComponent } from '../../dialog/upload-dialog.component';
@@ -41,7 +40,6 @@ export class WarehouseComponent implements OnInit {
     private globals: Globals,
     private _snackBar: MatSnackBar,
     private warehouseService: WarehouseService,
-    private logService: LogService,
     private dialog: MatDialog
   ) { }
 

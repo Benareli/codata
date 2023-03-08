@@ -8,7 +8,6 @@ import { Globals } from 'src/app/global';
 import { Brand } from 'src/app/models/masterdata/brand.model';
 
 import { BrandService } from 'src/app/services/masterdata/brand.service';
-import { LogService } from 'src/app/services/settings/log.service';
 
 import { BrandDialogComponent } from '../../dialog/masterdata/brand-dialog.component';
 import { UploadDialogComponent } from '../../dialog/upload-dialog.component';
@@ -39,7 +38,6 @@ export class BrandComponent implements OnInit {
     private globals: Globals,
     private _snackBar: MatSnackBar,
     private brandService: BrandService,
-    private logService: LogService,
     private dialog: MatDialog
   ) { }
 

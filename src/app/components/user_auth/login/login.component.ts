@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Globals } from 'src/app/global';
-import { User } from 'src/app/models/user_auth/user.model';
 import { Role } from 'src/app/models/user_auth/role.model';
 import { AuthService } from 'src/app/services/user_auth/auth.service';
 import { User2Service } from 'src/app/services/user_auth/user2.service';
@@ -11,7 +9,6 @@ import { TokenStorageService } from 'src/app/services/user_auth/token-storage.se
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  //styleUrls: ['./login.component.sass']
   styleUrls: ['../../../style/main.sass'],
 })
 export class LoginComponent implements OnInit {
@@ -35,7 +32,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private globals: Globals,
     private user2Service: User2Service,
     private roleService: RoleService,
     private tokenStorage: TokenStorageService

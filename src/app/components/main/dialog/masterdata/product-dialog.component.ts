@@ -1,49 +1,39 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
-import { Globals } from 'src/app/global';
-import { FormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Observable, of } from "rxjs";
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Observable } from "rxjs";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-
-import { Log } from 'src/app/models/settings/log.model';
-import { LogService } from 'src/app/services/settings/log.service';
-import { FileUploadService } from 'src/app/services/settings/file-upload.service';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
+import { Globals } from 'src/app/global';
 import { Product } from 'src/app/models/masterdata/product.model';
-import { ProductService } from 'src/app/services/masterdata/product.service';
 import { Productcat } from 'src/app/models/masterdata/productcat.model';
-import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
 import { Brand } from 'src/app/models/masterdata/brand.model';
-import { BrandService } from 'src/app/services/masterdata/brand.service';
 import { Bundle } from 'src/app/models/masterdata/bundle.model';
-import { BundleService } from 'src/app/services/masterdata/bundle.service';
 import { Bom } from 'src/app/models/masterdata/bom.model';
-import { BomService } from 'src/app/services/masterdata/bom.service';
-import { Costing } from 'src/app/models/masterdata/costing.model';
-import { CostingService } from 'src/app/services/masterdata/costing.service';
 import { Partner } from 'src/app/models/masterdata/partner.model';
-import { PartnerService } from 'src/app/services/masterdata/partner.service';
 import { Tax } from 'src/app/models/accounting/tax.model';
-import { TaxService } from 'src/app/services/accounting/tax.service';
 import { Uom } from 'src/app/models/masterdata/uom.model';
-import { UomService } from 'src/app/services/masterdata/uom.service';
 import { Qop } from 'src/app/models/transaction/qop.model';
+
+import { LogService } from 'src/app/services/settings/log.service';
+import { FileUploadService } from 'src/app/services/settings/file-upload.service';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
+import { BrandService } from 'src/app/services/masterdata/brand.service';
+import { BundleService } from 'src/app/services/masterdata/bundle.service';
+import { BomService } from 'src/app/services/masterdata/bom.service';
+import { CostingService } from 'src/app/services/masterdata/costing.service';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
+import { TaxService } from 'src/app/services/accounting/tax.service';
+import { UomService } from 'src/app/services/masterdata/uom.service';
 import { QopService } from 'src/app/services/transaction/qop.service';
-import { Stockmove } from 'src/app/models/transaction/stockmove.model';
 import { StockmoveService } from 'src/app/services/transaction/stockmove.service';
-import { Posdetail } from 'src/app/models/transaction/posdetail.model';
 import { PosdetailService } from 'src/app/services/transaction/posdetail.service';
-import { Purchasedetail } from 'src/app/models/transaction/purchasedetail.model';
 import { PurchasedetailService } from 'src/app/services/transaction/purchasedetail.service';
 
-import { StockMoveDialogComponent } from '../stockmove/stockmove-dialog.component';
+import { StockMoveDialogComponent } from '../transaction/stockmove/stockmove-dialog.component';
 
 @Component({
   selector: 'app-product-dialog',

@@ -1,20 +1,13 @@
-import { Component, OnInit, Inject, Optional, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
 import { Globals } from 'src/app/global';
-import { Id } from 'src/app/models/settings/id.model';
-import { Purchase } from 'src/app/models/transaction/purchase.model';
-import { Purchasedetail } from 'src/app/models/transaction/purchasedetail.model';
-import { Log } from 'src/app/models/settings/log.model';
 import { Product } from 'src/app/models/masterdata/product.model';
 import { Uom } from 'src/app/models/masterdata/uom.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
 import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
-import { Stockmove } from 'src/app/models/transaction/stockmove.model';
-import { Journal } from 'src/app/models/accounting/journal.model';
 
 import { IdService } from 'src/app/services/settings/id.service';
 import { PurchaseService } from 'src/app/services/transaction/purchase.service';
@@ -28,12 +21,12 @@ import { StockmoveService } from 'src/app/services/transaction/stockmove.service
 import { JournalService } from 'src/app/services/accounting/journal.service';
 
 import { SmpartDialogComponent } from '../stockmove/smpart-dialog.component';
-import { BillcreateDialogComponent } from '../accounting/bill/billcreate-dialog.component';
+import { BillcreateDialogComponent } from '../../accounting/bill/billcreate-dialog.component';
 
 @Component({
   selector: 'app-purchase-dialog',
   templateUrl: './purchase-dialog.component.html',
-  styleUrls: ['../../../../style/main.sass']
+  styleUrls: ['../../../../../style/main.sass']
 })
 export class PurchaseDialogComponent implements OnInit {
   lock = false;

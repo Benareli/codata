@@ -1,20 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatSelectChange } from '@angular/material/select';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 import { API, APIDefinition } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
 import { Journal } from 'src/app/models/accounting/journal.model';
-import { Entry } from 'src/app/models/accounting/entry.model';
-import { Log } from 'src/app/models/settings/log.model';
-import { DataFilter, filterOption } from 'src/app/models/datafilter';
 
 import { JournalService } from 'src/app/services/accounting/journal.service';
-import { EntryService } from 'src/app/services/accounting/entry.service';
-import { LogService } from 'src/app/services/settings/log.service';
 
 import { EntryDialogComponent } from '../../dialog/entry-dialog.component';
 
@@ -49,9 +42,7 @@ export class JournalComponent implements OnInit {
   constructor(
     private router: Router,
     private globals: Globals,
-    private _snackBar: MatSnackBar,
     private journalService: JournalService,
-    private logService: LogService,
     private dialog: MatDialog
   ) { }
 

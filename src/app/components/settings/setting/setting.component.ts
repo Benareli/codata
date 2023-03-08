@@ -10,14 +10,11 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { BaseURL } from 'src/app/baseurl';
 
-import { Company } from 'src/app/models/settings/company.model';
 import { Id } from 'src/app/models/settings/id.model';
-import { Possession } from 'src/app/models/transaction/possession.model';
 import { Store } from 'src/app/models/settings/store.model';
 import { Tax } from 'src/app/models/accounting/tax.model';
 import { User } from 'src/app/models/user_auth/user.model';
 
-import { TokenStorageService } from 'src/app/services/user_auth/token-storage.service';
 import { FileUploadService } from 'src/app/services/settings/file-upload.service';
 import { CompanyService } from 'src/app/services/settings/company.service';
 import { IdService } from 'src/app/services/settings/id.service';
@@ -99,7 +96,6 @@ export class SettingComponent implements OnInit {
     private router: Router,
     private _snackBar: MatSnackBar,
     private globals: Globals,
-    private token: TokenStorageService,
     private uploadService: FileUploadService,
     private companyService: CompanyService,
     private storeService: StoreService,
