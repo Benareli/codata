@@ -1,0 +1,172 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+<div class="w-100">
+  <div class="mb-3 flex flex-row justify-between items-center">
+    <div class="flex-30">
+      <span class="title border-primary mb-0">{{journidtitle}}</span>
+    </div>
+    <div class="flex-40 text-center">
+      <span *ngIf="!new" class="dialog-title mb-0">{{jourtype}}</span>
+    </div>
+    <div class="flex-30 text-end">
+      <button class="text-danger p-1" mat-button (click)="closeDialog()">X</button>
+    </div>
+  </div>
+
+  <div class="w-100 flex flex-col flex-md-row">
+    <div *ngIf="!new" class="flex-100 flex-md-50 flex flex-row">
+      <div class="flex-30">Dokumen Asal</div>
+      <span class="flex-5">:</span>
+      <div class="input flex-65">{{data.origin}}</div>
+    </div>
+    <div *ngIf="new" class="flex-100 flex-md-50 flex flex-row">
+      <div class="flex-30">Journal Type</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" *ngIf="new" [(ngModel)]="jourtype">
+        <option *ngFor="let jourtype of jourtypes" [value]="jourtype">
+          {{ jourtype | titlecase }}
+        </option>
+      </select>
+    </div>
+    <div class="flex-100 flex-md-50 flex flex-row mt-2 mt-md-0 ml-0 ml-md-2">
+      <div class="flex-30">Tanggal</div>
+      <span class="flex-5">:</span>
+      <input [disabled]="!new" type="date" [(ngModel)]="datdate" class="input flex-65" />
+    </div>
+  </div>
+
+  <div class="w-100 mt-2">
+    <table class="w-100">
+      <tr class="pt-2 pb-1 border-t-2 border-solid border-gray">
+        <th class="th-style" fxFlex="30%">Label</th>
+        <th class="th-style text-left pl-1" fxFlex="30%">Account</th>
+        <th class="th-style text-right pr-1" fxFlex="15%">Debit</th>
+        <th class="th-style text-right pr-1" fxFlex="15%">Credit</th>
+        <th class="th-style text-center pr-1" fxFlex="10%"></th>
+      </tr>
+      <tr *ngIf="new" class="border-y-2 border-solid border-secondary py-1">
+        <td class="td-style pl-2" fxFlex="30%">
+          <input type="text" [(ngModel)]="datlabel"/>
+        </td>
+        <td class="td-style text-left" fxFlex="30%">
+          <input (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/>
+        </td>
+        <td class="td-style text-right pr-1" fxFlex="15%">
+          <input type="number" class="text-right" [(ngModel)]="datdebit"/>
+        </td>
+        <td class="td-style text-right pr-1" fxFlex="15%">
+          <input type="number" class="text-right" [(ngModel)]="datcredit"/>
+        </td>
+        <td class="td-style text-center" fxFlex="10%">
+          <div class="w-2rem btn-rainbow text-center" (click)="pushing()">
+            <button class="btn-gradient w-1rem text-white">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td fxFlex="35%"></td>
+        <td colspan="3" fxFlex="65%">
+          <ul class="dropdown" *ngIf="openDropDown">
+            <li class="list-group-item category"
+                *ngFor="let coa of coas | filter:term; let i1 = index"
+                [class.active]="i1 == currentIndex1"
+                (click)="getCoa(coa, i1)">
+                  {{ coa.code }} - {{ coa.name }}
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+
+    <mat-table #table [dataSource]="dataSource" class="mat-table">
+      <ng-container matColumnDef="label">
+        <td class="td-style" fxFlex="30%" mat-cell *matCellDef="let datas">
+          {{datas.label}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="account">
+        <td class="td-style text-left pl-1" fxFlex="30%" mat-cell *matCellDef="let datas">
+          <span *ngIf="datas.debits">{{datas.debits.code}} - {{datas.debits.name}}</span>
+          <span *ngIf="datas.credits">{{datas.credits.code}} - {{datas.credits.name}}</span>
+          <span *ngIf="datas.total"><b>TOTAL</b></span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="debit">
+        <td class="td-style text-right pr-1" fxFlex="15%" mat-cell *matCellDef="let datas">
+          <span *ngIf="!datas.total">{{datas.debit | number}}</span>
+          <span *ngIf="datas.total"><b>{{datas.debit | number}}</b></span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="credit">
+        <td class="td-style text-right pr-1" fxFlex="15%" mat-cell *matCellDef="let datas">
+          <span *ngIf="!datas.total">{{datas.credit | number}}</span>
+          <span *ngIf="datas.total"><b>{{datas.credit | number}}</b></span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <td class="td-style text-right pr-1" fxFlex="10%" mat-cell *matCellDef="let datas">
+          
+        </td>
+      </ng-container>
+
+      <tr mat-row class="table-row" 
+        *matRowDef="let row; columns: displayedColumns;"  
+      ></tr>
+    </mat-table>
+
+    <table class="w-100">
+      <tr *ngIf="new" class="border-y-2 border-solid border-lightgray py-1">
+        <td class="td-style pl-2" fxFlex="30%">
+        </td>
+        <td class="td-style text-left" fxFlex="30%">
+          TOTAL
+        </td>
+        <td class="td-style text-right pr-1" fxFlex="15%">
+          {{debit}}
+        </td>
+        <td class="td-style text-right pr-1" fxFlex="15%">
+          {{credit}}
+        </td>
+        <td class="td-style text-center" fxFlex="10%">
+          {{balance}}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!--<div class="table-container" style="margin-top: 10pt;">
+    <ngx-table [configuration]="configuration"
+           [data]="entrys"
+           [columns]="columns">
+      <ng-template let-row let-index="index">
+        <td style="width:25%;">
+          {{row.label}}
+        </td>
+        <td style="width:35%;">
+          <span *ngIf="row.debits">{{row.debits.code}}</span>
+          <span *ngIf="row.credits">{{row.credits.code}}</span>
+          <span *ngIf="row.total"><b>TOTAL</b></span>
+        </td>
+        <td style="width:15%;">
+          <span *ngIf="!row.total">{{row.debit}}</span>
+          <span *ngIf="row.total"><b>{{row.debit}}</b></span>
+        </td>
+        <td style="width:15%;">
+          <span *ngIf="!row.total">{{row.credit}}</span>
+          <span *ngIf="row.total"><b>{{row.credit}}</b></span>
+        </td>
+        <td style="width:10%;">
+          Action
+        </td>
+      </ng-template>
+    </ngx-table>
+  </div>-->
+</div>
+
+<div class="w-100 flex flex-row justify-between items-center">
+  <div class="w-90">
+    <button mat-button *ngIf="!new" class="w-90 btn btn-primary py-2" (click)="closeDialog()">Tutup</button>
+    <button mat-button *ngIf="new" [disabled]="balance!='balance'" class="w-90 btn btn-primary py-2" (click)="saveJournal()">Simpan</button>
+  </div>
+  <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+</div>
+</div>

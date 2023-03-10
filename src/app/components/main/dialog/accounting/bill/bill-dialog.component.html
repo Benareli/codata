@@ -2,10 +2,10 @@
 <div class="w-100">
   <div class="mb-3 flex flex-row justify-between items-center">
     <div class="w-100 flex flex-row justify-between">
-      <span class="title w-20rem h-2rem">{{journidtitle}}</span>
+      <span class="title w-20rem h-3rem border-primary">{{journidtitle}}</span>
       <div class="flex flex-col flex-md-row items-end items-md-start">
-        <span *ngIf="data.lock" class="order-2 order-md-2 mr-md-3 mt-2 mt-md-0 btn-primary bg-success" (click)="changeLock()">Posted</span>
-        <span *ngIf="!data.lock" class="order-2 order-md-2 mr-md-3 mt-2 mt-md-0 btn-primary bg-danger" (click)="changeLock()">Unposted</span>
+        <span *ngIf="data.lock" class="order-2 order-md-2 mr-md-3 mt-2 mt-md-0 btn btn-primary bg-success" (click)="changeLock()">Posted</span>
+        <span *ngIf="!data.lock" class="order-2 order-md-2 mr-md-3 mt-2 mt-md-0 btn btn-primary bg-danger" (click)="changeLock()">Unposted</span>
         <span *ngIf="data.lock && amountdue > 0" (click)="startPay()" class="order-3 order-md-1 mr-md-3 mt-2 mt-md-0 w-5rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1">Pay <i class="fa fa-money"></i></span>
         <button class="order-1 order-md-2 text-danger p-1" mat-button (click)="closeDialog()">X</button>
       </div>
@@ -43,13 +43,13 @@
 
   <div class="w-100 mt-2">
     <table class="w-100">
-      <tr class="py-1 border-y-1 border-solid border-gray bg-lightgray">
+      <tr class="pt-2 pb-1 border-t-2 border-solid border-gray">
         <th class="th-style" fxFlex="35%">Label</th>
-        <th class="th-style" fxFlex="10%">Qty</th>
-        <th class="th-style" fxFlex="20%">Price Unit</th>
-        <th class="th-style" fxFlex="7%">Disc</th>
-        <th class="th-style" fxFlex="7%">Tax</th>
-        <th class="th-style" fxFlex="21%">Subtotal</th>
+        <th class="th-style text-right pr-1" fxFlex="10%">Qty</th>
+        <th class="th-style text-right pr-1" fxFlex="20%">Price Unit</th>
+        <th class="th-style text-right pr-1" fxFlex="7%">Disc</th>
+        <th class="th-style text-right pr-1" fxFlex="7%">Tax</th>
+        <th class="th-style text-right pr-3" fxFlex="21%">Subtotal</th>
       </tr>
     </table>
 
@@ -70,12 +70,12 @@
         </td>
       </ng-container>
       <ng-container matColumnDef="discount">
-        <td class="td-style text-right" fxFlex="7%" mat-cell *matCellDef="let datas">
+        <td class="td-style text-right pr-1" fxFlex="7%" mat-cell *matCellDef="let datas">
           {{datas.discount | number}}
         </td>
       </ng-container>
       <ng-container matColumnDef="tax">
-        <td class="td-style text-right" fxFlex="7%" mat-cell *matCellDef="let datas">
+        <td class="td-style text-right pr-1" fxFlex="7%" mat-cell *matCellDef="let datas">
           {{datas.tax | number}}
         </td>
       </ng-container>
@@ -89,64 +89,67 @@
         *matRowDef="let row; columns: displayedColumns;"  
       ></tr>
     </mat-table>
-    <div fxLayout="row">
-      <div class="flex50">
-        <!--<mat-table #table [dataSource]="dataSourcePay" class="mat-table" style="margin-top: 20pt;">
+    <div class="w-100 flex flex-col flex-md-row pt-2">
+      <div class="flex-100 flex-md-50">
+        <table class="w-100">
+          <tr class="pt-2 pb-1 border-t-2 border-solid border-gray">
+            <th class="th-style" fxFlex="40%">Method</th>
+            <th class="th-style pl-1" fxFlex="20%">Date</th>
+            <th class="th-style text-right pr-1" fxFlex="40%">Payment</th>
+          </tr>
+        </table>
+        <mat-table #table [dataSource]="dataSourcePay">
           <ng-container matColumnDef="label">
-            <th class="th-style text-center" fxFlex="40%" mat-header-cell *matHeaderCellDef>Method</th>
-            <td class="tr-style text-left" fxFlex="40%" mat-cell *matCellDef="let datas">
-              {{datas.pay1method}}
+            <td class="td-style text-left" fxFlex="40%" mat-cell *matCellDef="let datas">
+              {{datas.pay_method}}
             </td>
           </ng-container>
           <ng-container matColumnDef="date">
-            <th class="th-style text-center" fxFlex="20%" mat-header-cell *matHeaderCellDef>Date</th>
-            <td class="tr-style text-left" fxFlex="20%" mat-cell *matCellDef="let datas">
+            <td class="td-style text-left" fxFlex="20%" mat-cell *matCellDef="let datas">
               {{datas.date | date}}
             </td>
           </ng-container>
           <ng-container matColumnDef="payment">
-            <th class="th-style text-center" fxFlex="40%" mat-header-cell *matHeaderCellDef>Payment</th>
-            <td class="tr-style text-right" fxFlex="40%" mat-cell *matCellDef="let datas">
-              {{datas.payment1 | number}}
+            <td class="td-style text-right" fxFlex="40%" mat-cell *matCellDef="let datas">
+              {{datas.payment | number}}
             </td>
           </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsPay" class="tableHeader"></tr>
-          <tr mat-row class="tableRow" 
+          <tr mat-row class="table-row" 
             *matRowDef="let row; columns: displayedColumnsPay;"  
           ></tr>
-        </mat-table>-->
+        </mat-table>
         <!--<ngx-table [configuration]="configurationPay"
           [data]="paymentx"
           [columns]="columnsPay">
         </ngx-table>-->
       </div>
-      <div class="flex50">
-        <table class="table-new text-right" style="margin-top:2pt;">
-          <tr>
-            <td class="td-total" fxFlex="50%">Subtotal</td>
-            <td class="td-total text-right" fxFlex="43%">Rp. {{thissub | number}}</td>
-            <td class="td-total" fxFlex="2%"></td>
+      <div class="flex-100 flex-md-50 text-right items-end">
+        <table class="w-20rem m-auto-left text-15">
+          <tr class="py-1 border-t-2 border-solid border-lightgray">
+            <td fxFlex="50%">Subtotal</td>
+            <td fxFlex="43%">Rp. {{thissub | number}}</td>
+            <td fxFlex="2%"></td>
           </tr>
-          <tr>
-            <td class="td-total" fxFlex="50%">Disc</td>
-            <td class="td-total text-right" fxFlex="43%">Rp. {{thisdisc | number}}</td>
-            <td class="td-total" fxFlex="2%"></td>
+          <tr class="py-1 border-t-2 border-solid border-lightgray">
+            <td fxFlex="50%">Disc</td>
+            <td fxFlex="43%">Rp. {{thisdisc | number}}</td>
+            <td fxFlex="2%"></td>
           </tr>
-          <tr>
-            <td class="td-total" fxFlex="50%">Tax</td>
-            <td class="td-total text-right" fxFlex="43%">Rp. {{thistax | number}}</td>
-            <td class="td-total" fxFlex="2%"></td>
+          <tr class="py-1 border-t-2 border-solid border-lightgray">
+            <td fxFlex="50%">Tax</td>
+            <td fxFlex="43%">Rp. {{thistax | number}}</td>
+            <td fxFlex="2%"></td>
           </tr>
-          <tr>
-            <td class="td-total" fxFlex="50%"><b>TOTAL</b></td>
-            <td class="td-total text-right" fxFlex="43%"><b>Rp. {{thistotal | number}}</b></td>
-            <td class="td-total" fxFlex="2%"></td>
+          <tr class="py-1 border-y-2 border-solid border-dark">
+            <td fxFlex="50%"><b>TOTAL</b></td>
+            <td fxFlex="43%"><b>Rp. {{thistotal | number}}</b></td>
+            <td fxFlex="2%"></td>
           </tr>
-          <tr>
-            <td class="td-total" fxFlex="50%">Outstanding</td>
-            <td class="td-total text-right" fxFlex="43%">Rp. {{amountdue | number}}</td>
-            <td class="td-total" fxFlex="2%"></td>
+          <tr class="py-1 border-b-2 border-solid border-lightgray">
+            <td fxFlex="50%">Outstanding</td>
+            <td fxFlex="43%">Rp. {{amountdue | number}}</td>
+            <td fxFlex="2%"></td>
           </tr>
         </table>
       </div>
@@ -154,10 +157,10 @@
   </div>
 </div>
 
-<div class="width-100" fxLayout="row" fxLayoutAlign="space-between center">
-  <div class="width-90">
-    <button mat-button class="save_btn" (click)="closeDialog()">Tutup</button>
+<div class="w-100 flex flex-row justify-between items-center">
+  <div class="w-90">
+    <button mat-button class="w-90 btn btn-primary py-2" (click)="closeDialog()">Tutup</button>
   </div>
-  <div class="width-10"><button class="log_btn" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+  <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
 </div>
 </div>

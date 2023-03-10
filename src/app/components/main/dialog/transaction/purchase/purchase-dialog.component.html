@@ -2,11 +2,11 @@
 <div class="w-100 overflow-y-scroll text-15">
   <div class="mb-1 flex flex-row justify-between items-center">
     <div class="w-100 flex flex-row justify-between">
-      <span class="title">{{purchaseid}}</span>
+      <span class="title border-primary">{{purchaseid}}</span>
       <div class="flex flex-col flex-md-row items-end items-md-start">
         <span *ngIf="data && !draft" class="order-2 order-md-1 mr-md-3 w-3rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1">{{smtotal | number}} <i class="fa fa-truck"></i></span>
         <span *ngIf="data && !draft" class="order-3 order-md-2 mr-md-3 w-3rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1">{{billtotal | number}} <i class="fa fa-file-text"></i></span>
-        <span class="order-2 order-md-3 btn-primary text-13 mr-3" *ngIf="data && draft" (click)="validate()">Validate</span>
+        <span class="order-2 order-md-3 btn btn-secondary text-13 mr-3" *ngIf="data && draft" (click)="validate()">Validate</span>
         <button class="order-1 order-md-4 text-danger text-13 p-1" mat-button (click)="closeDialog()">X</button>
       </div>
     </div>
@@ -47,7 +47,7 @@
   </div>
 
   <table class="w-100 mt-2">
-    <tr class="py-1 border-y-1 border-solid border-gray bg-lightgray">
+    <tr class="pt-2 pb-1 border-t-2 border-solid border-gray">
       <td class="th-style pl-2" fxFlex="35%">Product</td>
       <td class="th-style text-right" fxFlex="7%">Qty</td>
       <td class="th-style text-right" fxFlex="7%">Qty Done</td>
@@ -58,7 +58,7 @@
       <td class="th-style text-right" fxFlex="16%">Subtotal</td>
       <td class="th-style" fxFlex="5%"></td>
     </tr>
-    <tr *ngIf="!lock" class="border-b-2 border-solid border-gray py-1">
+    <tr *ngIf="!lock" class="border-y-2 border-solid border-secondary py-1">
       <td class="td-style pl-2" fxFlex="35%">
         <input (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/>
       </td>
@@ -86,8 +86,8 @@
       <td class="td-style" fxFlex="16%">
         <input disabled class=" text-right" [(ngModel)]="datsub"/>
       </td>
-      <td class="td-style btn-rainbow" fxFlex="5%">
-        <div class="w-1rem mx-auto text-center" (click)="pushing()">
+      <td class="td-style text-center" fxFlex="5%">
+        <div class="w-2rem btn-rainbow text-center" (click)="pushing()">
           <button class="btn-gradient w-1rem text-white">+</button>
         </div>
       </td>
@@ -208,7 +208,7 @@
       <td class="td-style py-1 border-b-2 border-solid border-lightgray" fxFlex="5%"></td>
     </tr>
     <tr>
-      <td fxFlex="69%" class="text-center"><mat-progress-bar mode="determinate" style="width: 200pt !important; margin: 0 auto;" [value]="persenqty" *ngIf="data"></mat-progress-bar></td>
+      <td fxFlex="69%" class="text-center"><mat-progress-bar mode="determinate" class="w-20rem mx-auto" [value]="persenqty" *ngIf="data"></mat-progress-bar></td>
       <td class="td-style py-1 border-b-2 border-solid border-lightgray text-right" fxFlex="10%"><b>TOTAL</b></td>
       <td class="td-style py-1 border-b-2 border-solid border-lightgray text-right" fxFlex="16%"><b>Rp. {{thistotal | number}}</b></td>
       <td class="td-style py-1 border-b-2 border-solid border-lightgray" fxFlex="5%"></td>
@@ -229,8 +229,8 @@
 
 <div class="w-100 flex flex-row justify-between items-center">
   <div class="w-90">
-    <button mat-button [disabled]="isRes" *ngIf="!this.lock" class="btn-primary w-90 py-2" (click)="startPO()">Simpan</button>
-    <button mat-button [disabled]="isRes" *ngIf="this.lock" class="btn-primary w-90 py-2 bg-white text-primary" (click)="editPO()">{{edit_text}}</button>
+    <button mat-button [disabled]="isRes" *ngIf="!this.lock" class="btn btn-primary w-90 py-2" (click)="startPO()">Simpan</button>
+    <button mat-button [disabled]="isRes" *ngIf="this.lock" class="btn btn-primary w-90 py-2 bg-white text-primary" (click)="editPO()">{{edit_text}}</button>
   </div>
   <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
 </div>

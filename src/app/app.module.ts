@@ -80,7 +80,11 @@ import { PurchaseDialogComponent } from './components/main/dialog/transaction/pu
 import { BillDialogComponent } from './components/main/dialog/accounting/bill/bill-dialog.component';
 import { BillcreateDialogComponent } from './components/main/dialog/accounting/bill/billcreate-dialog.component';
 
+//Accounting - Journal
+import { EntryDialogComponent } from './components/main/dialog/accounting/journal/entry-dialog.component';
 
+//Upload
+import { UploadDialogComponent } from './components/main/dialog/upload/upload-dialog.component';
 
 import { PosComponent } from './components/main/pos/pos.component';
 import { PosSessionComponent } from './components/main/pos-session/pos-session.component';
@@ -97,10 +101,8 @@ import { PosReportComponent } from './components/main/report/pos-report/pos-repo
 
 import { PosdetailDialogComponent } from './components/main/dialog/posdetail-dialog.component';
 import { PaymentDialogComponent } from './components/main/dialog/payment-dialog.component';
-import { UploadDialogComponent } from './components/main/dialog/upload-dialog.component';
 import { SaleDialogComponent } from './components/main/dialog/sale-dialog.component';
 import { PrintposDialogComponent } from './components/main/dialog/printpos-dialog.component';
-import { EntryDialogComponent } from './components/main/dialog/entry-dialog.component';
 import { UserroleDialogComponent } from './components/main/dialog/userrole-dialog.component';
 import { TaxDialogComponent } from './components/main/dialog/tax-dialog.component';
 import { StoreDialogComponent } from './components/main/dialog/store-dialog.component';
@@ -151,6 +153,12 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     BillDialogComponent,
     BillcreateDialogComponent,
 
+    //Accounting - Journal
+    EntryDialogComponent,
+
+    //Upload
+    UploadDialogComponent,
+
 
 
     PosComponent,
@@ -167,10 +175,8 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     WarehouseDialogComponent,
     PosdetailDialogComponent,
     PaymentDialogComponent,
-    UploadDialogComponent,
     SaleDialogComponent,
     PrintposDialogComponent,
-    EntryDialogComponent,
     UserroleDialogComponent,
     TaxDialogComponent,
     StoreDialogComponent,

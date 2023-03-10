@@ -16,7 +16,7 @@ import { BrandService } from 'src/app/services/masterdata/brand.service';
 
 import { ProductDialogComponent } from '../../dialog/masterdata/product-dialog.component';
 import { StockMoveDialogComponent } from '../../dialog/transaction/stockmove/stockmove-dialog.component';
-import { UploadDialogComponent } from '../../dialog/upload-dialog.component';
+import { UploadDialogComponent } from '../../dialog/upload/upload-dialog.component';
 
 @Component({
   selector: 'app-product',

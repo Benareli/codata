@@ -10,7 +10,7 @@ import { Productcat } from 'src/app/models/masterdata/productcat.model';
 import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
 
 import { ProductcatDialogComponent } from '../../dialog/masterdata/productcat-dialog.component';
-import { UploadDialogComponent } from '../../dialog/upload-dialog.component';
+import { UploadDialogComponent } from '../../dialog/upload/upload-dialog.component';
 
 //console.log(this.roles?.filter(role => role.name === "admin").map(role => role._id)); FUCKING HOLY GRAIL
 @Component({

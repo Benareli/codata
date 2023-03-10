@@ -21,6 +21,9 @@ export class JournalService {
   get(id: any): Observable<Journal> {
     return this.http.get(`${baseUrl}/id/${id}`, { 'headers': headers });
   }
+  findJourType(): Observable<Journal[]>{
+    return this.http.get<Journal[]>(`${baseUrl}/type`, { 'headers': headers });
+  }
   findJournal(): Observable<Journal[]>{
     return this.http.get<Journal[]>(`${baseUrl}/journal`, { 'headers': headers });
   }

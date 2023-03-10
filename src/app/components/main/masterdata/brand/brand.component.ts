@@ -10,7 +10,7 @@ import { Brand } from 'src/app/models/masterdata/brand.model';
 import { BrandService } from 'src/app/services/masterdata/brand.service';
 
 import { BrandDialogComponent } from '../../dialog/masterdata/brand-dialog.component';
-import { UploadDialogComponent } from '../../dialog/upload-dialog.component';
+import { UploadDialogComponent } from '../../dialog/upload/upload-dialog.component';
 
 @Component({
   selector: 'app-brand',

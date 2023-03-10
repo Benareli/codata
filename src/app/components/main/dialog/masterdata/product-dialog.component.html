@@ -38,7 +38,7 @@
         <div class="flex flex-col justify-around">
           <!--class="choosefile submit pink"-->
           <input class="choosefile" type="file" accept="image/*" (change)="selectFiles($event)" />
-          <button class="btn-primary text-10 w-80" [disabled]="!selectedFiles" (click)="uploadFiles()">Unggah</button>
+          <button class="btn btn-primary text-10 w-80" [disabled]="!selectedFiles" (click)="uploadFiles()">Unggah</button>
         </div>
       </div>
     </div>
@@ -401,7 +401,7 @@
 
 <div class="w-100 flex flex-row justify-between items-center mt-4">
   <div class="w-90">
-    <button [disabled]="isRes" mat-button class="submit btn-primary w-90 py-2" (click)="checkBigger()">Simpan</button>
+    <button [disabled]="isRes" mat-button class="submit btn btn-primary w-90 py-2" (click)="checkBigger()">Simpan</button>
   </div>
   <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
 </div>

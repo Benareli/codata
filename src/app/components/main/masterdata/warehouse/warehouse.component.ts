@@ -10,7 +10,7 @@ import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
 import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
 
 import { WarehouseDialogComponent } from '../../dialog/masterdata/warehouse-dialog.component';
-import { UploadDialogComponent } from '../../dialog/upload-dialog.component';
+import { UploadDialogComponent } from '../../dialog/upload/upload-dialog.component';
 
 @Component({
   selector: 'app-warehouse',
@@ -64,7 +64,6 @@ export class WarehouseComponent implements OnInit {
   retrieveWarehouse(): void {
     this.warehouseService.getAll()
       .subscribe(wh => {
-        console.log(wh);
         if(this.isIM || this.isAdm){
           this.warehouses = wh;
         }else{

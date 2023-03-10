@@ -7,7 +7,7 @@ import { Partner } from 'src/app/models/masterdata/partner.model';
 import { PartnerService } from 'src/app/services/masterdata/partner.service';
 
 import { PartnerDialogComponent } from '../../dialog/masterdata/partner-dialog.component';
-import { UploadDialogComponent } from '../../dialog/upload-dialog.component';
+import { UploadDialogComponent } from '../../dialog/upload/upload-dialog.component';
 
 @Component({
   selector: 'app-partner',

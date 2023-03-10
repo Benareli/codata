@@ -2,14 +2,14 @@
 	<div class="pl-2 h-2rem pt-1">
 		<div *ngIf="isIM || isAdm" class="submit-form">
     	<div class="flex flex-row items-end">
-        <input class="input h-1rem" type="text" name="description" [(ngModel)]="brandadd.description" required id="description" placeholder="Merek*">
-        <a class="submit w-6rem h-1rem btn-quick btn-quick-left ml-3" (click)="saveBrand()">+ Add</a>
+        <input class="input w-7rem h-1rem" type="text" name="description" [(ngModel)]="brandadd.description" required id="description" placeholder="Merek*">
+        <div class="btn-quick btn-quick-left ml-3" (click)="saveBrand()">+ Add</div>
     	</div>
   	</div>
 	</div>
 
-	<div class="pr-2 h-2rem">
-    <a class="submit btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</a>
+	<div class="pr-2">
+    <div class="btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</div>
 	</div>
 </div>
 

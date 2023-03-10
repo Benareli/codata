@@ -2,11 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
 import { Journal } from 'src/app/models/accounting/journal.model';
-import { Entry } from 'src/app/models/accounting/entry.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
 
 import { JournalService } from 'src/app/services/accounting/journal.service';
@@ -133,21 +131,19 @@ export class BillDialogComponent implements OnInit {
             this.thistotal = this.thissub - this.thisdisc + this.thistax;
           }
         }
-        console.log(this.datas);
+        
         for(let x=0;x<this.datas.length;x++){
           if(this.datas[x].products){
             this.entrys.push(this.datas[x]);
-            /*this.entrys.push(this.datas[x]);
             this.thissub = this.thissub + (this.datas[x].qty * this.datas[x].price_unit);
             this.thisdisc = this.thisdisc + (this.datas[x].discount/100 * this.datas[x].qty * this.datas[x].price_unit);
             this.thistax = this.thistax + (this.datas[x].tax / 100 * 
               ((this.datas[x].qty * this.datas[x].price_unit) - (this.datas[x].discount/100 * this.datas[x].qty * this.datas[x].price_unit)));
-            this.thistotal = this.thissub - this.thisdisc + this.thistax;*/
-            console.log(this.datas[x].products);
-            console.log(this.entrys);
+            this.thistotal = this.thissub - this.thisdisc + this.thistax;
           }
         }
         this.dataSource.data = this.entrys;
+        this.dataSourcePay.data = this.paymentx;
         /*this.entryService.getJournal(entry.id)
           .subscribe(ent => {
             for(let x=0;x<ent.length;x++){

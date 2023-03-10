@@ -3,7 +3,7 @@
   <div class="mb-3 flex flex-row justify-between items-center">
     <div class="w-100 flex flex-row justify-between">
       <div class="flex flex-col">
-        <span class="title mb-1">{{transidtitle}}</span>
+        <span class="title mb-1 border-primary">{{transidtitle}}</span>
         <h4>
           <div *ngIf="c==1">
             <span style="background: #28B463; color: white; border-radius: 3pt; padding: 3pt;">Goods In <i class="fa fa-arrow-circle-down"></i></span><span class="fw-300"> to <b>{{wh1String}}</b></span>
@@ -17,7 +17,7 @@
         </h4>
       </div>
       <div class="w-25 flex flex-col flex-md-row items-end items-md-start justify-start justify-md-end">
-        <div class="btn-primary text-12 mt-3 mt-md-0 order-2 order-md-1" *ngIf="request && isIM" (click)="validate()">Validate</div>
+        <div class="btn btn-secondary text-12 mt-3 mt-md-0 order-2 order-md-1" *ngIf="request && isIM" (click)="validate()">Validate</div>
         <button class="text-danger p-1 text-12 ml-0 ml-md-3 order-1 order-md-2" mat-button (click)="closeDialog()">X</button>
       </div>
     </div>
@@ -66,7 +66,7 @@
     </div>
   </div>
 
-  <table class="w-100 mt-2 text-13 fw-500 text-dark" *ngIf="new">
+  <!--<table class="w-100 mt-2 text-13 fw-500 text-dark" *ngIf="new">
     <tr class="border-b-1 border-solid border-lightgray">
       <th fxFlex="50%" class="p-1 text-left">Product</th>
       <th fxFlex="20%" class="p-1">Qty</th>
@@ -99,20 +99,22 @@
           *matRowDef="let row; columns: displayedColumns;"  
       ></tr>
     </mat-table>
-  </div>
+  </div>-->
 
-  <table class="w-100">
+  <!--<table class="w-100">
     <tr *ngIf="this.lock" class="borderinput mt-1">
       <td fxFlex="50%">
-        <input class="input" (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/></td>
-      <td fxFlex="20%"><input class="input text-right" [(ngModel)]="datqty"/></td>
+        <input (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/></td>
+      <td fxFlex="20%"><input class="text-right" [(ngModel)]="datqty"/></td>
       <td class="text-right" fxFlex="20%">
-        <select class="input width-100" [(ngModel)]="uomString">
+        <select class="width-100" [(ngModel)]="uomString">
           <option *ngFor="let uom of uoms" [value]="uom.id">
             {{ uom.uom_name }}
           </option>
         </select></td>
-      <td class="btn-rainbow" style="text-align:center;" fxFlex="10%"><button class="text-white" (click)="pushing()">+</button></td>
+      <td class="btn-rainbow" style="text-align:center;" fxFlex="10%">
+        <button class="w-1rem text-white" (click)="pushing()">+</button>
+      </td>
     </tr>
     <tr>
       <td colspan="4">
@@ -126,9 +128,87 @@
         </ul>
       </td>
     </tr>
-  </table>
+  </table>-->
 
-  <ngx-table *ngIf="!new" [configuration]="configuration"
+  <div class="w-100 mt-2">
+    <table class="w-100">
+      <tr class="pt-2 pb-1 border-t-2 border-solid border-gray">
+        <th class="th-style" fxFlex="40%">Label</th>
+        <th class="th-style text-right pr-1" fxFlex="15%">Qty</th>
+        <th class="th-style text-right pr-1" fxFlex="15%">UOM</th>
+        <th class="th-style text-right pr-1" fxFlex="15%">Original Qty</th>
+        <th class="th-style text-right pr-1" fxFlex="15%">Original UOM</th>
+      </tr>
+      <tr *ngIf="this.lock" class="border-y-2 border-solid border-secondary py-1">
+        <td fxFlex="40%">
+          <input (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/></td>
+        <td fxFlex="15%"><input class="text-right" [(ngModel)]="datqty"/></td>
+        <td class="text-right" fxFlex="15%">
+          <select [(ngModel)]="uomString">
+            <option *ngFor="let uom of uoms" [value]="uom.id">
+              {{ uom.uom_name }}
+            </option>
+          </select></td>
+        <td fxFlex="15%"></td>
+        <td class="text-center" fxFlex="15%">
+          <div class="w-2rem btn-rainbow text-center" (click)="pushing()">
+            <button class="text-white">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <ul class="dropdown" *ngIf="openDropDown">
+            <li class="list-group-item category text-16"
+              *ngFor="let product of products | filter:term; let i1 = index"
+              [class.active]="i1 == currentIndex1"
+              (click)="getProd(product, i1)">
+                {{ product.name }}
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+
+    <mat-table #table [dataSource]="dataSource" class="mat-table">
+      <ng-container matColumnDef="product">
+        <td class="td-style" fxFlex="40%" mat-cell *matCellDef="let datas">
+          <span *ngIf="new">{{datas.product.name}}</span>
+          <span *ngIf="!new">{{datas.products.name}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qty">
+        <td class="td-style text-right pr-1" fxFlex="15%" mat-cell *matCellDef="let datas">
+          <span *ngIf="!new && datas.qin">{{datas.qin | number}}</span>
+          <span *ngIf="!new && datas.qout">{{datas.qout | number}}</span>
+          <span *ngIf="new">{{datas.qty | number}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="uom">
+        <td class="td-style text-right pr-1" fxFlex="15%" mat-cell *matCellDef="let datas">
+          <span *ngIf="new">{{datas.uom.uom_name}}</span>
+          <span *ngIf="!new">{{datas.uoms.uom_name}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="oriqty">
+        <td class="td-style text-right pr-1" fxFlex="15%" mat-cell *matCellDef="let datas">
+          <span *ngIf="!new && datas.oriqin">{{datas.oriqin | number}}</span>
+          <span *ngIf="!new && datas.oriqout">{{datas.oriqout | number}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="oriuom">
+        <td class="td-style text-right pr-1" fxFlex="15%" mat-cell *matCellDef="let datas">
+          <span *ngIf="!new">{{datas.oriuoms.uom_name}}</span>
+        </td>
+      </ng-container>
+
+      <tr mat-row class="table-row" 
+        *matRowDef="let row; columns: displayedColumns;"  
+      ></tr>
+    </mat-table>
+  </div>
+
+  <!--<ngx-table *ngIf="!new" [configuration]="configuration"
     [data]="datas"
     [columns]="columns">
     <ng-template let-row let-index="index">
@@ -150,13 +230,13 @@
         <span *ngIf="row.oriuom_id">{{row.oriuoms.uom_name}}</span>
       </td>
     </ng-template>
-  </ngx-table>
+  </ngx-table>-->
 </div>
 
 <div class="w-100 flex flex-row justify-between items-center">
   <div class="w-90">
-    <button *ngIf="!new" mat-button class="btn-primary w-90 py-2" (click)="closeDialog()">Tutup</button>
-    <button *ngIf="new" mat-button class="btn-primary w-90 py-2" (click)="startSave()">Simpan</button>
+    <button *ngIf="!new" mat-button class="btn btn-primary w-90 py-2" (click)="closeDialog()">Tutup</button>
+    <button *ngIf="new" mat-button class="btn btn-primary w-90 py-2" (click)="startSave()">Simpan</button>
   </div>
   <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
 </div>

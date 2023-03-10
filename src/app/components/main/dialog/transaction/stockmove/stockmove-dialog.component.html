@@ -5,24 +5,6 @@
     <button class="text-danger p-1" mat-button (click)="closeDialog()">X</button>
   </div>
 
-  <!--<mat-form-field class="input_field input_50">
-    <mat-label>Warehouse</mat-label>
-    <mat-select required name="warehouseString" (selectionChange)="selectedValue($event)" [(value)]="selectedWarehouse">
-      <mat-option *ngFor="let warehouse of warehouses" [value]="warehouse.id" ngDefaultControl [(ngModel)]="warehouse.name">
-        {{ warehouse.short }} - {{ warehouse.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field class="input_field margin_7 input_50">
-    <mat-label>Partner</mat-label>
-    <mat-select name="partnerString" (selectionChange)="selectedValue2($event)" [(value)]="selectedPartner">
-      <mat-option *ngFor="let partner of partners" [value]="partner.id" ngDefaultControl [(ngModel)]="partner.name">
-        {{ partner.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>-->
-
   <div class="w-100 flex flex-col flex-md-row">
     <div class="flex-100 flex-md-50 flex flex-row">
       <div class="flex-30">Gudang</div>
@@ -65,5 +47,5 @@
   </div>
 </div>
 
-  <button mat-button class="submit btn-primary" (click)="createData()">Tambah</button>
+  <button mat-button class="submit btn btn-secondary p-2" (click)="createData()">Validasi</button>
 </div>

@@ -20,7 +20,7 @@ type AOA = any[][];
 @Component({
   selector: 'app-upload-dialog',
   templateUrl: './upload-dialog.component.html',
-  styleUrls: ['./dialog.component.sass']
+  styleUrls: ['../../../../style/main.sass']
 })
 export class UploadDialogComponent implements OnInit {
   isPM = false;

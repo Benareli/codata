@@ -138,7 +138,6 @@ export class PurchaseDialogComponent implements OnInit {
     this.logService.getAll()
       .subscribe(logPR => {
         logPR = logPR.filter(dataPR => dataPR.purchase === this.data);
-        console.log(logPR);
         this.log = logPR.length;
       })
   }

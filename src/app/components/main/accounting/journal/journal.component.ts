@@ -9,7 +9,7 @@ import { Journal } from 'src/app/models/accounting/journal.model';
 
 import { JournalService } from 'src/app/services/accounting/journal.service';
 
-import { EntryDialogComponent } from '../../dialog/entry-dialog.component';
+import { EntryDialogComponent } from '../../dialog/accounting/journal/entry-dialog.component';
 
 @Component({
   selector: 'app-journal',
@@ -139,7 +139,16 @@ export class JournalComponent implements OnInit {
   }
 
   openQuickAdd(): void {
-    
+    const dialog = this.dialog.open(EntryDialogComponent, {
+      maxWidth: '98vw',
+      maxHeight: '98vh',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
+      disableClose: true
+    })
+      .afterClosed()
+      .subscribe(() => this.retrieveData());
   }
 
 }

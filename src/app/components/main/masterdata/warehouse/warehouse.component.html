@@ -4,13 +4,13 @@
     	<div class="flex flex-row items-end">
         <input #input maxlength="6" type="text" class="input h-1rem w-4rem" name="short" [(ngModel)]="warehouseadd.short" required id="short" placeholder="Kode *">
         <input type="text" class="input h-1rem w-4rem ml-3" name="name" [(ngModel)]="warehouseadd.name" required id="name" placeholder="Nama *">
-      	<a class="submit h-1rem w-4rem btn-quick btn-quick-left ml-3" (click)="saveWarehouse()">+ Add</a>
+      	<div class="btn-quick btn-quick-left ml-3" (click)="saveWarehouse()">+ Add</div>
     	</div>
   	</div>
 	</div>
 
 	<div class="pr-2 h-1rem">
-    <a class="submit btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</a>
+    <div class="btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</div>
 	</div>
 </div>
 

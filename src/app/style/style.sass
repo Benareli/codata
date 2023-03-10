@@ -20,6 +20,7 @@
     width: 100%
     min-height: 100%
     height: 100%
+    font-size: 15px
     overflow: hidden
 
 .widget
@@ -68,7 +69,7 @@
     font-weight: 400
     padding-right: 3rem
     padding-left: 0rem
-    border-bottom: 2px solid map-get($colors, 'gray')
+    border-bottom: 2px solid map-get($colors, 'secondary')
     margin-bottom: 2rem
     text-transform: uppercase
     letter-spacing: 1pt
@@ -203,41 +204,70 @@ mat-button-toggle
 .text-gradient
     @include gradient-text
 
-.btn-primary
+.btn
     border-radius: .5rem
     padding: .5rem 1.5rem
     color: white
-    background-color: map-get($colors, 'primary')
     text-transform: uppercase
     letter-spacing: 1pt
     box-shadow: 2px 2px 3px 1px #ccc
 
+    &-primary
+        background-color: map-get($colors, 'primary')
+
+    &-secondary
+        background-color: map-get($colors, 'secondary')
+
 .btn-quick
-    color: #3f5efb 
-    font-family: 'Aleo', serif
+    color: map-get($colors, 'secondary') 
+    font-family: 'Anek Bangla', serif
     background: none
     border: 0
-    width: 75pt
+    width: 6rem !important
+    height: 1.5rem
     font-size: 14px
     text-transform: uppercase
     letter-spacing: 1pt
+    cursor: pointer
     border-bottom: 2px solid map-get($colors, 'gray')
     text-shadow: 0 1px 2px #aaa
 
     &-left
-        padding-left: 0em
-        padding-right: 2em
-        padding-bottom: .5em
+        text-align: left
+        //padding-left: 0em
+        //padding-right: auto
+        //padding-bottom: .5em
 
     &-right
-        padding-left: 2em
-        padding-right: 0em
-        padding-bottom: .5em
+        text-align: right
+        //padding-left: auto
+        //padding-right: 0em
+        //padding-bottom: .5em
+
+/* Progress Bar */
+::ng-deep .mat-progress-bar-background
+    fill: map-get($colors, 'secondary')
+
+::ng-deep .mat-progress-bar-buffer
+    background-color: map-get($colors, 'secondary')
+
+::ng-deep .mat-progress-bar-fill::after
+    background-color: map-get($colors, 'secondary')
+
+.mat-progress-bar.mat-accent
+    .mat-progress-bar-background
+        fill: map-get($colors, 'primary')
+
+    .mat-progress-bar-buffer
+        background-color: map-get($colors, 'primary')
+
+    .mat-progress-bar-fill::after
+        background-color: map-get($colors, 'primary')
 
 /* Table */
 mat-table
     background: #fff
-    text-size: 16px
+    text-size: 15px
     font-family: 'Aleo'
     width: 100%
     display: flex
@@ -252,21 +282,28 @@ mat-table
         text-transform: uppercase
 
     .table-row
-        border-bottom: 1px solid map-get($colors, 'lightgray')
+        border-bottom: 2px solid map-get($colors, 'lightgray')
         padding: .3rem
         height: 33px
         color: #444
         font-family: 'Aleo'
 
+    .table-row:first-child
+        border-top: 2px solid map-get($colors, 'lightgray')
+
 .th-style
     color: #333
-    border-left: 2px solid white
+    padding-right: 4px
+    padding-left: 4px
     font-weight: 500 !important
+
+.th-style:first-child
+    border: 0
 
 .td-style
     color: map-get($colors, 'dark')
-    font-weight: 500
-    font-size: 16px
+    font-weight: 500 !important
+    font-size: 15px
     border: 0
 
 .inactive

@@ -3,7 +3,9 @@ export class Entry {
     debit_acc?: string;
     credit_acc?: string;
     debit?: number;
+    debits?: any;
     credit?: number;
+    credits?: any;
     label?: string;
     product?: string;
     qty?: number;

@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 
 import { Globals } from 'src/app/global';
 import { Stockmove } from 'src/app/models/transaction/stockmove.model';
@@ -67,12 +66,9 @@ export class SMDetailDialogComponent implements OnInit {
 
   //Table
   displayedColumns: string[] = 
-  ['product', 'qty', 'uom'];
+  ['product', 'qty', 'uom', 'oriqty', 'oriuom'];
   dataSource = new MatTableDataSource<any>();
   datas?: any;
-
-  columns: Columns[];
-  configuration: Config;
 
   constructor(
     public dialogRef: MatDialogRef<SMDetailDialogComponent>,
@@ -87,6 +83,7 @@ export class SMDetailDialogComponent implements OnInit {
   ){}
 
   ngOnInit() {
+    this.datas = [];
     if (this.data){
       this.transidtitle = this.data.trans_id;
       this.datdate = this.data.date;
@@ -99,7 +96,7 @@ export class SMDetailDialogComponent implements OnInit {
             this.checkInterface();
           })
         this.lock = false;
-        this.columns = [
+        /*this.columns = [
           {key:'product.name', title:'Product', orderBy:'asc', width: '40%'},
           {key:'qin', title:'Qty', width:'7%'},
           {key:'uom.uom_name', title:'Uom', width:'7%'},
@@ -109,17 +106,16 @@ export class SMDetailDialogComponent implements OnInit {
         this.configuration = { ...DefaultConfig };
         this.configuration.columnReorder = true;
         this.configuration.searchEnabled = false;
-        this.configuration.paginationEnabled = false;
+        this.configuration.paginationEnabled = false;*/
       }else{
         this.stockmoveService.getTransId(this.data.trans_id)
           .subscribe(smti => {
             this.datas = smti;
             this.dataSource.data = this.datas;
             this.checkInterface();
-            console.log(this.datas);
           })
         this.lock = false;
-        this.columns = [
+        /*this.columns = [
           {key:'product.name', title:'Product', orderBy:'asc', width: '40%'},
           {key:'qin', title:'Qty', width:'7%'},
           {key:'uom.uom_name', title:'Uom', width:'7%'},
@@ -129,7 +125,7 @@ export class SMDetailDialogComponent implements OnInit {
         this.configuration = { ...DefaultConfig };
         this.configuration.columnReorder = true;
         this.configuration.searchEnabled = false;
-        this.configuration.paginationEnabled = false;
+        this.configuration.paginationEnabled = false;*/
       }
     }else{
       this.transidtitle = "New Inventory Request";
@@ -256,6 +252,7 @@ export class SMDetailDialogComponent implements OnInit {
       this.term = "";
       this.datqty = undefined;
       this.datuom = undefined;
+      this.uomString = undefined;
     }
   }
 
@@ -264,8 +261,10 @@ export class SMDetailDialogComponent implements OnInit {
   }
 
   startSave(): void {
+    console.log("HAA");
     this.stockrequestService.create(this.datas)
       .subscribe(src => {
+        console.log(src);
         this.closeDialog();
       })
   }

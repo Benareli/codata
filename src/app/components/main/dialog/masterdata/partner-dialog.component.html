@@ -40,8 +40,8 @@
 
 <div class="w-100 flex flex-row justify-between items-center">
   <div class="w-90">
-    <button *ngIf="!isNew" [disabled]="isRes" mat-button class="submit btn-primary w-90 py-2" (click)="updateData()">Simpan</button>
-    <button *ngIf="isNew" [disabled]="isRes" mat-button class="submit btn-primary w-90 py-2" (click)="createData()">Simpan</button>
+    <button *ngIf="!isNew" [disabled]="isRes" mat-button class="submit btn btn-primary w-90 py-2" (click)="updateData()">Simpan</button>
+    <button *ngIf="isNew" [disabled]="isRes" mat-button class="submit btn btn-primary w-90 py-2" (click)="createData()">Simpan</button>
   </div>
   <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
 </div>
