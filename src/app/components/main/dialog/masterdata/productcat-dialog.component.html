@@ -24,6 +24,61 @@
       <input class="input flex-65" required placeholder="Description" [(ngModel)]="data.description">
     </div>
   </div>
+  <div class="w-100 flex flex-col flex-md-row mt-4">
+    <span class="title mb-2 text-15">Accounting Section</span>
+  </div>
+  <div class="w-100 flex flex-col flex-md-row">
+    <div class="flex flex-row flex-50">
+      <div class="flex-30">Revenue Account</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [(ngModel)]="revId">
+        <option *ngFor="let coa of coas" [value]="coa.id">
+          {{ coa.code }} - {{ coa.name }}
+        </option>
+      </select>
+    </div>
+    <div class="flex flex-row flex-50 ml-md-3 mt-2 mt-md-0">
+      <div class="flex-30">Costing Account</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [(ngModel)]="expId">
+        <option *ngFor="let coa of coas" [value]="coa.id">
+          {{ coa.code }} - {{ coa.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="w-100 flex flex-col flex-md-row mt-2">
+    <div class="flex flex-row flex-50">
+      <div class="flex-30">Incoming Stock Account</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [(ngModel)]="incId">
+        <option *ngFor="let coa of coas" [value]="coa.id">
+          {{ coa.code }} - {{ coa.name }}
+        </option>
+      </select>
+    </div>
+    <div class="flex flex-row flex-50 ml-md-3 mt-2 mt-md-0">
+      <div class="flex-30">Outgoing Stock Account</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [(ngModel)]="outId">
+        <option *ngFor="let coa of coas" [value]="coa.id">
+          {{ coa.code }} - {{ coa.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="w-100 flex flex-col flex-md-row flex-wrap mt-2">
+    <div class="flex flex-row flex-50">
+      <div class="flex-30">Inventory Account</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [(ngModel)]="invId">
+        <option *ngFor="let coa of coas" [value]="coa.id">
+          {{ coa.code }} - {{ coa.name }}
+        </option>
+      </select>
+    </div>
+    <div class="flex flex-row flex-50">&nbsp;</div>
+  </div>
 </div>
 
 <div class="w-100 flex flex-row justify-between items-center">

@@ -6,6 +6,7 @@ import { Globals } from 'src/app/global';
 
 import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
 import { LogService } from 'src/app/services/settings/log.service';
+import { CoaService } from 'src/app/services/accounting/coa.service';
 
 @Component({
   selector: 'app-productcat-dialog',
@@ -25,21 +26,37 @@ export class ProductcatDialogComponent implements OnInit {
   currCatId?: string;
   currDescription?: string;
   log = 0;
+  coas?: any;
+  revId?: number;
+  expId?: number;
+  incId?: number;
+  outId?: number;
+  invId?: number;
 
   constructor(
     public dialogRef: MatDialogRef<ProductcatDialogComponent>,
     private _snackBar: MatSnackBar,
     private globals: Globals,
     private logService: LogService,
+    private coaService: CoaService,
     private productCatService: ProductCatService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
   ngOnInit() {
+    this.retrieveCoa();
     if (this.data.active == true){
-        this.statusActive = 'true';
-        this.isChecked = true;
-        this.a = 0;
+        this.productCatService.findOneAcc(this.data.id, this.globals.companyid)
+          .subscribe(dataAcc => {
+            this.revId = dataAcc.revenue_id;
+            this.expId = dataAcc.cost_id;
+            this.incId = dataAcc.incoming_id;
+            this.outId = dataAcc.outgoing_id;
+            this.invId = dataAcc.inventory_id;
+            this.statusActive = 'true';
+            this.isChecked = true;
+            this.a = 0;
+          })
       } else {
         this.statusActive = 'false';
         this.isChecked = false;
@@ -58,6 +75,13 @@ export class ProductcatDialogComponent implements OnInit {
     };
     if(!this.isIM || !this.isAdm) this.isRes = true;
     this.retrieveLog();
+  }
+
+  retrieveCoa(): void {
+    this.coaService.getAll()
+      .subscribe(coa => {
+        this.coas = coa;
+      })
   }
 
   retrieveLog(): void {

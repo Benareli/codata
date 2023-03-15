@@ -113,8 +113,6 @@ export class PurchaseDialogComponent implements OnInit {
     this.lock = false;
     this.purchaseid = "New Draft"
     this.datas = [{products:"",qty:"",price_unit:""}];
-    //this.dataSource.data = this.datas;
-    //console.log(this.dataSource.data);
     this.datdate = new Date().toISOString().split('T')[0];
     if(this.data){
       this.lock = true;
@@ -185,7 +183,6 @@ export class PurchaseDialogComponent implements OnInit {
               })
           })
       })
-
   }
 
   retrievePODetail(): void {
@@ -195,7 +192,6 @@ export class PurchaseDialogComponent implements OnInit {
         for(let x=0;x<POD.length;x++){
           this.totalqty = Number(this.totalqty) + Number(POD[x].qty) ?? 0;
           this.totaldone = Number(this.totaldone) + Number(POD[x].qty_done) ?? 0;
-          //this.datas = [...this.datas,(POD[x])];
           this.datas.push(POD[x]);
           this.dataSource.data = this.datas;
         }
@@ -220,7 +216,6 @@ export class PurchaseDialogComponent implements OnInit {
   pushing(): void {
     if(this.datid){
       this.uomService.get(this.datuomid).subscribe(uomz => {
-        //this.datas = [...this.datas, {
         this.datas.push({
           id: this.datid, products: this.datprod, qty: this.datqty, qty_done: 0, uoms: uomz, 
           uom_id: Number(this.datuomid), price_unit: this.datcost ?? 0, tax: this.dattax ?? 0, discount: this.datdisc,
@@ -470,7 +465,8 @@ export class PurchaseDialogComponent implements OnInit {
       this.datas[x].qty_rec = this.datas[x].qty - this.datas[x].qty_done;
     }
     this.purchasedetailService.updateReceiveAll(
-      this.globals.userid, this.supplierString, this.warehouseString, this.datdate, this.datas)
+      this.globals.userid, this.supplierString, this.warehouseString, this.datdate, 
+      this.globals.companyid, this.datas)
       .subscribe(res => {
         this.closeBackDialog();
       })
@@ -485,7 +481,8 @@ export class PurchaseDialogComponent implements OnInit {
     }).afterClosed().subscribe(result => {
       if(result){
         this.purchasedetailService.updateReceiveAll(
-          this.globals.userid, this.supplierString, result[0].warehouse, result[0].date, result)
+          this.globals.userid, this.supplierString, result[0].warehouse, result[0].date,
+          this.globals.companyid, result)
             .subscribe(res => {
               this.closeBackDialog();
             })

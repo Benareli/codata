@@ -59,6 +59,19 @@ import { ProductCatComponent } from './components/main/masterdata/product-cat/pr
 import { UomComponent } from './components/main/masterdata/uom/uom.component';
 import { WarehouseComponent } from './components/main/masterdata/warehouse/warehouse.component';
 
+//Transaction - Purchase
+import { PurchaseComponent } from './components/main/transaction/purchase/purchase.component';
+
+//Transaction - Sale
+import { SaleComponent } from './components/main/transaction/sale/sale.component';
+
+//Transaction - Stock
+import { StockmoveComponent } from './components/main/transaction/stockmove/stockmove.component';
+
+//Accounting
+import { JournalComponent } from './components/main/accounting/journal/journal.component';
+import { PayableComponent } from './components/main/accounting/payable/payable.component';
+import { ReceivableComponent } from './components/main/accounting/receivable/receivable.component';
 
 //Dialog
 //Masterdata
@@ -68,13 +81,16 @@ import { ProductDialogComponent } from './components/main/dialog/masterdata/prod
 import { ProductcatDialogComponent } from './components/main/dialog/masterdata/productcat-dialog.component';
 import { WarehouseDialogComponent } from './components/main/dialog/masterdata/warehouse-dialog.component';
 
-//Transaction
+//Transaction - Purchase
+import { PurchaseDialogComponent } from './components/main/dialog/transaction/purchase/purchase-dialog.component';
+
+//Transaction - Sale
+import { SaleDialogComponent } from './components/main/dialog/transaction/sale/sale-dialog.component';
+
+//Transaction - Stock
 import { SMDetailDialogComponent } from './components/main/dialog/transaction/stockmove/sm-detail-dialog.component';
 import { SmpartDialogComponent } from './components/main/dialog/transaction/stockmove/smpart-dialog.component';
 import { StockMoveDialogComponent } from './components/main/dialog/transaction/stockmove/stockmove-dialog.component';
-
-//Purchase
-import { PurchaseDialogComponent } from './components/main/dialog/transaction/purchase/purchase-dialog.component';
 
 //Accounting - Bill
 import { BillDialogComponent } from './components/main/dialog/accounting/bill/bill-dialog.component';
@@ -89,19 +105,11 @@ import { UploadDialogComponent } from './components/main/dialog/upload/upload-di
 import { PosComponent } from './components/main/pos/pos.component';
 import { PosSessionComponent } from './components/main/pos-session/pos-session.component';
 
-import { PurchaseComponent } from './components/main/transaction/purchase/purchase.component';
-import { StockmoveComponent } from './components/main/transaction/stockmove/stockmove.component';
-import { JournalComponent } from './components/main/accounting/journal/journal.component';
-
-import { PayableComponent } from './components/main/accounting/payable/payable.component';
-import { SaleComponent } from './components/main/sale/sale.component';
-import { ReceivableComponent } from './components/main/accounting/receivable/receivable.component';
 import { HelpdeskComponent } from './components/main/helpdesk/helpdesk.component';
 import { PosReportComponent } from './components/main/report/pos-report/pos-report.component';
 
 import { PosdetailDialogComponent } from './components/main/dialog/posdetail-dialog.component';
 import { PaymentDialogComponent } from './components/main/dialog/payment-dialog.component';
-import { SaleDialogComponent } from './components/main/dialog/sale-dialog.component';
 import { PrintposDialogComponent } from './components/main/dialog/printpos-dialog.component';
 import { UserroleDialogComponent } from './components/main/dialog/userrole-dialog.component';
 import { TaxDialogComponent } from './components/main/dialog/tax-dialog.component';
@@ -134,6 +142,20 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     UomComponent,
     WarehouseComponent,
 
+    //Transaction - Purchase
+    PurchaseComponent,
+
+    //Transaction - Sale
+    SaleComponent,
+
+    //Transaction - Stock
+    StockmoveComponent,
+
+    //Accounting
+    JournalComponent,
+    PayableComponent,
+    ReceivableComponent,
+
     //Dialog
     //Masterdata
     BrandDialogComponent,
@@ -145,6 +167,9 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     SMDetailDialogComponent,
     SmpartDialogComponent,
     StockMoveDialogComponent,
+
+    //Transaction - Sale
+    SaleDialogComponent,
 
     //Transaction - Purchase
     PurchaseDialogComponent,
@@ -163,19 +188,11 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
 
     PosComponent,
     PosSessionComponent,
-    PurchaseComponent,
-    StockmoveComponent,
-    JournalComponent,
-    
-    PayableComponent,
-    SaleComponent,
-    ReceivableComponent,
     HelpdeskComponent,
     PosReportComponent,
     WarehouseDialogComponent,
     PosdetailDialogComponent,
     PaymentDialogComponent,
-    SaleDialogComponent,
     PrintposDialogComponent,
     UserroleDialogComponent,
     TaxDialogComponent,

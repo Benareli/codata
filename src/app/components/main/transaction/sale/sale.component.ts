@@ -1,36 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormsModule, FormControl } from '@angular/forms';
-import { Observable, of } from "rxjs";
-import { Globals } from 'src/app/global';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DataFilter, filterOption } from 'src/app/models/datafilter';
-
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 import { API, APIDefinition } from 'ngx-easy-table';
 
-import { SaleDialogComponent } from '../dialog/sale-dialog.component';
-
+import { Globals } from 'src/app/global';
 import { Sale } from 'src/app/models/transaction/sale.model';
-import { SaleService } from 'src/app/services/transaction/sale.service';
 import { Saledetail } from 'src/app/models/transaction/saledetail.model';
-import { SaledetailService } from 'src/app/services/transaction/saledetail.service';
-import { Product } from 'src/app/models/masterdata/product.model';
-import { ProductService } from 'src/app/services/masterdata/product.service';
-import { Productcat } from 'src/app/models/masterdata/productcat.model';
-import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
-import { Brand } from 'src/app/models/masterdata/brand.model';
-import { BrandService } from 'src/app/services/masterdata/brand.service';
 import { Partner } from 'src/app/models/masterdata/partner.model';
-import { PartnerService } from 'src/app/services/masterdata/partner.service';
 import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
+
+import { SaleService } from 'src/app/services/transaction/sale.service';
+import { SaledetailService } from 'src/app/services/transaction/saledetail.service';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
 import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+
+import { SaleDialogComponent } from '../../dialog/transaction/sale/sale-dialog.component';
 
 @Component({
   selector: 'app-sale',
   templateUrl: './sale.component.html',
-  styleUrls: ['../style/main.component.sass']
+  styleUrls: ['../../../../style/main.sass']
 })
 export class SaleComponent implements OnInit {
   partners?: Partner[];
@@ -65,9 +55,6 @@ export class SaleComponent implements OnInit {
     private dialog: MatDialog,
     private saleService: SaleService,
     private saledetailService: SaledetailService,
-    private productService: ProductService,
-    private productCatService: ProductCatService,
-    private brandService: BrandService,
     private partnerService: PartnerService,
     private warehouseService: WarehouseService
   ) { }
@@ -161,9 +148,12 @@ export class SaleComponent implements OnInit {
 
   addSale(): void {
     const dialog = this.dialog.open(SaleDialogComponent, {
-      width: '100vw',
+      maxWidth: '98vw',
+      maxHeight: '98vh',
       height: '100%',
-      disableClose: true,   
+      width: '100%',
+      panelClass: 'full-screen-modal',
+      disableClose: true,    
     }).afterClosed().subscribe(result => {
       if(result) this.openDialog(result);
       this.retrieveData();
@@ -172,8 +162,11 @@ export class SaleComponent implements OnInit {
 
   openDialog(id: string) {
     const dialog = this.dialog.open(SaleDialogComponent, {
-      width: '100vw',
+      maxWidth: '98vw',
+      maxHeight: '98vh',
       height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
       disableClose: true,
       data: id
     }).afterClosed().subscribe(result => {

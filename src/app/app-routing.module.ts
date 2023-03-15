@@ -14,7 +14,7 @@ import { WarehouseComponent } from './components/main/masterdata/warehouse/wareh
 import { StockmoveComponent } from './components/main/transaction/stockmove/stockmove.component';
 import { PartnerComponent } from './components/main/masterdata/partner/partner.component';
 import { PurchaseComponent } from './components/main/transaction/purchase/purchase.component';
-import { SaleComponent } from './components/main/sale/sale.component';
+import { SaleComponent } from './components/main/transaction/sale/sale.component';
 import { PosComponent } from './components/main/pos/pos.component';
 import { PosSessionComponent } from './components/main/pos-session/pos-session.component';
 import { JournalComponent } from './components/main/accounting/journal/journal.component';

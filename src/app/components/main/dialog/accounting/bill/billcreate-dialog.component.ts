@@ -32,16 +32,17 @@ export class BillcreateDialogComponent implements OnInit {
   purchaseid?: string;
   purchaseHeader?: string;
   prefixes?: string;
-  pdetailid: string[];
-  productbill: string[];
-  qrec: number[];
-  productname: string[];
-  uom: string[];
-  priceunit: number[];
-  tax: number[];
-  discount: number[];
-  qinv: number[];
-  subtotal: number[];
+  prodcompany?: any[];
+  pdetailid?: string[];
+  productbill?: string[];
+  qrec?: number[];
+  productname?: string[];
+  uom?: string[];
+  priceunit?: number[];
+  tax?: number[];
+  discount?: number[];
+  qinv?: number[];
+  subtotal?: number[];
   checked = false;
 
   //Table
@@ -168,6 +169,7 @@ export class BillcreateDialogComponent implements OnInit {
     this.pdetailid = [];
     this.productbill = [];
     this.productname = [];
+    this.prodcompany = [];
     this.uom = [];
     this.qrec = [];
     this.priceunit = [];
@@ -181,6 +183,7 @@ export class BillcreateDialogComponent implements OnInit {
         this.pdetailid.push(this.datas[x].id);
         this.productbill.push(this.datas[x].product_id);
         this.productname.push(this.datas[x].products.name);
+        this.prodcompany.push(this.globals.companyid);
         this.qrec.push(this.datas[x].qty_rec);
         this.uom.push(this.datas[x].uom_id);
         this.priceunit.push(this.datas[x].price_unit);
@@ -197,7 +200,8 @@ export class BillcreateDialogComponent implements OnInit {
     const journal = {
       amount: y, date: this.datdate, duedate: this.datduedate, origin: this.purchaseid, productbill: this.productbill, qrec: this.qrec,
       productname: this.productname, uom: this.uom, priceunit: this.priceunit, tax: this.tax, discount: this.discount, 
-      partner: this.supplierString, pdetail: this.pdetailid, qinv: this.qinv, subtotal: this.subtotal
+      partner: this.supplierString, pdetail: this.pdetailid, qinv: this.qinv, subtotal: this.subtotal, 
+      company: this.globals.companyid, user: this.globals.userid
     };
     this.journalService.createBill(journal)
       .subscribe(cbill => {

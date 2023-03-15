@@ -261,12 +261,15 @@ export class SMDetailDialogComponent implements OnInit {
   }
 
   startSave(): void {
-    console.log("HAA");
+    if(this.datas[0].product==''){
+      this._snackBar.open("Tidak ada Produk!", "Tutup", {duration: 5000});
+    }else{
     this.stockrequestService.create(this.datas)
       .subscribe(src => {
         console.log(src);
         this.closeDialog();
       })
+    }
   }
 
   validate(): void {

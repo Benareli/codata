@@ -42,6 +42,9 @@ export class JournalService {
   updateLock(id: any, data: any): Observable<any> {
     return this.http.put(`${baseUrl}/lock/${id}`, data, { 'headers': headers });
   }
+  createJour(data: any): Observable<any> {
+    return this.http.post(`${baseUrl}/jour`, data, { 'headers': headers });
+  }
   createBill(data: any): Observable<any> {
     return this.http.post(`${baseUrl}/bill`, data, { 'headers': headers });
   }

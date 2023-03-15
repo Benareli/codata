@@ -132,6 +132,7 @@ export class StockMoveDialogComponent implements OnInit {
     };
     this.stockmoveService.create(dataSM)
       .subscribe(res => {
+        console.log(res);
         this.closeDialog();
       }); 
   }

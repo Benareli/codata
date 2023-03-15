@@ -16,4 +16,11 @@ export class Sale {
 	payment?: string[];
 	paid?: number;
 	open?: boolean;
+
+	warehouse_id?: number;
+	warehouses?: any;
+	partner_id?: number;
+	partners?: any;
+	user_id?: number;
+	users?: any;
 }

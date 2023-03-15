@@ -44,4 +44,7 @@ export class ProductCatService {
   findByDesc(description: any): Observable<Productcat[]> {
     return this.http.get<Productcat[]>(`${baseUrl}?description=${description}`, { 'headers': headers });
   }
+  findOneAcc(id: any, company: any): Observable<any> {
+    return this.http.get<Productcat[]>(`${baseUrl}/acc/${id}/${company}`, { 'headers': headers });
+  }
 }

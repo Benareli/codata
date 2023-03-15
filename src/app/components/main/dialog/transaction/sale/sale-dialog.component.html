@@ -1,0 +1,210 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+  <div class="w-100 overflow-y-scroll text-15">
+    <div class="mb-1 flex flex-row justify-between items-center">
+      <div class="w-100 flex flex-row justify-between">
+        <span class="title border-primary">{{saleid}}</span>
+        <div class="flex flex-col flex-md-row items-end items-md-start">
+          <span *ngIf="data && !draft" class="order-2 order-md-1 mr-md-3 w-3rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1">{{smtotal | number}} <i class="fa fa-truck"></i></span>
+          <span *ngIf="data && !draft" class="order-3 order-md-2 mr-md-3 w-3rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1">{{invtotal | number}} <i class="fa fa-file-text"></i></span>
+          <span class="order-2 order-md-3 btn btn-secondary text-13 mr-3 cursor-default" *ngIf="data && draft" (click)="validate()">Validate</span>
+          <button class="order-1 order-md-4 text-danger text-13 p-1" mat-button (click)="closeDialog()">X</button>
+        </div>
+      </div>
+    </div>
+    <div class="w-100 flex flex-col flex-md-row justify-between items-start">
+      <div class="w-100 flex-100 flex-md-50 flex flex-row">
+        <div class="flex-30">Customer</div>
+        <span class="flex-5">:</span>
+        <select class="input flex-65" [disabled]="this.lock" [(ngModel)]="customerString">
+          <option value="0"></option>
+          <option *ngFor="let partner of partners" [value]="partner.id">
+            {{ partner.name }}
+          </option>
+        </select>
+      </div>
+      <div class="w-100 flex-100 flex-md-50 flex flex-row mt-2 mt-md-0 ml-0 ml-md-2">
+        <div class="flex-30">Date</div>
+        <span class="flex-5">:</span>
+        <input type="date" class="input flex-65" [disabled]="this.lock" [(ngModel)]="datdate"/>
+      </div>
+    </div>
+    <div class="w-100 flex flex-col flex-md-row justify-between items-start mt-0 mt-md-2">
+      <div class="w-100 flex-100 flex-md-50 flex flex-row mt-2 mt-md-0">
+        <div class="flex-30">Gudang</div>
+        <span class="flex-5">:</span>
+        <select class="input flex-65" [disabled]="this.lock" [(ngModel)]="warehouseString">
+          <option value="0"></option>
+          <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+            {{ warehouse.short }}
+          </option>
+        </select>
+      </div>
+      <div class="w-100 flex-100 flex-md-50 flex flex-row mt-2 mt-md-0 ml-0 ml-md-2">
+        <div class="flex-30">Expected Date</div>
+        <span class="flex-5">:</span>
+        <input type="date" class="input flex-65" [disabled]="this.lock" [(ngModel)]="datexpected"/>
+      </div>
+    </div>
+  
+    <table class="w-100 mt-2">
+      <tr class="pt-2 pb-1 border-t-2 border-solid border-gray">
+        <td class="th-style pl-2" fxFlex="35%">Product</td>
+        <td class="th-style text-right" fxFlex="7%">Qty</td>
+        <td class="th-style text-right" fxFlex="7%">Qty Done</td>
+        <td class="th-style text-center" fxFlex="7%">Uom</td>
+        <td class="th-style text-right" fxFlex="13%">Harga Satuan</td>
+        <td class="th-style text-right" fxFlex="5%">Disc%</td>
+        <td class="th-style text-right" fxFlex="5%">Tax%</td>
+        <td class="th-style text-right" fxFlex="16%">Subtotal</td>
+        <td class="th-style" fxFlex="5%"></td>
+      </tr>
+      <tr *ngIf="!lock" class="border-y-2 border-solid border-secondary py-1">
+        <td class="td-style pl-2" fxFlex="35%">
+          <input (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/>
+        </td>
+        <td class="td-style" fxFlex="7%">
+          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="datqty"/>
+        </td>
+        <td class="td-style" fxFlex="7%">
+        </td>
+        <td class="td-style text-center" fxFlex="7%">
+          <select [disabled]="this.lock" [(ngModel)]="datuomid">
+            <option *ngFor="let uom of uoms" [value]="uom.id">
+              {{ uom.uom_name }}
+            </option>
+          </select>
+        </td>
+        <td class="td-style" fxFlex="13%">
+          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="datprice"/>
+        </td>
+        <td class="td-style" fxFlex="5%">
+          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="datdisc"/>
+        </td>
+        <td class="td-style" fxFlex="5%">
+          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="dattax"/>
+        </td>
+        <td class="td-style" fxFlex="16%">
+          <input disabled class=" text-right" [(ngModel)]="datsub"/>
+        </td>
+        <td class="td-style text-center" fxFlex="5%">
+          <div class="w-2rem btn-rainbow text-center" (click)="pushing()">
+            <button class="btn-gradient w-1rem text-white">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="9" fxFlex="100%">
+          <ul class="dropdown" *ngIf="openDropDown">
+            <li class="list-group-item category"
+                *ngFor="let product of products | filter:term; let i1 = index"
+                [class.active]="i1 == currentIndex1"
+                (click)="getProd(product, i1)">
+                  {{ product.name }}
+            </li>
+          </ul>
+          
+        </td>
+      </tr>
+    </table>
+    
+    <mat-table #table [dataSource]="dataSource" class="mat-table">
+      <ng-container matColumnDef="product">
+        <td class="td-style" fxFlex="35%" mat-cell *matCellDef="let datas">
+          {{datas.products.name}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qty">
+        <td class="td-style text-right" fxFlex="7%" mat-cell *matCellDef="let datas">
+          {{datas.qty | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="qty_done">
+        <td class="td-style text-right" fxFlex="7%" mat-cell *matCellDef="let datas">
+          {{datas.qty_done | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="uom">
+        <td class="td-style text-center" fxFlex="7%" mat-cell *matCellDef="let datas">
+          {{datas.uoms.uom_name}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="price_unit">
+        <td class="td-style text-right" fxFlex="13%" mat-cell *matCellDef="let datas">
+          {{datas.price_unit | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="discount">
+        <td class="td-style text-right" fxFlex="5%" mat-cell *matCellDef="let datas">
+          {{datas.discount | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="tax">
+        <td class="td-style text-right" fxFlex="5%" mat-cell *matCellDef="let datas">
+          {{datas.tax | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="subtotal">
+        <td class="td-style text-right" fxFlex="16%" mat-cell *matCellDef="let datas">
+          {{datas.subtotal | number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <td class="td-style" fxFlex="5%" mat-cell *matCellDef="let datas">
+          <div *ngIf="datas.qty_done == 0">
+          <a class="add_stock" *ngIf="edit && (isSalM || isAdm)" ><mat-icon class="mat-icon" 
+            (click)="deleteSODetail(dataSource.filteredData.indexOf(datas), datas.id, datas.products)">delete</mat-icon></a>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-row class="table-row" 
+        *matRowDef="let row; columns: displayedColumns;"  
+      ></tr>
+    </mat-table>
+  
+    <table class="w-100 mt-1">
+      <tr>
+        <td fxFlex="69%"></td>
+        <td class="td-style fw-500 text-dark py-1 border-b-1 border-solid border-lightgray text-right" fxFlex="10%">Subtotal</td>
+        <td class="td-style fw-500 text-dark py-1 border-b-1 border-solid border-lightgray text-right" fxFlex="16%">Rp. {{thissub | number}}</td>
+        <td class="td-style py-1 border-b-1 border-solid border-lightgray" fxFlex="5%"></td>
+      </tr>
+      <tr>
+        <td fxFlex="69%"></td>
+        <td class="td-style fw-500 text-dark py-1 border-b-1 border-solid border-lightgray text-right" fxFlex="10%">Disc</td>
+        <td class="td-style fw-500 text-dark py-1 border-b-1 border-solid border-lightgray text-right" fxFlex="16%">Rp. {{thisdisc | number}}</td>
+        <td class="td-style py-1 border-b-1 border-solid border-lightgray" fxFlex="5%"></td>
+      </tr>
+      <tr>
+        <td fxFlex="69%" class="text-center"><span *ngIf="data" class="text-14">{{persenqty | number}}% Barang Diterima</span></td>
+        <td class="td-style fw-500 text-dark py-1 border-b-2 border-solid border-lightgray text-right" fxFlex="10%">Tax</td>
+        <td class="td-style fw-500 text-dark py-1 border-b-2 border-solid border-lightgray text-right" fxFlex="16%">Rp. {{thistax | number}}</td>
+        <td class="td-style py-1 border-b-2 border-solid border-lightgray" fxFlex="5%"></td>
+      </tr>
+      <tr>
+        <td fxFlex="69%" class="text-center"><mat-progress-bar mode="determinate" class="w-20rem mx-auto" [value]="persenqty" *ngIf="data"></mat-progress-bar></td>
+        <td class="td-style py-1 border-b-2 border-solid border-lightgray text-right" fxFlex="10%"><b>TOTAL</b></td>
+        <td class="td-style py-1 border-b-2 border-solid border-lightgray text-right" fxFlex="16%"><b>Rp. {{thistotal | number}}</b></td>
+        <td class="td-style py-1 border-b-2 border-solid border-lightgray" fxFlex="5%"></td>
+      </tr>
+      <tr>
+        <td fxFlex="69%">
+          <div class="flex flex-row justify-around items-center">
+            <button class="text-primary uppercase flex50 text-13" (click)="openSendPartial()" *ngIf="data && !draft && persenqty! < 100"><i class="fa fa-arrow-down"></i> Sebagian</button>
+            <button class="text-primary uppercase flex50 text-13" (click)="sendAll()" *ngIf="data && !draft && persenqty! < 100"><i class="fa fa-arrow-down"></i> Semua</button>
+          </div>
+        </td>
+        <td colspan="3" fxFlex="31%" class="text-right">
+          <button (click)="startInvoice()" *ngIf="data" class="text-gradient uppercase">Create Bill <i class="fa fa-file-text-o"></i><i class="fa fa-chevron-right"></i></button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <div class="w-100 flex flex-row justify-between items-center">
+    <div class="w-90">
+      <button mat-button [disabled]="isRes" *ngIf="!this.lock" class="btn btn-primary w-90 py-2" (click)="startSO()">Simpan</button>
+      <button mat-button [disabled]="isRes" *ngIf="this.lock" class="btn btn-primary w-90 py-2 bg-white text-primary" (click)="editSO()">{{edit_text}}</button>
+    </div>
+    <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
+  </div>
+  </div>

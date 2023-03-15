@@ -1,21 +1,14 @@
-<div class="flex-container">
-	<div class="flex-left">
-		<div *ngIf="isSalM || isAdm" class="submit-form">
-    		<div fxLayout="row">
-            <div (click)="addSale()" class="quick_add">
-      			<button class="submit">+ Tambah</button></div>
-    		</div>
-  		</div>
+<div class="container">
+	<div class="pl-2 pt-1">
+		<div *ngIf="isSalM || isAdm" class="btn-quick btn-quick-left" (click)="addSale()">+ Add</div>
 	</div>
 
-	<div class="flex-right">
-    <div (click)="toggleDisplay()" class="submit-form quick_add">
-      <button class="submit">Filter</button>
-    </div>
+	<div class="pr-2 pt-1">
+    <div class="btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</div>
 	</div>
 </div>
 
-<div class="table-container">
+<div class="mx-3">
   <ngx-table
     [configuration]="configuration"
     [data]="sales"
@@ -31,7 +24,7 @@
         {{row.date | date}}
       </td>
       <td (click)="openDialog(row.id)">
-        {{row.customer.name}}
+        {{row.partners.name}}
       </td>
       <td (click)="openDialog(row.id)" class="text-right">
         {{row.amount_untaxed | number}}

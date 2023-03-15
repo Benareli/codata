@@ -75,8 +75,8 @@ export class EntryDialogComponent implements OnInit {
       //this.entryService.getJournal(this.data.journal_id)
         .subscribe(entry => {
           this.entrys = entry.entrys;
+          this.datdate = entry.date?.toString().split('T')[0];
           this.jourtype = entry.type;
-          console.log(entry);
           /*this.columns = [
             {key:'label', title:'Label', width: '25%'},
             {key:'debit_id', title:'Account', width:'35%'},
@@ -106,7 +106,7 @@ export class EntryDialogComponent implements OnInit {
         this.jourtypes = [];
         for(let x=0; x<type.length; x++){
           if(type[x].toString() == 'invoice' || type[x].toString() == 'bill'){
-            console.log(type[x]);
+            //Do Nothing
           }else{
             this.jourtypes.push(type[x]);
           }
@@ -195,7 +195,23 @@ export class EntryDialogComponent implements OnInit {
   }
 
   saveJournal() {
-    console.log(this.datdate);
+    if(!this.datdate){
+      this._snackBar.open("Tanggal Tidak Boleh Kosong!", "Tutup", {duration: 5000});
+    }else{
+      const Jour = {
+        date: this.datdate,
+        type: this.jourtype,
+        entry: this.entrys,
+        amount: this.debit,
+        company: this.globals.companyid,
+        user: this.globals.userid
+      }
+      this.journalService.createJour(Jour)
+        .subscribe(inputJour => {
+          if(inputJour.message == 'done') this.closeDialog();
+        })
+    }
+    
   }
 
   closeDialog() {
