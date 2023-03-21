@@ -163,14 +163,17 @@ export class AppComponent implements OnInit, AfterViewInit{
       this.globals.roles = user.roles;
       this.companyService.getAll()
         .subscribe(company => {
-          this.globals.pos_shift = company[0].pos_shift;
-          this.pos_shift = company[0].pos_shift;
-          this.logo = company[0].image;
-          this.comp_name = company[0].comp_name;
-          this.nav_color = "#" + company[0].nav_color;
-          this.title_color = "#" + company[0].title_color;
-          this.globals.cost_general = company[0].cost_general;
-          this.globals.companyid = company[0].id;
+          if(company && this.globals.companyid != company[0].id) {
+            this.globals.pos_shift = company[0].pos_shift;
+            this.pos_shift = company[0].pos_shift;
+            this.logo = company[0].image;
+            this.comp_name = company[0].comp_name;
+            this.nav_color = "#" + company[0].nav_color;
+            this.title_color = "#" + company[0].title_color;
+            this.globals.cost_general = company[0].cost_general;
+            this.globals.companyid = company[0].id;
+          }
+          console.log("company => ", this.globals.companyid);
           if(this.globals.pos_shift){
             this.user2Service.get(user.id)
               .subscribe(users => {

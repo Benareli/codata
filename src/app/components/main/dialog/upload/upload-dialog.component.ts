@@ -107,7 +107,7 @@ export class UploadDialogComponent implements OnInit {
       .subscribe(partner => {
         this.partners = partner;
       })
-    this.productService.findAllActive()
+    this.productService.findAllActive(this.globals.companyid)
       .subscribe(product => {
         this.products = product;
       })

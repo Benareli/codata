@@ -12,8 +12,8 @@ import { PurchasedetailService } from 'src/app/services/transaction/purchasedeta
 import { JournalService } from 'src/app/services/accounting/journal.service';
 
 @Component({
-  selector: 'app-billcreate-dialog',
-  templateUrl: './billcreate-dialog.component.html',
+  selector: 'app-aparcreate-dialog',
+  templateUrl: './aparcreate-dialog.component.html',
   styleUrls: ['../../../../../style/main.sass']
 })
 export class BillcreateDialogComponent implements OnInit {

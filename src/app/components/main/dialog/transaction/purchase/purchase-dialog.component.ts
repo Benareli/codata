@@ -21,7 +21,7 @@ import { StockmoveService } from 'src/app/services/transaction/stockmove.service
 import { JournalService } from 'src/app/services/accounting/journal.service';
 
 import { SmpartDialogComponent } from '../stockmove/smpart-dialog.component';
-import { BillcreateDialogComponent } from '../../accounting/bill/billcreate-dialog.component';
+import { BillcreateDialogComponent } from '../../accounting/bill/aparcreate-dialog.component';
 
 @Component({
   selector: 'app-purchase-dialog',
@@ -151,7 +151,7 @@ export class PurchaseDialogComponent implements OnInit {
         this.warehouses = datawh;
         this.warehouseString = datawh[0].id;
       });
-    this.productService.findAllPOReady()
+    this.productService.findAllPOReady(this.globals.companyid)
       .subscribe(dataProd => {
         this.products = dataProd;
       });
@@ -477,7 +477,7 @@ export class PurchaseDialogComponent implements OnInit {
       width: '90vw',
       height: '80%',
       disableClose: true,
-      data: this.purchaseHeader
+      data: ["purchase", this.purchaseHeader]
     }).afterClosed().subscribe(result => {
       if(result){
         this.purchasedetailService.updateReceiveAll(
@@ -495,7 +495,7 @@ export class PurchaseDialogComponent implements OnInit {
       width: '90vw',
       height: '80%',
       disableClose: true,
-      data: this.purchaseHeader
+      data: ["purchase", this.purchaseHeader]
     }).afterClosed().subscribe(result => {
       this.closeBackDialog();
     });

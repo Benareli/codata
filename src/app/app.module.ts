@@ -94,7 +94,7 @@ import { StockMoveDialogComponent } from './components/main/dialog/transaction/s
 
 //Accounting - Bill
 import { BillDialogComponent } from './components/main/dialog/accounting/bill/bill-dialog.component';
-import { BillcreateDialogComponent } from './components/main/dialog/accounting/bill/billcreate-dialog.component';
+import { BillcreateDialogComponent } from './components/main/dialog/accounting/bill/aparcreate-dialog.component';
 
 //Accounting - Journal
 import { EntryDialogComponent } from './components/main/dialog/accounting/journal/entry-dialog.component';

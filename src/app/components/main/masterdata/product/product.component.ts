@@ -83,8 +83,9 @@ export class ProductComponent implements OnInit {
 
   retrieveProduct(): void {
     this.loaded = true;
-    this.productService.getAll()
+    this.productService.getAll(this.globals.companyid)
       .subscribe(prod => {
+        console.log(prod);
         if(this.isIM || this.isAdm){
           this.products = prod;
         }else{

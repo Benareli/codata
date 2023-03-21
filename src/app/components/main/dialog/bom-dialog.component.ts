@@ -110,11 +110,11 @@ export class BomDialogComponent implements OnInit {
   }
 
   retrieveData(): void {
-    this.productService.findAllRM()
+    this.productService.findAllRM(this.globals.companyid)
       .subscribe(dataProdRM => {
         this.rmproducts = dataProdRM;
       })
-    this.productService.findAllRMTrue()
+    this.productService.findAllRMTrue(this.globals.companyid)
       .subscribe(dataProd => {
         this.products = dataProd;
         if(!this.data){

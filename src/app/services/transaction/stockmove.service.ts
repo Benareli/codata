@@ -33,7 +33,7 @@ export class StockmoveService {
     return this.http.get<Stockmove[]>(`${baseUrl}/prod/${product}`, { 'headers': headers });
   }
   create(data: any): Observable<any> {
-    return this.http.post(baseUrl, data, { 'headers': headers });
+    return this.http.post(`${baseUrl}/quick`, data, { 'headers': headers });
   }
   findTransIn(product: any): Observable<Stockmove[]> {
     return this.http.get<Stockmove[]>(`${baseUrl}/transin/${product}`, { 'headers': headers });

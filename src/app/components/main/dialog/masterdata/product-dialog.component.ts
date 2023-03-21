@@ -261,8 +261,7 @@ export class ProductDialogComponent implements OnInit {
         this.orilprice = prod.listprice;
         this.datbprice = prod.botprice;
         this.oribprice = prod.botprice;
-        this.datcost = prod.cost;
-        this.oricost = prod.cost;
+        
         this.datmin = prod.min;
         this.orimin = prod.min;
         this.datmax = prod.max;
@@ -315,6 +314,11 @@ export class ProductDialogComponent implements OnInit {
         }
         this.retrieveBundle();
         this.retrieveBom();
+        this.productService.getCostComp(prod.id, this.globals.companyid)
+          .subscribe(pcost => {
+            this.datcost = pcost.cost;
+            this.oricost = pcost.cost;
+          })
     });
     this.posDetailService.findByProduct(id)
       .subscribe(posDet => {
@@ -418,7 +422,7 @@ export class ProductDialogComponent implements OnInit {
             this.easytableBundle();
           }
         })
-      this.productService.findAllFGStock()
+      this.productService.findAllFGStock(this.globals.companyid)
       .subscribe(allfg => {
         this.bproducts = allfg;
       })
@@ -453,7 +457,7 @@ export class ProductDialogComponent implements OnInit {
             this.easytableBom();
           }
         })
-      this.productService.findAllRM()
+      this.productService.findAllRM(this.globals.companyid)
         .subscribe(allrm => {
           this.boproducts = allrm;
         })
@@ -799,7 +803,8 @@ export class ProductDialogComponent implements OnInit {
         supplier: this.partnerid,
         active: this.isChecked,
         message: this.isUpdated,
-        user: this.globals.userid
+        user: this.globals.userid,
+        company: this.globals.companyid,
       };
       this.productService.update(this.data, dataProd)
         .subscribe({
@@ -845,7 +850,8 @@ export class ProductDialogComponent implements OnInit {
         max: this.datmax,
         supplier: this.partnerid,
         active: this.isChecked,
-        user: this.globals.userid
+        user: this.globals.userid,
+        company: this.globals.companyid,
       };
       this.productService.create(data)
         .subscribe({

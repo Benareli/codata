@@ -189,8 +189,8 @@
       <tr>
         <td fxFlex="69%">
           <div class="flex flex-row justify-around items-center">
-            <button class="text-primary uppercase flex50 text-13" (click)="openSendPartial()" *ngIf="data && !draft && persenqty! < 100"><i class="fa fa-arrow-down"></i> Sebagian</button>
-            <button class="text-primary uppercase flex50 text-13" (click)="sendAll()" *ngIf="data && !draft && persenqty! < 100"><i class="fa fa-arrow-down"></i> Semua</button>
+            <button class="text-primary uppercase flex50 text-13" (click)="openSendPartial()" *ngIf="data && !draft && persenqty! < 100"><i class="fa fa-arrow-up"></i> Sebagian</button>
+            <button class="text-primary uppercase flex50 text-13" (click)="sendAll()" *ngIf="data && !draft && persenqty! < 100"><i class="fa fa-arrow-up"></i> Semua</button>
           </div>
         </td>
         <td colspan="3" fxFlex="31%" class="text-right">

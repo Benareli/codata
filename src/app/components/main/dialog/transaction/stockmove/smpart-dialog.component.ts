@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { PurchaseService } from 'src/app/services/transaction/purchase.service';
 import { PurchasedetailService } from 'src/app/services/transaction/purchasedetail.service';
+import { SaleService } from 'src/app/services/transaction/sale.service';
+import { SaledetailService } from 'src/app/services/transaction/saledetail.service';
 
 import { Product } from 'src/app/models/masterdata/product.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
@@ -26,15 +28,16 @@ export class SmpartDialogComponent implements OnInit {
   partners?: Partner[];
   warehouses?: Warehouse[];
   products?: Product[];
-  supplierString?: number;
+  partnerString?: number;
   warehouseString?: number;
   datqty?: any;
   datdate?: string;
 
-  purchaseid?: string;
-  purchaseHeader?: string;
+  transacid?: string;
+  transacHeader?: string;
   prefixes?: string;
   transid?: string;
+  dataActions: any;
 
   //Table
   displayedColumns: string[] = 
@@ -54,16 +57,19 @@ export class SmpartDialogComponent implements OnInit {
     private globals: Globals,
     private purchaseService: PurchaseService,
     private purchasedetailService: PurchasedetailService,
+    private saleService: SaleService,
+    private saledetailService: SaledetailService,
     private warehouseService: WarehouseService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
   ngOnInit() {
-    if(this.data){
-      this.retrievePO();
-    }
     this.datas = [{product:"",qty:"",price_unit:""}]
     this.dataSource.data = this.datas;
+    this.dataActions = { purchase: this.retrievePO, sale: this.retrieveSO};
+    if (this.data && this.dataActions[this.data[0]]) {
+      this.dataActions[this.data[0]].call(this);
+    }
     this.datdate = new Date().toISOString().split('T')[0];;
     this.checkRole();
   }
@@ -79,11 +85,11 @@ export class SmpartDialogComponent implements OnInit {
   }
 
   retrievePO(): void {
-    this.purchaseService.get(this.data)
+    this.purchaseService.get(this.data[1])
       .subscribe(dataPO => {
-        this.supplierString = dataPO.partner_id;
+        this.partnerString = dataPO.partner_id;
         this.warehouseString = dataPO.warehouse_id;
-        this.purchaseid = dataPO.purchase_id;
+        this.transacid = dataPO.purchase_id;
         this.retrievePODetail();
       })
     this.warehouseService.getAll()
@@ -93,7 +99,7 @@ export class SmpartDialogComponent implements OnInit {
   }
 
   retrievePODetail(): void {
-    this.purchasedetailService.getByPOId(this.data)
+    this.purchasedetailService.getByPOId(this.data[1])
       .subscribe(POD => {
         if(this.datas[0].product=='') this.datas.splice(0,1);
           for(let x=0;x<POD.length;x++){
@@ -105,7 +111,34 @@ export class SmpartDialogComponent implements OnInit {
         })
   }
 
-  editPO(index: number): void {
+  retrieveSO(): void {
+    this.saleService.get(this.data[1])
+      .subscribe(dataSO => {
+        this.partnerString = dataSO.partner_id;
+        this.warehouseString = dataSO.warehouse_id;
+        this.transacid = dataSO.sale_id;
+        this.retrieveSODetail();
+      })
+    this.warehouseService.getAll()
+      .subscribe(who => {
+        this.warehouses = who;
+      })
+  }
+
+  retrieveSODetail(): void {
+    this.saledetailService.getBySOId(this.data[1])
+      .subscribe(SOD => {
+        if(this.datas[0].product=='') this.datas.splice(0,1);
+          for(let x=0;x<SOD.length;x++){
+            this.datas.push(SOD[x]);
+            this.datas[x].qty_rec = 0;
+            this.datas[x].warehouse = this.warehouseString;
+            this.dataSource.data = this.datas;
+          }
+        })
+  }
+
+  edit(index: number): void {
   	if (this.datas[index].qty_rec > (this.datas[index].qty - this.datas[index].qty_done)) {
   		this.datas[index].qty_rec = (this.datas[index].qty - this.datas[index].qty_done);
   		this._snackBar.open("Kuantiti melebihi yang dipesan!", "Tutup", {duration: 5000});

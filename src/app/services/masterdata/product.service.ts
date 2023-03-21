@@ -16,8 +16,8 @@ const headers= new HttpHeaders()
 export class ProductService {
 
   constructor(private http: HttpClient) { }
-  getAll(): Observable<Product[]> {
-    return this.http.get<Product[]>(baseUrl, { 'headers': headers });
+  getAll(comp: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${baseUrl}/all/${comp}`, { 'headers': headers });
   }
   getTable(): Observable<Product[]>{
     return this.http.get(baseUrl, { 'headers': headers })
@@ -35,34 +35,40 @@ export class ProductService {
   update(id: any, data: any): Observable<any> {
     return this.http.put(`${baseUrl}/${id}`, data, { 'headers': headers });
   }
-  findAllActive(): Observable<Product[]>{
-    return this.http.get<Product[]>(`${baseUrl}/active`, { 'headers': headers });
+  findAllActive(comp: any): Observable<Product[]>{
+    return this.http.get<Product[]>(`${baseUrl}/active/${comp}`, { 'headers': headers });
   }
-  findAllStock(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${baseUrl}/stock`, { 'headers': headers });
+  findAllStock(comp: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${baseUrl}/stock/${comp}`, { 'headers': headers });
   }
-  findAllActiveStock(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${baseUrl}/activestock`, { 'headers': headers });
+  findAllActiveStock(comp: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${baseUrl}/activestock/${comp}`, { 'headers': headers });
   }
-  findAllReady(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${baseUrl}/ready`, { 'headers': headers });
+  findAllReady(comp: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${baseUrl}/ready/${comp}`, { 'headers': headers });
   }
-  findAllFGStock(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${baseUrl}/fgready`, { 'headers': headers });
+  findAllFGStock(comp: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${baseUrl}/fgready/${comp}`, { 'headers': headers });
   }
-  findAllRMStock(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${baseUrl}/rmready`, { 'headers': headers });
+  findAllRMStock(comp: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${baseUrl}/rmready/${comp}`, { 'headers': headers });
   }
-  findAllRMTrue(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${baseUrl}/rmtrue`, { 'headers': headers });
+  findAllRMTrue(comp: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${baseUrl}/rmtrue/${comp}`, { 'headers': headers });
   }
-  findAllRM(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${baseUrl}/rm`, { 'headers': headers });
+  findAllRM(comp: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${baseUrl}/rm/${comp}`, { 'headers': headers });
   }
-  findAllPOReady(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${baseUrl}/poready`, { 'headers': headers });
+  findAllPOReady(comp: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${baseUrl}/poready/${comp}`, { 'headers': headers });
+  }
+  findAllSOReady(comp: any): Observable<Product[]> {
+    return this.http.get<Product[]>(`${baseUrl}/soready/${comp}`, { 'headers': headers });
   }
   findByDesc(name: any): Observable<Product[]> {
     return this.http.get<Product[]>(`${baseUrl}?name=${name}`, { 'headers': headers });
+  }
+  getCostComp(prod: any, comp: any): Observable<any> {
+    return this.http.get(`${baseUrl}/costcomp/${prod}/${comp}`, { 'headers': headers });
   }
 }

@@ -192,13 +192,13 @@
       </ng-container>
       <ng-container matColumnDef="oriqty">
         <td class="td-style text-right pr-1" fxFlex="15%" mat-cell *matCellDef="let datas">
-          <span *ngIf="!new && datas.oriqin">{{datas.oriqin | number}}</span>
-          <span *ngIf="!new && datas.oriqout">{{datas.oriqout | number}}</span>
+          <span *ngIf="!new && datas.oriqin > 0">{{datas.oriqin | number}}</span>
+          <span *ngIf="!new && datas.oriqout > 0">{{datas.oriqout | number}}</span>
         </td>
       </ng-container>
       <ng-container matColumnDef="oriuom">
         <td class="td-style text-right pr-1" fxFlex="15%" mat-cell *matCellDef="let datas">
-          <span *ngIf="!new">{{datas.oriuoms.uom_name}}</span>
+          <span *ngIf="!new && datas.oriuoms">{{datas.oriuoms.uom_name}}</span>
         </td>
       </ng-container>
 

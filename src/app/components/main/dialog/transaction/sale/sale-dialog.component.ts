@@ -151,7 +151,7 @@ export class SaleDialogComponent implements OnInit {
         this.warehouses = datawh;
         this.warehouseString = datawh[0].id;
       });
-    this.productService.findAllPOReady()
+    this.productService.findAllActive(this.globals.companyid)
       .subscribe(dataProd => {
         this.products = dataProd;
       });
@@ -188,7 +188,6 @@ export class SaleDialogComponent implements OnInit {
   retrieveSODetail(): void {
     this.saledetailService.getBySOId(this.data)
     .subscribe(SOD => {
-      console.log(SOD);
       if(this.datas[0].products=='') this.datas.splice(0,1);
       for(let x=0;x<SOD.length;x++){
         this.totalqty = Number(this.totalqty) + Number(SOD[x].qty) ?? 0;
@@ -468,28 +467,29 @@ export class SaleDialogComponent implements OnInit {
       this.datas[x].qty_rec = this.datas[x].qty - this.datas[x].qty_done;
     }
     this.saledetailService.updateSendAll(
-      this.globals.userid, this.customerString, this.warehouseString, this.datdate, this.datas)
+      this.globals.userid, this.customerString, this.warehouseString, this.datdate, 
+      this.globals.companyid, this.datas)
       .subscribe(res => {
         this.closeBackDialog();
       })
   }
 
   openSendPartial() {
-    /*const dialog = this.dialog.open(ReceivepartDialogComponent, {
+    const dialog = this.dialog.open(SmpartDialogComponent, {
       width: '90vw',
       height: '80%',
       disableClose: true,
-      data: this.saleHeader
+      data: ["sale", this.saleHeader]
     }).afterClosed().subscribe(result => {
       if(result){
-        console.log(result);
-        this.saledetailService.updateReceiveAll(
-          this.globals.userid, this.customerString, result[0].warehouse, result[0].date, result)
+        this.saledetailService.updateSendAll(
+          this.globals.userid, this.customerString, result[0].warehouse, result[0].date,
+          this.globals.companyid, result)
             .subscribe(res => {
               this.closeBackDialog();
             })
       }
-    });*/
+    });
   }
 
   startInvoice() {
@@ -497,7 +497,7 @@ export class SaleDialogComponent implements OnInit {
       width: '90vw',
       height: '80%',
       disableClose: true,
-      data: this.saleHeader
+      data: ["sale", this.saleHeader]
     }).afterClosed().subscribe(result => {
       this.closeBackDialog();
     });

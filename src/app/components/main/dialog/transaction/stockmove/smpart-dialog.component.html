@@ -1,7 +1,7 @@
 <div class="dialog-container submit-form flex flex-col justify-between">
   <div class="w-100 overflow-y-scroll">
     <div class="flex flex-row justify-between items-center">
-      <span class="title">Terima Sebagian {{purchaseid}}</span>
+      <span class="title">Terima Sebagian {{transacid}}</span>
       <button class="text-danger p-1 mb-3" mat-button (click)="closeDialog()">X</button>
     </div>
 
@@ -33,8 +33,8 @@
     <mat-table #table [dataSource]="dataSource" class="mat-table">
       <ng-container matColumnDef="product">
         <td class="td-style" fxFlex="50%" mat-cell *matCellDef="let datas">
-          <span *ngIf="datas.purchase_id">{{datas.products.name}}</span>
-          <span *ngIf="!datas.purchase_id">{{datas.product}}</span>
+          <span *ngIf="datas">{{datas.products.name}}</span>
+          <span *ngIf="!datas">{{datas.product}}</span>
         </td>
       </ng-container>
       <ng-container matColumnDef="qty">
@@ -44,7 +44,7 @@
       </ng-container>
       <ng-container matColumnDef="qty_done">
         <td class="td-style text-right" fxFlex="25%" mat-cell *matCellDef="let datas; let index = index">
-          <input type="number" class="input pl-2" [value]="datas.qty_rec" [(ngModel)]="datas.qty_rec" (keyup)="editPO(dataSource.filteredData.indexOf(datas))"/>
+          <input type="number" class="input pl-2" [value]="datas.qty_rec" [(ngModel)]="datas.qty_rec" (keyup)="edit(dataSource.filteredData.indexOf(datas))"/>
         </td>
       </ng-container>
 

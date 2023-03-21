@@ -110,6 +110,7 @@ export class SMDetailDialogComponent implements OnInit {
       }else{
         this.stockmoveService.getTransId(this.data.trans_id)
           .subscribe(smti => {
+            console.log(smti);
             this.datas = smti;
             this.dataSource.data = this.datas;
             this.checkInterface();
@@ -151,7 +152,7 @@ export class SMDetailDialogComponent implements OnInit {
   }
 
   retrieveData(): void {
-    this.productService.findAllActive()
+    this.productService.findAllActive(this.globals.companyid)
       .subscribe(prod => {
         this.products = prod;
       })

@@ -225,14 +225,14 @@ export class PosComponent {
     });
     
     if(this.globals.cost_general){
-      this.productService.findAllActive()
+      this.productService.findAllActive(this.globals.companyid)
         .subscribe(prod => {
           this.products = prod;
           this.oriprods = this.products;
           this.loaded = false;
       });
     }else{
-      this.productService.findAllReady()
+      this.productService.findAllReady(this.globals.companyid)
         .subscribe(prod => {
           this.products = prod;
           this.oriprods = this.products;

@@ -31,8 +31,8 @@ export class SaledetailService {
   update(id: any, data: any): Observable<any> {
     return this.http.put(`${baseUrl}/${id}`, data, { 'headers': headers });
   }
-  updateSendAll(id: any, partner: any, wh: any, date: any, data: any): Observable<any> {
-    return this.http.put(`${baseUrl}/sendAll/${id}/${partner}/${wh}/${date}`, data, { 'headers': headers });
+  updateSendAll(id: any, partner: any, wh: any, date: any, comp: any, data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/sendAll/${id}/${partner}/${wh}/${date}/${comp}`, data, { 'headers': headers });
   }
   delete(id: any): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`, { 'headers': headers });
