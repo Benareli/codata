@@ -18,7 +18,7 @@ import { UploadDialogComponent } from '../../dialog/upload/upload-dialog.compone
   styleUrls: ['../../../../style/main.sass']
 })
 export class BrandComponent implements OnInit {
-  brands: Brand[];
+  brands!: Brand[];
   isIU = false;
   isIM = false;
   isAdm = false;
@@ -30,8 +30,8 @@ export class BrandComponent implements OnInit {
     active: true
   };
   
-  columns: Columns[];
-  configuration: Config;
+  columns!: Columns[];
+  configuration!: Config;
  
   constructor(
     private router: Router,

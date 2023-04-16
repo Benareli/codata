@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Product } from 'src/app/models/masterdata/product.model';
@@ -21,7 +22,10 @@ import { StockmoveService } from 'src/app/services/transaction/stockmove.service
 import { JournalService } from 'src/app/services/accounting/journal.service';
 
 import { SmpartDialogComponent } from '../stockmove/smpart-dialog.component';
-import { BillcreateDialogComponent } from '../../accounting/bill/aparcreate-dialog.component';
+import { AparcreateDialogComponent } from '../../accounting/journal/aparcreate-dialog.component';
+import { TransacStockDialogComponent } from '../connect/transac-stock-dialog.component';
+import { TransacAccDialogComponent } from '../connect/transac-acc-dialog.component';
+import { PrintComponent } from '../../../print/print.component';
 
 @Component({
   selector: 'app-purchase-dialog',
@@ -38,7 +42,7 @@ export class PurchaseDialogComponent implements OnInit {
   isAdm = false;
   isRes = false;
   draft?: boolean = false;
-  term: string;
+  term!: string;
   openDropDown = false;
 
   partners?: Partner[];
@@ -75,6 +79,9 @@ export class PurchaseDialogComponent implements OnInit {
   prefixes?: string;
   transid?: string;
 
+  printPO?: any;
+  printPOdet?: any;
+
   //Table
   displayedColumns: string[] = 
   ['product', 'qty', 'qty_done', 'uom', 'price_unit', 'discount', 'tax', 'subtotal', 'action'];
@@ -103,6 +110,7 @@ export class PurchaseDialogComponent implements OnInit {
     private uomService: UomService,
     private stockmoveService: StockmoveService,
     private journalService: JournalService,
+    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -151,7 +159,8 @@ export class PurchaseDialogComponent implements OnInit {
         this.warehouses = datawh;
         this.warehouseString = datawh[0].id;
       });
-    this.productService.findAllPOReady(this.globals.companyid)
+    //this.productService.findAllPOReady(this.cookieService.get('company'))
+    this.productService.findAllPOReady(1)
       .subscribe(dataProd => {
         this.products = dataProd;
       });
@@ -164,6 +173,7 @@ export class PurchaseDialogComponent implements OnInit {
   retrievePO(): void {
     this.purchaseService.get(this.data)
       .subscribe(dataPO => {
+        this.printPO = dataPO;
         this.purchaseid = dataPO.purchase_id;
         this.supplierString = dataPO.partner_id;
         this.warehouseString = dataPO.warehouse_id;
@@ -195,6 +205,7 @@ export class PurchaseDialogComponent implements OnInit {
           this.datas.push(POD[x]);
           this.dataSource.data = this.datas;
         }
+        this.printPOdet = this.datas;
         this.persenqty = Number(this.totaldone) / Number(this.totalqty) * 100;
       })
   }
@@ -401,7 +412,8 @@ export class PurchaseDialogComponent implements OnInit {
       paid: 0,
       delivery_state: 0,
       open: true,
-      company: this.globals.companyid
+      //company: this.cookieService.get('company')
+      company: 1
     };
     this.purchaseService.create(purcHeaderData)
       .subscribe({
@@ -448,7 +460,8 @@ export class PurchaseDialogComponent implements OnInit {
         warehouse: this.warehouseString,
         date: this.datdate,
         user: this.globals.userid,
-        company: this.globals.companyid
+        //company: this.cookieService.get('company')
+        company: 1
       };
       this.purchasedetailService.create(purchaseDetail)
         .subscribe({
@@ -466,7 +479,8 @@ export class PurchaseDialogComponent implements OnInit {
     }
     this.purchasedetailService.updateReceiveAll(
       this.globals.userid, this.supplierString, this.warehouseString, this.datdate, 
-      this.globals.companyid, this.datas)
+      1, this.datas)
+      //this.cookieService.get('company'), this.datas)
       .subscribe(res => {
         this.closeBackDialog();
       })
@@ -482,7 +496,8 @@ export class PurchaseDialogComponent implements OnInit {
       if(result){
         this.purchasedetailService.updateReceiveAll(
           this.globals.userid, this.supplierString, result[0].warehouse, result[0].date,
-          this.globals.companyid, result)
+          1, result)
+          //this.cookieService.get('company'), result)
             .subscribe(res => {
               this.closeBackDialog();
             })
@@ -491,11 +506,44 @@ export class PurchaseDialogComponent implements OnInit {
   }
 
   startInvoice() {
-    const dialog = this.dialog.open(BillcreateDialogComponent, {
+    const dialog = this.dialog.open(AparcreateDialogComponent, {
       width: '90vw',
       height: '80%',
       disableClose: true,
       data: ["purchase", this.purchaseHeader]
+    }).afterClosed().subscribe(result => {
+      this.closeBackDialog();
+    });
+  }
+
+  openTransacStock() {
+    const dialog = this.dialog.open(TransacStockDialogComponent, {
+      width: '90vw',
+      height: '80%',
+      disableClose: true,
+      data: ["purchase", this.purchaseid]
+    }).afterClosed().subscribe(result => {
+      this.closeBackDialog();
+    });
+  }
+
+  openTransacAcc() {
+    const dialog = this.dialog.open(TransacAccDialogComponent, {
+      width: '90vw',
+      height: '80%',
+      disableClose: true,
+      data: ["purchase", this.purchaseid]
+    }).afterClosed().subscribe(result => {
+      this.closeBackDialog();
+    });
+  }
+
+  openPrint() {
+    const dialog = this.dialog.open(PrintComponent, {
+      width: '90vw',
+      height: '80%',
+      disableClose: true,
+      data: ["purchase", this.printPO, this.printPOdet]
     }).afterClosed().subscribe(result => {
       this.closeBackDialog();
     });

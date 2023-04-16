@@ -28,8 +28,8 @@ export class BomComponent implements OnInit {
   uom?: Uom[];
   bomes: any;
 
-  columns: Columns[];
-  configuration: Config;
+  columns!: Columns[];
+  configuration!: Config;
 
   constructor(
     private router: Router,

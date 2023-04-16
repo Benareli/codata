@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Uom } from 'src/app/models/masterdata/uom.model';
@@ -56,6 +57,7 @@ export class StockMoveDialogComponent implements OnInit {
     private uomService: UomService,
     private warehouseService: WarehouseService,
     private stockmoveService: StockmoveService,
+    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -127,7 +129,8 @@ export class StockMoveDialogComponent implements OnInit {
       cost: this.datcost ?? 0,
       uom_id: Number(this.datuom),
       date: new Date(),
-      company_id: this.globals.companyid,
+      //company_id: this.cookieService.get('company'),
+      company_id: 1,
       meth: this.globals.cost_general,
     };
     this.stockmoveService.create(dataSM)

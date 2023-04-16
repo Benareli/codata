@@ -1,0 +1,33 @@
+<div class="dialog-container submit-form flex flex-col justify-start">
+    <div class="w-100 overflow-y-scroll">
+      <div class="flex flex-row justify-between items-center">
+        <span class="title">{{transacid}} </span>
+        <button class="text-danger p-1 mb-3" mat-button (click)="closeDialog()">X</button>
+      </div>
+    </div>
+  
+    <div>
+      <ngx-table
+        [configuration]="configuration"
+        [data]="journals"
+        [columns]="columns"
+        (event)="openDialog($event)">
+        <ng-template let-row let-index="index">
+          <td (click)="openDialog(row.id)">
+            {{row.name}}
+          </td>
+          <td (click)="openDialog(row.id)">
+            {{row.date | date}}
+          </td>
+          <td (click)="openDialog(row.id)">
+            {{row.req}}
+          </td>
+          <td>
+            <button>
+              
+            </button>
+          </td>
+        </ng-template>
+      </ngx-table>
+    </div>
+  </div>

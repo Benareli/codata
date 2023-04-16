@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+//import { CookieService } from 'ngx-cookie-service';
 
 import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
@@ -25,7 +26,7 @@ import { UploadDialogComponent } from '../../dialog/upload/upload-dialog.compone
 })
 export class ProductComponent implements OnInit {
   loaded: boolean = false;
-  products: Product[];
+  products!: Product[];
   productcats?: Productcat[];
   brands?: Brand[];
   uom?: Uom[];
@@ -38,12 +39,12 @@ export class ProductComponent implements OnInit {
   dattoggle?: string = "true";
   toggle?: boolean = true;
 
-  columns: Columns[];
-  configuration: Config;
+  columns!: Columns[];
+  configuration!: Config;
 
-  cols: number;
-  rowHeight: string;
-  term: string;
+  cols!: number;
+  rowHeight!: string;
+  term!: string;
 
   baseUrl = BaseURL.BASE_URL;
 
@@ -61,6 +62,7 @@ export class ProductComponent implements OnInit {
     private productService: ProductService,
     private productCatService: ProductCatService,
     private brandService: BrandService,
+    //private cookieService: CookieService,
     private dialog: MatDialog
   ) {}
 
@@ -83,9 +85,10 @@ export class ProductComponent implements OnInit {
 
   retrieveProduct(): void {
     this.loaded = true;
-    this.productService.getAll(this.globals.companyid)
+    //this.productService.getAll(this.cookieService.get('company'))
+    this.productService.getAll(1)
       .subscribe(prod => {
-        console.log(prod);
+        console.log(prod)
         if(this.isIM || this.isAdm){
           this.products = prod;
         }else{

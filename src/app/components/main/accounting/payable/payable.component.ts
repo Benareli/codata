@@ -16,15 +16,15 @@ import { BillDialogComponent } from '../../dialog/accounting/bill/bill-dialog.co
   styleUrls: ['../../../../style/main.sass']
 })
 export class PayableComponent implements OnInit {
-  journals: Journal[];
+  journals!: Journal[];
   isAccU = false;
   isAccM = false;
   isAdm = false;
   isShow = false;
   datas?: any;
   
-  columns: Columns[];
-  configuration: Config;
+  columns!: Columns[];
+  configuration!: Config;
 
   constructor(
     private router: Router,

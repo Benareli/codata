@@ -50,6 +50,9 @@ import { CompanyComponent } from './components/settings/company/company.componen
 import { ProfileComponent } from './components/settings/profile/profile.component';
 import { SettingComponent } from './components/settings/setting/setting.component';
 
+//Print
+import { PrintComponent } from './components/main/print/print.component';
+
 //Masterdata
 import { BomComponent } from './components/main/masterdata/bom/bom.component';
 import { BrandComponent } from './components/main/masterdata/brand/brand.component';
@@ -61,10 +64,8 @@ import { WarehouseComponent } from './components/main/masterdata/warehouse/wareh
 
 //Transaction - Purchase
 import { PurchaseComponent } from './components/main/transaction/purchase/purchase.component';
-
 //Transaction - Sale
 import { SaleComponent } from './components/main/transaction/sale/sale.component';
-
 //Transaction - Stock
 import { StockmoveComponent } from './components/main/transaction/stockmove/stockmove.component';
 
@@ -82,22 +83,26 @@ import { ProductcatDialogComponent } from './components/main/dialog/masterdata/p
 import { WarehouseDialogComponent } from './components/main/dialog/masterdata/warehouse-dialog.component';
 
 //Transaction - Purchase
-import { PurchaseDialogComponent } from './components/main/dialog/transaction/purchase/purchase-dialog.component';
-
+import { PurchaseDialogComponent } from './components/main/dialog/transaction/purchase/purchase-dialog.component'
 //Transaction - Sale
 import { SaleDialogComponent } from './components/main/dialog/transaction/sale/sale-dialog.component';
-
 //Transaction - Stock
 import { SMDetailDialogComponent } from './components/main/dialog/transaction/stockmove/sm-detail-dialog.component';
 import { SmpartDialogComponent } from './components/main/dialog/transaction/stockmove/smpart-dialog.component';
 import { StockMoveDialogComponent } from './components/main/dialog/transaction/stockmove/stockmove-dialog.component';
+//Transaction - Connect
+import { TransacStockDialogComponent } from './components/main/dialog/transaction/connect/transac-stock-dialog.component';
+import { TransacAccDialogComponent } from './components/main/dialog/transaction/connect/transac-acc-dialog.component';
 
 //Accounting - Bill
 import { BillDialogComponent } from './components/main/dialog/accounting/bill/bill-dialog.component';
-import { BillcreateDialogComponent } from './components/main/dialog/accounting/bill/aparcreate-dialog.component';
-
+//Accounting - Invoice
+import { InvoiceDialogComponent } from './components/main/dialog/accounting/invoice/invoice-dialog.component';
+//Accounting - Payment
+import { PaymentDialogComponent } from './components/main/dialog/accounting/payment/payment-dialog.component';
 //Accounting - Journal
 import { EntryDialogComponent } from './components/main/dialog/accounting/journal/entry-dialog.component';
+import { AparcreateDialogComponent } from './components/main/dialog/accounting/journal/aparcreate-dialog.component';
 
 //Upload
 import { UploadDialogComponent } from './components/main/dialog/upload/upload-dialog.component';
@@ -109,14 +114,11 @@ import { HelpdeskComponent } from './components/main/helpdesk/helpdesk.component
 import { PosReportComponent } from './components/main/report/pos-report/pos-report.component';
 
 import { PosdetailDialogComponent } from './components/main/dialog/posdetail-dialog.component';
-import { PaymentDialogComponent } from './components/main/dialog/payment-dialog.component';
 import { PrintposDialogComponent } from './components/main/dialog/printpos-dialog.component';
 import { UserroleDialogComponent } from './components/main/dialog/userrole-dialog.component';
 import { TaxDialogComponent } from './components/main/dialog/tax-dialog.component';
 import { StoreDialogComponent } from './components/main/dialog/store-dialog.component';
 import { BomDialogComponent } from './components/main/dialog/bom-dialog.component';
-import { InvoicecreateDialogComponent } from './components/main/dialog/invoicecreate-dialog.component';
-import { InvoiceDialogComponent } from './components/main/dialog/invoice-dialog.component';
 import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.component';
 
 @NgModule({
@@ -132,6 +134,9 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     CompanyComponent,
     ProfileComponent,
     SettingComponent,
+
+    //Print
+    PrintComponent,
 
     //Masterdata
     BomComponent,  
@@ -167,19 +172,26 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     SMDetailDialogComponent,
     SmpartDialogComponent,
     StockMoveDialogComponent,
-
     //Transaction - Sale
     SaleDialogComponent,
-
     //Transaction - Purchase
     PurchaseDialogComponent,
+    //Transaction - Connect
+    TransacStockDialogComponent,
+    TransacAccDialogComponent,
 
     //Accounting - Bill
     BillDialogComponent,
-    BillcreateDialogComponent,
+
+    //Accounting - Invoice
+    InvoiceDialogComponent,
+
+    //Accounting - Payment
+    PaymentDialogComponent,
 
     //Accounting - Journal
     EntryDialogComponent,
+    AparcreateDialogComponent,
 
     //Upload
     UploadDialogComponent,
@@ -192,15 +204,15 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     PosReportComponent,
     WarehouseDialogComponent,
     PosdetailDialogComponent,
-    PaymentDialogComponent,
     PrintposDialogComponent,
     UserroleDialogComponent,
     TaxDialogComponent,
     StoreDialogComponent,
     BomDialogComponent,
-    InvoicecreateDialogComponent,
-    InvoiceDialogComponent,
     TicketDialogComponent,
+    TicketDialogComponent,
+    
+    TicketDialogComponent, 
     
   ],
   imports: [

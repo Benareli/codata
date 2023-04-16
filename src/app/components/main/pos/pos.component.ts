@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxPrintModule } from 'ngx-print';
 
 import { PosdetailDialogComponent } from '../dialog/posdetail-dialog.component';
-import { PaymentDialogComponent } from '../dialog/payment-dialog.component';
+import { PaymentDialogComponent } from '../dialog/accounting/payment/payment-dialog.component';
 import { PrintposDialogComponent } from '../dialog/printpos-dialog.component';
 
 import { Id } from 'src/app/models/settings/id.model';

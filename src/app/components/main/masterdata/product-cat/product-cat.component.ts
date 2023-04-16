@@ -19,7 +19,7 @@ import { UploadDialogComponent } from '../../dialog/upload/upload-dialog.compone
   styleUrls: ['../../../../style/main.sass']
 })
 export class ProductCatComponent implements OnInit {
-  productcats: Productcat[];
+  productcats!: Productcat[];
   isIU = false;
   isIM = false;
   isAdm = false;
@@ -32,8 +32,8 @@ export class ProductCatComponent implements OnInit {
     active: true
   };
 
-  columns: Columns[];
-  configuration: Config;
+  columns!: Columns[];
+  configuration!: Config;
  
   constructor(
     private router: Router,

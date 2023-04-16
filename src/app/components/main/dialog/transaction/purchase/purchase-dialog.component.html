@@ -3,9 +3,10 @@
   <div class="mb-1 flex flex-row justify-between items-center">
     <div class="w-100 flex flex-row justify-between">
       <span class="title border-primary">{{purchaseid}}</span>
+      <button (click)="openPrint()">PRINT</button>
       <div class="flex flex-col flex-md-row items-end items-md-start">
-        <span *ngIf="data && !draft" class="order-2 order-md-1 mr-md-3 w-3rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1">{{smtotal | number}} <i class="fa fa-truck"></i></span>
-        <span *ngIf="data && !draft" class="order-3 order-md-2 mr-md-3 w-3rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1">{{billtotal | number}} <i class="fa fa-file-text"></i></span>
+        <button *ngIf="data && !draft" class="order-2 order-md-1 mr-md-3 w-3rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1" (click)="openTransacStock()">{{smtotal | number}} <i class="fa fa-truck"></i></button>
+        <button *ngIf="data && !draft" class="order-3 order-md-2 mr-md-3 w-3rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1" (click)="openTransacAcc()">{{billtotal | number}} <i class="fa fa-file-text"></i></button>
         <span class="order-2 order-md-3 btn btn-secondary text-13 mr-3 cursor-default" *ngIf="data && draft" (click)="validate()">Validate</span>
         <button class="order-1 order-md-4 text-danger text-13 p-1" mat-button (click)="closeDialog()">X</button>
       </div>
@@ -58,6 +59,8 @@
       <td class="th-style text-right" fxFlex="16%">Subtotal</td>
       <td class="th-style" fxFlex="5%"></td>
     </tr>
+  </table>
+  <table class="w-100">
     <tr *ngIf="!lock" class="border-y-2 border-solid border-secondary py-1">
       <td class="td-style pl-2" fxFlex="35%">
         <input (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/>
@@ -93,7 +96,7 @@
       </td>
     </tr>
     <tr>
-      <td colspan="9" fxFlex="100%">
+      <td colspan="99" fxFlex="100%">
         <ul class="dropdown" *ngIf="openDropDown">
           <li class="list-group-item category"
               *ngFor="let product of products | filter:term; let i1 = index"
@@ -229,7 +232,7 @@
 
 <div class="w-100 flex flex-row justify-between items-center">
   <div class="w-90">
-    <button mat-button [disabled]="isRes" *ngIf="!this.lock" class="btn btn-primary w-90 py-2" (click)="startPO()">Simpan</button>
+    <button mat-button [disabled]="isRes" *ngIf="!this.lock" class="btn btn-secondary w-90 py-2" (click)="startPO()">Simpan</button>
     <button mat-button [disabled]="isRes" *ngIf="this.lock" class="btn btn-primary w-90 py-2 bg-white text-primary" (click)="editPO()">{{edit_text}}</button>
   </div>
   <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>

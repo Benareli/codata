@@ -17,7 +17,7 @@ import { UomcatService } from 'src/app/services/masterdata/uomcat.service';
 })
 export class UomComponent implements OnInit {
   uomcats?: Uomcat[];
-  uoms: Uom[];
+  uoms!: Uom[];
   datcat?: string;
   isIU = false;
   isIM = false;
@@ -31,8 +31,8 @@ export class UomComponent implements OnInit {
     ratio: 0,
   };
 
-  columns: Columns[];
-  configuration: Config;
+  columns!: Columns[];
+  configuration!: Config;
 
   constructor(
     private router: Router,

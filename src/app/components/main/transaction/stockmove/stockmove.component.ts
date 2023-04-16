@@ -18,16 +18,16 @@ import { SMDetailDialogComponent } from '../../dialog/transaction/stockmove/sm-d
   styleUrls: ['../../../../style/main.sass']
 })
 export class StockmoveComponent implements OnInit {
-  stockmoves: Stockmove[];
-  stockrequests: Stockrequest[];
+  stockmoves!: Stockmove[];
+  stockrequests!: Stockrequest[];
   isIU = false;
   isIM = false;
   isAdm = false;
   isShow = false;
-  datas: Stockmove[];
+  datas!: Stockmove[];
   
-  columns: Columns[];
-  configuration: Config;
+  columns!: Columns[];
+  configuration!: Config;
 
   constructor(
     private router: Router,

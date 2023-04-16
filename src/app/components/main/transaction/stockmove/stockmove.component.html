@@ -2,9 +2,9 @@
   <div class="pl-2 pt-1">
     <div class="btn-quick btn-quick-left" (click)="addStockmove()">+ Add</div>
   </div>
-	<div class="pr-2 pt-1">
+  <div class="pr-2 pt-1">
     <div class="btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</div>
-	</div>
+  </div>
 </div>
 
 <div class="mx-3 mt-2">
@@ -23,8 +23,8 @@
         {{row.date | date}}
       </td>
       <td (click)="openDialog(row.id)">
-        <span *ngIf="row.req" style="background: #A569BD; color: white; border-radius: 3pt; padding: 3pt;">Draft</span>
-        <span *ngIf="!row.req" style="background: #28B463; color: white; border-radius: 3pt; padding: 3pt;">Posted</span>
+        <span *ngIf="row.req" class="text-warning text-shadow">Draft</span>
+        <span *ngIf="!row.req" class="text-success text-shadow">Confirmed</span>
       </td>
     </ng-template>
   </ngx-table>

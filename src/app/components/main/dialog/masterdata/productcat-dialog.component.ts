@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 
@@ -40,13 +41,15 @@ export class ProductcatDialogComponent implements OnInit {
     private logService: LogService,
     private coaService: CoaService,
     private productCatService: ProductCatService,
+    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
   ngOnInit() {
     this.retrieveCoa();
     if (this.data.active == true){
-        this.productCatService.findOneAcc(this.data.id, this.globals.companyid)
+        //this.productCatService.findOneAcc(this.data.id, this.cookieService.get('company'))
+        this.productCatService.findOneAcc(this.data.id, 1)
           .subscribe(dataAcc => {
             this.revId = dataAcc.revenue_id;
             this.expId = dataAcc.cost_id;

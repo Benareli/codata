@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Journal } from 'src/app/models/accounting/journal.model';
@@ -27,10 +28,10 @@ export class EntryDialogComponent implements OnInit {
   isRes = false;
   new = false;
   jourtype?: string;
-  entrys: Entry[];
-  coas: Coa[];
+  entrys!: Entry[];
+  coas!: Coa[];
   jourtypes: any;
-  term: string;
+  term!: string;
   ph?: string = 'Ketik disini untuk cari';
   coaid?: number;
   coasel?: any;
@@ -60,6 +61,7 @@ export class EntryDialogComponent implements OnInit {
     private journalService: JournalService,
     private entryService: EntryService,
     private coaService: CoaService,
+    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -72,24 +74,10 @@ export class EntryDialogComponent implements OnInit {
     }else{
       this.journidtitle = this.data.name;
       this.journalService.get(this.data.id)
-      //this.entryService.getJournal(this.data.journal_id)
         .subscribe(entry => {
           this.entrys = entry.entrys;
           this.datdate = entry.date?.toString().split('T')[0];
           this.jourtype = entry.type;
-          /*this.columns = [
-            {key:'label', title:'Label', width: '25%'},
-            {key:'debit_id', title:'Account', width:'35%'},
-            {key:'debit', title:'Debit', width:'15%'},
-            {key:'credit', title:'Credit', orderBy:'desc', width:'15%'},
-            {key:'',title:'Quick View', width:'10%'}
-          ];
-          this.configuration = { ...DefaultConfig };
-          this.configuration.columnReorder = true;
-          this.configuration.searchEnabled = false;
-          this.configuration.headerEnabled = true;
-          this.configuration.detailsTemplate = true;
-          this.configuration.tableLayout.hover = true;*/
           this.countDebCred();
         })
     }
@@ -203,7 +191,8 @@ export class EntryDialogComponent implements OnInit {
         type: this.jourtype,
         entry: this.entrys,
         amount: this.debit,
-        company: this.globals.companyid,
+        //company: this.cookieService.get('company'),
+        company: 1,
         user: this.globals.userid
       }
       this.journalService.createJour(Jour)

@@ -15,10 +15,10 @@ import { UploadDialogComponent } from '../../dialog/upload/upload-dialog.compone
   styleUrls: ['../../../../style/main.sass']
 })
 export class PartnerComponent implements OnInit {
-  partners: Partner[];
+  partners!: Partner[];
   
-  columns: Columns[];
-  configuration: Config;
+  columns!: Columns[];
+  configuration!: Config;
  
   constructor(
     private partnerService: PartnerService,

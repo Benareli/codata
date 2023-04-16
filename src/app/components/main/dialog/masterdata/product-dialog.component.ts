@@ -5,6 +5,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Product } from 'src/app/models/masterdata/product.model';
@@ -71,7 +72,7 @@ export class ProductDialogComponent implements OnInit {
   oritaxinid?: any;
   oritaxoutid?: any;
 
-  imageData: string;
+  imageData!: string;
 
   datid?: string;
   datsku?: string;
@@ -110,8 +111,8 @@ export class ProductDialogComponent implements OnInit {
   partners?: Partner[];
   taxs?: Tax[];
   uoms?: Uom[];
-  boms: Bom[];
-  bundles: Bundle[];
+  boms!: Bom[];
+  bundles!: Bundle[];
   qop1: any;
 
   overhead?: number;
@@ -145,7 +146,7 @@ export class ProductDialogComponent implements OnInit {
   clickedRows = null; 
 
   //Upload File
-  fileName: string;
+  fileName!: string;
   selectedFiles?: FileList;
   progressInfos: any[] = [];
   message: string[] = [];
@@ -156,7 +157,7 @@ export class ProductDialogComponent implements OnInit {
   //Bundle
   bproducts?: Product[];
   currentIndex1 = -1;
-  term: string;
+  term!: string;
   ph?: string = 'Ketik disini untuk cari';
   openDropDown = false;
   bdatid?: string;
@@ -168,7 +169,7 @@ export class ProductDialogComponent implements OnInit {
   //BOM
   boproducts?: Product[];
   currentIndex2 = -1;
-  term2: string;
+  term2!: string;
   pi?: string = 'Ketik disini untuk cari';
   openDropDown2 = false;
   bodatid?: string;
@@ -179,12 +180,12 @@ export class ProductDialogComponent implements OnInit {
 
   coru: number = 0;
 
-  columnsBundle: Columns[];
-  configurationBundle: Config;
-  columnsBom: Columns[];
-  configurationBom: Config;
-  columnsQop1: Columns[];
-  configurationQop1: Config;
+  columnsBundle!: Columns[];
+  configurationBundle!: Config;
+  columnsBom!: Columns[];
+  configurationBom!: Config;
+  columnsQop1!: Columns[];
+  configurationQop1!: Config;
 
   constructor(
     public dialogRef: MatDialogRef<ProductDialogComponent>,
@@ -203,6 +204,7 @@ export class ProductDialogComponent implements OnInit {
     private stockmoveService: StockmoveService,
     private posDetailService: PosdetailService,
     private purchaseDetailService: PurchasedetailService,
+    //private cookieService: CookieService,
     private globals: Globals,
     private logService: LogService,
     private fb: FormBuilder,
@@ -314,7 +316,8 @@ export class ProductDialogComponent implements OnInit {
         }
         this.retrieveBundle();
         this.retrieveBom();
-        this.productService.getCostComp(prod.id, this.globals.companyid)
+        //this.productService.getCostComp(prod.id, this.cookieService.get('company'))
+        this.productService.getCostComp(prod.id, 1)
           .subscribe(pcost => {
             this.datcost = pcost.cost;
             this.oricost = pcost.cost;
@@ -422,7 +425,8 @@ export class ProductDialogComponent implements OnInit {
             this.easytableBundle();
           }
         })
-      this.productService.findAllFGStock(this.globals.companyid)
+      //this.productService.findAllFGStock(this.cookieService.get('company'))
+      this.productService.findAllFGStock(1)
       .subscribe(allfg => {
         this.bproducts = allfg;
       })
@@ -457,7 +461,8 @@ export class ProductDialogComponent implements OnInit {
             this.easytableBom();
           }
         })
-      this.productService.findAllRM(this.globals.companyid)
+      //this.productService.findAllRM(this.cookieService.get('company'))
+      this.productService.findAllRM(1)
         .subscribe(allrm => {
           this.boproducts = allrm;
         })
@@ -652,7 +657,8 @@ export class ProductDialogComponent implements OnInit {
       qty: this.bodatqty,
       uom: this.bodatuom,
       product: this.data,
-      company_id: this.globals.companyid
+      //company_id: this.cookieService.get('company')
+      company_id: 1
     };
     this.bomService.create(dataBom)
       .subscribe(res => {
@@ -804,7 +810,8 @@ export class ProductDialogComponent implements OnInit {
         active: this.isChecked,
         message: this.isUpdated,
         user: this.globals.userid,
-        company: this.globals.companyid,
+        //company: this.cookieService.get('company'),
+        company: 1,
       };
       this.productService.update(this.data, dataProd)
         .subscribe({
@@ -851,7 +858,8 @@ export class ProductDialogComponent implements OnInit {
         supplier: this.partnerid,
         active: this.isChecked,
         user: this.globals.userid,
-        company: this.globals.companyid,
+        //company: this.cookieService.get('company'),
+        company: 1,
       };
       this.productService.create(data)
         .subscribe({

@@ -6,7 +6,7 @@
       <div class="flex flex-col flex-md-row items-end items-md-start">
         <span *ngIf="data.lock" class="order-2 order-md-2 mr-md-3 mt-2 mt-md-0 btn btn-primary bg-success" (click)="changeLock()">Posted</span>
         <span *ngIf="!data.lock" class="order-2 order-md-2 mr-md-3 mt-2 mt-md-0 btn btn-primary bg-danger" (click)="changeLock()">Unposted</span>
-        <span *ngIf="data.lock && amountdue > 0" (click)="startPay()" class="order-3 order-md-1 mr-md-3 mt-2 mt-md-0 w-5rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1">Pay <i class="fa fa-money"></i></span>
+        <span *ngIf="data.lock" (click)="startPay()" class="order-3 order-md-1 mr-md-3 mt-2 mt-md-0 w-5rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1">Pay <i class="fa fa-money"></i><i class="fa fa-chevron-right"></i></span>
         <button class="order-1 order-md-2 text-danger p-1" mat-button (click)="closeDialog()">X</button>
       </div>
     </div>
@@ -28,7 +28,7 @@
     <div class="flex-100 flex-md-50 flex flex-row">
       <div class="flex-30">Vendor</div>
       <span class="flex-5">:</span>
-      <select class="input flex-65" [disabled]="this.lock" [(ngModel)]="supplierString">
+      <select class="input flex-65" [disabled]="this.lock" [(ngModel)]="customerString">
         <option *ngFor="let partner of partners" [value]="partner.id">
           {{ partner.name }}
         </option>
@@ -55,37 +55,37 @@
 
     <mat-table #table [dataSource]="dataSource" class="mat-table">
       <ng-container matColumnDef="label">
-        <td class="td-style" fxFlex="35%" mat-cell *matCellDef="let datas">
+        <td class="tr-style" fxFlex="35%" mat-cell *matCellDef="let datas">
           {{datas.label}}
         </td>
       </ng-container>
       <ng-container matColumnDef="qty">
-        <td class="td-style text-right pr-1" fxFlex="10%" mat-cell *matCellDef="let datas">
+        <td class="tr-style text-right pr-1" fxFlex="10%" mat-cell *matCellDef="let datas">
           {{datas.qty | number}}
         </td>
       </ng-container>
       <ng-container matColumnDef="price_unit">
-        <td class="td-style text-right pr-1" fxFlex="20%" mat-cell *matCellDef="let datas">
+        <td class="tr-style text-right pr-1" fxFlex="20%" mat-cell *matCellDef="let datas">
           {{datas.price_unit | number}}
         </td>
       </ng-container>
       <ng-container matColumnDef="discount">
-        <td class="td-style text-right pr-1" fxFlex="7%" mat-cell *matCellDef="let datas">
+        <td class="tr-style text-right pr-1" fxFlex="7%" mat-cell *matCellDef="let datas">
           {{datas.discount | number}}
         </td>
       </ng-container>
       <ng-container matColumnDef="tax">
-        <td class="td-style text-right pr-1" fxFlex="7%" mat-cell *matCellDef="let datas">
+        <td class="tr-style text-right pr-1" fxFlex="7%" mat-cell *matCellDef="let datas">
           {{datas.tax | number}}
         </td>
       </ng-container>
       <ng-container matColumnDef="subtotal">
-        <td class="td-style text-right" fxFlex="21%" mat-cell *matCellDef="let datas">
-          {{datas.debit | number}}
+        <td class="tr-style text-right" fxFlex="21%" mat-cell *matCellDef="let datas">
+          {{datas.subtotal | number}}
         </td>
       </ng-container>
 
-      <tr mat-row class="table-row" 
+      <tr mat-row class="tableRow" 
         *matRowDef="let row; columns: displayedColumns;"  
       ></tr>
     </mat-table>
@@ -98,31 +98,27 @@
             <th class="th-style text-right pr-1" fxFlex="40%">Payment</th>
           </tr>
         </table>
-        <mat-table #table [dataSource]="dataSourcePay">
+        <mat-table #table [dataSource]="dataSourcePay" class="mat-table" style="margin-top: 20pt;">
           <ng-container matColumnDef="label">
-            <td class="td-style text-left" fxFlex="40%" mat-cell *matCellDef="let datas">
-              {{datas.pay_method}}
+            <td class="tr-style text-left" fxFlex="40%" mat-cell *matCellDef="let datas">
+              {{datas.pay1method}}
             </td>
           </ng-container>
           <ng-container matColumnDef="date">
-            <td class="td-style text-left" fxFlex="20%" mat-cell *matCellDef="let datas">
+            <td class="tr-style text-left" fxFlex="20%" mat-cell *matCellDef="let datas">
               {{datas.date | date}}
             </td>
           </ng-container>
           <ng-container matColumnDef="payment">
-            <td class="td-style text-right" fxFlex="40%" mat-cell *matCellDef="let datas">
-              {{datas.payment | number}}
+            <td class="tr-style text-right" fxFlex="40%" mat-cell *matCellDef="let datas">
+              {{datas.payment1 | number}}
             </td>
           </ng-container>
 
-          <tr mat-row class="table-row" 
+           <tr mat-row class="tableRow" 
             *matRowDef="let row; columns: displayedColumnsPay;"  
           ></tr>
         </mat-table>
-        <!--<ngx-table [configuration]="configurationPay"
-          [data]="paymentx"
-          [columns]="columnsPay">
-        </ngx-table>-->
       </div>
       <div class="flex-100 flex-md-50 text-right items-end">
         <table class="w-20rem m-auto-left text-15">
@@ -141,14 +137,14 @@
             <td fxFlex="43%">Rp. {{thistax | number}}</td>
             <td fxFlex="2%"></td>
           </tr>
-          <tr class="py-1 border-y-2 border-solid border-dark">
+          <tr class="py-1 border-t-2 border-solid border-lightgray">
             <td fxFlex="50%"><b>TOTAL</b></td>
             <td fxFlex="43%"><b>Rp. {{thistotal | number}}</b></td>
             <td fxFlex="2%"></td>
           </tr>
-          <tr class="py-1 border-b-2 border-solid border-lightgray">
+          <tr class="py-1 border-t-2 border-solid border-lightgray">
             <td fxFlex="50%">Outstanding</td>
-            <td fxFlex="43%">Rp. {{amountdue | number}}</td>
+            <td fxFlex="43%">Rp. {{thistotal - payments | number}}</td>
             <td fxFlex="2%"></td>
           </tr>
         </table>

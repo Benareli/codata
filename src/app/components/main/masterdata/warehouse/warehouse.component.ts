@@ -18,7 +18,7 @@ import { UploadDialogComponent } from '../../dialog/upload/upload-dialog.compone
   styleUrls: ['../../../../style/main.sass']
 })
 export class WarehouseComponent implements OnInit {
-  warehouses: Warehouse[];
+  warehouses!: Warehouse[];
   isIU = false;
   isIM = false;
   isAdm = false;
@@ -32,8 +32,8 @@ export class WarehouseComponent implements OnInit {
     active: true
   };
   
-  columns: Columns[];
-  configuration: Config;
+  columns!: Columns[];
+  configuration!: Config;
  
   constructor(
     private router: Router,

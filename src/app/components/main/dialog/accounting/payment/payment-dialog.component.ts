@@ -1,15 +1,16 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
-import { Globals } from 'src/app/global';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DecimalPipe } from '@angular/common';
 
-import { Log } from 'src/app/models/settings/log.model';
+import { Globals } from 'src/app/global';
+
 import { LogService } from 'src/app/services/settings/log.service';
 
 @Component({
   selector: 'app-payment-dialog',
   templateUrl: './payment-dialog.component.html',
-  styleUrls: ['./dialog.component.sass']
+  styleUrls: ['../../../../../style/main.sass']
 })
 export class PaymentDialogComponent implements OnInit {
   isChecked = false;
@@ -27,7 +28,7 @@ export class PaymentDialogComponent implements OnInit {
   payment2?: string = '0';
   change?: string;
   changeNum: number=0;
-  typePay: number;
+  typePay!: number;
 
   //disc
   pay1Type: string='tunai';
@@ -38,6 +39,7 @@ export class PaymentDialogComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private globals: Globals,
     private logService: LogService,
+    private decimalPipe: DecimalPipe,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -75,16 +77,10 @@ export class PaymentDialogComponent implements OnInit {
     }
   }
 
-  pay1(): void {
-    this.pay1s = true; this.pay2s = false;
-    this.borderchange = '1px solid #000';
-    this.borderchange2 = '1px solid #eee';
-  }
-
-  pay2(): void {
-    this.pay1s = false; this.pay2s = true;
-    this.borderchange = '1px solid #eee';
-    this.borderchange2 = '1px solid #000';
+  formatNum(value: String) {
+    const cleanValue = value.replace(/[^\d.-]/g, '');
+    const numericValue = parseFloat(cleanValue);
+    return isNaN(numericValue) ? null : this.decimalPipe.transform(numericValue, '1.2-2');
   }
 
   mode2(): void {

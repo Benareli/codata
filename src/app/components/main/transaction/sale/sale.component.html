@@ -1,11 +1,11 @@
 <div class="container">
-	<div class="pl-2 pt-1">
-		<div *ngIf="isSalM || isAdm" class="btn-quick btn-quick-left" (click)="addSale()">+ Add</div>
-	</div>
+  <div class="pl-2 pt-1">
+    <div *ngIf="isSalM || isAdm" class="btn-quick btn-quick-left" (click)="addSale()">+ Add</div>
+  </div>
 
-	<div class="pr-2 pt-1">
+  <div class="pr-2 pt-1">
     <div class="btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</div>
-	</div>
+  </div>
 </div>
 
 <div class="mx-3">
@@ -39,16 +39,16 @@
         {{row.amount_total | number}}
       </td>
       <td (click)="openDialog(row.id)" class="text-right">
-        <span *ngIf="row.open" style="background: #A569BD; color: white; border-radius: 3pt; padding: 3pt;">Draft</span>
-        <span *ngIf="!row.open" style="background: #28B463; color: white; border-radius: 3pt; padding: 3pt;">Posted</span>
+        <span *ngIf="row.open" class="text-warning text-shadow">Draft</span>
+        <span *ngIf="!row.open" class="text-success text-shadow">Confirmed</span>
       </td>
       <td>
         <button
           class="save_btn"
           id="expandButton-{{ index }}"
-          (click)="onRowClickEvent($event, index, row.sale_id)">
-          <i class="fa fa-arrow-right" *ngIf="!toggledRows.has(index)"></i>
-          <i class="fa fa-arrow-down" *ngIf="toggledRows.has(index)"></i>
+          (click)="onRowClickEvent($event, index, row.id)">
+          <i class="fa fa-arrow-down" *ngIf="!toggledRows.has(index)"></i>
+          <i class="fa fa-arrow-up" *ngIf="toggledRows.has(index)"></i>
           
         </button>
       </td>

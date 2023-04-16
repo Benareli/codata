@@ -1,0 +1,97 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+<div class="w-100">
+  <div class="mb-3 flex flex-row justify-between items-center">
+    <span class="title mb-0">{{data.order_id}}</span>
+    <button class="order-1 order-md-2 text-danger p-1" mat-button (click)="closeDialog()">X</button>
+  </div>
+
+  <div class="w-100 flex flex-col flex-md-row">
+    <div class="flex-100 flex-md-50 flex flex-col">
+      <div class="flex flex-col">
+        <h4 class="font-secondary uppercase">Payment</h4>
+        <div>
+          <mat-button-toggle-group #group="matButtonToggleGroup" [(value)]="pay1Type" (change)="onPay1Change(group.value)">
+            <mat-button-toggle value="tunai" aria-label="Tunai">
+              Tunai
+            </mat-button-toggle>
+            <mat-button-toggle value="bank" aria-label="Bank">
+              Bank
+            </mat-button-toggle>
+            <mat-button-toggle value="cc" aria-label="Settlement">
+              E-Wallet/CC
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <input class="w-90 input mt-1" [(ngModel)]="payment"/>
+      </div>
+      <div class="flex flex-col mt-2" *ngIf="isPay2">
+        <h4 class="font-secondary uppercase">Payment 2</h4>
+        <div>
+          <mat-button-toggle-group #group2="matButtonToggleGroup" [(value)]="pay2Type" (change)="onPay2Change(group2.value)">
+            <mat-button-toggle value="tunai" aria-label="Tunai">
+              Tunai
+            </mat-button-toggle>
+            <mat-button-toggle value="bank" aria-label="Bank">
+              Bank
+            </mat-button-toggle>
+            <mat-button-toggle value="cc" aria-label="Settlement">
+              E-Wallet/CC
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <input class="w-90 input mt-1" [(ngModel)]="payment2"/>
+      </div>
+      <div class="font-secondary uppercase">Total</div>
+      <input class="flex-90 input" [(ngModel)]="data.total"/>
+      <div class="font-secondary uppercase">Change</div>
+      <input class="flex-90 input" [(ngModel)]="change"/>
+      <button class="btn-primary p-2 text-primary bg-white" *ngIf="data.typePay=='in'" style="width:87%" (click)="mode2()">Other Payment Method</button>
+    </div>
+
+    <div class="flex-100 flex-md-50 flex flex-col">
+      <div class="flex flex-col">
+        <div class="flex flex-row">
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark" (click)="press('1')">1</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark ml-1" (click)="press('2')">2</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark ml-1" (click)="press('3')">3</button>
+          <span class="flex-10"></span>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-secondary" (click)="press('1k')">+ 1K</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-secondary ml-1" (click)="press('2k')">+ 2K</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-secondary ml-1" (click)="press('5k')">+ 5K</button>
+        </div>
+        <div class="flex flex-row mt-1">
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark" (click)="press('4')">4</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark ml-1" (click)="press('5')">5</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark ml-1" (click)="press('6')">6</button>
+          <span class="flex-10"></span>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-secondary" (click)="press('10k')">+ 10K</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-secondary ml-1" (click)="press('20k')">+ 20K</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-secondary ml-1" (click)="press('50k')">+ 50K</button>
+        </div>
+        <div class="flex flex-row mt-1">
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark" (click)="press('7')">7</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark ml-1" (click)="press('8')">8</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark ml-1" (click)="press('9')">9</button>
+          <span class="flex-10 mr-2"></span>
+          <button class="flex-45 bg-lightgray border-radius-1 py-2 text-secondary" (click)="press('100k')">+ 100K</button>
+        </div>
+        <div class="flex flex-row mt-1">
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark" (click)="press('.')">.</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark ml-1" (click)="press('0')">0</button>
+          <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark ml-1" (click)="press('000')">000</button>
+          <span class="flex-10 mr-2"></span>
+          <button class="flex-45 bg-lightgray border-radius-1 py-2 text-primary" (click)="press('F')">FULL</button>
+        </div>
+        <div class="flex flex-row mt-1">
+          <button class="flex-100 bg-lightgray border-radius-1 py-2 text-danger" (click)="press('X')">CLEAR</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="w-100 flex flex-row justify-between items-center">
+  <button mat-button [disabled]="isRes" class="flex-100 btn btn-secondary py-2" (click)="confirm()">Save</button>
+</div>
+</div>

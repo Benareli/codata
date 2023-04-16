@@ -8,7 +8,7 @@ import { Journal } from 'src/app/models/accounting/journal.model';
 
 import { JournalService } from 'src/app/services/accounting/journal.service';
 
-import { InvoiceDialogComponent } from '../../dialog/invoice-dialog.component';
+import { InvoiceDialogComponent } from '../../dialog/accounting/invoice/invoice-dialog.component';
 
 @Component({
   selector: 'app-receivable',
@@ -16,15 +16,15 @@ import { InvoiceDialogComponent } from '../../dialog/invoice-dialog.component';
   styleUrls: ['../../../../style/main.sass']
 })
 export class ReceivableComponent implements OnInit {
-  journals: Journal[];
+  journals!: Journal[];
   isAccU = false;
   isAccM = false;
   isAdm = false;
   isShow = false;
   datas?: any;
   
-  columns: Columns[];
-  configuration: Config;
+  columns!: Columns[];
+  configuration!: Config;
 
   constructor(
     private router: Router,
@@ -55,10 +55,9 @@ export class ReceivableComponent implements OnInit {
     this.journalService.findInv()
       .subscribe(journal => {
         this.journals = Array.from(new Map(journal.reverse().map(item => [item.journal_id, item])).values());
-
         this.columns = [
-          {key:'journal_id', title:'Journal ID', orderBy:'desc', width: '20%'},
-          {key:'partner.name', title:'Partner', width:'30%'},
+          {key:'name', title:'Journal ID', orderBy:'desc', width: '20%'},
+          {key:'partners.name', title:'Partner', width:'30%'},
           {key:'amount', title:'Amount', width:'20%'},
           {key:'date', title:'Date', width:'20%'},
           {key:'lock', title:'Status', width:'10%'}
@@ -72,8 +71,11 @@ export class ReceivableComponent implements OnInit {
   openDialog($event: { event: string; value: any }) {
     if($event.event == "onClick"){
       const dialog = this.dialog.open(InvoiceDialogComponent, {
-        width: '98%',
-        height: '90%',
+        maxWidth: '98vw',
+        maxHeight: '98vh',
+        height: '100%',
+        width: '100%',
+        panelClass: 'full-screen-modal',
         disableClose: true,
         data: $event.value.row
       }).afterClosed().subscribe(result => {

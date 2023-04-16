@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Stockmove } from 'src/app/models/transaction/stockmove.model';
@@ -31,15 +32,15 @@ export class SMDetailDialogComponent implements OnInit {
   lock = false;
   new = false;
   request = false;
-  in: boolean;
-  out: boolean;
+  in!: boolean;
+  out!: boolean;
   stockmoves?: Stockmove[];
-  products: Product[];
-  warehouses: Warehouse[];
-  uoms: Uom[];
-  uomcats: Uomcat[];
+  products!: Product[];
+  warehouses!: Warehouse[];
+  uoms!: Uom[];
+  uomcats!: Uomcat[];
   uomcat: any;
-  typeTrans: string;
+  typeTrans!: string;
   fromString?: string;
   tooString?: string;
   uomString?: string;
@@ -52,10 +53,10 @@ export class SMDetailDialogComponent implements OnInit {
   datuom?: string;
   datsuom?: any;
   datcost?: number;
-  datdate: string;
-  datfrom: string;
-  datto: string;
-  term: string;
+  datdate!: string;
+  datfrom!: string;
+  datto!: string;
+  term!: string;
   ph?: string = 'Ketik disini untuk cari';
   openDropDown = false;
 
@@ -79,6 +80,7 @@ export class SMDetailDialogComponent implements OnInit {
     private productService: ProductService,
     private warehouseService: WarehouseService,
     private uomService: UomService,
+    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -96,17 +98,6 @@ export class SMDetailDialogComponent implements OnInit {
             this.checkInterface();
           })
         this.lock = false;
-        /*this.columns = [
-          {key:'product.name', title:'Product', orderBy:'asc', width: '40%'},
-          {key:'qin', title:'Qty', width:'7%'},
-          {key:'uom.uom_name', title:'Uom', width:'7%'},
-          {key:'oriqin', title:'Qty', width:'7%'},
-          {key:'uom.uom_name', title:'Uom', width:'7%'}
-        ];
-        this.configuration = { ...DefaultConfig };
-        this.configuration.columnReorder = true;
-        this.configuration.searchEnabled = false;
-        this.configuration.paginationEnabled = false;*/
       }else{
         this.stockmoveService.getTransId(this.data.trans_id)
           .subscribe(smti => {
@@ -116,17 +107,6 @@ export class SMDetailDialogComponent implements OnInit {
             this.checkInterface();
           })
         this.lock = false;
-        /*this.columns = [
-          {key:'product.name', title:'Product', orderBy:'asc', width: '40%'},
-          {key:'qin', title:'Qty', width:'7%'},
-          {key:'uom.uom_name', title:'Uom', width:'7%'},
-          {key:'oriqin', title:'Qty', width:'7%'},
-          {key:'uom.uom_name', title:'Uom', width:'7%'}
-        ];
-        this.configuration = { ...DefaultConfig };
-        this.configuration.columnReorder = true;
-        this.configuration.searchEnabled = false;
-        this.configuration.paginationEnabled = false;*/
       }
     }else{
       this.transidtitle = "New Inventory Request";
@@ -152,7 +132,8 @@ export class SMDetailDialogComponent implements OnInit {
   }
 
   retrieveData(): void {
-    this.productService.findAllActive(this.globals.companyid)
+    //this.productService.findAllActive(this.cookieService.get('company'))
+    this.productService.findAllActive(1)
       .subscribe(prod => {
         this.products = prod;
       })
@@ -244,7 +225,8 @@ export class SMDetailDialogComponent implements OnInit {
       const dataPush = {
         id: this.datid, product: this.datprod, prodid: this.datid, qty: this.datqty, qty_done: 0, 
         uom: this.uomz, uomid: this.uomString, user: this.globals.userid, from: this.fromString, 
-        to: this.tooString, type: this.typeTrans, date: this.datdate, company: this.globals.companyid,
+        //to: this.tooString, type: this.typeTrans, date: this.datdate, company: this.cookieService.get('company'),
+        to: this.tooString, type: this.typeTrans, date: this.datdate, company: 1,
         cost: this.datcost
       }
       this.datas.push(dataPush);

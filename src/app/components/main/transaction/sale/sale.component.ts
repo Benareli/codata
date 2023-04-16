@@ -25,8 +25,8 @@ import { SaleDialogComponent } from '../../dialog/transaction/sale/sale-dialog.c
 export class SaleComponent implements OnInit {
   partners?: Partner[];
   warehouses?: Warehouse[];
-  sales: Sale[];
-  saledetails: Saledetail[];
+  sales!: Sale[];
+  saledetails!: Saledetail[];
   isSalU = false;
   isSalM = false;
   isAdm = false;
@@ -35,16 +35,16 @@ export class SaleComponent implements OnInit {
   customerString?: string;
   warehouseString?: string;
 
-  columns: Columns[];
-  configuration: Config;
-  @ViewChild('table', { static: true }) table: APIDefinition;
+  columns!: Columns[];
+  configuration!: Config;
+  @ViewChild('table', { static: true }) table!: APIDefinition;
   toggledRows = new Set<number>();
   
-  nestedConfiguration: Config;
+  nestedConfiguration!: Config;
   nestedColumns: Columns[] = [
-    {key:'product.name', title:'Product', width:'50%'},
+    {key:'products.name', title:'Product', width:'50%'},
     {key:'qty', title:'Qty', width:'15%'},
-    {key:'uom.uom_name', title:'Uom', width:'15%'},
+    {key:'uoms.uom_name', title:'Uom', width:'15%'},
   ];
 
   currentIndex = -1;

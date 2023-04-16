@@ -34,15 +34,15 @@ export class WarehouseDialogComponent implements OnInit {
   currShort?: string;
   log = 0;
 
-  companyid: number;
-  companys: Company[];
-  smin: Stockmove[];
-  smout: Stockmove[];
-  whqop: Qop[];
-  columns: Columns[];
-  configuration: Config;
-  columnswh: Columns[];
-  configurationwh: Config;
+  companyid!: number;
+  companys!: Company[];
+  smin!: Stockmove[];
+  smout!: Stockmove[];
+  whqop!: Qop[];
+  columns!: Columns[];
+  configuration!: Config;
+  columnswh!: Columns[];
+  configurationwh!: Config;
 
   constructor(
     public dialogRef: MatDialogRef<WarehouseDialogComponent>,

@@ -17,20 +17,20 @@ import { EntryDialogComponent } from '../../dialog/accounting/journal/entry-dial
   styleUrls: ['../../../../style/main.sass']
 })
 export class JournalComponent implements OnInit {
-  journals: Journal[];
-  entries: string[];
+  journals!: Journal[];
+  entries!: string[];
   isAccU = false;
   isAccM = false;
   isAdm = false;
   isShow = false;
   datas?: any;
   
-  columns: Columns[];
-  configuration: Config;
-  @ViewChild('table', { static: true }) table: APIDefinition;
+  columns!: Columns[];
+  configuration!: Config;
+  @ViewChild('table', { static: true }) table!: APIDefinition;
   toggledRows = new Set<number>();
   
-  nestedConfiguration: Config;
+  nestedConfiguration!: Config;
   nestedColumns: Columns[] = [
     {key:'label', title:'Account', width:'50%'},
     {key:'debit', title:'Debit', width:'15%'},

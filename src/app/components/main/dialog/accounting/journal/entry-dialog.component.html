@@ -165,7 +165,7 @@
 <div class="w-100 flex flex-row justify-between items-center">
   <div class="w-90">
     <button mat-button *ngIf="!new" class="w-90 btn btn-primary py-2" (click)="closeDialog()">Tutup</button>
-    <button mat-button *ngIf="new" [disabled]="balance!='balance'" class="w-90 btn btn-primary py-2" (click)="saveJournal()">Simpan</button>
+    <button mat-button *ngIf="new" [disabled]="balance!='balance'" class="w-90 btn btn-secondary py-2" (click)="saveJournal()">Simpan</button>
   </div>
   <div class="w-10"><button class="text-primary p-1" [(ngModel)]="log"><mat-icon>message</mat-icon> {{log}}</button></div>
 </div>
