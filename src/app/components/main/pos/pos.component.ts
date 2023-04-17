@@ -7,7 +7,7 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { MatGridList } from '@angular/material/grid-list';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NgxPrintModule } from 'ngx-print';
+//import { NgxPrintModule } from 'ngx-print';
 
 import { PosdetailDialogComponent } from '../dialog/posdetail-dialog.component';
 import { PaymentDialogComponent } from '../dialog/accounting/payment/payment-dialog.component';

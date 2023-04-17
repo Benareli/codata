@@ -15,7 +15,7 @@ import { User2Service } from 'src/app/services/user_auth/user2.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./style/main.sass']
 })
 export class AppComponent implements OnInit, AfterViewInit{
   title = 'Codata';

@@ -1,6 +1,7 @@
 <div *ngIf="isLoggedIn">
   <mat-toolbar [style.background-color]="nav_color">
-    <div fxLayout="row" class="fullW" fxLayoutAlign="start center" *ngIf="sidenav.mode === 'over'">
+    <div class="flex flex-row w-100" *ngIf="sidenav.mode === 'over'">
+    <!-- fxLayout="row" class="fullW" fxLayoutAlign="start center"-->
       <button mat-icon-button style="color: #3f5efb; fill: #3f5efb;" (click)="sidenav.toggle()">
         <mat-icon *ngIf="!sidenav.opened">
             menu
@@ -13,16 +14,19 @@
         <span class="rute"><b>{{rute}}</b></span>
       </div>
     </div>
-    <div fxLayout="row" class="fullW" fxLayoutAlign="space-between center" *ngIf="sidenav.mode === 'side'">
-      <div fxLayout="row" fxLayoutAlign="start center">
+    <div class="flex flex-row w-100 justify-between" *ngIf="sidenav.mode === 'side'">
+    <!-- fxLayout="row" class="fullW" fxLayoutAlign="space-between center"-->
+      <div class="flex flex-row">
+      <!-- fxLayout="row" fxLayoutAlign="start center"-->
         <img src="{{baseUrl}}files/files/{{logo}}" width="45" [routerLink]="['/']">
         <span [style.color]="title_color" style="margin-left:10px;">{{ comp_name }}</span>
-        <span class="rute">Codata | <b>{{rute}}</b></span>
+        <span class="ml-2">Codata | <b>{{rute}}</b></span>
       </div>
       <div>
-        <div fxLayout="row" fxLayoutAlign="end center">
-          <a mat-button class="text-gradient" [routerLink]="'/profile'"> {{ username }} </a>
-          <a mat-button class="logout-btn text-gradient" (click)="logout()"> Log Out </a>
+        <div class="flex flex-row">
+        <!-- fxLayout="row" fxLayoutAlign="end center"-->
+          <a mat-button class="btn-primary" [routerLink]="'/profile'"> {{ username }} </a>
+          <a mat-button class="btn-primary" (click)="logout()"> Log Out </a>
         </div>
       </div>
     </div>
@@ -30,9 +34,11 @@
 
   <mat-sidenav-container class="mat-sidenav-container">
     <mat-sidenav mode="side" #sidenav="matSidenav" class="mat_sidenav">
-      <div class="fullH" fxLayout="column" fxLayoutAlign="space-between start">
+      <div class="h-100 flex flex-col justify-between">
+      <!-- fxLayout="column" fxLayoutAlign="space-between start"-->
         <div style="width: 100%;">
-          <div fxLayout="row" *ngIf="sidenav.mode === 'over'" fxLayoutAlign="start center">
+          <div class="flex flex-row" *ngIf="sidenav.mode === 'over'">
+          <!-- fxLayoutAlign="start center"-->
             <!--<img src="/assets/img/s.png" width="45" [routerLink]="['/']">-->
             <img src="{{baseUrl}}files/files/{{logo}}" width="45" [routerLink]="['/']">
             <span [style.color]="title_color" style="margin-left:10px;">{{ comp_name }}</span>

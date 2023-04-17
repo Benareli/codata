@@ -1,7 +1,7 @@
-<div fxLayout="row" fxLayoutAlign="center center" class="w-100 h-100vh justify-center" *ngIf="!isLoggedIn">
-  <mat-card class="mat-elevation-z3 mx-auto border-radius-2 px-4 py-2 text-center flex flex-col" [fxFlex.gt-sm]="30" [fxFlex.lt-md]="60" [fxFlex.lt-sm]="98">
+<div class="flex flex-row w-100 h-100vh justify-center" *ngIf="!isLoggedIn">
+  <mat-card class="mat-elevation-z3 mx-auto border-radius-2 px-4 py-2 text-center flex flex-col">
     <mat-card-header class="mx-auto"><h1>Codata</h1></mat-card-header>
-    <mat-card-content fxLayout="column">
+    <mat-card-content class="flex flex-col">
       <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <mat-form-field class="bg-lightgray border-radius-1 w-100 mt-2">
           <mat-label class="text-16 pl-2">Username</mat-label>
