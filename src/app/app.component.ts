@@ -83,70 +83,53 @@ export class AppComponent implements OnInit, AfterViewInit{
           this.rute = 'POS';
           this.layPOS = true;
           if(this.maxWidth) this.router.navigate(['/']);
-          this.wiggle();
         }else if(event.url=="/pos-session"){
           this.rute = this.rute + 'Sesi POS';
           this.layPOS = true;
-          this.wiggle();
         }else if(event.url=="/purchase"){
           this.rute = this.rute + 'Pembelian';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/sale"){
           this.rute = this.rute + 'Penjualan';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/stockmove"){
           this.rute = this.rute + 'Pergerakan Barang';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/partner"){
           this.rute = this.rute + 'Pelanggan/Supplier';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/warehouse"){
           this.rute = this.rute + 'Gudang';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/product"){
           this.rute = this.rute + 'Produk';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/productcategory"){
           this.rute = this.rute + 'Kategori Produk';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/uom"){
           this.rute = this.rute + 'Satuan Produk';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/brand"){
           this.rute = this.rute + 'Merek';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/journal"){
           this.rute = this.rute + 'Jurnal';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/payable"){
           this.rute = this.rute + 'Hutang';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/receivable"){
           this.rute = this.rute + 'Piutang';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/bom"){
           this.rute = this.rute + 'Bahan Pembentuk';
           this.layPOS = false;
-          this.wiggle();
         }else if(event.url=="/setting"){
           this.rute = this.rute + 'Setting';
           this.layPOS = false;
-          this.wiggle();
         }else{
           this.layPOS = false;
-          this.wiggle();
         }
       }
     })
@@ -217,10 +200,10 @@ export class AppComponent implements OnInit, AfterViewInit{
       .observe(['(max-width: 800px)'])
       .subscribe((res) => {
         if (res.matches) {
-          this.maxWidth = true;
+          //this.maxWidth = true;
           this.wiggle();
         } else {
-          this.maxWidth = false;
+          //this.maxWidth = false;
           this.wiggle();
         }
       });
@@ -260,7 +243,9 @@ export class AppComponent implements OnInit, AfterViewInit{
   }
 
   wiggle() {
-    if(this.layPOS && this.maxWidth){
+    this.sidenav.mode = 'over';
+    this.sidenav.close();
+    /*if(this.layPOS && this.maxWidth){
       this.sidenav.mode = 'over';
       this.sidenav.close();
     }else if(!this.layPOS && this.maxWidth){
@@ -270,13 +255,9 @@ export class AppComponent implements OnInit, AfterViewInit{
       this.sidenav.mode = 'over';
       this.sidenav.close();
     }else if (!this.layPOS && !this.maxWidth){
-      this.sidenav.mode = 'side';
-      this.sidenav.open();
-    }
-  }
-
-  wigglewiggle() {
-    this.sidenav.mode = 'side';
-    this.sidenav.open();
+      //This should be 'side' and open
+      this.sidenav.mode = 'over';
+      this.sidenav.close();
+    }*/
   }
 }

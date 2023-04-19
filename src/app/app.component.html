@@ -1,33 +1,32 @@
 <div *ngIf="isLoggedIn">
   <mat-toolbar [style.background-color]="nav_color">
-    <div class="flex flex-row w-100" *ngIf="sidenav.mode === 'over'">
-    <!-- fxLayout="row" class="fullW" fxLayoutAlign="start center"-->
-      <button mat-icon-button style="color: #3f5efb; fill: #3f5efb;" (click)="sidenav.toggle()">
-        <mat-icon *ngIf="!sidenav.opened">
-            menu
-        </mat-icon>
-        <mat-icon *ngIf="sidenav.opened">
-            close
-        </mat-icon>
-      </button>
-      <div *ngIf="sidenav.mode === 'over'">
-        <span class="rute"><b>{{rute}}</b></span>
-      </div>
-    </div>
-    <div class="flex flex-row w-100 justify-between" *ngIf="sidenav.mode === 'side'">
-    <!-- fxLayout="row" class="fullW" fxLayoutAlign="space-between center"-->
+    <div class="flex flex-row w-100 justify-between items-center">
       <div class="flex flex-row">
-      <!-- fxLayout="row" fxLayoutAlign="start center"-->
-        <img src="{{baseUrl}}files/files/{{logo}}" width="45" [routerLink]="['/']">
-        <span [style.color]="title_color" style="margin-left:10px;">{{ comp_name }}</span>
-        <span class="ml-2">Codata | <b>{{rute}}</b></span>
-      </div>
-      <div>
-        <div class="flex flex-row">
-        <!-- fxLayout="row" fxLayoutAlign="end center"-->
-          <a mat-button class="btn-primary" [routerLink]="'/profile'"> {{ username }} </a>
-          <a mat-button class="btn-primary" (click)="logout()"> Log Out </a>
+        <button mat-icon-button style="color: #3f5efb; fill: #3f5efb;" (click)="sidenav.toggle()">
+          <mat-icon *ngIf="!sidenav.opened">
+              menu
+          </mat-icon>
+          <mat-icon *ngIf="sidenav.opened">
+              close
+          </mat-icon>
+        </button>
+        <div class="flex flex-row ml-2">
+          <img src="{{baseUrl}}files/files/{{logo}}" width="45" [routerLink]="['/']">
+          <span [style.color]="title_color" class="ml-2 mt-1">{{ comp_name }}</span>
+          <span class="ml-2 mt-1">{{rute}}</span>
         </div>
+      </div>
+      <div class="flex flex-row">
+        <!--<button mat-icon-button style="color: #3f5efb; fill: #3f5efb;" (click)="sidenav.toggle()">
+          <mat-icon *ngIf="!sidenav.opened">
+              menu
+          </mat-icon>
+          <mat-icon *ngIf="sidenav.opened">
+              close
+          </mat-icon>
+        </button>-->
+        <a mat-button class="text-gradient" [routerLink]="'/profile'"> {{ username }} </a>
+        <a mat-button class="fullW logout-btn text-gradient" (click)="logout()"> Log Out </a>
       </div>
     </div>
   </mat-toolbar>
@@ -37,12 +36,6 @@
       <div class="h-100 flex flex-col justify-between">
       <!-- fxLayout="column" fxLayoutAlign="space-between start"-->
         <div style="width: 100%;">
-          <div class="flex flex-row" *ngIf="sidenav.mode === 'over'">
-          <!-- fxLayoutAlign="start center"-->
-            <!--<img src="/assets/img/s.png" width="45" [routerLink]="['/']">-->
-            <img src="{{baseUrl}}files/files/{{logo}}" width="45" [routerLink]="['/']">
-            <span [style.color]="title_color" style="margin-left:10px;">{{ comp_name }}</span>
-          </div>
           <button mat-button class="menu-button" [routerLink]="'/pos'" *ngIf="sidenav.mode === 'side' && isLoggedIn && !pos_shift && isPOSU">
             <span>POS</span>
           </button>
@@ -54,7 +47,7 @@
             <span>Pembelian</span>
           </button>
             <button mat-button class="menu-button" [routerLink]="'/purchase'" *ngIf="isLoggedIn && isPurShow">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>PO</span>
             </button>
 
@@ -62,7 +55,7 @@
             <span>Penjualan</span>
           </button>
             <button mat-button class="menu-button" [routerLink]="'/sale'" *ngIf="isLoggedIn && isSalShow">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>SO</span>
             </button>
 
@@ -70,7 +63,7 @@
             <span>Transaksi</span>
           </button>
             <button mat-button class="menu-button" [routerLink]="'/stockmove'" *ngIf="isLoggedIn && isTransacShow">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Gerakan Barang</span>
             </button>
           
@@ -78,15 +71,15 @@
             <span>Akuntansi</span>
           </button>
             <button mat-button class="menu-button" [routerLink]="'/receivable'" *ngIf="isLoggedIn && isAccShow">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Piutang</span>
             </button>
             <button mat-button class="menu-button" [routerLink]="'/payable'" *ngIf="isLoggedIn && isAccShow">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Hutang</span>
             </button>
             <button mat-button class="menu-button" [routerLink]="'/journal'" *ngIf="isLoggedIn && isAccShow">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Jurnal</span>
             </button>
           
@@ -98,23 +91,23 @@
             <span>Katalog Produk</span>
           </button>
             <button mat-button class="menu-button" [routerLink]="'/product'" *ngIf="isLoggedIn && isProductShow">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Produk</span>
             </button>
             <button mat-button class="menu-button" [routerLink]="'/productcategory'" *ngIf="isLoggedIn && isProductShow && isIM">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Kategori</span>
             </button>
             <button mat-button class="menu-button" [routerLink]="'/brand'" *ngIf="isLoggedIn && isProductShow && isIM">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Merek</span>
             </button>
             <button mat-button class="menu-button" [routerLink]="'/uom'" *ngIf="isLoggedIn && isProductShow && isIM">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Satuan</span>
             </button>
             <button mat-button class="menu-button" [routerLink]="'/warehouse'" *ngIf="isLoggedIn && isProductShow && isIM">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Gudang</span>
             </button>
           
@@ -122,7 +115,7 @@
             <span>Produksi</span>
           </button>
             <button mat-button class="menu-button" [routerLink]="'/bom'" *ngIf="isLoggedIn && isProductionShow">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Bahan Pembentuk</span>
             </button>
 
@@ -138,23 +131,14 @@
             <span>Laporan</span>
           </button>
             <button mat-button class="menu-button" [routerLink]="'/report-pos'" *ngIf="isLoggedIn && isReportShow">
-              <mat-icon class="mat-icon">keyboard_arrow_right</mat-icon>
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>POS</span>
             </button>
         </div>
-        <div *ngIf="sidenav.mode === 'side'" style="width: 100%;">
+        <div class="flex flex-col">
           <button mat-button class="menu-button" [routerLink]="'/setting'" *ngIf="isLoggedIn && isAdm">
             <span>Setting</span>
           </button>
-        </div>
-        <div *ngIf="sidenav.mode === 'over'" class="profile2">
-          <div fxLayout="column" fxLayoutAlign="center center">
-          <button mat-button class="menu-button" [routerLink]="'/setting'" *ngIf="isLoggedIn && isAdm">
-            <span>Setting</span>
-          </button>
-          <a mat-button class="text-gradient" [routerLink]="'/profile'"> {{ username }} </a>
-          <a mat-button class="fullW logout-btn text-gradient" (click)="logout()"> Log Out </a>
-        </div>
         </div>
       </div>
 
