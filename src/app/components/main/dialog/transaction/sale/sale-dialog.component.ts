@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Product } from 'src/app/models/masterdata/product.model';
@@ -25,6 +24,7 @@ import { SmpartDialogComponent } from '../stockmove/smpart-dialog.component';
 import { AparcreateDialogComponent } from '../../accounting/journal/aparcreate-dialog.component';
 import { TransacStockDialogComponent } from '../connect/transac-stock-dialog.component';
 import { TransacAccDialogComponent } from '../connect/transac-acc-dialog.component';
+import { PrintComponent } from '../../../print/print.component';
 
 @Component({
   selector: 'app-sale-dialog',
@@ -78,6 +78,9 @@ export class SaleDialogComponent implements OnInit {
   prefixes?: string;
   transid?: string;
 
+  printSO?: any;
+  printSOdet?: any;
+
   //Table
   displayedColumns: string[] = 
   ['product', 'qty', 'qty_done', 'uom', 'price_unit', 'discount', 'tax', 'subtotal', 'action'];
@@ -106,7 +109,6 @@ export class SaleDialogComponent implements OnInit {
     private uomService: UomService,
     private stockmoveService: StockmoveService,
     private journalService: JournalService,
-    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -155,8 +157,7 @@ export class SaleDialogComponent implements OnInit {
         this.warehouses = datawh;
         this.warehouseString = datawh[0].id;
       });
-    //this.productService.findAllActive(this.cookieService.get('company'))
-    this.productService.findAllActive(1)
+    this.productService.findAllActive(localStorage.getItem("comp"))
       .subscribe(dataProd => {
         this.products = dataProd;
       });
@@ -169,6 +170,7 @@ export class SaleDialogComponent implements OnInit {
   retrieveSO(): void {
     this.saleService.get(this.data)
       .subscribe(dataSO => {
+        this.printSO = dataSO;
         this.saleid = dataSO.sale_id;
         this.customerString = dataSO.partner_id;
         this.warehouseString = dataSO.warehouse_id;
@@ -200,6 +202,7 @@ export class SaleDialogComponent implements OnInit {
         this.datas.push(SOD[x]);
         this.dataSource.data = this.datas;
       }
+      this.printSOdet = this.datas;
       this.persenqty = Number(this.totaldone) / Number(this.totalqty) * 100;
     })
   }
@@ -406,8 +409,7 @@ export class SaleDialogComponent implements OnInit {
       paid: 0,
       delivery_state: 0,
       open: true,
-      //company: this.cookieService.get('company')
-      company: 1
+      company: localStorage.getItem("comp")
     };
     this.saleService.create(salHeaderData)
       .subscribe({
@@ -454,8 +456,7 @@ export class SaleDialogComponent implements OnInit {
         warehouse: this.warehouseString,
         date: this.datdate,
         user: this.globals.userid,
-        //company: this.cookieService.get('company')
-        company: 1
+        company: localStorage.getItem("comp")
       };
       this.saledetailService.create(saleDetail)
         .subscribe({
@@ -473,8 +474,7 @@ export class SaleDialogComponent implements OnInit {
     }
     this.saledetailService.updateSendAll(
       this.globals.userid, this.customerString, this.warehouseString, this.datdate, 
-      1, this.datas)
-      //this.cookieService.get('company'), this.datas)
+      localStorage.getItem("comp"), this.datas)
       .subscribe(res => {
         this.closeBackDialog();
       })
@@ -490,8 +490,7 @@ export class SaleDialogComponent implements OnInit {
       if(result){
         this.saledetailService.updateSendAll(
           this.globals.userid, this.customerString, result[0].warehouse, result[0].date,
-          1, result)
-          //this.cookieService.get('company'), result)
+          localStorage.getItem("comp"), result)
             .subscribe(res => {
               this.closeBackDialog();
             })
@@ -529,6 +528,15 @@ export class SaleDialogComponent implements OnInit {
       data: ["sale", this.saleid]
     }).afterClosed().subscribe(result => {
       this.closeBackDialog();
+    });
+  }
+
+  openPrint() {
+    const dialog = this.dialog.open(PrintComponent, {
+      width: '90vw',
+      height: '80%',
+      disableClose: true,
+      data: ["sale", this.printSO, this.printSOdet]
     });
   }
 }

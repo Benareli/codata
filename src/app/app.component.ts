@@ -86,50 +86,66 @@ export class AppComponent implements OnInit, AfterViewInit{
         }else if(event.url=="/pos-session"){
           this.rute = this.rute + 'Sesi POS';
           this.layPOS = true;
+          this.wiggle();
         }else if(event.url=="/purchase"){
           this.rute = this.rute + 'Pembelian';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/sale"){
           this.rute = this.rute + 'Penjualan';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/stockmove"){
           this.rute = this.rute + 'Pergerakan Barang';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/partner"){
           this.rute = this.rute + 'Pelanggan/Supplier';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/warehouse"){
           this.rute = this.rute + 'Gudang';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/product"){
           this.rute = this.rute + 'Produk';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/productcategory"){
           this.rute = this.rute + 'Kategori Produk';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/uom"){
           this.rute = this.rute + 'Satuan Produk';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/brand"){
           this.rute = this.rute + 'Merek';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/journal"){
           this.rute = this.rute + 'Jurnal';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/payable"){
           this.rute = this.rute + 'Hutang';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/receivable"){
           this.rute = this.rute + 'Piutang';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/bom"){
           this.rute = this.rute + 'Bahan Pembentuk';
           this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/setting"){
           this.rute = this.rute + 'Setting';
           this.layPOS = false;
+          this.wiggle();
         }else{
           this.layPOS = false;
+          this.wiggle();
         }
       }
     })
@@ -138,7 +154,15 @@ export class AppComponent implements OnInit, AfterViewInit{
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
+      this.handleLocalStorage();
+    }
+    else{
+      this.router.navigate(['/login']);
+    }
+  }
+
+  handleLocalStorage() {
+    const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
       this.username = user.username;
       this.globals.username = user.username;
@@ -153,10 +177,10 @@ export class AppComponent implements OnInit, AfterViewInit{
             this.comp_name = company[0].comp_name;
             this.nav_color = "#" + company[0].nav_color;
             this.title_color = "#" + company[0].title_color;
+            localStorage.setItem("comp", company[0].id);
             this.globals.cost_general = company[0].cost_general;
             this.globals.companyid = company[0].id;
           }
-          console.log("company => ", this.globals.companyid);
           if(this.globals.pos_shift){
             this.user2Service.get(user.id)
               .subscribe(users => {
@@ -164,10 +188,6 @@ export class AppComponent implements OnInit, AfterViewInit{
               })
           }else{ this.checkRole(); }
         });
-    }
-    else{
-      this.router.navigate(['/login']);
-    }
   }
 
   checkRole() {

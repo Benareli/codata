@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Product } from 'src/app/models/masterdata/product.model';
@@ -110,7 +109,6 @@ export class PurchaseDialogComponent implements OnInit {
     private uomService: UomService,
     private stockmoveService: StockmoveService,
     private journalService: JournalService,
-    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -159,8 +157,7 @@ export class PurchaseDialogComponent implements OnInit {
         this.warehouses = datawh;
         this.warehouseString = datawh[0].id;
       });
-    //this.productService.findAllPOReady(this.cookieService.get('company'))
-    this.productService.findAllPOReady(1)
+    this.productService.findAllPOReady(localStorage.getItem("comp"))
       .subscribe(dataProd => {
         this.products = dataProd;
       });
@@ -412,8 +409,7 @@ export class PurchaseDialogComponent implements OnInit {
       paid: 0,
       delivery_state: 0,
       open: true,
-      //company: this.cookieService.get('company')
-      company: 1
+      company: localStorage.getItem("comp")
     };
     this.purchaseService.create(purcHeaderData)
       .subscribe({
@@ -460,8 +456,7 @@ export class PurchaseDialogComponent implements OnInit {
         warehouse: this.warehouseString,
         date: this.datdate,
         user: this.globals.userid,
-        //company: this.cookieService.get('company')
-        company: 1
+        company: localStorage.getItem("comp")
       };
       this.purchasedetailService.create(purchaseDetail)
         .subscribe({
@@ -479,8 +474,7 @@ export class PurchaseDialogComponent implements OnInit {
     }
     this.purchasedetailService.updateReceiveAll(
       this.globals.userid, this.supplierString, this.warehouseString, this.datdate, 
-      1, this.datas)
-      //this.cookieService.get('company'), this.datas)
+      localStorage.getItem("comp"), this.datas)
       .subscribe(res => {
         this.closeBackDialog();
       })
@@ -496,8 +490,7 @@ export class PurchaseDialogComponent implements OnInit {
       if(result){
         this.purchasedetailService.updateReceiveAll(
           this.globals.userid, this.supplierString, result[0].warehouse, result[0].date,
-          1, result)
-          //this.cookieService.get('company'), result)
+          localStorage.getItem("comp"), result)
             .subscribe(res => {
               this.closeBackDialog();
             })
@@ -544,8 +537,6 @@ export class PurchaseDialogComponent implements OnInit {
       height: '80%',
       disableClose: true,
       data: ["purchase", this.printPO, this.printPOdet]
-    }).afterClosed().subscribe(result => {
-      this.closeBackDialog();
     });
   }
 }

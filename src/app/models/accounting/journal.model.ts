@@ -16,4 +16,5 @@ export class Journal {
     entrys?: any;
     name?: any;
     amountdue?: number;
+    companys?: any;
 }

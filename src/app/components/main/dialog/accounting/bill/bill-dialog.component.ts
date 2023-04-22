@@ -14,6 +14,7 @@ import { PaymentService } from 'src/app/services/accounting/payment.service';
 import { IdService } from 'src/app/services/settings/id.service';
 
 import { PaymentDialogComponent } from '../payment/payment-dialog.component';
+import { PrintComponent } from '../../../print/print.component';
 
 @Component({
   selector: 'app-bill-dialog',
@@ -56,6 +57,9 @@ export class BillDialogComponent implements OnInit {
   payid?: string;
   today?: Date;
 
+  printBill?: any;
+  printBilldet?: any;
+
   //Table
   displayedColumns: string[] = 
   ['label', 'qty', 'price_unit', 'discount', 'tax', 'subtotal'];
@@ -94,14 +98,14 @@ export class BillDialogComponent implements OnInit {
     this.payables = [];
     this.journidtitle = this.data.name;
     this.supplierString = this.data.partners.id;
-    this.datdate = this.data.date.split('T')[0];
+    this.datdate = (new Date(this.data.date)).toLocaleString().split('T')[0];
     this.thissub = 0;
     this.thisdisc = 0;
     this.thissubdisc = 0;
     this.thistax = 0;
     this.thistotal = 0;
     if(this.data.duedate){
-      this.datduedate = this.data.duedate.split('T')[0];
+      this.datduedate = (new Date(this.data.duedate)).toLocaleString().split('T')[0];
     }else{
       this.datduedate = "";
     }
@@ -112,29 +116,8 @@ export class BillDialogComponent implements OnInit {
         this.lock = journal!.lock!;
         this.datas = journal!.entrys!;
         this.paymentx = journal!.payments;
-        /*for(let x=0;x<this.entrys.length;x++){
-          if(this.entrys[x].products){
-            this.payables = [...this.payables,(this.entrys[x])];
-            this.thissub = this.thissub + (this.entrys[x].qty * this.entrys[x].price_unit);
-            if(this.entrys[x].discount){
-              this.thisdisc = this.thisdisc + (this.entrys[x].discount = 0 /100 * this.entrys[x].qty! * this.entrys[x].price_unit!);
-              this.thissubdisc = this.entrys[x].discount = 0 /100 * this.entrys[x].qty! * this.entrys[x].price_unit!;
-            }
-            else{ 
-              this.thisdisc = this.thisdisc + 0;
-              this.thissubdisc = 0;
-            }
-            if(this.entrys[x].tax){
-              this.thistax = this.thistax + (this.entrys[x].tax! / 100 * 
-                ((this.entrys[x].qty! * this.entrys[x].price_unit!) - this.thissubdisc));
-            }else{ this.thistax = this.thistax + 0 }
-            this.thistotal = this.thissub - this.thisdisc + this.thistax;
-          }
-        }*/
-        
         for(let x=0;x<this.datas.length;x++){
           if(this.datas[x].products){
-            console.log(this.datas[x]);
             this.entrys.push(this.datas[x]);
             this.thissub = this.thissub + (this.datas[x].qty * this.datas[x].price_unit);
             this.thisdisc = this.thisdisc + (this.datas[x].discount/100 * this.datas[x].qty * this.datas[x].price_unit);
@@ -143,6 +126,18 @@ export class BillDialogComponent implements OnInit {
           this.thistotal = this.thissub - this.thisdisc + this.thistax;
           }
         }
+        this.printBill = {
+          bill_id: this.data.name,
+          partners: this.data.partners,
+          date: this.data.date.split('T')[0],
+          duedate: this.data.duedate ? this.data.duedate.split('T')[0] : '',
+          totalTax: this.thistax,
+          totalDisc: this.thisdisc,
+          totalUntaxed: this.thissub,
+          total: this.thistotal,
+          companys: journal.companys,
+        };
+        this.printBilldet = this.entrys;
         this.dataSource.data = this.entrys;
         this.dataSourcePay.data = this.paymentx;
       })
@@ -206,5 +201,14 @@ export class BillDialogComponent implements OnInit {
       .subscribe(lockz => {
         this.dialogRef.close(this.data);
       })
+  }
+
+  openPrint() {
+    const dialog = this.dialog.open(PrintComponent, {
+      width: '90vw',
+      height: '80%',
+      disableClose: true,
+      data: ["bill", this.printBill, this.printBilldet]
+    })
   }
 }

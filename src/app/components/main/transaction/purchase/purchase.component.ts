@@ -101,7 +101,7 @@ export class PurchaseComponent implements OnInit {
   }
 
   retrieveData(): void {
-    this.purchaseService.getAll()
+    this.purchaseService.getAllByComp(1)
       .subscribe(dataPur => {
         this.purchases = dataPur;
       })

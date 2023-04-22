@@ -20,7 +20,8 @@
             {{row.date | date}}
           </td>
           <td (click)="openDialog(row.id)">
-            {{row.req}}
+            <span *ngIf="row.lock" class="text-success text-shadow">Posted</span>
+            <span *ngIf="!row.lock" class="text-danger text-shadow">Unposted</span>
           </td>
           <td>
             <button>

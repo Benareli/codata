@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 
@@ -41,25 +40,23 @@ export class ProductcatDialogComponent implements OnInit {
     private logService: LogService,
     private coaService: CoaService,
     private productCatService: ProductCatService,
-    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
   ngOnInit() {
     this.retrieveCoa();
     if (this.data.active == true){
-        //this.productCatService.findOneAcc(this.data.id, this.cookieService.get('company'))
-        this.productCatService.findOneAcc(this.data.id, 1)
-          .subscribe(dataAcc => {
-            this.revId = dataAcc.revenue_id;
-            this.expId = dataAcc.cost_id;
-            this.incId = dataAcc.incoming_id;
-            this.outId = dataAcc.outgoing_id;
-            this.invId = dataAcc.inventory_id;
-            this.statusActive = 'true';
-            this.isChecked = true;
-            this.a = 0;
-          })
+      this.productCatService.findOneAcc(this.data.id, localStorage.getItem("comp"))
+        .subscribe(dataAcc => {
+          this.revId = dataAcc.revenue_id;
+          this.expId = dataAcc.cost_id;
+          this.incId = dataAcc.incoming_id;
+          this.outId = dataAcc.outgoing_id;
+          this.invId = dataAcc.inventory_id;
+          this.statusActive = 'true';
+          this.isChecked = true;
+          this.a = 0;
+        })
       } else {
         this.statusActive = 'false';
         this.isChecked = false;

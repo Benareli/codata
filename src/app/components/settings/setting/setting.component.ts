@@ -127,7 +127,7 @@ export class SettingComponent implements OnInit {
         this.cost_general = company[0].cost_general;
         this.explainer1();
         this.comp_name = company[0].comp_name;
-        this.comp_addr = company[0].comp_addr;
+        this.comp_addr = company[0].street;
         this.comp_phone = company[0].comp_phone;
         this.comp_email = company[0].comp_email;
         this.navcolor = company[0].nav_color!.toString();

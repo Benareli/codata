@@ -19,6 +19,9 @@ export class SaleService {
   getAll(): Observable<Sale[]> {
     return this.http.get<Sale[]>(baseUrl, { 'headers': headers });
   }
+  getAllByComp(comp: any): Observable<Sale[]> {
+    return this.http.get<Sale[]>(`${baseUrl}/comp/${comp}`, { 'headers': headers });
+  }
   get(id: any): Observable<Sale> {
     return this.http.get(`${baseUrl}/${id}`, { 'headers': headers });
   }

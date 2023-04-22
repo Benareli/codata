@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Product } from 'src/app/models/masterdata/product.model';
@@ -72,7 +71,6 @@ export class AparcreateDialogComponent implements OnInit {
     private saleService: SaleService,
     private saledetailService: SaledetailService,
     private journalService: JournalService,
-    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -164,12 +162,6 @@ export class AparcreateDialogComponent implements OnInit {
     }
   }
 
-  changeDueDate(): void {
-    for(let x=0; x<this.datas.length; x++){
-      this.datas[x].duedate = this.datduedate;
-    }
-  }
-
   billrec(): void {
     for(let x=0; x<this.datas.length; x++){
       this.datas[x].qty_rec = this.datas[x].qty_done;
@@ -225,8 +217,7 @@ export class AparcreateDialogComponent implements OnInit {
         this.pdetailid.push(this.datas[x].id);
         this.productbill.push(this.datas[x].product_id);
         this.productname.push(this.datas[x].products.name);
-        //this.prodcompany.push(this.cookieService.get('company'));
-        this.prodcompany.push(1);
+        this.prodcompany.push(localStorage.getItem("comp"));
         this.qrec.push(this.datas[x].qty_rec);
         this.uom.push(this.datas[x].uom_id);
         this.priceunit.push(this.datas[x].price_unit);
@@ -241,11 +232,10 @@ export class AparcreateDialogComponent implements OnInit {
       }
     }
     const journal = {
-      amount: y, date: this.datdate, duedate: this.datduedate, origin: this.transacid, productbill: this.productbill, qrec: this.qrec,
+      amount: y, date: this.datdate, duedate: this.datduedate ? this.datduedate : this.datdate, origin: this.transacid, productbill: this.productbill, qrec: this.qrec,
       productname: this.productname, uom: this.uom, priceunit: this.priceunit, tax: this.tax, discount: this.discount, 
       partner: this.supplierString, pdetail: this.pdetailid, qinv: this.qinv, subtotal: this.subtotal, 
-      //company: this.cookieService.get('company'), user: this.globals.userid
-      company: 1, user: this.globals.userid
+      company: localStorage.getItem("comp"), user: this.globals.userid
     };
     if(this.data[0]==='purchase'){
       this.journalService.createBill(journal)

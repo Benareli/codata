@@ -5,7 +5,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
-//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Product } from 'src/app/models/masterdata/product.model';
@@ -204,7 +203,6 @@ export class ProductDialogComponent implements OnInit {
     private stockmoveService: StockmoveService,
     private posDetailService: PosdetailService,
     private purchaseDetailService: PurchasedetailService,
-    //private cookieService: CookieService,
     private globals: Globals,
     private logService: LogService,
     private fb: FormBuilder,
@@ -316,8 +314,7 @@ export class ProductDialogComponent implements OnInit {
         }
         this.retrieveBundle();
         this.retrieveBom();
-        //this.productService.getCostComp(prod.id, this.cookieService.get('company'))
-        this.productService.getCostComp(prod.id, 1)
+        this.productService.getCostComp(prod.id, localStorage.getItem("comp"))
           .subscribe(pcost => {
             this.datcost = pcost.cost;
             this.oricost = pcost.cost;
@@ -328,17 +325,17 @@ export class ProductDialogComponent implements OnInit {
         this.posdet = posDet[0].totalLine;
         this.posqty = posDet[0].totalQty;
       })
-    this.purchaseDetailService.findByProduct(id)
+    this.purchaseDetailService.findByProduct(id, localStorage.getItem("comp"))
       .subscribe(purDet => {
-        this.purdet = purDet[0].totalLine;
-        this.purqty = purDet[0].totalQty;
+        this.purdet = purDet[0].totalline;
+        this.purqty = purDet[0].totalqty;
       })
-    this.stockmoveService.findTransIn(id)
+    this.stockmoveService.findTransIn(id, localStorage.getItem("comp"))
       .subscribe(transin => {
         this.qindet = transin[0].totalline;
         this.qinqty = transin[0].totalqin;
       })
-    this.stockmoveService.findTransOut(id)
+    this.stockmoveService.findTransOut(id, localStorage.getItem("comp"))
       .subscribe(transout => {
         this.qoutdet = transout[0].totalline;
         this.qoutqty = transout[0].totalqout;
@@ -425,8 +422,7 @@ export class ProductDialogComponent implements OnInit {
             this.easytableBundle();
           }
         })
-      //this.productService.findAllFGStock(this.cookieService.get('company'))
-      this.productService.findAllFGStock(1)
+      this.productService.findAllFGStock(localStorage.getItem("comp"))
       .subscribe(allfg => {
         this.bproducts = allfg;
       })
@@ -461,8 +457,7 @@ export class ProductDialogComponent implements OnInit {
             this.easytableBom();
           }
         })
-      //this.productService.findAllRM(this.cookieService.get('company'))
-      this.productService.findAllRM(1)
+      this.productService.findAllRM(localStorage.getItem("comp"))
         .subscribe(allrm => {
           this.boproducts = allrm;
         })
@@ -657,8 +652,7 @@ export class ProductDialogComponent implements OnInit {
       qty: this.bodatqty,
       uom: this.bodatuom,
       product: this.data,
-      //company_id: this.cookieService.get('company')
-      company_id: 1
+      company_id: localStorage.getItem("comp")
     };
     this.bomService.create(dataBom)
       .subscribe(res => {
@@ -810,8 +804,7 @@ export class ProductDialogComponent implements OnInit {
         active: this.isChecked,
         message: this.isUpdated,
         user: this.globals.userid,
-        //company: this.cookieService.get('company'),
-        company: 1,
+        company: localStorage.getItem("comp"),
       };
       this.productService.update(this.data, dataProd)
         .subscribe({
@@ -858,8 +851,7 @@ export class ProductDialogComponent implements OnInit {
         supplier: this.partnerid,
         active: this.isChecked,
         user: this.globals.userid,
-        //company: this.cookieService.get('company'),
-        company: 1,
+        company: localStorage.getItem("comp"),
       };
       this.productService.create(data)
         .subscribe({

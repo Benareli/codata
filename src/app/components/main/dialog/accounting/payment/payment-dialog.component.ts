@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DecimalPipe } from '@angular/common';
 
 import { Globals } from 'src/app/global';
 
@@ -39,7 +38,6 @@ export class PaymentDialogComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private globals: Globals,
     private logService: LogService,
-    private decimalPipe: DecimalPipe,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -77,11 +75,11 @@ export class PaymentDialogComponent implements OnInit {
     }
   }
 
-  formatNum(value: String) {
+  /*formatNum(value: String) {
     const cleanValue = value.replace(/[^\d.-]/g, '');
     const numericValue = parseFloat(cleanValue);
     return isNaN(numericValue) ? null : this.decimalPipe.transform(numericValue, '1.2-2');
-  }
+  }*/
 
   mode2(): void {
     this.isPay2 = !this.isPay2;

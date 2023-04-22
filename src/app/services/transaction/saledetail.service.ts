@@ -37,7 +37,7 @@ export class SaledetailService {
   delete(id: any): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`, { 'headers': headers });
   }
-  findByProduct(product: any): Observable<Saledetail[]> {
-    return this.http.get<Saledetail[]>(`${baseUrl}/poo/${product}`, { 'headers': headers });
+  findByProduct(product: any, comp: any): Observable<Saledetail[]> {
+    return this.http.get<Saledetail[]>(`${baseUrl}/soo/${product}/${comp}`, { 'headers': headers });
   }
 }

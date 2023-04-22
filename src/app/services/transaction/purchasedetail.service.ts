@@ -37,7 +37,7 @@ export class PurchasedetailService {
   delete(id: any): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`, { 'headers': headers });
   }
-  findByProduct(product: any): Observable<Purchasedetail[]> {
-    return this.http.get<Purchasedetail[]>(`${baseUrl}/poo/${product}`, { 'headers': headers });
+  findByProduct(product: any, comp: any): Observable<Purchasedetail[]> {
+    return this.http.get<Purchasedetail[]>(`${baseUrl}/poo/${product}/${comp}`, { 'headers': headers });
   }
 }

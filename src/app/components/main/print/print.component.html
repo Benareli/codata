@@ -1,11 +1,16 @@
-<div class="w-100">
-  <span class="title">PRINT TEST</span>
-  <button (click)="exportToPDF()">Export to PDF</button>
-  <div
-    id="print"
-    class="w-48rem border-1 border-solid border-black"
-    
-  >
+<div class="w-100 flex flex-row justify-between items-start pt-1">
+  <span class="title">PRINT {{title}}</span>
+  <button class="btn btn-secondary h-1rem py-1 px-2" (click)="exportToPDF()">Export to PDF</button>
+  <button class="close_btn h-2rem" mat-button (click)="closeDialog()">X</button>
+</div>
+<div>
+  <div class="mt-4 border-1 border-solid border-black" style="width: 48rem; height: 62rem; transform-origin: top left; transform: scale(0.7);">
+    <div
+      id="print"
+      style="width: 48rem; height: 68rem;"
+      [innerHTML]="htmlContent"
+    >
+    </div>
   </div>
 </div>
 

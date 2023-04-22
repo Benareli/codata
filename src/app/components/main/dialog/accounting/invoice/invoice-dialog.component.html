@@ -1,8 +1,9 @@
 <div class="dialog-container submit-form flex flex-col justify-between">
 <div class="w-100">
   <div class="mb-3 flex flex-row justify-between items-center">
-    <div class="w-100 flex flex-row justify-between">
+    <div class="w-100 flex flex-row justify-between items-start pt-1">
       <span class="title w-20rem h-3rem border-primary">{{journidtitle}}</span>
+      <button class="btn bg-white text-black py-1 px-2 h-1rem" (click)="openPrint()">PRINT <i class="fa fa-print"></i></button>
       <div class="flex flex-col flex-md-row items-end items-md-start">
         <span *ngIf="data.lock" class="order-2 order-md-2 mr-md-3 mt-2 mt-md-0 btn btn-primary bg-success" (click)="changeLock()">Posted</span>
         <span *ngIf="!data.lock" class="order-2 order-md-2 mr-md-3 mt-2 mt-md-0 btn btn-primary bg-danger" (click)="changeLock()">Unposted</span>

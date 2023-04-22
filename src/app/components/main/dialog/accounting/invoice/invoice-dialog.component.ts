@@ -14,6 +14,7 @@ import { PaymentService } from 'src/app/services/accounting/payment.service';
 import { IdService } from 'src/app/services/settings/id.service';
 
 import { PaymentDialogComponent } from '../payment/payment-dialog.component';
+import { PrintComponent } from '../../../print/print.component';
 
 @Component({
   selector: 'app-invoice-dialog',
@@ -56,6 +57,9 @@ export class InvoiceDialogComponent implements OnInit {
   payid?: string;
   today?: Date;
 
+  printInv?: any;
+  printInvdet?: any;
+
   //Table
   displayedColumns: string[] = 
   ['label', 'qty', 'price_unit', 'discount', 'tax', 'subtotal'];
@@ -94,48 +98,32 @@ export class InvoiceDialogComponent implements OnInit {
     this.invoices = [];
     this.journidtitle = this.data.name;
     this.customerString = this.data.partners.id;
-    this.datdate = this.data.date.split('T')[0];
+    this.datdate = (new Date(this.data.date)).toLocaleString().split('T')[0];
     this.thissub = 0;
     this.thisdisc = 0;
     this.thissubdisc = 0;
     this.thistax = 0;
     this.thistotal = 0;
     if(this.data.duedate){
-      this.datduedate = this.data.duedate.split('T')[0];
+      this.datduedate = (new Date(this.data.duedate)).toLocaleString().split('T')[0];
     }else{
       this.datduedate = "";
     }
     this.journalService.get(this.data.id)
       .subscribe(journal => {
-        console.log(journal);
         this.journalid = journal.id;
         this.amountdue = journal.amountdue!;
         this.lock = journal!.lock!;
         this.datas = journal!.entrys!;
         this.paymentx = journal!.payments;
-        for(let x=0;x<this.entrys.length;x++){
+        /*for(let x=0;x<this.entrys.length;x++){
           if(this.entrys[x].products){
             this.invoices = [...this.invoices,(this.entrys[x])];
-            /*this.thissub = this.thissub + (this.entrys[x].qty * this.entrys[x].price_unit);
-            if(this.entrys[x].discount){
-              this.thisdisc = this.thisdisc + (this.entrys[x].discount = 0 /100 * this.entrys[x].qty! * this.entrys[x].price_unit!);
-              this.thissubdisc = this.entrys[x].discount = 0 /100 * this.entrys[x].qty! * this.entrys[x].price_unit!;
-            }
-            else{ 
-              this.thisdisc = this.thisdisc + 0;
-              this.thissubdisc = 0;
-            }
-            if(this.entrys[x].tax){
-              this.thistax = this.thistax + (this.entrys[x].tax! / 100 * 
-                ((this.entrys[x].qty! * this.entrys[x].price_unit!) - this.thissubdisc));
-            }else{ this.thistax = this.thistax + 0 }
-            this.thistotal = this.thissub - this.thisdisc + this.thistax;*/
           }
-        }
+        }*/
 
         for(let x=0;x<this.datas.length;x++){
           if(this.datas[x].products){
-            console.log(x, this.datas[x]);
             this.entrys.push(this.datas[x]);
             this.thissub = this.thissub + (this.datas[x].qty * this.datas[x].price_unit);
             this.thisdisc = this.thisdisc + (this.datas[x].discount/100 * this.datas[x].qty * this.datas[x].price_unit);
@@ -144,6 +132,18 @@ export class InvoiceDialogComponent implements OnInit {
             this.thistotal = this.thissub - this.thisdisc + this.thistax;
           }
         }
+        this.printInv = {
+          invoice_id: this.data.name,
+          partners: this.data.partners,
+          date: this.data.date.split('T')[0],
+          duedate: this.data.duedate ? this.data.duedate.split('T')[0] : '',
+          totalTax: this.thistax,
+          totalDisc: this.thisdisc,
+          totalUntaxed: this.thissub,
+          total: this.thistotal,
+          companys: journal.companys,
+        };
+        this.printInvdet = this.entrys;
         this.dataSource.data = this.entrys;
         this.dataSourcePay.data = this.paymentx;
       })
@@ -201,11 +201,24 @@ export class InvoiceDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  closeBackDialog() {
+    this.dialogRef.close(this.data);
+  }
+
   changeLock(): void {
     const locks = {lock: !this.lock}
     this.journalService.updateLock(this.journalid, locks)
       .subscribe(lockz => {
         this.dialogRef.close(this.data);
       })
+  }
+
+  openPrint() {
+    const dialog = this.dialog.open(PrintComponent, {
+      width: '90vw',
+      height: '80%',
+      disableClose: true,
+      data: ["invoice", this.printInv, this.printInvdet]
+    })
   }
 }

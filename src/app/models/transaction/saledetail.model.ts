@@ -12,6 +12,6 @@ export class Saledetail {
 	warehouse?: string;
 	stockmove?: string;
 	date?: Date;
-	totalLine?: number;
-	totalQty?: number;
+	totalline?: number;
+	totalqty?: number;
 }

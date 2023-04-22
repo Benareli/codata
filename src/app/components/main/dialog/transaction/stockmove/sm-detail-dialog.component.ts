@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Stockmove } from 'src/app/models/transaction/stockmove.model';
@@ -80,7 +79,6 @@ export class SMDetailDialogComponent implements OnInit {
     private productService: ProductService,
     private warehouseService: WarehouseService,
     private uomService: UomService,
-    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -132,8 +130,7 @@ export class SMDetailDialogComponent implements OnInit {
   }
 
   retrieveData(): void {
-    //this.productService.findAllActive(this.cookieService.get('company'))
-    this.productService.findAllActive(1)
+    this.productService.findAllActive(localStorage.getItem("comp"))
       .subscribe(prod => {
         this.products = prod;
       })
@@ -225,8 +222,7 @@ export class SMDetailDialogComponent implements OnInit {
       const dataPush = {
         id: this.datid, product: this.datprod, prodid: this.datid, qty: this.datqty, qty_done: 0, 
         uom: this.uomz, uomid: this.uomString, user: this.globals.userid, from: this.fromString, 
-        //to: this.tooString, type: this.typeTrans, date: this.datdate, company: this.cookieService.get('company'),
-        to: this.tooString, type: this.typeTrans, date: this.datdate, company: 1,
+        to: this.tooString, type: this.typeTrans, date: this.datdate, company: localStorage.getItem("comp"),
         cost: this.datcost
       }
       this.datas.push(dataPush);

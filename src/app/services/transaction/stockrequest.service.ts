@@ -18,6 +18,9 @@ export class StockrequestService {
   getAll(): Observable<Stockrequest[]> {
     return this.http.get<Stockrequest[]>(baseUrl, { 'headers': headers });
   }
+  getAllByComp(comp: any): Observable<Stockrequest[]> {
+    return this.http.get<Stockrequest[]>(`${baseUrl}/comp/${comp}`, { 'headers': headers });
+  }
   getTable(): Observable<Stockrequest[]>{
     return this.http.get(baseUrl, { 'headers': headers })
       .pipe(map((response: any) => response.data as Stockrequest[]))

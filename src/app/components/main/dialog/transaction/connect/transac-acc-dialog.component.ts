@@ -33,7 +33,7 @@ export class TransacAccDialogComponent implements OnInit {
     this.columns = [
       {key:'name', title:'Name', orderBy:'desc', width: '35%'},
       {key:'date', title:'Date', width:'25%'},
-      {key:'req', title:'Status', width:'25%'},
+      {key:'lock', title:'Status', width:'25%'},
       {key:'', title:'Action', width:'15%'},
     ];
     this.configuration = { ...DefaultConfig };

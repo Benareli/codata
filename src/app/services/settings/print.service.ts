@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
-import { Purchase } from 'src/app/models/transaction/purchase.model';
+import { Print } from 'src/app/models/settings/print.model';
 import { BaseURL } from 'src/app/baseurl';
 
-const baseUrl = BaseURL.BASE_URL + 'purchases';
+const baseUrl = BaseURL.BASE_URL + 'prints';
 const headers= new HttpHeaders()
   .set('apikey', BaseURL.API_KEY)
   .set('apikey2', BaseURL.API_KEY2)
@@ -13,16 +13,16 @@ const headers= new HttpHeaders()
 @Injectable({
   providedIn: 'root'
 })
-export class PurchaseService {
+export class PrintService {
 
   constructor(private http: HttpClient) { }
-  getAll(): Observable<Purchase[]> {
-    return this.http.get<Purchase[]>(baseUrl, { 'headers': headers });
+  getAll(): Observable<Print[]> {
+    return this.http.get<Print[]>(baseUrl, { 'headers': headers });
   }
-  getAllByComp(comp: any): Observable<Purchase[]> {
-    return this.http.get<Purchase[]>(`${baseUrl}/comp/${comp}`, { 'headers': headers });
+  getByDet(mod: any, comp: any): Observable<any>{
+    return this.http.get(`${baseUrl}/det/${mod}/${comp}`, { 'headers': headers });
   }
-  get(id: any): Observable<Purchase> {
+  get(id: any): Observable<Print> {
     return this.http.get(`${baseUrl}/${id}`, { 'headers': headers });
   }
   create(data: any): Observable<any> {
@@ -30,8 +30,5 @@ export class PurchaseService {
   }
   update(id: any, data: any): Observable<any> {
     return this.http.put(`${baseUrl}/${id}`, data, { 'headers': headers });
-  }
-  updateState(id: any, state: any): Observable<any> {
-    return this.http.get(`${baseUrl}/state/${id}/${state}`, { 'headers': headers });
   }
 }

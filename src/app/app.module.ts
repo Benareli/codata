@@ -11,7 +11,7 @@ import { QRCodeModule } from 'angular2-qrcode';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-//import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -230,7 +230,7 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
 
     LayoutModule,
     DragDropModule,
-    //FlexLayoutModule,
+    FlexLayoutModule,
     MatToolbarModule,
     MatCardModule,
     MatInputModule,

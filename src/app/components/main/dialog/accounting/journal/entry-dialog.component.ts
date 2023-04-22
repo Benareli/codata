@@ -2,8 +2,6 @@ import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
-//import { CookieService } from 'ngx-cookie-service';
 
 import { Globals } from 'src/app/global';
 import { Journal } from 'src/app/models/accounting/journal.model';
@@ -61,7 +59,6 @@ export class EntryDialogComponent implements OnInit {
     private journalService: JournalService,
     private entryService: EntryService,
     private coaService: CoaService,
-    //private cookieService: CookieService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
@@ -76,7 +73,7 @@ export class EntryDialogComponent implements OnInit {
       this.journalService.get(this.data.id)
         .subscribe(entry => {
           this.entrys = entry.entrys;
-          this.datdate = entry.date?.toString().split('T')[0];
+          this.datdate = (new Date(entry.date!)).toLocaleString().split('T')[0];
           this.jourtype = entry.type;
           this.countDebCred();
         })
@@ -191,8 +188,7 @@ export class EntryDialogComponent implements OnInit {
         type: this.jourtype,
         entry: this.entrys,
         amount: this.debit,
-        //company: this.cookieService.get('company'),
-        company: 1,
+        company: localStorage.getItem("comp"),
         user: this.globals.userid
       }
       this.journalService.createJour(Jour)

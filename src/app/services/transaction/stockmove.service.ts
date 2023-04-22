@@ -19,6 +19,9 @@ export class StockmoveService {
   getAll(): Observable<Stockmove[]> {
     return this.http.get<Stockmove[]>(baseUrl, { 'headers': headers });
   }
+  getAllByComp(comp: any): Observable<Stockmove[]> {
+    return this.http.get<Stockmove[]>(`${baseUrl}/comp/${comp}`, { 'headers': headers });
+  }
   getTable(): Observable<Stockmove[]>{
     return this.http.get(baseUrl, { 'headers': headers })
       .pipe(map((response: any) => response.data as Stockmove[]))
@@ -35,11 +38,11 @@ export class StockmoveService {
   create(data: any): Observable<any> {
     return this.http.post(`${baseUrl}/quick`, data, { 'headers': headers });
   }
-  findTransIn(product: any): Observable<Stockmove[]> {
-    return this.http.get<Stockmove[]>(`${baseUrl}/transin/${product}`, { 'headers': headers });
+  findTransIn(product: any, comp: any): Observable<Stockmove[]> {
+    return this.http.get<Stockmove[]>(`${baseUrl}/transin/${product}/${comp}`, { 'headers': headers });
   }
-  findTransOut(product: any): Observable<Stockmove[]> {
-    return this.http.get<Stockmove[]>(`${baseUrl}/transout/${product}`, { 'headers': headers });
+  findTransOut(product: any, comp: any): Observable<Stockmove[]> {
+    return this.http.get<Stockmove[]>(`${baseUrl}/transout/${product}/${comp}`, { 'headers': headers });
   }
   findOrigin(origin: any): Observable<Stockmove[]> {
     return this.http.get<Stockmove[]>(`${baseUrl}/origin/${origin}`, { 'headers': headers });
