@@ -9,18 +9,10 @@
     <div class="flex-100 flex-md-50 flex flex-col">
       <div class="flex flex-col">
         <h4 class="font-secondary uppercase">Payment</h4>
-        <div>
-          <mat-button-toggle-group #group="matButtonToggleGroup" [(value)]="pay1Type" (change)="onPay1Change(group.value)">
-            <mat-button-toggle value="tunai" aria-label="Tunai">
-              Tunai
-            </mat-button-toggle>
-            <mat-button-toggle value="bank" aria-label="Bank">
-              Bank
-            </mat-button-toggle>
-            <mat-button-toggle value="cc" aria-label="Settlement">
-              E-Wallet/CC
-            </mat-button-toggle>
-          </mat-button-toggle-group>
+        <div class="flex flex-row w-100">
+          <div *ngFor="let pm of paymentMethods" class="btn-select" [class.item-selected]="selectedPm === pm">
+            <button (click)="payMeth(pm)">{{pm.name}}</button>
+          </div>
         </div>
         <input class="w-90 input mt-1" [(ngModel)]="payment"/>
       </div>

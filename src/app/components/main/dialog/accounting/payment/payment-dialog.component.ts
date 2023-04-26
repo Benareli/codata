@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Globals } from 'src/app/global';
 
 import { LogService } from 'src/app/services/settings/log.service';
+import { PaymentmethodService } from 'src/app/services/accounting/paymentmethod.service';
 
 @Component({
   selector: 'app-payment-dialog',
@@ -28,21 +29,27 @@ export class PaymentDialogComponent implements OnInit {
   change?: string;
   changeNum: number=0;
   typePay!: number;
+  paymentMethods?: any = [];
 
   //disc
   pay1Type: string='tunai';
   pay2Type: string='tunai';
+
+  pay1Meth?: number = 0;
+  selectedPm: any;
 
   constructor(
     public dialogRef: MatDialogRef<PaymentDialogComponent>,
     private _snackBar: MatSnackBar,
     private globals: Globals,
     private logService: LogService,
+    private paymentmethodService: PaymentmethodService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 
   ngOnInit() {
     this.countChange();
+    this.retrieveData();
     //this.checkRole();
   }
 
@@ -55,8 +62,21 @@ export class PaymentDialogComponent implements OnInit {
     if(!this.isPOSM || !this.isAdm) this.isRes = true;
   }
 
+  retrieveData() {
+    this.paymentmethodService.getAll()
+      .subscribe(pm => {
+        this.paymentMethods = pm;
+      })
+  }
+
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  payMeth(pm: any): void {
+    this.pay1Meth = pm.id;
+    this.selectedPm = pm;
+    console.log(this.pay1Meth);
   }
 
   onPay1Change(val: string) {
@@ -182,7 +202,7 @@ export class PaymentDialogComponent implements OnInit {
     }else if(this.data.typePay == "out"){
       this.dialogRef.close({
         payment:this.payment,
-        pay_type: this.pay1Type,
+        pay_type: this.selectedPm,
         change: this.change
       })
     }

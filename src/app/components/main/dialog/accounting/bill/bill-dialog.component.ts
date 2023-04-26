@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Globals } from 'src/app/global';
 import { Journal } from 'src/app/models/accounting/journal.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
+import { Entry } from 'src/app/models/accounting/entry.model';
 
 import { JournalService } from 'src/app/services/accounting/journal.service';
 import { EntryService } from 'src/app/services/accounting/entry.service';
@@ -31,6 +32,8 @@ export class BillDialogComponent implements OnInit {
   entrys: any;
   datas: any;
   journals!: Journal[];
+  crossCoas!: any;
+  ent!: Entry[];
   payables: any;
   paymentx: any;
   partners?: Partner[];
@@ -98,23 +101,25 @@ export class BillDialogComponent implements OnInit {
     this.payables = [];
     this.journidtitle = this.data.name;
     this.supplierString = this.data.partners.id;
-    this.datdate = (new Date(this.data.date)).toLocaleString().split('T')[0];
+    this.datdate = (new Date(this.data.date)).toLocaleString('en-CA', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+    });
+    this.datduedate = (new Date(this.data.duedate)).toLocaleString('en-CA', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+    });
     this.thissub = 0;
     this.thisdisc = 0;
     this.thissubdisc = 0;
     this.thistax = 0;
     this.thistotal = 0;
-    if(this.data.duedate){
-      this.datduedate = (new Date(this.data.duedate)).toLocaleString().split('T')[0];
-    }else{
-      this.datduedate = "";
-    }
     this.journalService.get(this.data.id)
       .subscribe(journal => {
         this.journalid = journal.id;
         this.amountdue = journal.amountdue!;
         this.lock = journal!.lock!;
         this.datas = journal!.entrys!;
+        this.ent = journal!.entrys!;
+        this.crossCoas = this.ent.find(entry => entry.label === "Payable");
         this.paymentx = journal!.payments;
         for(let x=0;x<this.datas.length;x++){
           if(this.datas[x].products){
@@ -129,8 +134,8 @@ export class BillDialogComponent implements OnInit {
         this.printBill = {
           bill_id: this.data.name,
           partners: this.data.partners,
-          date: this.data.date.split('T')[0],
-          duedate: this.data.duedate ? this.data.duedate.split('T')[0] : '',
+          date: this.datdate,
+          duedate: this.datduedate ? this.datduedate : '',
           totalTax: this.thistax,
           totalDisc: this.thisdisc,
           totalUntaxed: this.thissub,
@@ -156,7 +161,7 @@ export class BillDialogComponent implements OnInit {
         order_id: this.journidtitle,
         subtotal: this.thissub,
         discount: this.thisdisc,
-        total: this.thistotal - this.payments,
+        total: this.amountdue,
         typePay: "out",
       }
     }).afterClosed().subscribe(result => {
@@ -173,7 +178,7 @@ export class BillDialogComponent implements OnInit {
         this.payid = idp.message;
         const payments = {pay_id: this.payid, order_id: this.journidtitle,
           amount_total: this.thistotal, payment: res.payment, pay_method: res.pay_type,
-          date: this.today, type: "out"
+          date: this.today, type: "out", cross: this.crossCoas.credits, company: localStorage.getItem("comp")
         };
         this.paymentService.create(payments)
           .subscribe(res => {

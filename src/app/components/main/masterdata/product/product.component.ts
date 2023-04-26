@@ -85,7 +85,6 @@ export class ProductComponent implements OnInit {
     this.loaded = true;
     this.productService.getAll(localStorage.getItem("comp"))
       .subscribe(prod => {
-        console.log(prod)
         if(this.isIM || this.isAdm){
           this.products = prod;
         }else{

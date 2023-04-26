@@ -135,6 +135,10 @@ export class AppComponent implements OnInit, AfterViewInit{
           this.rute = this.rute + 'Piutang';
           this.layPOS = false;
           this.wiggle();
+        }else if(event.url=="/acc-config"){
+          this.rute = this.rute + 'Config Acc.';
+          this.layPOS = false;
+          this.wiggle();
         }else if(event.url=="/bom"){
           this.rute = this.rute + 'Bahan Pembentuk';
           this.layPOS = false;

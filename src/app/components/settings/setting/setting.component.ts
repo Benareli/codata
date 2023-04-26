@@ -12,7 +12,6 @@ import { BaseURL } from 'src/app/baseurl';
 
 import { Id } from 'src/app/models/settings/id.model';
 import { Store } from 'src/app/models/settings/store.model';
-import { Tax } from 'src/app/models/accounting/tax.model';
 import { User } from 'src/app/models/user_auth/user.model';
 
 import { FileUploadService } from 'src/app/services/settings/file-upload.service';
@@ -20,12 +19,10 @@ import { CompanyService } from 'src/app/services/settings/company.service';
 import { IdService } from 'src/app/services/settings/id.service';
 import { PossessionService } from 'src/app/services/transaction/possession.service';
 import { StoreService } from 'src/app/services/settings/store.service';
-import { TaxService } from 'src/app/services/accounting/tax.service';
 import { User2Service } from 'src/app/services/user_auth/user2.service';
 
 import { RegisterComponent } from '../../user_auth/register/register.component';
 import { UserroleDialogComponent } from '../../main/dialog/userrole-dialog.component';
-import { TaxDialogComponent } from '../../main/dialog/tax-dialog.component';
 import { StoreDialogComponent } from '../../main/dialog/store-dialog.component';
 
 @Component({
@@ -38,7 +35,6 @@ export class SettingComponent implements OnInit {
   navcolor: string = "#ffffff";
   stores?: Store[];
   users?: User[];
-  taxs?: Tax[];
   ids?: Id[];
   companyid?: string;
   cost_general?: boolean = true;
@@ -80,12 +76,6 @@ export class SettingComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  //Table Tax
-  displayedColumnsTax: string[] = ['name','tax','include'];
-  dataSourceTax = new MatTableDataSource<Tax>();
-  @ViewChild(MatPaginator, { static: true }) paginatorTax!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sortTax!: MatSort;
-
   //Table User
   displayedColumnsUser: string[] = ['name'];
   dataSourceUser = new MatTableDataSource<User>();
@@ -102,7 +92,6 @@ export class SettingComponent implements OnInit {
     private user2Service: User2Service,
     private idService: IdService,
     private possessionService: PossessionService,
-    private taxService: TaxService,
     private dialog: MatDialog
   ) { }
 
@@ -157,12 +146,6 @@ export class SettingComponent implements OnInit {
         this.prepurchase = ids[0].pre_purchase_id;
         this.prejournal = ids[0].pre_journal_id;
         this.prebill = ids[0].pre_bill_id;
-      })
-    this.taxService.getAll()
-      .subscribe(taxs => {
-        this.dataSourceTax.data = taxs;
-        this.dataSourceTax.paginator = this.paginatorTax;
-        this.dataSourceTax.sort = this.sortTax;
       })
     this.explainer2();
   }
@@ -301,27 +284,6 @@ export class SettingComponent implements OnInit {
       })
   }
 
-  addTax(): void {
-    const dialog = this.dialog.open(TaxDialogComponent, {
-      width: '98%',
-      height: '90%',
-      disableClose: true
-    })
-      .afterClosed()
-      .subscribe(() => this.retrieveCompany());
-  }
-
-  openTax(row: Tax): void {
-    const dialog = this.dialog.open(TaxDialogComponent, {
-      width: '98%',
-      height: '90%',
-      disableClose: true,
-      data: row
-    })
-      .afterClosed()
-      .subscribe(() => this.retrieveCompany());
-  }
-
   addStore(): void {
     const dialog = this.dialog.open(StoreDialogComponent, {
       width: '98%',
@@ -332,7 +294,7 @@ export class SettingComponent implements OnInit {
       .subscribe(() => this.retrieveCompany());
   }
 
-  openStore(row: Tax): void {
+  openStore(row: any): void {
     const dialog = this.dialog.open(StoreDialogComponent, {
       width: '98%',
       height: '90%',

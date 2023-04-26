@@ -250,7 +250,8 @@ mat-button-toggle
     color: white
     text-transform: uppercase
     letter-spacing: 1pt
-    box-shadow: 2px 2px 3px 1px #ccc
+    box-shadow: 2px 2px 2px 1px #ddd
+    cursor: pointer
 
     &-primary
         background-color: map-get($colors, 'primary')
@@ -284,6 +285,31 @@ mat-button-toggle
         //padding-right: 0em
         //padding-bottom: .5em
 
+.btn-select
+    padding: .5rem 1.5rem
+    color: map-get($colors, 'dark')
+    letter-spacing: 1pt
+    box-shadow: 1px 1px 1px 1px #ddd
+
+.btn-select:first-child
+    border-radius: .5rem 0 0 .5rem
+.btn-select:last-child
+    border-radius: 0 .5rem .5rem 0
+
+.btn-select:hover, .btn-select:active
+    box-shadow: 0px 0px 0px 0px #ddd
+    background: map-get($colors, "secondary")
+    color: map-get($colors, "white")
+    transform: translate(1px, 1px)
+.btn-select:hover button
+    color: white
+
+.item-selected
+    background-color: map-get($colors, "secondary")
+    box-shadow: 0px 0px 0px 0px #ddd
+    transform: translate(1px, 1px)
+.item-selected button
+    color: map-get($colors, "white")
 /* Progress Bar */
 ::ng-deep .mat-progress-bar-background
     fill: map-get($colors, 'gray')
@@ -314,7 +340,7 @@ mat-table
     flex-direction: column
   
     .table-header
-        background: #333
+        background: map-get($colors, 'lightgray')
         height: 23pt
         padding: 5pt
         border: 0
@@ -332,12 +358,11 @@ mat-table
         border-top: 2px solid map-get($colors, 'lightgray')
 
 .th-style
-    color: #333
+    color: map-get($colors, 'black')
     padding-right: 4px
     padding-left: 4px
+    font-size: 15px
     font-weight: 500 !important
-
-.th-style:first-child
     border: 0
 
 .td-style

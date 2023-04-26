@@ -73,6 +73,7 @@ import { StockmoveComponent } from './components/main/transaction/stockmove/stoc
 import { JournalComponent } from './components/main/accounting/journal/journal.component';
 import { PayableComponent } from './components/main/accounting/payable/payable.component';
 import { ReceivableComponent } from './components/main/accounting/receivable/receivable.component';
+import { AccSettingsComponent } from './components/main/accounting/acc-settings/acc-settings.component';
 
 //Dialog
 //Masterdata
@@ -103,6 +104,8 @@ import { PaymentDialogComponent } from './components/main/dialog/accounting/paym
 //Accounting - Journal
 import { EntryDialogComponent } from './components/main/dialog/accounting/journal/entry-dialog.component';
 import { AparcreateDialogComponent } from './components/main/dialog/accounting/journal/aparcreate-dialog.component';
+//Accounting - Setting
+import { TaxDialogComponent } from './components/main/dialog/accounting/acc-settings/tax-dialog.component';
 
 //Upload
 import { UploadDialogComponent } from './components/main/dialog/upload/upload-dialog.component';
@@ -116,7 +119,6 @@ import { PosReportComponent } from './components/main/report/pos-report/pos-repo
 import { PosdetailDialogComponent } from './components/main/dialog/posdetail-dialog.component';
 import { PrintposDialogComponent } from './components/main/dialog/printpos-dialog.component';
 import { UserroleDialogComponent } from './components/main/dialog/userrole-dialog.component';
-import { TaxDialogComponent } from './components/main/dialog/tax-dialog.component';
 import { StoreDialogComponent } from './components/main/dialog/store-dialog.component';
 import { BomDialogComponent } from './components/main/dialog/bom-dialog.component';
 import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.component';
@@ -160,6 +162,7 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     JournalComponent,
     PayableComponent,
     ReceivableComponent,
+    AccSettingsComponent,
 
     //Dialog
     //Masterdata
@@ -182,16 +185,15 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
 
     //Accounting - Bill
     BillDialogComponent,
-
     //Accounting - Invoice
     InvoiceDialogComponent,
-
     //Accounting - Payment
     PaymentDialogComponent,
-
     //Accounting - Journal
     EntryDialogComponent,
     AparcreateDialogComponent,
+    //Accounting - Settings
+    TaxDialogComponent,
 
     //Upload
     UploadDialogComponent,
@@ -206,13 +208,12 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     PosdetailDialogComponent,
     PrintposDialogComponent,
     UserroleDialogComponent,
-    TaxDialogComponent,
     StoreDialogComponent,
     BomDialogComponent,
     TicketDialogComponent,
     TicketDialogComponent,
     
-    TicketDialogComponent, 
+    TicketDialogComponent,
     
   ],
   imports: [

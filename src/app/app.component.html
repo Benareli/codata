@@ -17,14 +17,6 @@
         </div>
       </div>
       <div class="flex flex-row">
-        <!--<button mat-icon-button style="color: #3f5efb; fill: #3f5efb;" (click)="sidenav.toggle()">
-          <mat-icon *ngIf="!sidenav.opened">
-              menu
-          </mat-icon>
-          <mat-icon *ngIf="sidenav.opened">
-              close
-          </mat-icon>
-        </button>-->
         <a mat-button class="text-gradient" [routerLink]="'/profile'"> {{ username }} </a>
         <a mat-button class="fullW logout-btn text-gradient" (click)="logout()"> Log Out </a>
       </div>
@@ -34,7 +26,6 @@
   <mat-sidenav-container class="mat-sidenav-container">
     <mat-sidenav mode="side" #sidenav="matSidenav" class="mat_sidenav">
       <div class="h-100 flex flex-col justify-between">
-      <!-- fxLayout="column" fxLayoutAlign="space-between start"-->
         <div style="width: 100%;">
           <button mat-button class="menu-button" [routerLink]="'/pos'" *ngIf="sidenav.mode === 'side' && isLoggedIn && !pos_shift && isPOSU">
             <span>POS</span>
@@ -81,6 +72,10 @@
             <button mat-button class="menu-button" [routerLink]="'/journal'" *ngIf="isLoggedIn && isAccShow">
               <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
               <span>Jurnal</span>
+            </button>
+            <button mat-button class="menu-button" [routerLink]="'/acc-config'" *ngIf="isLoggedIn && isAccShow">
+              <mat-icon class="mat-icon text-15 h-15">keyboard_arrow_right</mat-icon>
+              <span>Config</span>
             </button>
           
           <button mat-button class="menu-button" [routerLink]="'/partner'" *ngIf="isLoggedIn && isPU">
@@ -145,7 +140,6 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="main_content">
-        <!--<mat-progress-bar mode="indeterminate" *ngIf="productLoad"></mat-progress-bar>-->
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

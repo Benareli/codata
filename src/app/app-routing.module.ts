@@ -18,6 +18,7 @@ import { SaleComponent } from './components/main/transaction/sale/sale.component
 import { PosComponent } from './components/main/pos/pos.component';
 import { PosSessionComponent } from './components/main/pos-session/pos-session.component';
 import { JournalComponent } from './components/main/accounting/journal/journal.component';
+import { AccSettingsComponent } from './components/main/accounting/acc-settings/acc-settings.component';
 import { BomComponent } from './components/main/masterdata/bom/bom.component';
 import { PayableComponent } from './components/main/accounting/payable/payable.component';
 import { ReceivableComponent } from './components/main/accounting/receivable/receivable.component';
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'pos', component: PosComponent },
   { path: 'pos-session', component: PosSessionComponent },
   { path: 'journal', component: JournalComponent },
+  { path: 'acc-config', component: AccSettingsComponent },
   { path: 'bom', component: BomComponent },
   { path: 'payable', component: PayableComponent },
   { path: 'receivable', component: ReceivableComponent },

@@ -73,7 +73,9 @@ export class EntryDialogComponent implements OnInit {
       this.journalService.get(this.data.id)
         .subscribe(entry => {
           this.entrys = entry.entrys;
-          this.datdate = (new Date(entry.date!)).toLocaleString().split('T')[0];
+          this.datdate = (new Date(entry.date!)).toLocaleString('en-CA', {
+            year: 'numeric', month: '2-digit', day: '2-digit',
+          });
           this.jourtype = entry.type;
           this.countDebCred();
         })

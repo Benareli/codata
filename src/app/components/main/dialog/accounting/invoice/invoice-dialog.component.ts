@@ -98,19 +98,21 @@ export class InvoiceDialogComponent implements OnInit {
     this.invoices = [];
     this.journidtitle = this.data.name;
     this.customerString = this.data.partners.id;
-    this.datdate = (new Date(this.data.date)).toLocaleString().split('T')[0];
+    this.datdate = (new Date(this.data.date)).toLocaleString('en-CA', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+    });
+    this.datduedate = (new Date(this.data.duedate)).toLocaleString('en-CA', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+    });
     this.thissub = 0;
     this.thisdisc = 0;
     this.thissubdisc = 0;
     this.thistax = 0;
     this.thistotal = 0;
-    if(this.data.duedate){
-      this.datduedate = (new Date(this.data.duedate)).toLocaleString().split('T')[0];
-    }else{
-      this.datduedate = "";
-    }
     this.journalService.get(this.data.id)
       .subscribe(journal => {
+        console.log(journal);
+        console.log(this.data);
         this.journalid = journal.id;
         this.amountdue = journal.amountdue!;
         this.lock = journal!.lock!;
@@ -135,8 +137,8 @@ export class InvoiceDialogComponent implements OnInit {
         this.printInv = {
           invoice_id: this.data.name,
           partners: this.data.partners,
-          date: this.data.date.split('T')[0],
-          duedate: this.data.duedate ? this.data.duedate.split('T')[0] : '',
+          date: this.datdate,
+          duedate: this.datduedate ? this.datduedate : '',
           totalTax: this.thistax,
           totalDisc: this.thisdisc,
           totalUntaxed: this.thissub,
@@ -162,7 +164,7 @@ export class InvoiceDialogComponent implements OnInit {
         order_id: this.journidtitle,
         subtotal: this.thissub,
         discount: this.thisdisc,
-        total: this.thistotal - this.payments,
+        total: this.amountdue,
         typePay: "in",
       }
     }).afterClosed().subscribe(result => {
@@ -179,7 +181,7 @@ export class InvoiceDialogComponent implements OnInit {
         this.payid = idp.message;
         const payments = {pay_id: this.payid, order_id: this.journidtitle,
           amount_total: this.thistotal,payment1: res.payment1,pay1method: res.pay1Type,
-          date: this.today, type: "in"
+          date: this.today, type: "in", company: localStorage.getItem("comp")
         };
         this.paymentService.create(payments)
           .subscribe(res => {
