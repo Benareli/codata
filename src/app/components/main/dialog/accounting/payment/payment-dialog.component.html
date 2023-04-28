@@ -14,7 +14,7 @@
             <button (click)="payMeth(pm)">{{pm.name}}</button>
           </div>
         </div>
-        <input class="w-90 input mt-1" [(ngModel)]="payment"/>
+        <input class="w-90 input mt-2" [(ngModel)]="payment"/>
       </div>
       <div class="flex flex-col mt-2" *ngIf="isPay2">
         <h4 class="font-secondary uppercase">Payment 2</h4>
@@ -33,10 +33,14 @@
         </div>
         <input class="w-90 input mt-1" [(ngModel)]="payment2"/>
       </div>
-      <div class="font-secondary uppercase">Total</div>
-      <input class="flex-90 input" [(ngModel)]="data.total"/>
-      <div class="font-secondary uppercase">Change</div>
-      <input class="flex-90 input" [(ngModel)]="change"/>
+      <div class="flex flex-row mt-2 w-90">
+        <div class="flex-30 font-secondary uppercase">Total</div>
+        <input class="flex-70 input" [(ngModel)]="data.total"/>
+      </div>
+      <div class="flex flex-row mt-2 w-90">
+        <div class="flex-30 font-secondary uppercase">Difference</div>
+        <input class="flex-70 input" [(ngModel)]="change"/>
+      </div>
       <button class="btn-primary p-2 text-primary bg-white" *ngIf="data.typePay=='in'" style="width:87%" (click)="mode2()">Other Payment Method</button>
     </div>
 
@@ -72,7 +76,7 @@
           <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark ml-1" (click)="press('0')">0</button>
           <button class="flex-15 bg-lightgray border-radius-1 py-2 text-dark ml-1" (click)="press('000')">000</button>
           <span class="flex-10 mr-2"></span>
-          <button class="flex-45 bg-lightgray border-radius-1 py-2 text-primary" (click)="press('F')">FULL</button>
+          <button class="flex-45 bg-primary border-radius-1 py-2 text-lightgray" (click)="press('F')">FULL</button>
         </div>
         <div class="flex flex-row mt-1">
           <button class="flex-100 bg-lightgray border-radius-1 py-2 text-danger" (click)="press('X')">CLEAR</button>

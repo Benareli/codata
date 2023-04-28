@@ -14,6 +14,7 @@ import { SaleService } from 'src/app/services/transaction/sale.service';
 import { SaledetailService } from 'src/app/services/transaction/saledetail.service';
 import { PartnerService } from 'src/app/services/masterdata/partner.service';
 import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+import { SharedService } from 'src/app/shared.service';
 
 import { SaleDialogComponent } from '../../dialog/transaction/sale/sale-dialog.component';
 
@@ -52,6 +53,7 @@ export class SaleComponent implements OnInit {
   constructor(
     private router: Router,
     private globals: Globals,
+    private sharedService: SharedService,
     private dialog: MatDialog,
     private saleService: SaleService,
     private saledetailService: SaledetailService,
@@ -170,8 +172,15 @@ export class SaleComponent implements OnInit {
       disableClose: true,
       data: id
     }).afterClosed().subscribe(result => {
-      if(result) this.openDialog(result);
-      this.retrieveData();
+      if(result) {
+        this.sharedService.setLoading(true)
+        setTimeout(() => {
+          this.sharedService.setLoading(false)
+          this.openDialog(result);
+        },100); 
+      }else{
+        this.retrieveData();
+      }
     });
   }
 }

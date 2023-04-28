@@ -2,13 +2,15 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import * as CryptoJS from 'crypto-js';
 
+import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
 import { Journal } from 'src/app/models/accounting/journal.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
+import { Entry } from 'src/app/models/accounting/entry.model';
 
 import { JournalService } from 'src/app/services/accounting/journal.service';
-import { EntryService } from 'src/app/services/accounting/entry.service';
 import { PartnerService } from 'src/app/services/masterdata/partner.service';
 import { PaymentService } from 'src/app/services/accounting/payment.service';
 import { IdService } from 'src/app/services/settings/id.service';
@@ -31,6 +33,8 @@ export class InvoiceDialogComponent implements OnInit {
   entrys: any;
   datas: any;
   journals!: Journal[];
+  crossCoas!: any;
+  ent!: Entry[];
   invoices: any;
   paymentx: any;
   partners?: Partner[];
@@ -75,7 +79,6 @@ export class InvoiceDialogComponent implements OnInit {
     private dialog: MatDialog,
     private globals: Globals,
     private journalService: JournalService,
-    private entryService: EntryService,
     private partnerService: PartnerService,
     private paymentService: PaymentService,
     private idService: IdService,
@@ -111,19 +114,12 @@ export class InvoiceDialogComponent implements OnInit {
     this.thistotal = 0;
     this.journalService.get(this.data.id)
       .subscribe(journal => {
-        console.log(journal);
-        console.log(this.data);
         this.journalid = journal.id;
         this.amountdue = journal.amountdue!;
         this.lock = journal!.lock!;
         this.datas = journal!.entrys!;
         this.paymentx = journal!.payments;
-        /*for(let x=0;x<this.entrys.length;x++){
-          if(this.entrys[x].products){
-            this.invoices = [...this.invoices,(this.entrys[x])];
-          }
-        }*/
-
+        this.crossCoas = this.ent.find(entry => entry.label === "Payable");
         for(let x=0;x<this.datas.length;x++){
           if(this.datas[x].products){
             this.entrys.push(this.datas[x]);
@@ -181,7 +177,8 @@ export class InvoiceDialogComponent implements OnInit {
         this.payid = idp.message;
         const payments = {pay_id: this.payid, order_id: this.journidtitle,
           amount_total: this.thistotal,payment1: res.payment1,pay1method: res.pay1Type,
-          date: this.today, type: "in", company: localStorage.getItem("comp")
+          date: this.today, type: "in",
+          company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8))
         };
         this.paymentService.create(payments)
           .subscribe(res => {

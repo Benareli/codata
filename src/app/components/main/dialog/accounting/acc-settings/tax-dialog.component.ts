@@ -1,18 +1,12 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Globals } from 'src/app/global';
-import { FormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Observable, of } from "rxjs";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatCheckboxModule } from "@angular/material/checkbox";
-
-import { Tax } from 'src/app/models/accounting/tax.model';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaxService } from 'src/app/services/accounting/tax.service';
 
 @Component({
   selector: 'app-tax-dialog',
   templateUrl: './tax-dialog.component.html',
-  styleUrls: ['./dialog.component.sass']
+  styleUrls: ['../../../../../style/main.sass']
 })
 export class TaxDialogComponent implements OnInit {
   statusActive?: string;
@@ -26,10 +20,8 @@ export class TaxDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<TaxDialogComponent>,
-    private _snackBar: MatSnackBar,
     private globals: Globals,
     private taxService: TaxService,
-    private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
 

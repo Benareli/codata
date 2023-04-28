@@ -1,7 +1,6 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Globals } from 'src/app/global';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import * as XLSX from 'xlsx';
 
 import { Brand } from 'src/app/models/masterdata/brand.model';
@@ -55,7 +54,6 @@ export class UploadDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<UploadDialogComponent>,
-    private _snackBar: MatSnackBar,
     private globals: Globals,
     private brandService: BrandService,
     private productCatService: ProductCatService,

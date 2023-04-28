@@ -2,7 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import * as CryptoJS from 'crypto-js';
 
+import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
 import { Product } from 'src/app/models/masterdata/product.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
@@ -217,7 +219,7 @@ export class AparcreateDialogComponent implements OnInit {
         this.pdetailid.push(this.datas[x].id);
         this.productbill.push(this.datas[x].product_id);
         this.productname.push(this.datas[x].products.name);
-        this.prodcompany.push(localStorage.getItem("comp"));
+        this.prodcompany.push(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)));
         this.qrec.push(this.datas[x].qty_rec);
         this.uom.push(this.datas[x].uom_id);
         this.priceunit.push(this.datas[x].price_unit);
@@ -235,7 +237,7 @@ export class AparcreateDialogComponent implements OnInit {
       amount: y, date: this.datdate, duedate: this.datduedate ? this.datduedate : this.datdate, origin: this.transacid, productbill: this.productbill, qrec: this.qrec,
       productname: this.productname, uom: this.uom, priceunit: this.priceunit, tax: this.tax, discount: this.discount, 
       partner: this.supplierString, pdetail: this.pdetailid, qinv: this.qinv, subtotal: this.subtotal, 
-      company: localStorage.getItem("comp"), user: this.globals.userid
+      company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)), user: this.globals.userid
     };
     if(this.data[0]==='purchase'){
       this.journalService.createBill(journal)

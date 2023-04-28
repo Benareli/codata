@@ -2,6 +2,9 @@ import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import * as html2pdf from 'html2pdf.js';
+import * as CryptoJS from 'crypto-js';
+
+import { BaseURL } from 'src/app/baseurl';
 
 import { PrintService } from 'src/app/services/settings/print.service';
 
@@ -87,7 +90,7 @@ export class PrintComponent implements OnInit {
     var totalUntaxed = this.data[1].amount_untaxed ? this.thousandDecimal(this.data[1].amount_untaxed) : '';
     var total = this.data[1].amount_total ? this.thousandDecimal(this.data[1].amount_total) : '';
 
-    this.printService.getByDet(this.data[0], localStorage.getItem("comp"))
+    this.printService.getByDet(this.data[0], JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(prints => {
         const evaluated = eval(prints.template);
         this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(evaluated);
@@ -136,7 +139,7 @@ export class PrintComponent implements OnInit {
     var totalUntaxed = this.data[1].amount_untaxed ? this.thousandDecimal(this.data[1].amount_untaxed) : '';
     var total = this.data[1].amount_total ? this.thousandDecimal(this.data[1].amount_total) : '';
 
-    this.printService.getByDet(this.data[0], localStorage.getItem("comp"))
+    this.printService.getByDet(this.data[0], JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(prints => {
         const evaluated = eval(prints.template);
         this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(evaluated);
@@ -186,7 +189,7 @@ export class PrintComponent implements OnInit {
     var totalUntaxed = this.data[1].totalUntaxed ? this.thousandDecimal(this.data[1].totalUntaxed) : '';
     var total = this.data[1].total ? this.thousandDecimal(this.data[1].total) : '';
 
-    this.printService.getByDet(this.data[0], localStorage.getItem("comp"))
+    this.printService.getByDet(this.data[0], JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(prints => {
         const evaluated = eval(prints.template);
         this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(evaluated);
@@ -236,7 +239,7 @@ export class PrintComponent implements OnInit {
     var totalUntaxed = this.data[1].totalUntaxed ? this.thousandDecimal(this.data[1].totalUntaxed) : '';
     var total = this.data[1].total ? this.thousandDecimal(this.data[1].total) : '';
 
-    this.printService.getByDet(this.data[0], localStorage.getItem("comp"))
+    this.printService.getByDet(this.data[0], JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(prints => {
         const evaluated = eval(prints.template);
         this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(evaluated);

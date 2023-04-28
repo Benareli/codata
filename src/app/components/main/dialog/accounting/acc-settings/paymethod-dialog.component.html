@@ -1,0 +1,31 @@
+<div class="dialog-container submit-form flex flex-col justify-between">
+  <div class="w-100">
+    <div class="mb-3 flex flex-row justify-between items-center">
+      <span *ngIf="datname" class="title">{{datname}}</span>
+      <span *ngIf="!datname" class="title">New</span>
+      <button class="order-1 order-md-2 text-danger p-1" mat-button (click)="closeDialog()">X</button>
+    </div>
+
+    <div class="w-100 flex flex-col flex-md-row">
+      <div class="flex-100 flex-md-50 flex flex-row">
+        <div class="flex-30">Nama Pay Method *</div>
+        <span class="flex-5">:</span>
+        <input class="input flex-65" id="desc" required placeholder="Name" [(ngModel)]="datname">
+      </div>
+      <div class="flex-100 flex-md-50 flex flex-row mt-2 mt-md-0 ml-0 ml-md-2">
+        <div class="flex-30">Account *</div>
+        <span class="flex-5">:</span>
+        <select class="input flex-65" [(ngModel)]="datcoa">
+          <option value="0"></option>
+          <option *ngFor="let coa of coas" [value]="coa.id">
+            {{ coa.code }} - {{ coa.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+    
+  <div class="w-100">
+    <button mat-button class="w-100 btn btn-primary py-2" (click)="updateData()">Simpan</button>
+  </div>
+</div>

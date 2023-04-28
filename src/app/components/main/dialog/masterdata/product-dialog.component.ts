@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Observable } from "rxjs";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+import * as CryptoJS from 'crypto-js';
 
+import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
 import { Product } from 'src/app/models/masterdata/product.model';
 import { Productcat } from 'src/app/models/masterdata/productcat.model';
@@ -205,7 +206,6 @@ export class ProductDialogComponent implements OnInit {
     private purchaseDetailService: PurchasedetailService,
     private globals: Globals,
     private logService: LogService,
-    private fb: FormBuilder,
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
@@ -314,7 +314,7 @@ export class ProductDialogComponent implements OnInit {
         }
         this.retrieveBundle();
         this.retrieveBom();
-        this.productService.getCostComp(prod.id, localStorage.getItem("comp"))
+        this.productService.getCostComp(prod.id, JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
           .subscribe(pcost => {
             this.datcost = pcost.cost;
             this.oricost = pcost.cost;
@@ -325,17 +325,17 @@ export class ProductDialogComponent implements OnInit {
         this.posdet = posDet[0].totalLine;
         this.posqty = posDet[0].totalQty;
       })
-    this.purchaseDetailService.findByProduct(id, localStorage.getItem("comp"))
+    this.purchaseDetailService.findByProduct(id, JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(purDet => {
         this.purdet = purDet[0].totalline;
         this.purqty = purDet[0].totalqty;
       })
-    this.stockmoveService.findTransIn(id, localStorage.getItem("comp"))
+    this.stockmoveService.findTransIn(id, JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(transin => {
         this.qindet = transin[0].totalline;
         this.qinqty = transin[0].totalqin;
       })
-    this.stockmoveService.findTransOut(id, localStorage.getItem("comp"))
+    this.stockmoveService.findTransOut(id, JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(transout => {
         this.qoutdet = transout[0].totalline;
         this.qoutqty = transout[0].totalqout;
@@ -422,7 +422,7 @@ export class ProductDialogComponent implements OnInit {
             this.easytableBundle();
           }
         })
-      this.productService.findAllFGStock(localStorage.getItem("comp"))
+      this.productService.findAllFGStock(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(allfg => {
         this.bproducts = allfg;
       })
@@ -457,7 +457,7 @@ export class ProductDialogComponent implements OnInit {
             this.easytableBom();
           }
         })
-      this.productService.findAllRM(localStorage.getItem("comp"))
+      this.productService.findAllRM(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
         .subscribe(allrm => {
           this.boproducts = allrm;
         })
@@ -652,7 +652,7 @@ export class ProductDialogComponent implements OnInit {
       qty: this.bodatqty,
       uom: this.bodatuom,
       product: this.data,
-      company_id: localStorage.getItem("comp")
+      company_id: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8))
     };
     this.bomService.create(dataBom)
       .subscribe(res => {
@@ -804,7 +804,7 @@ export class ProductDialogComponent implements OnInit {
         active: this.isChecked,
         message: this.isUpdated,
         user: this.globals.userid,
-        company: localStorage.getItem("comp"),
+        company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)),
       };
       this.productService.update(this.data, dataProd)
         .subscribe({
@@ -851,7 +851,7 @@ export class ProductDialogComponent implements OnInit {
         supplier: this.partnerid,
         active: this.isChecked,
         user: this.globals.userid,
-        company: localStorage.getItem("comp"),
+        company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)),
       };
       this.productService.create(data)
         .subscribe({

@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+import * as CryptoJS from 'crypto-js';
 
 import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
@@ -13,6 +14,7 @@ import { Uom } from 'src/app/models/masterdata/uom.model';
 import { ProductService } from 'src/app/services/masterdata/product.service';
 import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
 import { BrandService } from 'src/app/services/masterdata/brand.service';
+import { SharedService } from 'src/app/shared.service';
 
 import { ProductDialogComponent } from '../../dialog/masterdata/product-dialog.component';
 import { StockMoveDialogComponent } from '../../dialog/transaction/stockmove/stockmove-dialog.component';
@@ -58,6 +60,7 @@ export class ProductComponent implements OnInit {
   constructor(
     private router: Router,
     private globals: Globals,
+    private sharedService: SharedService,
     private productService: ProductService,
     private productCatService: ProductCatService,
     private brandService: BrandService,
@@ -82,8 +85,8 @@ export class ProductComponent implements OnInit {
   }
 
   retrieveProduct(): void {
-    this.loaded = true;
-    this.productService.getAll(localStorage.getItem("comp"))
+    this.sharedService.setLoading(true)
+    this.productService.getAll(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(prod => {
         if(this.isIM || this.isAdm){
           this.products = prod;
@@ -104,6 +107,7 @@ export class ProductComponent implements OnInit {
         this.configuration.searchEnabled = false;
         /*this.configuration.tableLayout.borderless = true;
         this.configuration.tableLayout.striped = true;*/
+        this.sharedService.setLoading(false)
       })
     this.productCatService.findAllActive()
       .subscribe(dataPC => {

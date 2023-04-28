@@ -1,16 +1,16 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
+import * as CryptoJS from 'crypto-js';
 
 import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
-import { Company } from 'src/app/models/settings/company.model';
-import { User } from 'src/app/models/user_auth/user.model';
 
 import { TokenStorageService } from 'src/app/services/user_auth/token-storage.service';
 import { CompanyService } from 'src/app/services/settings/company.service';
 import { User2Service } from 'src/app/services/user_auth/user2.service';
+import { SharedService } from './shared.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +18,7 @@ import { User2Service } from 'src/app/services/user_auth/user2.service';
   styleUrls: ['./style/main.sass']
 })
 export class AppComponent implements OnInit, AfterViewInit{
+  loading = false;
   title = 'Codata';
   baseUrl = BaseURL.BASE_URL;
 
@@ -69,13 +70,17 @@ export class AppComponent implements OnInit, AfterViewInit{
   username?: string;
   constructor(
     private router: Router,
-    private route : ActivatedRoute,
     private globals: Globals,
+    private sharedService: SharedService,
     private user2Service: User2Service,
     private companyService: CompanyService,
     public breakpointObserver: BreakpointObserver,
     private tokenStorageService: TokenStorageService
   ){ 
+    this.sharedService.loading$.subscribe(loading => {
+      this.loading = loading;
+    });
+    
     router.events.subscribe(event => {
       if(event instanceof NavigationEnd){
         this.rute = '';
@@ -181,7 +186,11 @@ export class AppComponent implements OnInit, AfterViewInit{
             this.comp_name = company[0].comp_name;
             this.nav_color = "#" + company[0].nav_color;
             this.title_color = "#" + company[0].title_color;
-            localStorage.setItem("comp", company[0].id);
+            
+            //const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(company[0].id), BaseURL.API_KEY).toString();
+            //const decryptedData = JSON.parse((CryptoJS.AES.decrypt(encryptedData!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8));
+
+            localStorage.setItem("comp", CryptoJS.AES.encrypt(JSON.stringify(company[0].id), BaseURL.API_KEY).toString());
             this.globals.cost_general = company[0].cost_general;
             this.globals.companyid = company[0].id;
           }

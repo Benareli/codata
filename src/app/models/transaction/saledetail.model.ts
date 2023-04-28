@@ -7,6 +7,7 @@ export class Saledetail {
 	tax?: number;
 	subtotal?: number;
 	product?: string;
+	products?: any;
 	uom?: string;
 	partner?: string;
 	warehouse?: string;

@@ -16,7 +16,7 @@ import { TaxService } from 'src/app/services/accounting/tax.service';
 import { PaymentmethodService } from 'src/app/services/accounting/paymentmethod.service';
 
 import { TaxDialogComponent } from '../../../main/dialog/accounting/acc-settings/tax-dialog.component';
-
+import { PaymethodDialogComponent } from '../../dialog/accounting/acc-settings/paymethod-dialog.component';
 
 @Component({
   selector: 'app-acc-settings',
@@ -76,6 +76,27 @@ export class AccSettingsComponent implements OnInit {
 
   openTax(row: Tax): void {
     const dialog = this.dialog.open(TaxDialogComponent, {
+      width: '98%',
+      height: '90%',
+      disableClose: true,
+      data: row
+    })
+      .afterClosed()
+      .subscribe(() => this.retrieveData());
+  }
+
+  addPayMethod(): void {
+    const dialog = this.dialog.open(PaymethodDialogComponent, {
+      width: '98%',
+      height: '90%',
+      disableClose: true
+    })
+      .afterClosed()
+      .subscribe(() => this.retrieveData());
+  }
+
+  openPayMethod(row: Paymentmethod): void {
+    const dialog = this.dialog.open(PaymethodDialogComponent, {
       width: '98%',
       height: '90%',
       disableClose: true,

@@ -64,7 +64,7 @@ export class SmpartDialogComponent implements OnInit {
   ){}
 
   ngOnInit() {
-    this.datas = [{product:"",qty:"",price_unit:""}]
+    this.datas = [{products:{name:""},qty:"",price_unit:""}]
     this.dataSource.data = this.datas;
     this.dataActions = { purchase: this.retrievePO, sale: this.retrieveSO};
     if (this.data && this.dataActions[this.data[0]]) {
@@ -101,7 +101,7 @@ export class SmpartDialogComponent implements OnInit {
   retrievePODetail(): void {
     this.purchasedetailService.getByPOId(this.data[1])
       .subscribe(POD => {
-        if(this.datas[0].product=='') this.datas.splice(0,1);
+        if(this.datas[0].products.name==='') this.datas.splice(0,1);
           for(let x=0;x<POD.length;x++){
             this.datas.push(POD[x]);
             this.datas[x].qty_rec = 0;
@@ -128,12 +128,15 @@ export class SmpartDialogComponent implements OnInit {
   retrieveSODetail(): void {
     this.saledetailService.getBySOId(this.data[1])
       .subscribe(SOD => {
-        if(this.datas[0].product=='') this.datas.splice(0,1);
+        console.log(SOD);
+        if(this.datas[0].products.name==='') this.datas.splice(0,1);
           for(let x=0;x<SOD.length;x++){
             this.datas.push(SOD[x]);
             this.datas[x].qty_rec = 0;
+            this.datas[x].qoh = SOD[x].products.productcostcomps[0].qoh;
             this.datas[x].warehouse = this.warehouseString;
             this.dataSource.data = this.datas;
+            console.log("datas", this.datas);
           }
         })
   }

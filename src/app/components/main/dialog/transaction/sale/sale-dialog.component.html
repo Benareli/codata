@@ -3,7 +3,7 @@
     <div class="mb-1 flex flex-row justify-between items-center">
       <div class="w-100 flex flex-row justify-between items-start pt-1">
         <span class="title border-primary">{{saleid}}</span>
-        <button class="btn bg-white text-black py-1 px-2 h-1rem" (click)="openPrint()">PRINT <i class="fa fa-print"></i></button>
+        <button class="btn bg-white text-dark py-1 px-2 h-1rem" (click)="openPrint()">PRINT <i class="fa fa-print"></i></button>
         <div class="flex flex-col flex-md-row items-end items-md-start">
           <button *ngIf="data && !draft" class="order-2 order-md-1 mr-md-3 w-3rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1" (click)="openTransacStock()">{{smtotal | number}} <i class="fa fa-truck"></i></button>
           <button *ngIf="data && !draft" class="order-3 order-md-2 mr-md-3 w-3rem text-center text-gradient py-1 px-2 border-1 border-solid border-lightgray border-radius-1" (click)="openTransacAcc()">{{invtotal | number}} <i class="fa fa-file-text"></i></button>
@@ -26,7 +26,7 @@
       <div class="w-100 flex-100 flex-md-50 flex flex-row mt-2 mt-md-0 ml-0 ml-md-2">
         <div class="flex-30">Date</div>
         <span class="flex-5">:</span>
-        <input type="date" class="input flex-65" [disabled]="this.lock" [(ngModel)]="datdate"/>
+        <input type="date" class="input flex-65" [disabled]="this.lock" [(ngModel)]="datdate" name="datdate"/>
       </div>
     </div>
     <div class="w-100 flex flex-col flex-md-row justify-between items-start mt-0 mt-md-2">
@@ -43,7 +43,7 @@
       <div class="w-100 flex-100 flex-md-50 flex flex-row mt-2 mt-md-0 ml-0 ml-md-2">
         <div class="flex-30">Expected Date</div>
         <span class="flex-5">:</span>
-        <input type="date" class="input flex-65" [disabled]="this.lock" [(ngModel)]="datexpected"/>
+        <input type="date" class="input flex-65" [disabled]="this.lock" [(ngModel)]="datexpected" name="datexpected"/>
       </div>
     </div>
   
@@ -63,10 +63,10 @@
     <table class="w-100">
       <tr *ngIf="!lock" class="border-y-2 border-solid border-secondary py-1">
         <td class="td-style pl-2" fxFlex="35%">
-          <input (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term"/>
+          <input (focus)="onF()" placeholder="{{ph}}" [(ngModel)]="term" name="term"/>
         </td>
         <td class="td-style" fxFlex="7%">
-          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="datqty"/>
+          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="datqty" name="datqty"/>
         </td>
         <td class="td-style" fxFlex="7%">
         </td>
@@ -78,16 +78,16 @@
           </select>
         </td>
         <td class="td-style" fxFlex="13%">
-          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="datprice"/>
+          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="datprice" name="datprice"/>
         </td>
         <td class="td-style" fxFlex="5%">
-          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="datdisc"/>
+          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="datdisc" name="datdisc"/>
         </td>
         <td class="td-style" fxFlex="5%">
-          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="dattax"/>
+          <input class="w-90 text-right" (blur)="calculate()" [(ngModel)]="dattax" name="dattax"/>
         </td>
         <td class="td-style" fxFlex="16%">
-          <input disabled class=" text-right" [(ngModel)]="datsub"/>
+          <input disabled class=" text-right" [(ngModel)]="datsub" name="datsub"/>
         </td>
         <td class="td-style text-center" fxFlex="5%">
           <div class="w-2rem btn-rainbow text-center" (click)="pushing()">
@@ -192,8 +192,8 @@
       <tr>
         <td fxFlex="69%">
           <div class="flex flex-row justify-around items-center">
-            <button class="text-primary uppercase flex50 text-13" (click)="openSendPartial()" *ngIf="data && !draft && persenqty! < 100"><i class="fa fa-arrow-up"></i> Sebagian</button>
-            <button class="text-primary uppercase flex50 text-13" (click)="sendAll()" *ngIf="data && !draft && persenqty! < 100"><i class="fa fa-arrow-up"></i> Semua</button>
+            <button class="text-secondary uppercase flex50 text-13" (click)="openSendPartial()" *ngIf="data && !draft && persenqty! < 100"><i class="fa fa-arrow-up"></i> Sebagian</button>
+            <button class="text-secondary uppercase flex50 text-13" (click)="sendAll()" *ngIf="data && !draft && persenqty! < 100"><i class="fa fa-arrow-up"></i> Semua</button>
           </div>
         </td>
         <td colspan="3" fxFlex="31%" class="text-right">

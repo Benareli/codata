@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import * as CryptoJS from 'crypto-js';
 
+import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
 
 import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
@@ -46,7 +48,7 @@ export class ProductcatDialogComponent implements OnInit {
   ngOnInit() {
     this.retrieveCoa();
     if (this.data.active == true){
-      this.productCatService.findOneAcc(this.data.id, localStorage.getItem("comp"))
+      this.productCatService.findOneAcc(this.data.id, JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
         .subscribe(dataAcc => {
           this.revId = dataAcc.revenue_id;
           this.expId = dataAcc.cost_id;

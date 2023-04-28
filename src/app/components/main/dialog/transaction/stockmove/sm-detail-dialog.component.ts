@@ -2,7 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import * as CryptoJS from 'crypto-js';
 
+import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
 import { Stockmove } from 'src/app/models/transaction/stockmove.model';
 import { Product } from 'src/app/models/masterdata/product.model';
@@ -130,7 +132,7 @@ export class SMDetailDialogComponent implements OnInit {
   }
 
   retrieveData(): void {
-    this.productService.findAllActive(localStorage.getItem("comp"))
+    this.productService.findAllActive(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(prod => {
         this.products = prod;
       })
@@ -222,7 +224,8 @@ export class SMDetailDialogComponent implements OnInit {
       const dataPush = {
         id: this.datid, product: this.datprod, prodid: this.datid, qty: this.datqty, qty_done: 0, 
         uom: this.uomz, uomid: this.uomString, user: this.globals.userid, from: this.fromString, 
-        to: this.tooString, type: this.typeTrans, date: this.datdate, company: localStorage.getItem("comp"),
+        to: this.tooString, type: this.typeTrans, date: this.datdate, 
+        company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)),
         cost: this.datcost
       }
       this.datas.push(dataPush);

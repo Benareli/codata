@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import * as CryptoJS from 'crypto-js';
 
+import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
 import { Uom } from 'src/app/models/masterdata/uom.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
@@ -127,7 +129,7 @@ export class StockMoveDialogComponent implements OnInit {
       cost: this.datcost ?? 0,
       uom_id: Number(this.datuom),
       date: new Date(),
-      company_id: localStorage.getItem("comp"),
+      company_id: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)),
       meth: this.globals.cost_general,
     };
     this.stockmoveService.create(dataSM)

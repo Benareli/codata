@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Globals } from 'src/app/global';
 
-import { LogService } from 'src/app/services/settings/log.service';
 import { PaymentmethodService } from 'src/app/services/accounting/paymentmethod.service';
 
 @Component({
@@ -42,7 +41,6 @@ export class PaymentDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<PaymentDialogComponent>,
     private _snackBar: MatSnackBar,
     private globals: Globals,
-    private logService: LogService,
     private paymentmethodService: PaymentmethodService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
@@ -66,6 +64,7 @@ export class PaymentDialogComponent implements OnInit {
     this.paymentmethodService.getAll()
       .subscribe(pm => {
         this.paymentMethods = pm;
+        this.selectedPm = pm[0];
       })
   }
 
@@ -76,7 +75,6 @@ export class PaymentDialogComponent implements OnInit {
   payMeth(pm: any): void {
     this.pay1Meth = pm.id;
     this.selectedPm = pm;
-    console.log(this.pay1Meth);
   }
 
   onPay1Change(val: string) {
@@ -177,6 +175,11 @@ export class PaymentDialogComponent implements OnInit {
         this.payment2 = '';
       }
       this.payment2 += key;
+      this.countChange();
+    }
+
+    if(Number(this.payment) > this.data.total){
+      this.payment = this.data.total.toString();
       this.countChange();
     }
   }

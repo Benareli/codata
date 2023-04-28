@@ -1,9 +1,9 @@
-<div class="container">
-	<div class="pl-2 h-1rem pt-1">
+<div class="container items-end">
+	<div class="pl-2 h-2rem pt-1">
 		<div *ngIf="isIM || isAdm" class="submit-form">
     	<div class="flex flex-row items-end">
-        <input #input maxlength="6" type="text" class="input h-1rem w-4rem" name="catid" [(ngModel)]="productcatadd.catid" required id="catid" placeholder="ID Kategori * (max 6 char)">
-        <input type="text" class="input h-1rem w-4rem ml-3" name="description" [(ngModel)]="productcatadd.description" required id="description" placeholder="Nama *">
+        <input #input maxlength="6" type="text" class="input h-2rem w-4rem" name="catid" [(ngModel)]="productcatadd.catid" required id="catid" placeholder="ID Kategori * (max 6 char)">
+        <input type="text" class="input h-2rem w-4rem ml-3" name="description" [(ngModel)]="productcatadd.description" required id="description" placeholder="Nama *">
         <div class="btn-quick btn-quick-left ml-3" (click)="saveProductCat()">+ Add</div>
     	</div>
   	</div>

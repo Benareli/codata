@@ -2,14 +2,15 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import * as CryptoJS from 'crypto-js';
 
+import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
 import { Journal } from 'src/app/models/accounting/journal.model';
 import { Partner } from 'src/app/models/masterdata/partner.model';
 import { Entry } from 'src/app/models/accounting/entry.model';
 
 import { JournalService } from 'src/app/services/accounting/journal.service';
-import { EntryService } from 'src/app/services/accounting/entry.service';
 import { PartnerService } from 'src/app/services/masterdata/partner.service';
 import { PaymentService } from 'src/app/services/accounting/payment.service';
 import { IdService } from 'src/app/services/settings/id.service';
@@ -78,7 +79,6 @@ export class BillDialogComponent implements OnInit {
     private dialog: MatDialog,
     private globals: Globals,
     private journalService: JournalService,
-    private entryService: EntryService,
     private partnerService: PartnerService,
     private paymentService: PaymentService,
     private idService: IdService,
@@ -119,8 +119,8 @@ export class BillDialogComponent implements OnInit {
         this.lock = journal!.lock!;
         this.datas = journal!.entrys!;
         this.ent = journal!.entrys!;
-        this.crossCoas = this.ent.find(entry => entry.label === "Payable");
         this.paymentx = journal!.payments;
+        this.crossCoas = this.ent.find(entry => entry.label === "Payable");
         for(let x=0;x<this.datas.length;x++){
           if(this.datas[x].products){
             this.entrys.push(this.datas[x]);
@@ -178,7 +178,8 @@ export class BillDialogComponent implements OnInit {
         this.payid = idp.message;
         const payments = {pay_id: this.payid, order_id: this.journidtitle,
           amount_total: this.thistotal, payment: res.payment, pay_method: res.pay_type,
-          date: this.today, type: "out", cross: this.crossCoas.credits, company: localStorage.getItem("comp")
+          date: this.today, type: "out", cross: this.crossCoas.credits,
+          company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8))
         };
         this.paymentService.create(payments)
           .subscribe(res => {

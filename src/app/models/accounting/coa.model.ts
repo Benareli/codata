@@ -5,4 +5,5 @@ export class Coa {
     code?: string;
     name?: string;
     active?: boolean;
+    type?: number;
 }

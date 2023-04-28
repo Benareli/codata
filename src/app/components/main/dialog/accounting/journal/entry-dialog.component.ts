@@ -1,15 +1,15 @@
-import { Component, OnInit, Inject, Optional, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import * as CryptoJS from 'crypto-js';
 
+import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
-import { Journal } from 'src/app/models/accounting/journal.model';
 import { Entry } from 'src/app/models/accounting/entry.model';
 import { Coa } from 'src/app/models/accounting/coa.model';
 
 import { JournalService } from 'src/app/services/accounting/journal.service';
-import { EntryService } from 'src/app/services/accounting/entry.service';
 import { CoaService } from 'src/app/services/accounting/coa.service';
 
 @Component({
@@ -57,7 +57,6 @@ export class EntryDialogComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private globals: Globals,
     private journalService: JournalService,
-    private entryService: EntryService,
     private coaService: CoaService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
@@ -190,7 +189,7 @@ export class EntryDialogComponent implements OnInit {
         type: this.jourtype,
         entry: this.entrys,
         amount: this.debit,
-        company: localStorage.getItem("comp"),
+        company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)),
         user: this.globals.userid
       }
       this.journalService.createJour(Jour)

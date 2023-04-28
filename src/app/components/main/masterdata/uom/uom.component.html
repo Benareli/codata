@@ -1,20 +1,20 @@
-<div class="container">
+<div class="container items-end">
 	<div class="pl-2 h-2rem pt-1">
 		<div *ngIf="isIM || isAdm" class="submit-form">
     	<div class="flex flex-row items-end">
-        <input class="input h-1rem w-4rem" type="text" name="name" [(ngModel)]="uomadd.uom_name" required id="name" placeholder="Name *">
-        <select class="input h-1rem w-4rem ml-3" [(ngModel)]="datcat">
+        <input class="input h-2rem w-4rem" type="text" name="name" [(ngModel)]="uomadd.uom_name" required id="name" placeholder="Name *">
+        <select class="input h-2rem w-4rem ml-3" [(ngModel)]="datcat">
           <option *ngFor="let uomcat of uomcats" [value]="uomcat.id">
             {{ uomcat.uom_cat }}
           </option>
         </select>
-        <input class="input h-1rem w-4rem ml-3" type="text" name="ratio" [(ngModel)]="uomadd.ratio" required id="ratio" placeholder="Ratio *">
+        <input class="input h-2rem w-4rem ml-3" type="text" name="ratio" [(ngModel)]="uomadd.ratio" required id="ratio" placeholder="Ratio *">
       	<div class="btn-quick btn-quick-left ml-3" (click)="saveUom()">+ Add</div>
     	</div>
   	</div>
 	</div>
 
-	<div class="pr-2 h-1rem">
+	<div class="pr-2">
     <div class="btn-quick btn-quick-right" (click)="toggleDisplay()">Filter</div>
 	</div>
 </div>

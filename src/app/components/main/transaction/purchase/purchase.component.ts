@@ -14,6 +14,7 @@ import { PurchaseService } from 'src/app/services/transaction/purchase.service';
 import { PurchasedetailService } from 'src/app/services/transaction/purchasedetail.service';
 import { PartnerService } from 'src/app/services/masterdata/partner.service';
 import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+import { SharedService } from 'src/app/shared.service';
 
 import { PurchaseDialogComponent } from '../../dialog/transaction/purchase/purchase-dialog.component';
 
@@ -52,6 +53,7 @@ export class PurchaseComponent implements OnInit {
   constructor(
     private router: Router,
     private globals: Globals,
+    private sharedService: SharedService,
     private dialog: MatDialog,
     private purchaseService: PurchaseService,
     private purchasedetailService: PurchasedetailService,
@@ -170,8 +172,15 @@ export class PurchaseComponent implements OnInit {
       disableClose: true,
       data: id
     }).afterClosed().subscribe(result => {
-      if(result) this.openDialog(result);
-      this.retrieveData();
+      if(result) {
+        this.sharedService.setLoading(true)
+        setTimeout(() => {
+          this.sharedService.setLoading(false)
+          this.openDialog(result);
+        },100); 
+      }else{
+        this.retrieveData();
+      }
     });
   }
 }

@@ -2,7 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import * as CryptoJS from 'crypto-js';
 
+import { BaseURL } from 'src/app/baseurl';
 import { Globals } from 'src/app/global';
 import { Product } from 'src/app/models/masterdata/product.model';
 import { Uom } from 'src/app/models/masterdata/uom.model';
@@ -157,7 +159,7 @@ export class PurchaseDialogComponent implements OnInit {
         this.warehouses = datawh;
         this.warehouseString = datawh[0].id;
       });
-    this.productService.findAllPOReady(localStorage.getItem("comp"))
+    this.productService.findAllPOReady(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(dataProd => {
         this.products = dataProd;
       });
@@ -409,7 +411,7 @@ export class PurchaseDialogComponent implements OnInit {
       paid: 0,
       delivery_state: 0,
       open: true,
-      company: localStorage.getItem("comp")
+      company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8))
     };
     this.purchaseService.create(purcHeaderData)
       .subscribe({
@@ -456,7 +458,7 @@ export class PurchaseDialogComponent implements OnInit {
         warehouse: this.warehouseString,
         date: this.datdate,
         user: this.globals.userid,
-        company: localStorage.getItem("comp")
+        company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8))
       };
       this.purchasedetailService.create(purchaseDetail)
         .subscribe({
@@ -474,7 +476,8 @@ export class PurchaseDialogComponent implements OnInit {
     }
     this.purchasedetailService.updateReceiveAll(
       this.globals.userid, this.supplierString, this.warehouseString, this.datdate, 
-      localStorage.getItem("comp"), this.datas)
+      JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)), 
+      this.datas)
       .subscribe(res => {
         this.closeBackDialog();
       })
@@ -490,7 +493,8 @@ export class PurchaseDialogComponent implements OnInit {
       if(result){
         this.purchasedetailService.updateReceiveAll(
           this.globals.userid, this.supplierString, result[0].warehouse, result[0].date,
-          localStorage.getItem("comp"), result)
+          JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)), 
+          result)
             .subscribe(res => {
               this.closeBackDialog();
             })

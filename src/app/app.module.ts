@@ -106,6 +106,7 @@ import { EntryDialogComponent } from './components/main/dialog/accounting/journa
 import { AparcreateDialogComponent } from './components/main/dialog/accounting/journal/aparcreate-dialog.component';
 //Accounting - Setting
 import { TaxDialogComponent } from './components/main/dialog/accounting/acc-settings/tax-dialog.component';
+import { PaymethodDialogComponent } from './components/main/dialog/accounting/acc-settings/paymethod-dialog.component';
 
 //Upload
 import { UploadDialogComponent } from './components/main/dialog/upload/upload-dialog.component';
@@ -194,6 +195,7 @@ import { TicketDialogComponent } from './components/main/dialog/ticket-dialog.co
     AparcreateDialogComponent,
     //Accounting - Settings
     TaxDialogComponent,
+    PaymethodDialogComponent,
 
     //Upload
     UploadDialogComponent,
