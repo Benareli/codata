@@ -1,76 +1,133 @@
-<div class="loaders" *ngIf="loaded">
-	<!--<div class="gooey">
-  		<span class="dot"></span>
-  		<div class="dots">
-    		<span></span><span></span><span></span>
-  		</div>
-	</div>-->
-	<div class="loader"></div>
-</div>
-<div class="container" *ngIf="!loaded">
-	<!--<div fxLayout="column" class="left-container">
-		<div >
-			<button class="session" *ngIf="pos_open" [routerLink]="'/pos-session'">Kembali ke sesi</button>
-		</div>
-		<mat-form-field style="max-height: 40pt !important;">
-      		<input matInput type="text" class="form-control" placeholder="Search data" [(ngModel)]="term">
-    	</mat-form-field>
-		<button class="clear-filter" (click)="clearFilter()">Clear Filter</button>
-		<div class="filter">
-		Kategori
-		<ul>
-      		<li class="list-group-item category"
-        		*ngFor="let productcat of productcats; let i1 = index"
-        		[class.active]="i1 == currentIndex1"
-        		(click)="filterCategory(productcat, i1)">
-        	{{ productcat.description }}
-      		</li>
-    	</ul>
-
-		Merek
-		<ul>
-      		<li class="list-group-item category"
-        		*ngFor="let brand of brands; let i2 = index"
-        		[class.active]="i2 == currentIndex2"
-        		(click)="filterBrands(brand, i2)">
-        	{{ brand.description }}
-      		</li>
-    	</ul>
-    	</div>
-	</div>-->
-
-	<!--cols="3"-->
-	<div class="center-container">
-		<div fxLayout="row" fxLayoutAlign="space-around center" style="margin-bottom: 5pt;">
-			<div *ngIf="pos_open" style="width: 150pt; padding-right: 5pt;">
-				<button class="session" style="height: 30pt;" [routerLink]="'/pos-session'">Kembali ke sesi</button>
-			</div>
-			<input type="text" class="inputs" style="width: 90%;" placeholder="Search data" [(ngModel)]="term">
+<div class="bg-lightgray w-100 flex flex-col flex-md-row justify-center items-start" style="height: calc(100vh - 60px);">
+  <div class="flex-60 h-100">
+	<div class="flex flex-row justify-around items-center m-2">
+	  <div *ngIf="pos_open" style="width: 150pt; padding-right: 5pt;">
+		<button class="bg-primary text-white" style="height: 30pt;" [routerLink]="'/pos-session'">Kembali ke sesi</button>
+	  </div>
+	  <input type="text" class="input w-90" placeholder="Search data" [(ngModel)]="term">
       
 			<!--<mat-form-field style="max-height: 40pt !important; width: 90%;">
       			<input matInput type="text" class="form-control" style="text-align: center;" placeholder="Search data" [(ngModel)]="term">
     		</mat-form-field>-->
 			<!--<button class="clear-filter" (click)="clearFilter()">Clear Filter</button>-->
+	</div>
+    <!--<mat-grid-list 
+      [cols]="cols"
+      [rowHeight]="rowHeight">
+      <mat-grid-tile *ngFor="let product of products | filter:term" [colspan]="1" [rowspan]="2" (click)="adding(product)">
+        <mat-card class="w-10rem h-20rem">
+          <mat-card-content>
+            <div class="text-13">{{product.name}}</div>
+            <img mat-card-image class="w-80 mx-auto" src="{{baseUrl}}files/files/{{product.image}}"/>
+            <div class="bg-primary text-dark w-auto p-1">Rp {{product.listprice | number}}</div>
+          </mat-card-content>        
+        </mat-card>
+      </mat-grid-tile> 
+    </mat-grid-list>-->
+	<div class="flex flex-wrap gap-1rem m-2">
+	  <div *ngFor="let product of products | filter:term" style="flex-basis: calc(20% - 1rem);" (click)="adding(product)">
+		<div class="w-9rem h-11rem bg-white flex flex-col border-radius-1 overflow-hidden">
+		  <div class="w-100 h-3rem bg-white text-14 text-center border-b-2 border-solid border-secondary">
+			<b>{{product.name}}</b>
+		  </div>
+		  <div class="w-90 mt-1 mb-1 h-5rem mx-auto overflow-hidden">
+			<img class="mx-auto w-100" src="{{baseUrl}}files/files/{{product.image}}" />
+		  </div>
+		  <div class="mt-1 w-auto ml-auto">
+			<span class="bg-primary border-radius-1 text-dark p-1">Rp {{product.listprice | number}}</span>
+		  </div>
 		</div>
-       	<mat-grid-list 
-       		[cols]="cols"
-       		[rowHeight]="rowHeight">
-      		<mat-grid-tile *ngFor="let product of products | filter:term" [colspan]="1" [rowspan]="2" (click)="adding(product)">
-        		<mat-card>
-            		<mat-card-content>
-            			<div class="mat-content">
-            				<div class="title">{{product.name}}</div>
-            				<img mat-card-image class="imgs" src="{{baseUrl}}files/files/{{product.image}}"/>
-               				<div class="price">Rp {{product.listprice | number}}</div>
-               			</div>
-            		</mat-card-content>        
-        		</mat-card>
-         	</mat-grid-tile> 
-        </mat-grid-list>
+	  </div>
+	</div>
+  </div>
+
+  <div class="flex-40 h-100 bg-gray">
+	<div class="flex flex-col h-100 justify-between items-center">
+	  <div class="flex flex-col w-100">
+	    <div class="flex flex-row mt-2 h-3rem">
+		  <div class="flex-80 flex flex-row mx-1 justify-around items-center">
+		  	<select class="input flex-45" [disabled]="pos_open" [(ngModel)]="selectedStore">
+		  	  <option *ngFor="let store of stores" [value]="store.id">
+			  	{{ store.store_name }}
+		  	  </option>
+		  	</select>
+		  	<span class="flex-5"></span>
+		  	<select class="input flex-45" [(ngModel)]="selectedPartner">
+			  <option value=""></option>
+			  <option *ngFor="let partner of partners" [value]="partner.id">
+			  	{{ partner.name }}
+			  </option>
+		  	</select>
+	  	  </div>
+
+	  	  <div class="flex-20 h-3rem">
+    	    <div (click)="toggleCalc()"></div>
+    	    <mat-button-toggle-group #group="matButtonToggleGroup" [(value)]="discType">
+    		  <mat-button-toggle value="percent" aria-label="Percent">
+    		    Disc %
+  			  </mat-button-toggle>
+			  <mat-button-toggle value="amount" aria-label="Amount">
+			    Disc Rp
+			  </mat-button-toggle>
+  		  	</mat-button-toggle-group>
+    	  	<div class="discount-amount" style="padding-left: 10px; padding-right: 10px; cursor: default;" (click)="toggleCalc()">{{disc | number}}</div>
+    	  </div>
+	  	</div>
+
+		<div class="w-100 mt-2" style="overflow-y:scroll;">
+		  <ul class="mx-1">
+		    <li class="list-group-item" class="bg-white p-1 border-radius-1 overflow-hidden" style="margin-top: 5px;" *ngFor="let order of orders; let i3 = index">
+						  <!--(click)="posDetailClick(i3)"-->
+					  <!--(click)="setActiveTutorial(tutorial, i)"-->
+			  <div class="flex flex-row justify-between items-center">
+				<div (click)="openPosDetail(i3)" class="flex flex-col flex-60 pr-1 text-left">
+				  {{ order.product_name }}
+				  <div class="text-13 text-dark" style="margin-top: 5px;"><span class="text-17">{{order.qty_rec}}</span> {{order.suom}} x {{order.price_unit | number}} 
+				  	<span *ngIf="order.discount > 0">disc {{disc | number}}%</span>
+				  	<span *ngIf="order.discadd > 0 && disc != '0'"> + </span>
+				  	<span *ngIf="order.discadd > 0 && disc == '0'">disc </span>
+				  	<span *ngIf="order.discadd > 0">{{order.discadd | number}}</span>
+				  	<span *ngIf="order.tax >0">, tax{{order.tax}}%</span>
+				  	<span *ngIf="order.include"> inc</span>
+				  </div>
+			  	</div>
+			  	<div (click)="openPosDetail(i3)" class="flex flex-col flex-35">
+				  <div class="text-17 text-right pr-2">{{order.subtotal | number}}</div>
+			  	</div>
+			  	<div class="flex flex-col flex-5">
+				  <button class="bg-dark border-radius-2 w-2rem p-0 text-17 text-success" (click)="posDetailAdd(i3)">+</button>
+				  <button class="bg-dark border-radius-2 w-2rem p-0 text-17 text-danger" (click)="posDetailMin(i3)">-</button>
+			  	</div>
+			  </div>
+			</li>
+		  </ul>
+		</div>
+	  </div>
+
+	  <div class="w-100 bg-gradient text-white overflow-hidden">
+		<div class="m-1 flex flex-row justify-between">
+		  <div class="flex flex-col">
+			<div class="flex flex-row justrify-around items-start">
+			  <span>Sub: <b>{{subtotal | number}}</b></span>
+			  <span class="mx-1">-</span>
+			  <span>Disc: <b>{{disc | number}}%</b></span>
+			  <span *ngIf="discadd > 0"> - Rp.<b>{{discadd | number}}</b></span>
+			  <span class="mx-1">+</span>
+			  <span>Tax: <b>{{tax | number}}</b></span>
+			</div>
+			<div class="flex flex-row mt-1 text-20 items-start">
+			  <span class="total-text">Total  Rp.<b>{{total | number}}</b></span>
+			</div>
+		  </div>
+		  <div (click)="startPay()">PAY</div>
+		</div>
+	  </div>
 	</div>
 
-	<div class="right-container">
-		<div class="qops" *ngIf="isqop">
+	  
+  </div>
+</div>
+		<!--<div class="qops" *ngIf="isqop">
 			<ul class="prod">
    				<li class="list-group-item category"
       			  *ngFor="let qops of qopss; let i1 = index"
@@ -84,43 +141,11 @@
       			  </div>
     			</li>
   			</ul>
-		</div>
-		<div class="pos-number" *ngIf="!isqop">
-			<div>
-				<div fxLayout="row" style="margin-top:-8pt; margin-left:10pt; margin-right:10pt" fxLayoutAlign="space-around center">
-					<mat-form-field style="height:30pt; width:90pt;" class="input_field flex50">
-    					<mat-select name="storeString" (selectionChange)="selectedValue2($event)" [disabled]="pos_open" [(value)]="selectedStore">
-      						<mat-option *ngFor="let store of stores" [value]="store.id" ngDefaultControl>
-        					{{ store.store_name }}
-      						</mat-option>
-    					</mat-select>
-  					</mat-form-field>
-					<mat-form-field style="height:30pt; width:90pt;" class="input_field flex50 margin_7">
-						<mat-label>Customer</mat-label>
-    					<mat-select name="partnerString" (selectionChange)="selectedValue($event)" [(value)]="selectedPartner">
-    						<mat-option value="null"> </mat-option>
-      						<mat-option *ngFor="let partner of partners" [value]="partner.id" ngDefaultControl>
-        					{{ partner.name }}
-      						</mat-option>
-    					</mat-select>
-  					</mat-form-field>
-				</div>
-				<div class="discount">
-    				<div (click)="toggleCalc()" style="margin-top:3pt;">Discount</div>
-    				<div>
-    					<mat-button-toggle-group #group="matButtonToggleGroup" [(value)]="discType">
-    						<!--(change)="onDiscChange(group.value)"-->
-  							<mat-button-toggle value="percent" aria-label="Percent">
-    						%
-  							</mat-button-toggle>
-  							<!--<mat-button-toggle value="amount" aria-label="Amount">
-    						Rp
-  							</mat-button-toggle>-->
-						</mat-button-toggle-group>
-    				</div>
-    				<div class="discount-amount" style="padding-left: 10px; padding-right: 10px; cursor: default;" (click)="toggleCalc()">{{disc | number}}</div>
-    			</div>
-    			<div fxLayout="column" class="calc-holder" *ngIf="isCalc">
+		</div>-->
+	
+	  
+	  
+    	<!--<div fxLayout="column" class="calc-holder" *ngIf="isCalc">
         			<div fxLayout="row">
           				<button class="calc" (click)="press('1')">1</button>
           				<button class="calc" (click)="press('2')">2</button>
@@ -142,61 +167,24 @@
           				<button class="calc" style="color:red;" (click)="toggleCalc()">close</button>
         			</div>
       			</div>
-				<div style="margin-top:7pt;height:285pt;overflow-y:scroll;">
-					<ul style="margin:0pt 3pt;">
-      					<li class="list-group-item" *ngFor="let order of orders; let i3 = index">
-      						<!--(click)="posDetailClick(i3)"-->
-      					<!--(click)="setActiveTutorial(tutorial, i)"-->
-      					<div fxLayout="row" fxLayoutAlign="space-between center">
-      						<div (click)="openPosDetail(i3)" fxLayout="column" class="flex60" style="padding-right:3pt;">
-        						{{ order.product_name }}
-        						<div>{{order.qty}} {{order.suom}} x {{order.price_unit | number}} 
-        							<font style="color: #787878; font-size:.9em;">
-        							<span *ngIf="order.discount > 0">disc {{disc | number}}%</span>
-        							<span *ngIf="order.discadd > 0 && disc != '0'"> + </span>
-        							<span *ngIf="order.discadd > 0 && disc == '0'">disc </span>
-        							<span *ngIf="order.discadd > 0">{{order.discadd | number}}</span>
-        							<span *ngIf="order.tax >0">, tax{{order.tax}}%</span>
-        							<span *ngIf="order.include"> inc</span>
-        							</font>
-        						</div>
-        					</div>
-        					<div (click)="openPosDetail(i3)" fxLayout="column" class="flex30">
-        						<div style="font-size:1.1em; text-align:right;padding-right:3pt;">{{order.subtotal | number}}</div>
-        					</div>
-        					<div fxLayout="column" class="flex10">
-        						<button class="add-btn" (click)="posDetailAdd(i3)">+</button>
-        						<button class="min-btn" (click)="posDetailMin(i3)">-</button>
-        					</div>
-        				</div>
-      					</li>
-    				</ul>
-    			</div>
-    		</div>
-    		
-    		<!--<div class="total">
-    			<div style="padding-top:5pt;">Total Rp.<b>{{total | number}}</b></div>
-    			<div class="paynow" style="margin-top:0pt">Pay</div>
-    		</div>-->
-		</div>
-	</div>
-	<div class="total">
-		<div fxLayout="column" class="flex80">
-			<div fxLayout="row" fxLayoutAlign="space-around start">
-				<div style="color:#ddd;">Sub: <b>{{subtotal | number}}</b></div>
-				<div style="color:#ddd;">-</div>
-				<div style="color:#ddd;">Disc: <b>{{disc | number}}%</b></div>
-				<div *ngIf="discadd > 0" style="color:#ddd;"> - Rp.<b>{{discadd | number}}</b></div>
-				<div style="color:#ddd;">+</div>
-				<div style="color:#ddd;">Tax: <b>{{tax | number}}</b></div>
-			</div>
-    		<div fxLayout="row" fxLayoutAlign="space-around start">
-    			<div class="total-text">Total  Rp.<b>{{total | number}}</b></div>
-    		</div>
-    	</div>
-    	<div class="paynow flex20" (click)="startPay()">PAY</div>
-    	<!--<button class="paynow flex20" printSectionId="biji" ngxPrint>
-    	PAY</button>-->
-    </div>
-</div>
+		</div>-->
 
+
+
+<!--<div class="fixed" style="right: 10pt; bottom: 10pt;">
+	<div class="flex flex-col bg-primary w-38rem p-2">
+	  <div class="flex flex-row justrify-around items-start">
+		<div style="color:#ddd;">Sub: <b>{{subtotal | number}}</b></div>
+		<div style="color:#ddd;">-</div>
+		<div style="color:#ddd;">Disc: <b>{{disc | number}}%</b></div>
+		<div *ngIf="discadd > 0" style="color:#ddd;"> - Rp.<b>{{discadd | number}}</b></div>
+		  <div style="color:#ddd;">+</div>
+		  <div style="color:#ddd;">Tax: <b>{{tax | number}}</b></div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="space-around start">
+		  <div class="total-text">Total  Rp.<b>{{total | number}}</b></div>
+		</div>
+	  </div>
+	  <div class="paynow flex20" (click)="startPay()">PAY</div>
+	  
+  </div>-->

@@ -19,6 +19,9 @@ export class CompanyService {
   getAll(): Observable<Company[]> {
     return this.http.get<Company[]>(baseUrl, { 'headers': headers });
   }
+  get(id: any): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/get/${id}`, { 'headers': headers });
+  }
   update(id: any, data: any): Observable<any> {
     return this.http.put(`${baseUrl}/${id}`, data, { 'headers': headers });
   }

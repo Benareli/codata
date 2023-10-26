@@ -38,7 +38,7 @@ export class StoreService {
   deleteAll(): Observable<any> {
     return this.http.delete(baseUrl, { 'headers': headers });
   }
-  findAllActive(): Observable<Store[]>{
-    return this.http.get<Store[]>(`${baseUrl}/active`, { 'headers': headers });
+  findAllActive(comp: any): Observable<Store[]>{
+    return this.http.get<Store[]>(`${baseUrl}/active/${comp}`, { 'headers': headers });
   }
 }

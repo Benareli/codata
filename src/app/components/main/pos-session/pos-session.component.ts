@@ -83,7 +83,7 @@ export class PosSessionComponent implements OnInit {
     });
     this.possessionService.getUserClose(this.globals.userid)
       .subscribe(sessclose => {this.posessiondones = sessclose});
-    this.storeService.findAllActive()
+    this.storeService.getAll()
       .subscribe(store => {this.stores = store;this.storeString=store[0].id});
   }
 

@@ -1,6 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Globals } from 'src/app/global';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { Coa } from 'src/app/models/accounting/coa.model';
+
+import { CoaService } from 'src/app/services/accounting/coa.service';
 import { TaxService } from 'src/app/services/accounting/tax.service';
 
 @Component({
@@ -17,10 +21,14 @@ export class TaxDialogComponent implements OnInit {
   datname?: string = "";
   dattax?: number = 0;
   explainer?: string = "";
+  coas?: Coa[];
+  taxInId?: number;
+  taxOutId?: number;
 
   constructor(
     public dialogRef: MatDialogRef<TaxDialogComponent>,
     private globals: Globals,
+    private coaService: CoaService,
     private taxService: TaxService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ){}
@@ -42,10 +50,16 @@ export class TaxDialogComponent implements OnInit {
   }
 
   retrieveTax(): void {
+    this.coaService.getAll()
+      .subscribe(coa => {
+        this.coas = coa;
+      })
     this.taxService.get(this.data.id)
       .subscribe(taxs => {
         this.datname = taxs.name;
         this.dattax = taxs.tax;
+        this.taxInId = taxs.coa_in_id;
+        this.taxOutId = taxs.coa_out_id;
         this.datinclude = taxs!.include!.toString();
         this.include = taxs.include;
         this.checkExplainer();
@@ -88,7 +102,9 @@ export class TaxDialogComponent implements OnInit {
       const tax = {
         name: this.datname,
         tax: Number(this.dattax),
-        include: this.include
+        include: this.include,
+        coa_in_id: this.taxInId,
+        coa_out_id: this.taxOutId,
       };
       this.taxService.update(this.data.id, tax)
         .subscribe(res => {

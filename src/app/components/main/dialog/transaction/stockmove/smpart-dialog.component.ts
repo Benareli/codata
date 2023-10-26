@@ -64,6 +64,9 @@ export class SmpartDialogComponent implements OnInit {
   ){}
 
   ngOnInit() {
+    this.displayedColumns = this.data[0] === 'purchase'
+      ? ['product', 'qty', 'qty_done']
+      : ['product', 'qty', 'qty_avail', 'qty_done'];
     this.datas = [{products:{name:""},qty:"",price_unit:""}]
     this.dataSource.data = this.datas;
     this.dataActions = { purchase: this.retrievePO, sale: this.retrieveSO};
@@ -128,7 +131,6 @@ export class SmpartDialogComponent implements OnInit {
   retrieveSODetail(): void {
     this.saledetailService.getBySOId(this.data[1])
       .subscribe(SOD => {
-        console.log(SOD);
         if(this.datas[0].products.name==='') this.datas.splice(0,1);
           for(let x=0;x<SOD.length;x++){
             this.datas.push(SOD[x]);
@@ -136,7 +138,6 @@ export class SmpartDialogComponent implements OnInit {
             this.datas[x].qoh = SOD[x].products.productcostcomps[0].qoh;
             this.datas[x].warehouse = this.warehouseString;
             this.dataSource.data = this.datas;
-            console.log("datas", this.datas);
           }
         })
   }

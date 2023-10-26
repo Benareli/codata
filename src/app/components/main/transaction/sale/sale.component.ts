@@ -157,8 +157,15 @@ export class SaleComponent implements OnInit {
       panelClass: 'full-screen-modal',
       disableClose: true,    
     }).afterClosed().subscribe(result => {
-      if(result) this.openDialog(result);
-      this.retrieveData();
+      if(result) {
+        this.sharedService.setLoading(true)
+        setTimeout(() => {
+          this.sharedService.setLoading(false)
+          this.openDialog(result);
+        },100); 
+      }else{
+        this.retrieveData();
+      }
     });
   }
 

@@ -64,8 +64,9 @@ export class ProductDialogComponent implements OnInit {
   oriimage?: string;
   orimin?: number;
   orimax?: number;
-  orifg?: boolean;
-  orirm?: boolean;
+  oribund?: boolean;
+  oriprod?: boolean;
+  orinosell?: boolean;
   oricategoryid?: any;
   oribrandid?: any;
   oripartnerid?: any;
@@ -88,8 +89,9 @@ export class ProductDialogComponent implements OnInit {
   datisstock?: string;
   datmin?: number;
   datmax?: number;
-  datfg: boolean = false;
-  datrm: boolean = false;
+  datbund: boolean = false;
+  datprod: boolean = false;
+  datnosell: boolean = false;
   categoryid?: any;
   brandid?: any;
   partnerid?: any;
@@ -134,7 +136,7 @@ export class ProductDialogComponent implements OnInit {
   a = 0; b = 0;
   isUpdated = 'update';
   log = 0;
-  cFG = false; cRM = false;
+  cBUND = false; cPROD = false; cNOSELL = false;
 
   //Table
 
@@ -248,6 +250,7 @@ export class ProductDialogComponent implements OnInit {
   checkData(id: any){
     this.productService.get(id)
       .subscribe(prod => {
+        console.log(prod);
         this.datid = prod.id;
         this.datsku = prod.sku;
         this.orisku = prod.sku;
@@ -266,10 +269,12 @@ export class ProductDialogComponent implements OnInit {
         this.orimin = prod.min;
         this.datmax = prod.max;
         this.orimax = prod.max;
-        this.orifg = prod.fg;
-        this.datfg = prod.fg!;
-        this.orirm = prod.rm;
-        this.datrm = prod.rm!;
+        this.oribund = prod.bund;
+        this.datbund = prod.bund!;
+        this.oriprod = prod.prod;
+        this.datprod = prod.prod!;
+        this.orinosell = prod.nosell;
+        this.datnosell = prod.nosell!;
         this.oriimage = prod.image;
         if (prod.active == true){
           this.statusActive = 'true';
@@ -408,7 +413,7 @@ export class ProductDialogComponent implements OnInit {
   }
 
   retrieveBundle(): void{
-    if(this.orifg){
+    if(this.oribund){
       this.bundleService.getByBundle(this.data)
         .subscribe(bund => {
           this.coru = bund.length;
@@ -423,8 +428,8 @@ export class ProductDialogComponent implements OnInit {
           }
         })
       this.productService.findAllFGStock(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
-      .subscribe(allfg => {
-        this.bproducts = allfg;
+      .subscribe(allbund => {
+        this.bproducts = allbund;
       })
     }
   }
@@ -443,7 +448,7 @@ export class ProductDialogComponent implements OnInit {
   }
 
   retrieveBom(): void{
-    if(this.orirm){
+    if(this.oriprod){
       this.bomService.findByProduct(this.data)
         .subscribe(bom => {
           this.coru = bom.length;
@@ -458,8 +463,8 @@ export class ProductDialogComponent implements OnInit {
           }
         })
       this.productService.findAllRM(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
-        .subscribe(allrm => {
-          this.boproducts = allrm;
+        .subscribe(allprod => {
+          this.boproducts = allprod;
         })
       this.costingService.findByProduct(this.data)
         .subscribe(costs => {
@@ -667,16 +672,20 @@ export class ProductDialogComponent implements OnInit {
       });
   }
 
-  onFGChange(): void {
-    this.cFG = !this.cFG;
+  onBundChange(): void {
+    this.cBUND = !this.cBUND;
   }
 
-  onRMChange(): void {
-    this.cRM = !this.cRM;
+  onProdChange(): void {
+    this.cPROD = !this.cPROD;
   }
 
-  checkFG(): void {
-    if(!this.datfg){
+  onNosellChange(): void {
+    this.cNOSELL = !this.cNOSELL;
+  }
+
+  checkBund(): void {
+    if(!this.datbund){
       if(this.bundles.length>0){
         for(let k=0;k<this.bundles.length;k++){
           this.bundleService.delete(this.bundles[k].id).subscribe();
@@ -686,8 +695,8 @@ export class ProductDialogComponent implements OnInit {
     }
   }
 
-  checkRM(): void {
-    if(this.datrm) {
+  checkPROD(): void {
+    if(this.datprod) {
       const costing = {
         product: this.data, overhead: 0, ovType: "fix", ovTime: 0, labor: 0, laType: "fix", laTime: 0
       }
@@ -707,8 +716,8 @@ export class ProductDialogComponent implements OnInit {
   }
 
   updateData(): void {
-    if(this.cRM) this.checkRM();
-    if(this.cFG) this.checkFG();
+    if(this.cPROD) this.checkPROD();
+    if(this.cBUND) this.checkBund();
     if (!this.datname || this.datname == null
       || !this.datlprice || this.datlprice == null
       || !this.categoryid || this.categoryid == null
@@ -798,11 +807,12 @@ export class ProductDialogComponent implements OnInit {
         brand_id: this.brandid,
         min: this.datmin,
         max: this.datmax,
-        fg: this.datfg,
-        rm: this.datrm,
+        bund: this.datbund,
+        prod: this.datprod,
         supplier: this.partnerid,
         active: this.isChecked,
         message: this.isUpdated,
+        nosell: this.datnosell,
         user: this.globals.userid,
         company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)),
       };
@@ -843,13 +853,14 @@ export class ProductDialogComponent implements OnInit {
         tax_id: this.taxinid,
         taxout_id: this.taxoutid,
         image: 'default.png',
-        fg: this.datfg,
-        rm: this.datrm,
+        bund: this.datbund,
+        prod: this.datprod,
         qoh: 0,
         min: this.datmin,
         max: this.datmax,
         supplier: this.partnerid,
         active: this.isChecked,
+        nosell: this.datnosell,
         user: this.globals.userid,
         company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)),
       };

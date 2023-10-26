@@ -1,48 +1,45 @@
-import { Component, AfterContentInit, EventEmitter, 
-  ViewChild, Output, OnInit, HostListener } from '@angular/core';
-import { Globals } from 'src/app/global';
-import { ActivatedRoute, Router, Params } from '@angular/router';
-import { FormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
-import { MatGridList } from '@angular/material/grid-list';
 import { MatSnackBar } from '@angular/material/snack-bar';
-//import { NgxPrintModule } from 'ngx-print';
+import { SharedService } from 'src/app/shared.service';
+import * as CryptoJS from 'crypto-js';
+import { BaseURL } from 'src/app/baseurl';
+import { Globals } from 'src/app/global';
+
+import { Product } from 'src/app/models/masterdata/product.model';
+import { Productcat } from 'src/app/models/masterdata/productcat.model';
+import { Brand } from 'src/app/models/masterdata/brand.model';
+import { Partner } from 'src/app/models/masterdata/partner.model';
+import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
+import { Store } from 'src/app/models/settings/store.model';
+import { Pos } from 'src/app/models/transaction/pos.model';
+import { Posdetail } from 'src/app/models/transaction/posdetail.model';
+
+import { IdService } from 'src/app/services/settings/id.service';
+import { ProductService } from 'src/app/services/masterdata/product.service';
+import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
+import { BrandService } from 'src/app/services/masterdata/brand.service';
+import { PartnerService } from 'src/app/services/masterdata/partner.service';
+import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
+import { QopService } from 'src/app/services/transaction/qop.service';
+import { StoreService } from 'src/app/services/settings/store.service';
+import { PossessionService } from 'src/app/services/transaction/possession.service';
+import { PosService } from 'src/app/services/transaction/pos.service';
+import { PosdetailService } from 'src/app/services/transaction/posdetail.service';
+import { PaymentService } from 'src/app/services/accounting/payment.service';
 
 import { PosdetailDialogComponent } from '../dialog/posdetail-dialog.component';
 import { PaymentDialogComponent } from '../dialog/accounting/payment/payment-dialog.component';
 import { PrintposDialogComponent } from '../dialog/printpos-dialog.component';
 
-import { Id } from 'src/app/models/settings/id.model';
-import { IdService } from 'src/app/services/settings/id.service';
-import { Product } from 'src/app/models/masterdata/product.model';
-import { ProductService } from 'src/app/services/masterdata/product.service';
-import { Productcat } from 'src/app/models/masterdata/productcat.model';
-import { ProductCatService } from 'src/app/services/masterdata/product-cat.service';
-import { Brand } from 'src/app/models/masterdata/brand.model';
-import { BrandService } from 'src/app/services/masterdata/brand.service';
-import { Partner } from 'src/app/models/masterdata/partner.model';
-import { PartnerService } from 'src/app/services/masterdata/partner.service';
-import { Warehouse } from 'src/app/models/masterdata/warehouse.model';
-import { WarehouseService } from 'src/app/services/masterdata/warehouse.service';
-import { Qop } from 'src/app/models/transaction/qop.model';
-import { QopService } from 'src/app/services/transaction/qop.service';
-import { Store } from 'src/app/models/settings/store.model';
-import { StoreService } from 'src/app/services/settings/store.service';
-import { Possession } from 'src/app/models/transaction/possession.model';
-import { PossessionService } from 'src/app/services/transaction/possession.service';
-import { Pos } from 'src/app/models/transaction/pos.model';
-import { PosService } from 'src/app/services/transaction/pos.service';
-import { Posdetail } from 'src/app/models/transaction/posdetail.model';
-import { PosdetailService } from 'src/app/services/transaction/posdetail.service';
-import { Payment } from 'src/app/models/accounting/payment.model';
-import { PaymentService } from 'src/app/services/accounting/payment.service';
-import { BaseURL } from 'src/app/baseurl';
 
 @Component({
   selector: 'app-pos',
   templateUrl: './pos.component.html',
-  styleUrls: ['./pos.component.sass']
+  styleUrls: ['../../../style/main.sass']
 })
 export class PosComponent {
   products?: Product[];
@@ -58,10 +55,8 @@ export class PosComponent {
   storeid?: string;
   warehouseid?: string;
   orders: Array<any> = [];
-  cols: number;
-  rowHeight: string;
-
-  loaded: boolean = false;
+  cols!: number;
+  rowHeight!: string;
 
   baseUrl = BaseURL.BASE_URL;
 
@@ -89,7 +84,7 @@ export class PosComponent {
   discadd = 0;
   total = 0;
 
-  term: string;
+  term!: string;
   posid?: string;
   payid?: string;
   prefixes?: string;
@@ -144,6 +139,7 @@ export class PosComponent {
     private _snackBar: MatSnackBar,
     private dialog: MatDialog,
     private globals: Globals,
+    private sharedService: SharedService,
     private idService: IdService,
     private productService: ProductService,
     private productCatService: ProductCatService,
@@ -187,7 +183,7 @@ export class PosComponent {
   }
 
   retrieveData(): void{
-    this.loaded = true;
+    //this.sharedService.setLoading(true)
     this.productCatService.findAllActive()
       .subscribe({
         next: (dataPC) => {
@@ -209,14 +205,12 @@ export class PosComponent {
         this.warehouses = wh;
     });
 
-    this.storeService.findAllActive()
+    this.storeService.findAllActive(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
       .subscribe(store => {
         this.stores = store;
         this.selectedStore = store[0].id;
-        this.storeService.get(store[0].id)
-          .subscribe(sw => {
-            this.warehouseid=sw.warehouse._id;
-          })
+        this.warehouseid = this.stores.filter(stor => stor.id === store[0].id)[0].warehouse_id;
+        console.log(this.stores, this.selectedStore, this.warehouseid)
     });
 
     this.partnerService.findAllActiveCustomer()
@@ -225,18 +219,18 @@ export class PosComponent {
     });
     
     if(this.globals.cost_general){
-      this.productService.findAllActive(this.globals.companyid)
+      this.productService.findAllActive(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
         .subscribe(prod => {
           this.products = prod;
           this.oriprods = this.products;
-          this.loaded = false;
+          this.sharedService.setLoading(false);
       });
     }else{
-      this.productService.findAllReady(this.globals.companyid)
+      this.productService.findAllReady(JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)))
         .subscribe(prod => {
           this.products = prod;
           this.oriprods = this.products;
-          this.loaded = false;
+          this.sharedService.setLoading(false);
       });
     }
     
@@ -287,12 +281,12 @@ export class PosComponent {
 
   populateDisc() {
     for(let h=0; h<this.orders.length; h++){
-      this.orders[h].discount = Number(this.disc)/100 * Number(this.orders[h].qty) * Number(this.orders[h].price_unit)
+      this.orders[h].discount = Number(this.disc)/100 * Number(this.orders[h].qty_rec) * Number(this.orders[h].price_unit)
       if(this.orders[h].include){
-        this.orders[h].subtotal = (this.orders[h].qty * this.orders[h].price_unit) - 
+        this.orders[h].subtotal = (this.orders[h].qty_rec * this.orders[h].price_unit) - 
           this.orders[h].discount - this.orders[h].discadd;
       }else{
-        this.orders[h].subtotal = Number(this.orders[h].qty) * 
+        this.orders[h].subtotal = Number(this.orders[h].qty_rec) * 
           (Number(this.orders[h].price_unit) - (Number(this.disc)/100 * Number(this.orders[h].price_unit)) - Number(this.orders[h].discadd) + 
             (Number(this.orders[h].tax)/100 * 
               (Number(this.orders[h].price_unit) - (Number(this.disc)/100 * Number(this.orders[h].price_unit)) - Number(this.orders[h].discadd)
@@ -319,7 +313,7 @@ export class PosComponent {
   calculateTotal() {
     this.subtotal = 0; this.discadd = 0; this.untaxed = 0; this.tax = 0; this.total = 0;
     for(let g=0; g<this.orders.length; g++){
-      this.subtotal = this.subtotal + (this.orders[g].qty * this.orders[g].price_unit);
+      this.subtotal = this.subtotal + (this.orders[g].qty_rec * this.orders[g].price_unit);
       this.discadd = this.discadd + Number(this.orders[g].discadd);
       if(this.orders[g].include){
         this.untaxed = this.untaxed + (Number(this.orders[g].subtotal) / 
@@ -330,12 +324,12 @@ export class PosComponent {
         this.total = this.untaxed + this.tax;
       }else{
         this.untaxed = this.untaxed + (
-                        (Number(this.orders[g].qty) * Number(this.orders[g].price_unit)) - 
-                        ((Number(this.disc) / 100) * (Number(this.orders[g].qty) * Number(this.orders[g].price_unit)) ) - 
+                        (Number(this.orders[g].qty_rec) * Number(this.orders[g].price_unit)) - 
+                        ((Number(this.disc) / 100) * (Number(this.orders[g].qty_rec) * Number(this.orders[g].price_unit)) ) - 
                         Number(this.orders[g].discadd));
         this.tax = this.tax + (this.orders[g].tax / 100 * 
-                        ((Number(this.orders[g].qty) * Number(this.orders[g].price_unit)) -
-                        ((Number(this.disc) / 100) * (Number(this.orders[g].qty) * Number(this.orders[g].price_unit))) -
+                        ((Number(this.orders[g].qty_rec) * Number(this.orders[g].price_unit)) -
+                        ((Number(this.disc) / 100) * (Number(this.orders[g].qty_rec) * Number(this.orders[g].price_unit))) -
                         Number(this.orders[g].discadd)));
         this.total = this.untaxed + this.tax;
       }
@@ -343,16 +337,16 @@ export class PosComponent {
   }
 
   posDetailAdd(index: number): void {
-    let qtyold = this.orders[index].qty;
-    this.orders[index].qty = qtyold + 1;
-    this.orders[index].discount = Number(this.disc)/100 * Number(this.orders[index].qty) * Number(this.orders[index].price_unit)
+    let qtyold = this.orders[index].qty_rec;
+    this.orders[index].qty_rec = qtyold + 1;
+    this.orders[index].discount = Number(this.disc)/100 * Number(this.orders[index].qty_rec) * Number(this.orders[index].price_unit)
     if(this.orders[index].include){
-      this.orders[index].subtotal = (this.orders[index].qty * this.orders[index].price_unit) - 
+      this.orders[index].subtotal = (this.orders[index].qty_rec * this.orders[index].price_unit) - 
         this.orders[index].discount - this.orders[index].discadd;
     }else{
       this.orders[index].subtotal = 
-      (Number(this.orders[index].qty) * Number(this.orders[index].price_unit)) - Number(this.orders[index].discount) - Number(this.orders[index].discadd)
-        + (Number(this.orders[index].tax)/100 * ((Number(this.orders[index].qty) * Number(this.orders[index].price_unit)) - Number(this.orders[index].discount)
+      (Number(this.orders[index].qty_rec) * Number(this.orders[index].price_unit)) - Number(this.orders[index].discount) - Number(this.orders[index].discadd)
+        + (Number(this.orders[index].tax)/100 * ((Number(this.orders[index].qty_rec) * Number(this.orders[index].price_unit)) - Number(this.orders[index].discount)
           - Number(this.orders[index].discadd)));
     }
     this.calculateTotal();
@@ -360,16 +354,16 @@ export class PosComponent {
 
   posDetailMin(index: number): void {
     //this.currentIndex3 = index;
-    let qtyold = this.orders[index].qty;
-    this.orders[index].qty = qtyold - 1;
-    this.orders[index].discount = Number(this.disc)/100 * Number(this.orders[index].qty) * Number(this.orders[index].price_unit)
+    let qtyold = this.orders[index].qty_rec;
+    this.orders[index].qty_rec = qtyold - 1;
+    this.orders[index].discount = Number(this.disc)/100 * Number(this.orders[index].qty_rec) * Number(this.orders[index].price_unit)
     if(this.orders[index].include){
-      this.orders[index].subtotal = (this.orders[index].qty * this.orders[index].price_unit) - 
+      this.orders[index].subtotal = (this.orders[index].qty_rec * this.orders[index].price_unit) - 
         this.orders[index].discount - this.orders[index].discadd;
     }else{
       this.orders[index].subtotal = 
-      (Number(this.orders[index].qty) * Number(this.orders[index].price_unit)) - Number(this.orders[index].discount) - Number(this.orders[index].discadd)
-        + (Number(this.orders[index].tax)/100 * ((Number(this.orders[index].qty) * Number(this.orders[index].price_unit)) - Number(this.orders[index].discount)
+      (Number(this.orders[index].qty_rec) * Number(this.orders[index].price_unit)) - Number(this.orders[index].discount) - Number(this.orders[index].discadd)
+        + (Number(this.orders[index].tax)/100 * ((Number(this.orders[index].qty_rec) * Number(this.orders[index].price_unit)) - Number(this.orders[index].discount)
           - Number(this.orders[index].discadd)));
     }
     if(qtyold==1) this.orders.splice(index, 1);
@@ -383,7 +377,7 @@ export class PosComponent {
       disableClose: true,
       data: {
         product: this.orders[index].product,
-        qty: this.orders[index].qty,
+        qty_rec: this.orders[index].qty_rec,
         price_unit: this.orders[index].price_unit,
         discadd: this.orders[index].discadd,
         index: index
@@ -391,7 +385,7 @@ export class PosComponent {
     })
       .afterClosed()
       .subscribe(res => {
-        this.orders[res.index].qty = Number(res.qty);
+        this.orders[res.index].qty_rec = Number(res.qty_rec);
         this.orders[res.index].price_unit = Number(res.price_unit);
         this.orders[res.index].discadd = Number(res.discadd);
         this.orders[res.index].discount = Number(this.disc)/100 * Number(this.orders[res.index].qty) * Number(this.orders[res.index].price_unit)
@@ -400,11 +394,11 @@ export class PosComponent {
             this.orders[res.index].discount - this.orders[res.index].discadd;
         }else{
           this.orders[res.index].subtotal = 
-          (Number(this.orders[res.index].qty) * Number(this.orders[res.index].price_unit)) - Number(this.orders[res.index].discount) - Number(this.orders[res.index].discadd)
+          (Number(this.orders[res.index].qty_rec) * Number(this.orders[res.index].price_unit)) - Number(this.orders[res.index].discount) - Number(this.orders[res.index].discadd)
             + (Number(this.orders[res.index].tax)/100 * 
-              ((Number(this.orders[res.index].qty) * Number(this.orders[res.index].price_unit)) - Number(this.orders[res.index].discount) - Number(this.orders[res.index].discadd)));
+              ((Number(this.orders[res.index].qty_rec) * Number(this.orders[res.index].price_unit)) - Number(this.orders[res.index].discount) - Number(this.orders[res.index].discadd)));
         }
-        if(this.orders[res.index].qty == '0' || !this.orders[res.index].qty){
+        if(this.orders[res.index].qty_rec == '0' || !this.orders[res.index].qty_rec){
           this.orders.splice(res.index, 1);}
         this.calculateTotal();
       });
@@ -415,19 +409,19 @@ export class PosComponent {
       let avail = false;
       let taxes = 0;
       let include = false;
-      if(product.taxout) {taxes = product.taxout.tax; include = product.taxout.include;}
+      if(product.taxouts) {taxes = product.taxouts.tax; include = product.taxouts.include;}
       for (let x=0; x < this.orders.length; x++){
         if(product.id == this.orders[x].product){
           avail = true;
-          let qtyold = this.orders[x].qty;
+          let qtyold = this.orders[x].qty_rec;
           let oI = this.orders.findIndex((obj => obj.product == product.id));
-          this.orders[oI].qty = qtyold + 1;
-          this.orders[oI].discount = Number(this.disc)/100 * (Number(this.orders[oI].qty) * (Number(this.orders[oI].price_unit)))
+          this.orders[oI].qty_rec = qtyold + 1;
+          this.orders[oI].discount = Number(this.disc)/100 * (Number(this.orders[oI].qty_rec) * (Number(this.orders[oI].price_unit)))
           if(this.orders[oI].include){
-            this.orders[oI].subtotal = (this.orders[oI].qty * this.orders[oI].price_unit) -
+            this.orders[oI].subtotal = (this.orders[oI].qty_rec * this.orders[oI].price_unit) -
               this.orders[oI].discount - this.orders[oI].discadd;
           }else{
-            this.orders[oI].subtotal = this.orders[oI].qty * (
+            this.orders[oI].subtotal = this.orders[oI].qty_rec * (
               (this.orders[oI].price_unit - (Number(this.disc)/100 * this.orders[oI].price_unit) - Number(this.orders[oI].discadd)) + 
               this.orders[oI].tax/100 * (this.orders[oI].price_unit - (Number(this.disc)/100 * this.orders[oI].price_unit)
                 - Number(this.orders[oI].discadd)));
@@ -437,50 +431,31 @@ export class PosComponent {
       }
       
       if (!avail){
-        if(include){
-          const data = {
-            order_id: this.posid,
-            qty: 1,
-            price_unit: product.listprice,
-            discount: Number(this.disc)/100 * product!.listprice!,
-            discadd: 0,
-            subtotal: product!.listprice! - 
-              (Number(this.disc)/100 * (product!.listprice!)),
-            product: product.id,
-            product_name: product.name,
-            suom: product.suom.uom_name,
-            uom: product.suom._id,
-            fg: product.fg,
-            tax: taxes,
-            include: include,
-            taxes: (product!.listprice! - (Number(this.disc)/100 * (product!.listprice!))) / (1+(taxes/100)),
-            isStock: product.isStock,
-            user: this.globals.userid
-          };
-          this.orders.push(data);
-        }else{
-          const data = {
-            order_id: this.posid,
-            qty: 1,
-            price_unit: product.listprice,
-            discount: Number(this.disc)/100 * product!.listprice!,
-            discadd: 0,
-            subtotal: product!.listprice! - 
-              (Number(this.disc)/100 * (product!.listprice!)) +
-              taxes/100 * (product!.listprice! - (Number(this.disc)/100 * (product!.listprice!))),
-            product: product.id,
-            product_name: product.name,
-            suom: product.uoms.uom_name,
-            uom: product.uoms.id,
-            fg: product.fg,
-            tax: taxes,
-            include: include,
-            taxes: taxes/100 * (product!.listprice! - (Number(this.disc)/100 * (product!.listprice!))),
-            isStock: product.isStock,
-            user: this.globals.userid
-          };
-          this.orders.push(data);
-        }
+        const data = {
+          order_id: this.posid,
+          qty_rec: 1,
+          price_unit: product.listprice,
+          discount: Number(this.disc)/100 * product!.listprice!,
+          discadd: 0,
+          subtotal: include
+            ? product!.listprice! - (Number(this.disc)/100 * (product!.listprice!))
+            : product!.listprice! - (Number(this.disc)/100 * (product!.listprice!)) + taxes/100 * (product!.listprice! - (Number(this.disc)/100 * (product!.listprice!))),
+          product_data: product,
+          product: product.id,
+          product_name: product.name,
+          suom: product.uoms.uom_name,
+          uom_id: product.uom_id,
+          bund: product.bund,
+          tax: taxes,
+          include: include,
+          taxes: include 
+            ? (product!.listprice! - (Number(this.disc)/100 * (product!.listprice!))) - ((product!.listprice! - (Number(this.disc)/100 * (product!.listprice!))) / (1+(taxes/100)))
+            : taxes/100 * (product!.listprice! - (Number(this.disc)/100 * (product!.listprice!))),
+          isStock: product.isStock,
+          user: this.globals.userid,
+          company_id: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8))
+        };
+        this.orders.push(data);
         this.calculateTotal();
       }
     }else{
@@ -542,11 +517,12 @@ export class PosComponent {
                 discadd: 0,
                 subtotal: pro!.listprice! - 
                   (Number(this.disc)/100 * (pro!.listprice!)),
+                product_data: pro,
                 product: pro.id,
                 product_name: pro.name,
                 suom: pro.suom.uom_name,
                 uom: pro.suom._id,
-                fg: pro.fg,
+                bund: pro.bund,
                 partner: qops.part_id,
                 qop: qops.id,
                 tax: taxes,
@@ -568,11 +544,12 @@ export class PosComponent {
                 subtotal: pro!.listprice! - 
                   (Number(this.disc)/100 * (pro!.listprice!)) +
                   taxes/100 * (pro!.listprice! - (Number(this.disc)/100 * (pro!.listprice!))),
+                product_data: pro,
                 product: pro.id,
                 product_name: pro.name,
                 suom: pro.suom.uom_name,
                 uom: pro.suom._id,
-                fg: pro.fg,
+                bund: pro.bund,
                 partner: qops.part_id,
                 qop: qops.id,
                 tax: taxes,
@@ -642,13 +619,12 @@ export class PosComponent {
     })
       .afterClosed()
       .subscribe(res => {
-        //console.log (res);
-
-        this.rollingDetail(orderid);
+        //this.rollingDetail(orderid);
       });
   }
 
   paying(res: any): void {
+    //console.log(filtered![0].receivables);
     this.today = new Date();
     if(Number(res.payment1)==0) res.pay1Type = null;
     if(Number(res.payment2)==0) res.pay2Type = null;
@@ -659,93 +635,60 @@ export class PosComponent {
       .subscribe(idp => {
         this.payid = idp.message;
         const payments = {pay_id: this.payid,session: this.sess_id,order_id: this.posid,
-          amount_total: this.total,payment1: res.payment1,pay1method: res.pay1Type,
-          payment2: res.payment2,pay2method: res.pay2Type,change: res.change,changeMethod: "tunai",
-          date: this.today, type: "in"
+          amount_total: this.total, payment: res.payment, pay_method: res.pay_type,
+          change: res.change, changeMethod: "tunai", date: this.today, type: "in", pos: true, 
+          cross: this.selectedPartner ? this.partners?.filter(part => part.id === Number(this.selectedPartner))[0].receivables : 
+            this.stores?.filter(stor => stor.id === this.selectedStore)[0].receivables,
+          company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8))
         };
         this.paymentService.create(payments)
           .subscribe(res => {
-            this.createPOS(res.id);
+            if(res.message === "done") this.createPOS();
           })
       })
   }
 
-  createPOS(payment: any): void {
+  createPOS(): void {
     if(!this.globals.pos_session_id || this.globals.pos_session_id == null
       || this.globals.pos_session_id==''){ this.sess_id = "null" }
       else{ this.sess_id = this.globals.pos_session_id}
     const posdata = {
       order_id: this.posid,
-      store: this.selectedStore,
-      partner: this.partnerid ?? "null",
+      date: this.today,
       disc_type: this.discType,
       discount: this.disc,
       amount_untaxed: this.untaxed,
       amount_tax: this.tax,
       amount_subtotal: this.subtotal,
       amount_total: this.total,
+      partner: this.selectedPartner,
       user: this.globals.userid,
-      payment: payment,
-      date: this.today,
-      session: this.sess_id
+      open: true,
+      store: this.selectedStore,
+      warehouse: this.warehouseid,
+      company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)),
+      cross: this.selectedPartner 
+        ? this.partners?.filter(part => part.id === Number(this.selectedPartner))[0].receivables
+        : this.stores?.filter(stor => stor.id === Number(this.selectedStore))[0].receivables,
+      data: this.orders,
+      //payment: payment,
+      //session: this.sess_id
     };
     this.posService.create(posdata)
       .subscribe({
         next: (res) => {
-          this.openPrint(res.id);
-          //this.rollingDetail(res.id);
+          if(res.message == 'done'){
+            this.orders = [];
+            this.total = 0;
+            this.subtotal = 0;
+            this.disc = "0";
+            this.discount = 0;
+            this.tax = 0;
+          }else{
+            this._snackBar.open("Failed to save", "Tutup", {duration: 5000});
+          }
         },error: (e) => console.error(e)
       });
     
   }
-
-  rollingDetail(orderid: string): void {
-    if(this.orders.length>0){
-      this.createDetail(orderid, this.orders[0].qty, this.orders[0].price_unit, this.orders[0].discount+this.orders[0].discadd, 
-        this.orders[0].tax, this.orders[0].subtotal, this.orders[0].product, this.orders[0].partner,
-        this.orders[0].isStock.toString(), this.orders[0].qop, this.orders[0].uom,
-        this.orders[0].fg, this.orders[0].include);
-    }else{
-      this.total = 0;
-      this.subtotal = 0;
-      this.disc = "0";
-      this.discount = 0;
-      this.tax = 0;
-    }
-  }
-
-  createDetail(orderid:string, qty:number, price_unit:number, discount:number, tax: number, subtotal:number, 
-    product:string, partner:string, isStock:string, qop: string, uom: string, fg: boolean, include: boolean): void {
-      const posdetail = {
-        ids: orderid,
-        order_id: this.posid,
-        qty: qty,
-        uom: uom,
-        fg: fg,
-        include: include,
-        partner: partner ?? "null",
-        price_unit: price_unit,
-        discount: discount,
-        tax: tax,
-        subtotal: subtotal,
-        product: product,
-        isStock: isStock,
-        qop: qop,
-        store: this.selectedStore,
-        date: this.today,
-        warehouse: this.warehouseid,
-        user: this.globals.userid,
-        meth: this.globals.cost_general
-      };
-      this.posDetailService.create(posdetail)
-        .subscribe({
-          next: (res) => {
-            //console.log(res);
-            this.orders.splice(0, 1);
-            this.rollingDetail(orderid);
-          },
-          error: (e) => console.error(e)
-        });
-  }
-
 }

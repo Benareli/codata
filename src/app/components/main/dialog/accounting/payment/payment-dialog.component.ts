@@ -194,9 +194,9 @@ export class PaymentDialogComponent implements OnInit {
   confirm() {
     if(this.data.typePay == "in" && this.changeNum>=0){
       this.dialogRef.close({
-        payment1:this.payment,
+        payment:this.payment,
         payment2: this.payment2,
-        pay1Type: this.pay1Type,
+        pay_type: this.selectedPm,
         pay2Type: this.pay2Type,
         change: this.change
       })

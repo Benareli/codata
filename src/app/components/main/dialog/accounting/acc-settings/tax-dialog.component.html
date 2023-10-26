@@ -18,6 +18,26 @@
         <input class="input flex-65" id="desc" required placeholder="Pajak" type="number" (ngModelChange)="ngModelChange($event)" [(ngModel)]="dattax">
       </div>
     </div>
+    <div class="w-100 flex flex-col flex-md-row mt-2 mt-md-0">
+      <div class="flex flex-row flex-100 flex-md-50">
+        <div class="flex-30">Default Akun Pajak Masuk</div>
+        <span class="flex-5">:</span>
+        <select class="input flex-65" [(ngModel)]="taxInId">
+          <option *ngFor="let coa of coas" [value]="coa.id">
+            {{ coa.code }} - {{ coa.name }}
+          </option>
+        </select>
+      </div>
+      <div class="flex flex-row flex-100 flex-md-50">
+        <div class="flex-30">Default Akun Pajak Keluar</div>
+        <span class="flex-5">:</span>
+        <select class="input flex-65" [(ngModel)]="taxOutId">
+          <option *ngFor="let coa of coas" [value]="coa.id">
+            {{ coa.code }} - {{ coa.name }}
+          </option>
+        </select>
+      </div>
+    </div>
     <div class="w-100 flex flex-col flex-md-row mt-2 mt-md-8">
       <div class="flex-100 flex-md-50 flex flex-row">
         <div class="flex-30">Termasuk *</div>

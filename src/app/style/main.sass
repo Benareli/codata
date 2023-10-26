@@ -78,6 +78,19 @@
 .sticky
   position: sticky
 
+@for $i from 1 through 4
+  .left-#{$i}
+    left: $i
+@for $i from 1 through 4
+  .right-#{$i}
+    right: $i
+@for $i from 1 through 4
+  .top-#{$i}
+    top: $i
+@for $i from 1 through 4
+  .bottom-#{$i}
+    bottom: $i
+
 /* Visibility */
 .visible
   visibility: visible
@@ -139,6 +152,12 @@
 .flex-nowrap
   flex-wrap: nowrap
 
+/* Gap */
+@for $i from 0 through 12
+  .gap-#{$i}rem
+    gap: $i * 1rem
+
+
 /* Flex Order */
 @for $i from 0 through 12
   .order-#{$i}
@@ -185,7 +204,7 @@
     .min-w-#{$i}
       min-width: $i*1%
 
-@for $i from 0 to 24
+@for $i from 0 to 96
   .w-#{$i}rem
     width: $i * 1rem !important
 

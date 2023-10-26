@@ -4,8 +4,9 @@ export class Product {
 	name?: string;
 	description?: string;
 	barcode?: string;
-	fg?: boolean;
-	rm?: boolean;
+	bund?: boolean;
+	prod?: boolean;
+	nosell?: boolean;
 	image?: string;
     listprice?: number;
     botprice?: number;

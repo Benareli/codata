@@ -128,6 +128,12 @@ export class ProductcatDialogComponent implements OnInit {
         description: this.data.description,
         active: this.isChecked,
         message: this.isUpdated,
+        revenue_id: this.revId,
+        cost_id: this.expId,
+        incoming_id: this.incId,
+        outgoing_id: this.outId,
+        inventory_id: this.invId,
+        company: JSON.parse((CryptoJS.AES.decrypt(localStorage.getItem("comp")!, BaseURL.API_KEY)).toString(CryptoJS.enc.Utf8)),
         user: this.globals.userid
       };
       this.productCatService.update(this.data.id, data)

@@ -1,7 +1,31 @@
 <div class="w-100">
   <mat-tab-group mat-align-tabs="start" class="h-50 font-secondary overflow-auto">
     <mat-tab label="General">
-      Testing
+      <div class="container flex flex-col">
+        <div class="w-100 text-right">
+          <button class="btn-quick mb-2" (click)="saveAccSetting()"><i class="fa fa-save"></i> Save</button>
+        </div>
+        <div class="w-100 flex flex-col flex-md-row mt-2">
+          <div class="flex flex-row flex-50">
+            <div class="flex-30">Default Receivable</div>
+            <span class="flex-5">:</span>
+            <select class="input flex-65" [(ngModel)]="recId">
+              <option *ngFor="let coa of coarecs" [value]="coa.id">
+                {{ coa.code }} - {{ coa.name }}
+              </option>
+            </select>
+          </div>
+          <div class="flex flex-row flex-50 ml-md-3 mt-2 mt-md-0">
+            <div class="flex-30">Default Payable</div>
+            <span class="flex-5">:</span>
+            <select class="input flex-65" [(ngModel)]="payId">
+              <option *ngFor="let coa of coapays" [value]="coa.id">
+                {{ coa.code }} - {{ coa.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
     </mat-tab>
     <mat-tab label="Tax">
       <div class="flex flex-col flex-wrap justify-between text-center p-3">

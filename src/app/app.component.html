@@ -28,7 +28,7 @@
     <mat-sidenav mode="side" #sidenav="matSidenav" class="mat_sidenav">
       <div class="h-100 flex flex-col justify-between">
         <div style="width: 100%;">
-          <button mat-button class="menu-button" [routerLink]="'/pos'" *ngIf="sidenav.mode === 'side' && isLoggedIn && !pos_shift && isPOSU">
+          <button mat-button class="menu-button" [routerLink]="'/pos'" *ngIf="isLoggedIn && !pos_shift && isPOSU">
             <span>POS</span>
           </button>
           <button mat-button class="menu-button" [routerLink]="'/pos-session'" *ngIf="sidenav.mode === 'side' && isLoggedIn && pos_shift && isPOSU">
@@ -140,13 +140,13 @@
 
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="main_content">
+      <div class="main-content">
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
 
-<div *ngIf="!isLoggedIn">
+<div *ngIf="!isLoggedIn" class="w-100 h-100 flex justify-center items-center">
   <router-outlet></router-outlet>
 </div>

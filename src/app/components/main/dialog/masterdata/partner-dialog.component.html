@@ -36,6 +36,27 @@
     <mat-checkbox class="input_field flex-50" [(ngModel)]="isCustomer">Pelanggan</mat-checkbox>
     <mat-checkbox class="input_field flex-50" [(ngModel)]="isSupplier">Supplier</mat-checkbox>
   </div>
+
+  <div class="w-100 flex flex-col flex-md-row mt-2">
+    <div class="flex flex-row flex-50">
+      <div class="flex-30">Default Receivable</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [(ngModel)]="recId">
+        <option *ngFor="let coa of coarecs" [value]="coa.id">
+          {{ coa.code }} - {{ coa.name }}
+        </option>
+      </select>
+    </div>
+    <div class="flex flex-row flex-50 ml-md-3 mt-2 mt-md-0">
+      <div class="flex-30">Default Payable</div>
+      <span class="flex-5">:</span>
+      <select class="input flex-65" [(ngModel)]="payId">
+        <option *ngFor="let coa of coapays" [value]="coa.id">
+          {{ coa.code }} - {{ coa.name }}
+        </option>
+      </select>
+    </div>
+  </div>
 </div>
 
 <div class="w-100 flex flex-row justify-between items-center">

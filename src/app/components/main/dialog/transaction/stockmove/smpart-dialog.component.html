@@ -25,7 +25,9 @@
     <table class="w-100 mt-2">
       <tr class="pt-2 pb-1 border-t-2 border-solid border-gray">
         <th class="th-style" fxFlex="50%">Produk</th>
-        <th class="th-style" fxFlex="25%">Qty</th>
+        <th *ngIf="this.data[0] === 'sale'" class="th-style" fxFlex="13%">Qty</th>
+        <th *ngIf="this.data[0] === 'sale'" class="th-style" fxFlex="12%">Qty Ready</th>
+        <th *ngIf="this.data[0] === 'purchase'" class="th-style" fxFlex="25%">Qty Ready</th>
         <th class="th-style" fxFlex="25%">Qty yang Diterima</th>
       </tr>
     </table>
@@ -37,14 +39,34 @@
           <span *ngIf="!datas">{{datas.product}}</span>
         </td>
       </ng-container>
-      <ng-container matColumnDef="qty">
+      <ng-container *ngIf="this.data[0] === 'sale'" matColumnDef="qty">
+        <td class="td-style text-right pr-3" fxFlex="13%" mat-cell *matCellDef="let datas">
+          {{datas.qty - datas.qty_done | number}}
+        </td>
+      </ng-container>
+      <ng-container *ngIf="this.data[0] === 'sale'" matColumnDef="qty_avail">
+        <td class="td-style text-right pr-3" fxFlex="12%" mat-cell *matCellDef="let datas">
+          <span *ngIf="datas.qty - datas.qty_done < datas.products.productcostcomps[0].qoh" class="text-success">{{datas.products.productcostcomps[0].qoh | number}}</span>
+          <span *ngIf="datas.qty - datas.qty_done > datas.products.productcostcomps[0].qoh" class="text-danger">{{datas.products.productcostcomps[0].qoh | number}}</span>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="this.data[0] === 'purchase'" matColumnDef="qty">
         <td class="td-style text-right pr-3" fxFlex="25%" mat-cell *matCellDef="let datas">
           {{datas.qty - datas.qty_done | number}}
         </td>
       </ng-container>
       <ng-container matColumnDef="qty_done">
         <td class="td-style text-right" fxFlex="25%" mat-cell *matCellDef="let datas; let index = index">
-          <input type="number" class="input pl-2" [value]="datas.qty_rec" [(ngModel)]="datas.qty_rec" (keyup)="edit(dataSource.filteredData.indexOf(datas))"/>
+          <input *ngIf="
+            this.data[0] === 'sale' && 
+            datas.qty - datas.qty_done < datas.products.productcostcomps[0].qoh" 
+          type="number" class="input pl-2" [value]="datas.qty_rec" [(ngModel)]="datas.qty_rec" (keyup)="edit(dataSource.filteredData.indexOf(datas))"/>
+          <input disabled *ngIf="
+            this.data[0] === 'sale' && 
+            datas.qty - datas.qty_done > datas.products.productcostcomps[0].qoh" 
+          type="number" class="input input-danger pl-2" [value]="datas.qty_rec" [(ngModel)]="datas.qty_rec" (keyup)="edit(dataSource.filteredData.indexOf(datas))"/>
+          <input *ngIf="this.data[0] === 'purchase'" 
+          type="number" class="input pl-2" [value]="datas.qty_rec" [(ngModel)]="datas.qty_rec" (keyup)="edit(dataSource.filteredData.indexOf(datas))"/>
         </td>
       </ng-container>
 

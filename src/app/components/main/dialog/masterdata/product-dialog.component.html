@@ -18,7 +18,7 @@
       </mat-button-toggle-group>
 
       <div class="w-25 text-right flex flex-col flex-md-row items-center justify-end">
-        <div class="text-gradient uppercase text-12 order-2 order-md-1" *ngIf="!datfg && isIM" (click)="openStockDialog()">Add Stock</div>
+        <div class="text-gradient uppercase text-12 order-2 order-md-1" *ngIf="!datprod && isIM" (click)="openStockDialog()">Add Stock</div>
         <button class="text-danger p-1 ml-3 order-1 order-md-2" mat-button (click)="closeDialog()">X</button>
       </div>
     </div>
@@ -69,13 +69,17 @@
           <input class="input flex-65" placeholder="Deskripsi" [(ngModel)]="datdesc">
         </div>
         <div class="w-100 flex flex-row mt-2">
-          <div class="flex-50">
-            <mat-slide-toggle *ngIf="isNew" [disabled]="datrm" [(ngModel)]="datfg">Bundle</mat-slide-toggle>
-            <mat-slide-toggle *ngIf="!isNew" (change)="onFGChange()" [disabled]="isDis || datrm" [(ngModel)]="datfg">Bundle</mat-slide-toggle>
+          <div class="flex-35">
+            <mat-slide-toggle *ngIf="isNew" [disabled]="datprod" [(ngModel)]="datbund">Bundle</mat-slide-toggle>
+            <mat-slide-toggle *ngIf="!isNew" (change)="onBundChange()" [disabled]="isDis || datprod" [(ngModel)]="datbund">Bundle</mat-slide-toggle>
           </div>
-          <div class="flex-50">
-            <mat-slide-toggle *ngIf="isNew && isProdM" [disabled]="datfg" [(ngModel)]="datrm">Production</mat-slide-toggle>
-            <mat-slide-toggle *ngIf="!isNew && isProdM" (change)="onRMChange()" [disabled]="isDis || datfg" [(ngModel)]="datrm">Production</mat-slide-toggle>
+          <div class="flex-35">
+            <mat-slide-toggle *ngIf="isNew && isProdM" [disabled]="datbund" [(ngModel)]="datprod">Production</mat-slide-toggle>
+            <mat-slide-toggle *ngIf="!isNew && isProdM" (change)="onProdChange()" [disabled]="isDis || datbund" [(ngModel)]="datprod">Production</mat-slide-toggle>
+          </div>
+          <div class="flex-30">
+            <mat-slide-toggle *ngIf="isNew && isProdM" [(ngModel)]="datnosell">Can't be sold</mat-slide-toggle>
+            <mat-slide-toggle *ngIf="!isNew && isProdM" (change)="onNosellChange()" [(ngModel)]="datnosell">Can't be sold</mat-slide-toggle>
           </div>
         </div>
       </div>
@@ -228,7 +232,7 @@
   </mat-tab>
 
   <!--TAB3-->
-  <mat-tab label="Isi Bundle" *ngIf="datfg">
+  <mat-tab label="Isi Bundle" *ngIf="datprod">
     <table class="table-new" style="margin-top: 0pt !important;">
       <tr>
         <th class="th-new" style="border-left:1px solid #ccc;" fxFlex="50%">Product</th>
@@ -274,7 +278,7 @@
   </mat-tab>
 
   <!--TAB4-->
-  <mat-tab label="Bahan Baku" *ngIf="datrm">
+  <mat-tab label="Bahan Baku" *ngIf="datprod">
     <table class="table-new" style="margin-top: 0pt !important;">
       <tr>
         <th class="th-new" style="border-left:1px solid #ccc;" fxFlex="50%">Product</th>
